@@ -1,0 +1,663 @@
+@page "/dashboard"
+
+@using Syncfusion.Blazor.CircularGauge
+@using Syncfusion.Blazor.Layouts
+@using Syncfusion.Blazor.Inputs
+@using Syncfusion.Blazor.Charts
+@using Syncfusion.Blazor.Buttons
+@using Syncfusion.Blazor.Cards
+@using Syncfusion.Blazor.Navigations
+@using Microsoft.AspNetCore.Components.Authorization
+
+@inject IJSRuntime jsRuntime
+@inject IDataService dataService
+@inject DevicesDataModel devicesDataModel
+@inject PageTitleService pageTitleService
+@inject GetAllCalData getAllCalData
+@inject GetSchedule getSchedule
+@inject AuthenticationStateProvider authStateProvider
+@inject IStringLocalizer<MyStrings> localizer
+@implements IDisposable
+
+<SfDashboardLayout ID="DashBoard" @ref="DashboardLayout" AllowDragging="false" AllowResizing="false" AllowFloating="true" CellSpacing="@CellSpacing" Columns="30">
+    <DashboardLayoutEvents Created="Created" OnResizeStop="@ResizingHandler" OnWindowResize="@ResizingWindow" Resizing="ResizingHandler"></DashboardLayoutEvents>
+    <DashboardLayoutPanels>
+        <DashboardLayoutPanel Id="LayoutOne" Row="0" Col="0" SizeX="7" SizeY="8">
+            <HeaderTemplate>
+                <div>
+                    HBM-100D
+                    <a style="margin-right:auto">#1</a>
+                    <div style="display:flex; text-align:center; align-items:center; position:absolute; top:5px; right:5px; height:30px;">
+                        <button class="btn btn-primary" style="padding:0 0 0 0; width:30px;" @onclick="ShowModal1">...</button>
+                    </div>
+                </div>
+            </HeaderTemplate>
+            <ContentTemplate>
+                @if (IsInitialRender)
+                {
+                    <SfCircularGauge ID="GaugeOne" @ref="GaugeOne" Width="100%" Height="100%" MoveToCenter="true">
+                        <CircularGauge1></CircularGauge1>
+                    </SfCircularGauge>
+                }
+            </ContentTemplate>
+        </DashboardLayoutPanel>
+        <DashboardLayoutPanel Id="LayoutTwo" Row="0" Col="7" SizeX="7" SizeY="8">
+            <HeaderTemplate>
+                <div>
+                    HBM-100D
+                    <a style="margin-right:auto">#2</a>
+                    <div style="display:flex; text-align:center; align-items:center; position:absolute; top:5px; right:5px; height:30px;">
+                        <button class="btn btn-primary" style="padding:0 0 0 0; width:30px;" @onclick="ShowModal2">...</button>
+                    </div>
+                </div>
+            </HeaderTemplate>
+            <ContentTemplate>
+                @if (IsInitialRender)
+                {
+                    <SfCircularGauge ID="GaugeTwo" @ref="GaugeTwo" Width="100%" Height="100%" MoveToCenter="true">
+                        <CircularGauge2></CircularGauge2>
+                    </SfCircularGauge>
+                }
+            </ContentTemplate>
+        </DashboardLayoutPanel>
+
+
+
+
+        <DashboardLayoutPanel Id="LayoutFive" Row="0" Col="14" SizeX="15" SizeY="8">
+            <HeaderTemplate>
+                <div>
+                    @localizer[StringDescriptionModel.dashboard_pH_live_chart]
+                    @* <div style="display:flex; text-align:center; align-items:center; position:absolute; top:5px; right:5px;">
+                        <button class="btn btn-primary" style="padding:0 5px 0 5px; " @onclick="@(async()=> await dataService.DeletepH())">@localizer[StringDescriptionModel.dashboard_clear]</button>
+                    </div> *@
+                </div>
+            </HeaderTemplate>
+            <ContentTemplate>
+                @if (IsInitialRender)
+                {
+                    <StreamingChart></StreamingChart>
+                }
+            </ContentTemplate>
+        </DashboardLayoutPanel>
+        <DashboardLayoutPanel Id="LayoutSix" Row="8" Col="14" SizeX="15" SizeY="8">
+            <HeaderTemplate>
+                <div>
+                    @localizer[StringDescriptionModel.dashboard_alarm_datalog]
+                    @* <div style="display:flex; text-align:center; align-items:center; position:absolute; top:5px; right:5px;">
+                        <button class="btn btn-primary" style="padding:0 5px 0 5px; " @onclick="ToDeleteAlarmData">@localizer[StringDescriptionModel.dashboard_clear]</button>
+                    </div>   *@    
+                    @{
+                        if (historyAlarmActive)
+                        {
+                            <div style="display:flex; text-align:center; align-items:center; position:absolute; top:5px; right:5px; height:30px;">
+                                <button class="btn btn-primary" style="padding:0 5px 0 5px; " onclick="@(()=> { ShowHistoryAlarmData(false); historyAlarmActive = false;})">@localizer[StringDescriptionModel.show_inalarm]</button>
+                            </div>
+                        }
+                        else
+                        {
+                            <div style="display:flex; text-align:center; align-items:center; position:absolute; top:5px; right:5px; height:30px;">
+                                <button class="btn btn-primary" style="padding:0 5px 0 5px; " onclick="@(()=> { ShowHistoryAlarmData(true); historyAlarmActive = true;})">@localizer[StringDescriptionModel.show_history_alarm]</button>
+                            </div>
+                        }
+                    }
+
+                </div>
+            </HeaderTemplate>
+            <ContentTemplate>
+                @if (IsInitialRender)
+                {
+                    <AlarmDataGrid></AlarmDataGrid>
+                }
+            </ContentTemplate>
+        </DashboardLayoutPanel>
+        <DashboardLayoutPanel Id="LayoutSeven" Row="8" Col="0" SizeX="7" SizeY="8">
+            <HeaderTemplate><div > @localizer[StringDescriptionModel.dashboard_elec_life] System#1 </div></HeaderTemplate>
+            <ContentTemplate>
+
+                @if (IsInitialRender)
+                {
+                    <div style="
+                        position: absolute;
+                        top: 40px;
+                        left: 10px;
+                        font-size: calc(10px + 0.5vw);
+                        color: #333;
+                        white-space: nowrap;
+                        z-index: 1000;
+                    ">
+                        @MainLayout.fieldData.Field - 220
+                    </div>
+                    <div style="width:100%; height:100%" onmousedown="@(()=>NotifyMaintain1Msg())">
+                        <SfCircularGauge ID="GaugeThree" @ref="GaugeThree" Width="100%" Height="100%" MoveToCenter="true">
+                            <CircularGaugeLife1></CircularGaugeLife1>
+                        </SfCircularGauge>
+                    </div>
+                    <div style="position: absolute;
+                        bottom: 10px;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        font-size: calc(12px + 0.5vw);
+                        color: #333;
+                        white-space: nowrap;
+                        z-index: 1000;">
+                        @if (Setting.UserBasicDetail.Role == "Admin")
+                        {
+                            MainLayout.elapsedDays = (int)(DateTime.Now - startDate).TotalDays;
+                            MainLayout.remainDays = MainLayout.totalDays - MainLayout.elapsedDays;
+                            @*<div>
+                                <label>啟用日期：</label>
+                                <input type="date" @bind="startDate" />
+
+                                <label>已過天數：</label>
+                                <span>@elapsedDays</span>
+                            </div> *@
+                            <div>
+                                <label>@localizer[StringDescriptionModel.dashboard_remaindays]：</label>
+                                <span>@MainLayout.remainDays</span>
+                            </div>
+                        }
+                        else
+                        {
+                            MainLayout.elapsedDays = (int)(DateTime.Now - startDate).TotalDays;
+                            <div>
+                                <label>@localizer[StringDescriptionModel.dashboard_remaindays]：</label>
+                                <span>@MainLayout.remainDays</span>
+                            </div>
+                        }
+                    </div>
+
+                }
+            </ContentTemplate>
+        </DashboardLayoutPanel>
+        <DashboardLayoutPanel Id="LayoutEight" Row="8" Col="7" SizeX="7" SizeY="8">
+            <HeaderTemplate><div> @localizer[StringDescriptionModel.dashboard_elec_life] System#2 </div></HeaderTemplate>
+            <ContentTemplate>
+                @if (IsInitialRender)
+                {
+                    <div style="
+                        position: absolute;
+                        top: 40px;
+                        left: 10px;
+                        font-size: calc(10px + 0.5vw);
+                        color: #333;
+                        white-space: nowrap;
+                        z-index: 1000;
+                    ">
+                        @MainLayout.fieldData.Field - 220
+                    </div>
+                    <div style="width:100%; height:100%" onmousedown="@(()=>NotifyMaintain2Msg())">
+                        <SfCircularGauge ID="GaugeFour" @ref="GaugeFour" Width="100%" Height="100%" MoveToCenter="true">
+                            <CircularGaugeLife2></CircularGaugeLife2>
+                        </SfCircularGauge>
+                    </div>
+                    <div style="position: absolute;
+                        bottom: 10px;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        font-size: calc(12px + 0.5vw);
+                        color: #333;
+                        white-space: nowrap;
+                        z-index: 1000;">
+                        @if (Setting.UserBasicDetail.Role == "Admin")
+                        {
+                            MainLayout.elapsedDays = (int)(DateTime.Now - startDate).TotalDays;
+                            MainLayout.remainDays = MainLayout.totalDays - MainLayout.elapsedDays;
+                            @*<div>
+                                <label>啟用日期：</label>
+                                <input type="date" @bind="startDate" />
+
+                                <label>已過天數：</label>
+                                <span>@elapsedDays</span>
+                            </div> *@
+                            <div>
+                                <label>@localizer[StringDescriptionModel.dashboard_remaindays]：</label>
+                                <span>@MainLayout.remainDays</span>
+                            </div>
+                        }
+                        else
+                        {
+                            MainLayout.elapsedDays = (int)(DateTime.Now - startDate).TotalDays;
+                            <div>
+                                <label>@localizer[StringDescriptionModel.dashboard_remaindays]：</label>
+                                <span>@MainLayout.remainDays</span>
+                            </div>
+                        }
+                    </div>
+                }
+            </ContentTemplate>
+        </DashboardLayoutPanel>
+    </DashboardLayoutPanels>
+</SfDashboardLayout>
+
+<Modal @ref="modalRef1">
+    <ModalContent Centered>
+        <ModalHeader>
+            <ModalTitle>HBM-100D #1</ModalTitle>
+            <CloseButton />
+        </ModalHeader>
+        <ModalBody>
+            <Field>
+                <SfCard>
+                    <CardContent>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;">
+                            @foreach (var (label, key) in HbmReadings)
+                            {
+                                <div class="d-flex flex-column gap-2 text-center" style="font-size: 30px; ">
+                                    <label class="text-primary">@label:</label>
+                                    <span class="">@devicesDataModel[0, key]</span>
+                                </div>
+                            }
+                        </div>
+
+                        @if (Expand)
+                        {
+                            <hr />
+
+                            <div style="display: flex; flex-direction: row; justify-content: space-evenly;">
+                                <div class="control-wrapper flex-column d-flex align-items-center" style="height: 150px; width: 120px;">
+                                    <div style="font-size: 16px">@localizer[StringDescriptionModel.set_position]</div>
+                                    <input min="0" max="10" type="number" 
+                                    class="form-control text-center"
+                                    style="border-radius:8px; width:60px; height:40px;" 
+                                    @bind="hoisterDownCycleSettingCount[0]" 
+                                    @onclick="@(async()=> await UpdateNumber(14, hoisterDownCycleSettingCount[0]))" />                                       
+                                    <button class="btn btn-outline-primary" style="width: 60px; height:50px; white-space: nowrap; font-size: 14px;" 
+                                    onclick="@(()=> WriteToRegister(1100, 64))">
+                                        Up
+                                    </button> 
+                                    <button class="btn btn-outline-primary " style="width: 60px; height:50px;  white-space: nowrap; font-size: 14px; " 
+                                    onclick="@(()=> WriteToRegister(1100, 128))">
+                                        Down
+                                    </button>
+                                    <div style="font-size: 16px" class="text-nowrap">
+                                        @localizer[StringDescriptionModel.current_position]: <span>@hoisterDownCycleCount[0]</span>
+                                    </div>
+                                </div>
+
+                                <div class="control-wrapper" style="display: flex; flex-direction: column; gap:15px; position:relative; left: 20px;">
+                                    <div class="row row-cols-2 g-3">
+                                        @{
+                                            var buttons1 = new[]
+                                            {
+                                                new { Name = localizer[StringDescriptionModel.modal_a_wash], ButtonStyle = "btn-primary", Background = MainLayout.hbmWashingMotionControl[0], Address = (ushort)10, Value = 1 },
+                                                new { Name = localizer[StringDescriptionModel.modal_cylinder], ButtonStyle = "btn-outline-success", Background = MainLayout.airPressureValve[0], Address = (ushort)1100, Value = 16 },
+                                                new { Name = localizer[StringDescriptionModel.modal_a_cal], ButtonStyle = "btn-success", Background = MainLayout.hbmCalMotionControl[0], Address = (ushort)10, Value = 2 },
+                                                new { Name = localizer[StringDescriptionModel.modal_back_to_original], ButtonStyle = "btn-outline-primary", Background = MainLayout.electrodeStandbyPointSetting[0], Address = (ushort)1100, Value = 1024 }
+                                            };
+                                        }
+                                        @foreach (var button in buttons1)
+                                        {
+                                            <div class="col text-center">
+                                                <button class="btn @button.ButtonStyle rounded-pill"
+                                                style="width:120px; height:50px; white-space: nowrap; font-size: 14px; background-color: @(button.Background)"                                                     
+                                                @onclick="@(async () => WriteToRegister(button.Address, button.Value))">
+                                                    @button.Name
+                                                </button>
+                                            </div>
+                                        }
+                                        <div class="col text-center">
+                                            <button class="btn btn-danger rounded-pill"
+                                            style="width:120px; height:50px; white-space: nowrap; font-size: 14px;"
+                                            @onclick="@(async() => WriteToRegister(10, 4))"
+                                            onmousedown="this.classList.remove('btn-danger'); this.classList.add('btn-outline-danger');"
+                                            onmouseup="this.classList.remove('btn-outline-danger'); this.classList.add('btn-danger');">
+                                                @localizer[StringDescriptionModel.modal_stop]
+                                            </button>
+                                        </div>
+                                    </div>
+
+
+                                    <hr style="margin: 0; padding: 0;" />
+                                    <div class="row row-cols-2 g-3">
+                                        @{
+                                            var buttons2 = new[]
+                                            {
+                                                new { Name = localizer[StringDescriptionModel.modal_m_wash], Background = MainLayout.washingValve[0], RegisterValue = 1 },
+                                                new { Name = localizer[StringDescriptionModel.modal_m_reag], Background = MainLayout.reagValve[0], RegisterValue = 2 },
+                                                new { Name = localizer[StringDescriptionModel.modal_m_bufa], Background = MainLayout.bufAValve[0], RegisterValue = 4 },
+                                                new { Name = localizer[StringDescriptionModel.modal_m_bufb], Background = MainLayout.bufBValve[0], RegisterValue = 8 }
+                                            };
+                                        }
+                                        @foreach (var button in buttons2)
+                                        {
+                                            <div class="col text-center">
+                                                <button class="btn btn-outline-success rounded-pill"
+                                                style="width:120px; height:50px; background-color:@(button.Background);
+                                                            white-space: nowrap; font-size: 14px; padding: 0;"
+                                                @onclick="@(async () => WriteToRegister(1100, button.RegisterValue))">
+                                                    @button.Name
+                                                </button>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </CardContent>
+                    <CardContent EnableSeparator="true"></CardContent>
+                    <Syncfusion.Blazor.Cards.CardFooter>
+                        <CardFooterContent>
+                            <SfButton CssClass="e-outline" @onclick="@ExpandHandler">@(Expand ? "Collapse" : "Expand")</SfButton>
+                        </CardFooterContent>
+                    </Syncfusion.Blazor.Cards.CardFooter>
+                </SfCard>
+            </Field>
+        </ModalBody>
+    </ModalContent>
+</Modal>
+
+
+
+
+<Modal @ref="modalRef2">
+    <ModalContent Centered>
+        <ModalHeader>
+            <ModalTitle>HBM-100D #2</ModalTitle>
+            <CloseButton />
+        </ModalHeader>
+        <ModalBody>
+            <Field>
+                <SfCard>
+                    <CardContent>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;">
+                            @foreach (var (label, key) in HbmReadings)
+                            {
+                                <div class="d-flex flex-column gap-2 text-center" style="font-size: 30px; ">
+                                    <label class="text-primary">@label:</label>
+                                    <span class="">@devicesDataModel[1, key]</span>
+                                </div>
+                            }
+                        </div>
+
+                        @if (Expand)
+                        {
+                            <hr />
+
+                            <div style="display: flex; flex-direction: row; justify-content: space-evenly;">
+                                <div class="control-wrapper flex-column d-flex align-items-center justify-content-between" style="height: 150px; width: 120px;">
+                                    <div class="text-center" style="font-size: 16px;">@localizer[StringDescriptionModel.set_position]</div>
+                                    <input type="number" min="0" max="10" class="form-control text-center" 
+                                    style="border-radius:8px; width:60px; height:40px;" 
+                                    @bind="hoisterDownCycleSettingCount[1]" 
+                                    @onclick="@(async()=> await UpdateNumber(24, hoisterDownCycleSettingCount[1]))" />
+                                    <button class="btn btn-outline-primary" style="width: 60px; height:50px; font-size: 14px; padding: 0;" 
+                                    onclick="@(()=> WriteToRegister(2100, 64))">
+                                        Up
+                                    </button>
+                                    <button class="btn btn-outline-primary" style="width: 60px; height:50px; font-size: 14px; padding: 0;" 
+                                    onclick="@(()=> WriteToRegister(2100, 128))">
+                                        Down
+                                    </button>
+                                    <div class="text-nowrap" style="font-size: 16px;">
+                                        @localizer[StringDescriptionModel.current_position]: <span>@hoisterDownCycleCount[1]</span>
+                                    </div>
+                                </div>
+                                <div class="control-wrapper" style="display: flex; flex-direction: column; gap:15px; position:relative; left: 20px;">
+                                    <div class="row row-cols-2 g-3">
+                                        @{
+                                            var buttons3 = new[]
+                                            {
+                                                new { Name = localizer[StringDescriptionModel.modal_a_wash], ButtonStyle = "btn-primary", Background = MainLayout.hbmWashingMotionControl[1], Address = (ushort)20, Value = 1 },
+                                                new { Name = localizer[StringDescriptionModel.modal_cylinder], ButtonStyle = "btn-outline-success", Background = MainLayout.airPressureValve[1], Address = (ushort)2100, Value = 16 },
+                                                new { Name = localizer[StringDescriptionModel.modal_a_cal], ButtonStyle = "btn-success", Background = MainLayout.hbmCalMotionControl[1], Address = (ushort)20, Value = 2 },
+                                                new { Name = localizer[StringDescriptionModel.modal_back_to_original], ButtonStyle = "btn-outline-primary", Background = MainLayout.electrodeStandbyPointSetting[1], Address = (ushort)2100, Value = 1024 }
+                                            };
+                                        }
+                                        @foreach (var button in buttons3)
+                                        {
+                                            <div class="col text-center">
+                                                <button class="btn @button.ButtonStyle rounded-pill"
+                                                style="width:120px; height:50px; white-space: nowrap; font-size: 14px; background-color:@(button.Background)"                                                                                                                                                                      
+                                                @onclick="@(async () => WriteToRegister(button.Address, button.Value))">
+                                                    @button.Name
+                                                </button>
+                                            </div>                                    
+                                        }
+                                        <div class="col text-center">
+                                            <button class="btn btn-danger rounded-pill"
+                                            style="width:120px; height:50px; white-space: nowrap; font-size: 14px;"
+                                            @onclick="@(async() => WriteToRegister(20, 4))"
+                                            onmousedown="this.classList.remove('btn-danger'); this.classList.add('btn-outline-danger');"
+                                            onmouseup="this.classList.remove('btn-outline-danger'); this.classList.add('btn-danger');">
+                                                @localizer[StringDescriptionModel.modal_stop]
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <hr style="margin: 0; padding: 0;" />
+                                    <div class="row row-cols-2 g-3">
+                                        @{
+                                            var buttons4 = new[]
+                                            {
+                                                new { Name = localizer[StringDescriptionModel.modal_m_wash], Background = MainLayout.washingValve[1], RegisterValue = 1 },
+                                                new { Name = localizer[StringDescriptionModel.modal_m_reag], Background = MainLayout.reagValve[1], RegisterValue = 2 },
+                                                new { Name = localizer[StringDescriptionModel.modal_m_bufa], Background = MainLayout.bufAValve[1], RegisterValue = 4 },
+                                                new { Name = localizer[StringDescriptionModel.modal_m_bufb], Background = MainLayout.bufBValve[1], RegisterValue = 8 }
+                                            };
+                                        }
+                                        @foreach (var button in buttons4)
+                                        {
+                                            <div class="col text-center">
+                                                <button class="btn btn-outline-success rounded-pill"
+                                                style="width:120px; height:50px; background-color:@(button.Background);
+                                                            white-space: nowrap; font-size: 14px; padding: 0;"
+                                                @onclick="@(async () => WriteToRegister(2100, button.RegisterValue))">
+                                                    @button.Name
+                                                </button>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </CardContent>
+                    <CardContent EnableSeparator="true"></CardContent>
+                    <Syncfusion.Blazor.Cards.CardFooter>
+                        <CardFooterContent>
+                            <SfButton CssClass="e-outline" @onclick="@ExpandHandler">@(Expand ? "Collapse" : "Expand")</SfButton>
+                        </CardFooterContent>
+                    </Syncfusion.Blazor.Cards.CardFooter>
+                </SfCard>
+            </Field>
+        </ModalBody>
+    </ModalContent>
+</Modal>
+
+
+
+
+@code {
+    SfCircularGauge GaugeOne;
+    SfCircularGauge GaugeTwo;
+    SfCircularGauge GaugeThree;
+    SfCircularGauge GaugeFour;
+    SfDashboardLayout DashboardLayout;
+
+    private Modal modalRef1;
+    private Modal modalRef2;
+
+    private string[] d1ButtonColor { get; set; } = new string[4];
+    private string[] d2ButtonColor { get; set; } = new string[4];
+
+    public static List<SchedulerModel>? dataSource { get; set; }
+
+    public static bool historyAlarmActive = false;
+
+    public void ToDeleteAlarmData() => toDeleteAlarmData?.Invoke();
+    public static event Action? toDeleteAlarmData;
+
+    public void ShowHistoryAlarmData(bool a) => showHistoryAlarmData?.Invoke(a);
+    public static event Action<bool>? showHistoryAlarmData;
+
+    public void NotifyMaintain1Msg() => onMaintain1Msg?.Invoke();
+    public static event Action? onMaintain1Msg;
+
+    public void NotifyMaintain2Msg() => onMaintain2Msg?.Invoke();
+    public static event Action? onMaintain2Msg;
+
+    private bool ScatterChartChange { get; set; } = false;
+
+    public bool IsInitialRender { get; set; }
+    public double[] CellSpacing = { 10, 10 };
+
+    Timer timer = null;
+
+    private bool Expand = false;
+
+    public ElementReference WeekdayElementRef;
+    string selectedStep = "step1";
+
+    public static bool waitFeedback;
+    public static bool[] d1ToggleInput = new bool[5];
+    public static bool[] d2ToggleInput = new bool[5];
+
+    private static int d1ValveValue, d2ValveValue;
+
+    private int[] hoisterDownCycleSettingCount = new int[2];
+    private int[] hoisterDownCycleCount = new int[2];
+
+    private static DateTime startDate = new DateTime(2025, 2, 1);
+
+    private (string Label, string Key)[] HbmReadings = new[]
+    {
+        ("pH", "hbmpH"),
+        ("Elec", "hbmElec"),
+        ("Temp", "hbmTemp"),
+        ("Zero", "hbmZero"),
+        ("Slope", "hbmSlope"),
+        ("Health", "hbmHealth")
+    };
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        pageTitleService.Title = "";
+        MainLayout.OnLanguageChange += StateHasChanged;
+        MainLayout.OnFieldChange += Update;
+        devicesDataModel.OnStateChange += Update;
+        AlarmDataGrid.toChangeAlarmBtnState += StateHasChanged;
+
+        for (int i = 0; i < 1; i++)
+        {
+            hoisterDownCycleSettingCount[i] = (ushort)devicesDataModel[i, "hoisterDownCycleSettingCount"];
+        }
+        
+        if (Setting.UserBasicDetail.Role == "Admin" || Setting.UserBasicDetail.Role == "User")
+        {
+            getAllCalData.UpdateData();
+            await Task.Delay(500);
+            getSchedule.UpdateData();
+            await Task.Delay(500);
+        }
+
+        Update();
+    }
+
+    private async void Update()
+    {
+        for (int i = 0; i < 1; i++)
+        {          
+            hoisterDownCycleCount[i] = MainLayout.response.hoisterDownCycleCount[i];
+        }
+
+        StateHasChanged();
+    }
+
+    public async void Created(Object args)
+    {
+        IsInitialRender = true;
+    }
+
+    public async Task ResizingWindow(ResizeArgs args)
+    {
+        await Task.Delay(100);
+        await DashboardLayout.RefreshAsync();
+        await GaugeOne.RefreshAsync();
+        await GaugeTwo.RefreshAsync();
+        await GaugeThree.RefreshAsync();
+        await GaugeFour.RefreshAsync();
+    }
+
+    public async Task ResizingHandler(ResizeArgs args)
+    {
+        if (args.Id == "LayoutOne")
+        {
+            await Task.Delay(100);
+            GaugeOne.RefreshAsync();
+        }
+        else if (args.Id == "LayoutTwo")
+        {
+            await Task.Delay(100);
+            GaugeTwo.RefreshAsync();
+        }
+        else if (args.Id == "LayoutThree")
+        {
+            await Task.Delay(100);
+            GaugeThree.RefreshAsync();
+        }
+        else if (args.Id == "LayoutFour")
+        {
+            await Task.Delay(100);
+            GaugeFour.RefreshAsync();
+        }
+    }
+
+    private Task ShowModal1()
+    {
+        return modalRef1.Show();
+    }
+
+    private Task HideModal1()
+    {
+        return modalRef1.Hide();
+    }
+
+    private Task ShowModal2()
+    {
+        return modalRef2.Show();
+    }
+
+    private Task HideModal2()
+    {
+        return modalRef2.Hide();
+    }
+
+    public async Task ExpandHandler()
+    {
+        Expand = !Expand;
+        await Task.Delay(2);
+
+        if (Expand)
+        {
+            if (WeekdayElementRef.Id != null)
+            {
+                await jsRuntime.InvokeVoidAsync("setFocusToElement", WeekdayElementRef);
+            }
+        }
+    }
+
+    private Task OnSelectedStepChanged(string name)
+    {
+        selectedStep = name;
+
+        return Task.CompletedTask;
+    }
+
+    private async Task UpdateNumber(ushort address, int value)
+    {
+        PostModbusApiModel postModbusApiModel = new PostModbusApiModel();
+
+        postModbusApiModel.startAddress = address;
+        postModbusApiModel.value = value;
+        await dataService.PostModbusDevicesData(postModbusApiModel);
+        return;
+    }
+
+    void IDisposable.Dispose()
+    {
+        MainLayout.OnLanguageChange -= StateHasChanged;
+        MainLayout.OnFieldChange -= Update;
+        devicesDataModel.OnStateChange -= Update;
+        AlarmDataGrid.toChangeAlarmBtnState -= StateHasChanged;
+    }
+}

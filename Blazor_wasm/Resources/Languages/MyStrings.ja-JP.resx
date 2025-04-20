@@ -1,0 +1,813 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="account_login" xml:space="preserve">
+    <value>ログイン</value>
+  </data>
+  <data name="account_logout" xml:space="preserve">
+    <value>ログアウト</value>
+  </data>
+  <data name="charts" xml:space="preserve">
+    <value>チャート</value>
+  </data>
+  <data name="cal_datalog" xml:space="preserve">
+    <value>キャリブレーションデータログ</value>
+  </data>
+  <data name="proccess_setting" xml:space="preserve">
+    <value>プロセス設定</value>
+  </data>
+  <data name="schedule" xml:space="preserve">
+    <value>スケジュール</value>
+  </data>
+  <data name="account_modify_account" xml:space="preserve">
+    <value>アカウント修正</value>
+  </data>
+  <data name="dashboard_elec_life" xml:space="preserve">
+    <value>電極の持続力</value>
+  </data>
+  <data name="dashboard_pH_live_chart" xml:space="preserve">
+    <value>測定値のリアルタイムトレンドチャート</value>
+  </data>
+  <data name="dashboard_alarm_datalog" xml:space="preserve">
+    <value>アラームデータログ</value>
+  </data>
+  <data name="account_email_address" xml:space="preserve">
+    <value>メールアドレス</value>
+  </data>
+  <data name="account_password" xml:space="preserve">
+    <value>パスワード</value>
+  </data>
+  <data name="account_create_account" xml:space="preserve">
+    <value>新規アカウント作成</value>
+  </data>
+  <data name="account_forgot_password" xml:space="preserve">
+    <value>パスワードを忘れた場合</value>
+  </data>
+  <data name="dashboard_clear" xml:space="preserve">
+    <value>クリア</value>
+  </data>
+  <data name="modal_stop" xml:space="preserve">
+    <value>停止</value>
+  </data>
+  <data name="modal_cylinder" xml:space="preserve">
+    <value>シリンダー</value>
+  </data>
+  <data name="modal_unlock" xml:space="preserve">
+    <value>ホイスターロック解除</value>
+  </data>
+  <data name="home" xml:space="preserve">
+    <value>ホーム</value>
+  </data>
+  <data name="live_chart" xml:space="preserve">
+    <value>ライブチャート</value>
+  </data>
+  <data name="history_chart" xml:space="preserve">
+    <value>履歴チャート</value>
+  </data>
+  <data name="trendline_generation" xml:space="preserve">
+    <value>トレンドライン生成</value>
+  </data>
+  <data name="export_datalog" xml:space="preserve">
+    <value>データログのエクスポート</value>
+  </data>
+  <data name="clear_datalog" xml:space="preserve">
+    <value>データログのクリア</value>
+  </data>
+  <data name="d1_cal_datalogger" xml:space="preserve">
+    <value>D1キャリブレーションデータログ</value>
+  </data>
+  <data name="d2_cal_datalogger" xml:space="preserve">
+    <value>D2キャリブレーションデータログ</value>
+  </data>
+  <data name="washing_step_setting" xml:space="preserve">
+    <value>洗浄ステップ設定</value>
+  </data>
+  <data name="total_steps" xml:space="preserve">
+    <value>総ステップ数</value>
+  </data>
+  <data name="step" xml:space="preserve">
+    <value>ステップ</value>
+  </data>
+  <data name="select_total_steps" xml:space="preserve">
+    <value>総ステップ数を選択</value>
+  </data>
+  <data name="select_step_and_set_time" xml:space="preserve">
+    <value>ステップを選択して時間を設定</value>
+  </data>
+  <data name="step_number_setting" xml:space="preserve">
+    <value>ステップ設定</value>
+  </data>
+  <data name="set_cleaning_content" xml:space="preserve">
+    <value>洗浄内容の設定</value>
+  </data>
+  <data name="language_selection" xml:space="preserve">
+    <value>言語選択</value>
+  </data>
+  <data name="set_position" xml:space="preserve">
+    <value>いちせってい</value>
+  </data>
+  <data name="current_position" xml:space="preserve">
+    <value>げんざいいち</value>
+  </data>
+  <data name="account_ent_old_password" xml:space="preserve">
+    <value>古いパスワード</value>
+  </data>
+  <data name="account_submit" xml:space="preserve">
+    <value>送信</value>
+  </data>
+  <data name="message_check_email" xml:space="preserve">
+    <value>メールを確認してください</value>
+  </data>
+  <data name="message_error" xml:space="preserve">
+    <value>エラーが発生しました</value>
+  </data>
+  <data name="message_enter_email" xml:space="preserve">
+    <value>メールアドレスを入力してください</value>
+  </data>
+  <data name="message_verification_code_invalid" xml:space="preserve">
+    <value>認証コードが無効です</value>
+  </data>
+  <data name="modal_m_reag" xml:space="preserve">
+    <value>再生</value>
+  </data>
+  <data name="modal_m_bufa" xml:space="preserve">
+    <value>バッファ</value>
+  </data>
+  <data name="modal_m_bufb" xml:space="preserve">
+    <value>バッファ</value>
+  </data>
+  <data name="modal_a_wash" xml:space="preserve">
+    <value>洗浄</value>
+  </data>
+  <data name="modal_a_cal" xml:space="preserve">
+    <value>キャリブレーション</value>
+  </data>
+  <data name="modal_back_to_original" xml:space="preserve">
+    <value>元に戻す</value>
+  </data>
+  <data name="modal_m_wash" xml:space="preserve">
+    <value>洗浄</value>
+  </data>
+  <data name="account_select_account" xml:space="preserve">
+    <value>アカウントを選択</value>
+  </data>
+  <data name="modal_close" xml:space="preserve">
+    <value>閉じる</value>
+  </data>
+  <data name="modal_delete" xml:space="preserve">
+    <value>削除</value>
+  </data>
+  <data name="modal_ent_select_language" xml:space="preserve">
+    <value>言語を選択</value>
+  </data>
+  <data name="account_ent_email_address" xml:space="preserve">
+    <value>メールアドレス</value>
+  </data>
+  <data name="account_ent_password" xml:space="preserve">
+    <value>パスワード</value>
+  </data>
+  <data name="modal_language" xml:space="preserve">
+    <value>言語</value>
+  </data>
+  <data name="message_success" xml:space="preserve">
+    <value>成功しました</value>
+  </data>
+  <data name="account_ent_verification_code" xml:space="preserve">
+    <value>認証コード</value>
+  </data>
+  <data name="account_registration" xml:space="preserve">
+    <value>登録</value>
+  </data>
+  <data name="account_first_name" xml:space="preserve">
+    <value>名</value>
+  </data>
+  <data name="account_last_name" xml:space="preserve">
+    <value>姓</value>
+  </data>
+  <data name="account_ent_first_name" xml:space="preserve">
+    <value>名</value>
+  </data>
+  <data name="account_ent_last_name" xml:space="preserve">
+    <value>姓</value>
+  </data>
+  <data name="account_already_account" xml:space="preserve">
+    <value>すでにアカウントがあります</value>
+  </data>
+  <data name="account_password_again" xml:space="preserve">
+    <value>パスワードを再入力してください</value>
+  </data>
+  <data name="account_delete_account" xml:space="preserve">
+    <value>アカウントを削除</value>
+  </data>
+  <data name="account_reset_password" xml:space="preserve">
+    <value>パスワードをリセット</value>
+  </data>
+  <data name="account_new_password" xml:space="preserve">
+    <value>新しいパスワード</value>
+  </data>
+  <data name="account_ent_new_password" xml:space="preserve">
+    <value>新しいパスワード</value>
+  </data>
+  <data name="message_password_changed" xml:space="preserve">
+    <value>パスワードが変更されました</value>
+  </data>
+  <data name="message_password_change_failed" xml:space="preserve">
+    <value>パスワードの変更に失敗しました</value>
+  </data>
+  <data name="account_old_password" xml:space="preserve">
+    <value>古いパスワード</value>
+  </data>
+  <data name="btn_expand" xml:space="preserve">
+    <value>展開</value>
+  </data>
+  <data name="btn_collapse" xml:space="preserve">
+    <value>縮小</value>
+  </data>
+  <data name="btn_goto_modify" xml:space="preserve">
+    <value>修正へ</value>
+  </data>
+  <data name="lab_change_password" xml:space="preserve">
+    <value>パスワード変更</value>
+  </data>
+  <data name="schedule_system" xml:space="preserve">
+    <value>システム</value>
+  </data>
+  <data name="schedule_ent_select_system" xml:space="preserve">
+    <value>システムを選択</value>
+  </data>
+  <data name="schedule_subject" xml:space="preserve">
+    <value>件名</value>
+  </data>
+  <data name="schedule_ent_select_subject" xml:space="preserve">
+    <value>件名を選択</value>
+  </data>
+  <data name="schedule_start_time" xml:space="preserve">
+    <value>開始時間</value>
+  </data>
+  <data name="schedule_end_time" xml:space="preserve">
+    <value>終了時間</value>
+  </data>
+  <data name="schedule_monthly" xml:space="preserve">
+    <value>毎月</value>
+  </data>
+  <data name="schedule_weekly" xml:space="preserve">
+    <value>毎週</value>
+  </data>
+  <data name="schedule_daily" xml:space="preserve">
+    <value>毎日</value>
+  </data>
+  <data name="schedule_description" xml:space="preserve">
+    <value>説明</value>
+  </data>
+  <data name="modal_cancel" xml:space="preserve">
+    <value>キャンセル</value>
+  </data>
+  <data name="modal_confirm" xml:space="preserve">
+    <value>確認</value>
+  </data>
+  <data name="schedule_frequency" xml:space="preserve">
+    <value>頻度</value>
+  </data>
+  <data name="schedule_wash" xml:space="preserve">
+    <value>洗浄</value>
+  </data>
+  <data name="schedule_calibration" xml:space="preserve">
+    <value>キャリブレーション</value>
+  </data>
+  <data name="schedule_export" xml:space="preserve">
+    <value>エクスポート</value>
+  </data>
+  <data name="schedule_modal_title" xml:space="preserve">
+    <value>スケジュール</value>
+  </data>
+  <data name="calibration_step_setting" xml:space="preserve">
+    <value>キャリブレーションステップ設定</value>
+  </data>
+  <data name="history_start_date" xml:space="preserve">
+    <value>開始日</value>
+  </data>
+  <data name="history_end_date" xml:space="preserve">
+    <value>終了日</value>
+  </data>
+  <data name="alarm_active" xml:space="preserve">
+    <value>アクティブ</value>
+  </data>
+  <data name="alarm_inactive" xml:space="preserve">
+    <value>非アクティブ</value>
+  </data>
+  <data name="calgrid_export" xml:space="preserve">
+    <value>エクスポート</value>
+  </data>
+  <data name="calgrid_clear" xml:space="preserve">
+    <value>クリア</value>
+  </data>
+  <data name="calgrid_upload" xml:space="preserve">
+    <value>アップロード</value>
+  </data>
+  <data name="account_back_login" xml:space="preserve">
+    <value>ログインに戻る</value>
+  </data>
+  <data name="step_number" xml:space="preserve">
+    <value>ステップ</value>
+  </data>
+  <data name="wash" xml:space="preserve">
+    <value>洗浄</value>
+  </data>
+  <data name="reag" xml:space="preserve">
+    <value>試薬</value>
+  </data>
+  <data name="buf_a" xml:space="preserve">
+    <value>緩衝液A</value>
+  </data>
+  <data name="buf_b" xml:space="preserve">
+    <value>緩衝液B</value>
+  </data>
+  <data name="show_history_alarm" xml:space="preserve">
+    <value>過去のアラームを表示</value>
+  </data>
+  <data name="show_inalarm" xml:space="preserve">
+    <value>アラームを表示中</value>
+  </data>
+  <data name="field_selection" xml:space="preserve">
+    <value>水域の選択</value>
+  </data>
+  <data name="alarm_system0" xml:space="preserve">
+    <value>System_サーボ通信異常</value>
+  </data>
+  <data name="alarm_system1" xml:space="preserve">
+    <value>System_HBM通信異常</value>
+  </data>
+  <data name="alarm_system2" xml:space="preserve">
+    <value>System_異常な浄水圧</value>
+  </data>
+  <data name="alarm_system3" xml:space="preserve">
+    <value>System_異常な酸圧</value>
+  </data>
+  <data name="alarm_system4" xml:space="preserve">
+    <value>System_Buf.A 圧力異常</value>
+  </data>
+  <data name="alarm_system5" xml:space="preserve">
+    <value>System_Buf.B圧異常</value>
+  </data>
+  <data name="alarm_system6" xml:space="preserve">
+    <value>System_空気圧シリンダーの異常開閉</value>
+  </data>
+  <data name="alarm_system7" xml:space="preserve">
+    <value>System_ウインチ光ファイバー信号異常</value>
+  </data>
+  <data name="alarm_system8" xml:space="preserve">
+    <value>System_電極過巻き異常</value>
+  </data>
+  <data name="alarm_system9" xml:space="preserve">
+    <value>System_E_00</value>
+  </data>
+  <data name="alarm_system10" xml:space="preserve">
+    <value>System_E_01</value>
+  </data>
+  <data name="alarm_system11" xml:space="preserve">
+    <value>System_E_02</value>
+  </data>
+  <data name="alarm_system12" xml:space="preserve">
+    <value>System_E_03</value>
+  </data>
+  <data name="alarm_system13" xml:space="preserve">
+    <value>System_E_04</value>
+  </data>
+  <data name="alarm_system14" xml:space="preserve">
+    <value>System_E_05</value>
+  </data>
+  <data name="alarm_system15" xml:space="preserve">
+    <value>System_E_31</value>
+  </data>
+  <data name="alarm_driver1" xml:space="preserve">
+    <value>Driver_過電流</value>
+  </data>
+  <data name="alarm_driver2" xml:space="preserve">
+    <value>Driver_過電圧</value>
+  </data>
+  <data name="alarm_driver3" xml:space="preserve">
+    <value>Driver_低電圧</value>
+  </data>
+  <data name="alarm_driver4" xml:space="preserve">
+    <value>Driver_モーター適合異常</value>
+  </data>
+  <data name="alarm_driver5" xml:space="preserve">
+    <value>Driver_回生エラー</value>
+  </data>
+  <data name="alarm_driver6" xml:space="preserve">
+    <value>Driver_過負荷</value>
+  </data>
+  <data name="alarm_driver7" xml:space="preserve">
+    <value>Driver_速度制御誤差が大きすぎます</value>
+  </data>
+  <data name="alarm_driver8" xml:space="preserve">
+    <value>Driver_異常パルス制御命令</value>
+  </data>
+  <data name="alarm_driver9" xml:space="preserve">
+    <value>Driver_位置制御誤差が大きすぎます</value>
+  </data>
+  <data name="alarm_driver16" xml:space="preserve">
+    <value>Driver_回生状態での電圧異常</value>
+  </data>
+  <data name="alarm_driver17" xml:space="preserve">
+    <value>Driver_CN2通信失敗</value>
+  </data>
+  <data name="alarm_driver19" xml:space="preserve">
+    <value>Driver_緊急停止</value>
+  </data>
+  <data name="alarm_driver20" xml:space="preserve">
+    <value>Driver_逆方向限界異常</value>
+  </data>
+  <data name="alarm_driver21" xml:space="preserve">
+    <value>Driver_正方向限界異常</value>
+  </data>
+  <data name="alarm_driver22" xml:space="preserve">
+    <value>Driver_IGBT温度異常</value>
+  </data>
+  <data name="alarm_driver23" xml:space="preserve">
+    <value>Driver_メモリ異常</value>
+  </data>
+  <data name="alarm_driver24" xml:space="preserve">
+    <value>Driver_OAとOBの出力異常</value>
+  </data>
+  <data name="alarm_driver32" xml:space="preserve">
+    <value>Driver_シリアル通信タイムアウト</value>
+  </data>
+  <data name="alarm_driver34" xml:space="preserve">
+    <value>Driver_主回路電源異常</value>
+  </data>
+  <data name="alarm_driver35" xml:space="preserve">
+    <value>Driver_予備過負荷警告</value>
+  </data>
+  <data name="alarm_driver36" xml:space="preserve">
+    <value>Driver_エンコーダ初期磁場エラー</value>
+  </data>
+  <data name="alarm_driver37" xml:space="preserve">
+    <value>Driver_エンコーダ内部エラー</value>
+  </data>
+  <data name="alarm_driver38" xml:space="preserve">
+    <value>Driver_エンコーダ内部データ信頼性エラー</value>
+  </data>
+  <data name="alarm_driver39" xml:space="preserve">
+    <value>Driver_エンコーダ内部リセットエラー</value>
+  </data>
+  <data name="alarm_driver40" xml:space="preserve">
+    <value>Driver_バッテリー電圧異常またはエンコーダ内部エラー</value>
+  </data>
+  <data name="alarm_driver41" xml:space="preserve">
+    <value>Driver_グレイコードエラー</value>
+  </data>
+  <data name="alarm_driver42" xml:space="preserve">
+    <value>Driver_エンコーダ回転数カウントエラー</value>
+  </data>
+  <data name="alarm_driver43" xml:space="preserve">
+    <value>Driver_モーターデータ異常</value>
+  </data>
+  <data name="alarm_driver44" xml:space="preserve">
+    <value>Driver_ドライバ過負荷</value>
+  </data>
+  <data name="alarm_driver45" xml:space="preserve">
+    <value>Driver_防止ロック保護</value>
+  </data>
+  <data name="alarm_driver48" xml:space="preserve">
+    <value>Driver_モーター衝突エラー</value>
+  </data>
+  <data name="alarm_driver49" xml:space="preserve">
+    <value>Driver_モーター電力線誤配線検出</value>
+  </data>
+  <data name="alarm_driver50" xml:space="preserve">
+    <value>Driver_エンコーダ振動異常</value>
+  </data>
+  <data name="alarm_driver51" xml:space="preserve">
+    <value>Driver_モーター異常</value>
+  </data>
+  <data name="alarm_driver52" xml:space="preserve">
+    <value>Driver_エンコーダ内部通信異常</value>
+  </data>
+  <data name="alarm_driver53" xml:space="preserve">
+    <value>Driver_エンコーダ温度が保護上限を超過</value>
+  </data>
+  <data name="alarm_driver54" xml:space="preserve">
+    <value>Driver_エンコーダ異常状態エラー</value>
+  </data>
+  <data name="alarm_driver66" xml:space="preserve">
+    <value>Driver_アナログ速度指令の電圧入力が高すぎます</value>
+  </data>
+  <data name="alarm_driver68" xml:space="preserve">
+    <value>Driver_ドライバ機能使用率警告</value>
+  </data>
+  <data name="alarm_driver69" xml:space="preserve">
+    <value>Driver_電子ギア比設定エラー</value>
+  </data>
+  <data name="alarm_driver83" xml:space="preserve">
+    <value>Driver_モーターパラメータ異常</value>
+  </data>
+  <data name="alarm_driver86" xml:space="preserve">
+    <value>Driver_モーター速度過剰</value>
+  </data>
+  <data name="alarm_driver92" xml:space="preserve">
+    <value>Driver_モーター位置フィードバック異常</value>
+  </data>
+  <data name="alarm_driver96" xml:space="preserve">
+    <value>Driver_絶対位置喪失</value>
+  </data>
+  <data name="alarm_driver97" xml:space="preserve">
+    <value>Driver_エンコーダ電圧が低すぎます</value>
+  </data>
+  <data name="alarm_driver98" xml:space="preserve">
+    <value>Driver_絶対位置回転数オーバーフロー_エンコーダ</value>
+  </data>
+  <data name="alarm_driver100" xml:space="preserve">
+    <value>Driver_エンコーダ振動警告</value>
+  </data>
+  <data name="alarm_driver102" xml:space="preserve">
+    <value>Driver_絶対位置回転数オーバーフロー_ドライバ</value>
+  </data>
+  <data name="alarm_driver103" xml:space="preserve">
+    <value>Driver_エンコーダ温度警告</value>
+  </data>
+  <data name="alarm_driver104" xml:space="preserve">
+    <value>Driver_絶対型データIO伝送エラー</value>
+  </data>
+  <data name="alarm_driver105" xml:space="preserve">
+    <value>Driver_モータータイプエラー</value>
+  </data>
+  <data name="alarm_driver107" xml:space="preserve">
+    <value>Driver_ドライバ内部座標とエンコーダ座標の誤差が大きすぎます</value>
+  </data>
+  <data name="alarm_driver108" xml:space="preserve">
+    <value>Driver_エンコーダタイプ識別不可能</value>
+  </data>
+  <data name="alarm_driver109" xml:space="preserve">
+    <value>Driver_絶対位置設定未完了</value>
+  </data>
+  <data name="alarm_driver112" xml:space="preserve">
+    <value>Driver_エンコーダの読み書き未完了警告</value>
+  </data>
+  <data name="alarm_driver113" xml:space="preserve">
+    <value>Driver_エンコーダ回転数エラー</value>
+  </data>
+  <data name="alarm_driver114" xml:space="preserve">
+    <value>Driver_エンコーダ過速度</value>
+  </data>
+  <data name="alarm_driver115" xml:space="preserve">
+    <value>Driver_エンコーダメモリエラー</value>
+  </data>
+  <data name="alarm_driver116" xml:space="preserve">
+    <value>Driver_エンコーダ単回転絶対位置エラー</value>
+  </data>
+  <data name="alarm_driver117" xml:space="preserve">
+    <value>Driver_エンコーダ絶対回転数エラー</value>
+  </data>
+  <data name="alarm_driver121" xml:space="preserve">
+    <value>Driver_エンコーダパラメータ設定未完了エラー</value>
+  </data>
+  <data name="alarm_driver122" xml:space="preserve">
+    <value>Driver_エンコーダZ相位置喪失</value>
+  </data>
+  <data name="alarm_driver123" xml:space="preserve">
+    <value>Driver_エンコーダメモリビジー</value>
+  </data>
+  <data name="alarm_driver124" xml:space="preserve">
+    <value>Driver_モーター回転数が200rpmを超えると絶対位置のクリア指令が出されます</value>
+  </data>
+  <data name="alarm_driver125" xml:space="preserve">
+    <value>Driver_AL07Cを解除せずに再起動すると、モーターが停止します</value>
+  </data>
+  <data name="alarm_driver126" xml:space="preserve">
+    <value>Driver_エンコーダクリアプログラムエラー</value>
+  </data>
+  <data name="alarm_driver127" xml:space="preserve">
+    <value>Driver_エンコーダのバージョン異常</value>
+  </data>
+  <data name="alarm_driver131" xml:space="preserve">
+    <value>Driver_ドライバ出力電流過剰</value>
+  </data>
+  <data name="alarm_driver133" xml:space="preserve">
+    <value>Driver_回生設定異常</value>
+  </data>
+  <data name="alarm_driver134" xml:space="preserve">
+    <value>Driver_回生抵抗過負荷</value>
+  </data>
+  <data name="alarm_driver136" xml:space="preserve">
+    <value>Driver_ドライバー機能使用アラーム</value>
+  </data>
+  <data name="alarm_driver137" xml:space="preserve">
+    <value>Driver_電流感知が乱れる</value>
+  </data>
+  <data name="alarm_driver138" xml:space="preserve">
+    <value>Driver_自動ゲイン調整コマンド異常</value>
+  </data>
+  <data name="alarm_driver139" xml:space="preserve">
+    <value>Driver_自動ゲイン調整停止時間が短すぎる</value>
+  </data>
+  <data name="alarm_driver140" xml:space="preserve">
+    <value>Driver_自動ゲイン調整慣性推定異常</value>
+  </data>
+  <data name="alarm_driver153" xml:space="preserve">
+    <value>Driver_DSPファームウェアエラー</value>
+  </data>
+  <data name="alarm_driver156" xml:space="preserve">
+    <value>Driver_パラメータのリセットに失敗しました</value>
+  </data>
+  <data name="alarm_driver157" xml:space="preserve">
+    <value>Driver_コンデンサの異常充電</value>
+  </data>
+  <data name="alarm_driver166" xml:space="preserve">
+    <value>Driver_ドライバとモーターの絶対位置座標が一致しない</value>
+  </data>
+  <data name="alarm_driver863" xml:space="preserve">
+    <value>Driver_緊急停止_減速</value>
+  </data>
+  <data name="alarm_driver1058" xml:space="preserve">
+    <value>Driver_制御電源障害により書き込みエラーが発生する</value>
+  </data>
+  <data name="alarm_driver1313" xml:space="preserve">
+    <value>Driver_異常な柔軟性補償パラメータ</value>
+  </data>
+  <data name="alarm_driver3121" xml:space="preserve">
+    <value>Driver_モーター電源断線検出</value>
+  </data>
+  <data name="alarm_driver3291" xml:space="preserve">
+    <value>Driver_ドライバーモデルコード異常</value>
+  </data>
+  <data name="alarm_common0" xml:space="preserve">
+    <value>酸液の液位が低すぎます。</value>
+  </data>
+  <data name="alarm_common1" xml:space="preserve">
+    <value>Buf.Aの液位が低すぎます</value>
+  </data>
+  <data name="alarm_common2" xml:space="preserve">
+    <value>Buf.Bの液位が低すぎます</value>
+  </data>
+  <data name="alarm_common3" xml:space="preserve">
+    <value>気圧の異常</value>
+  </data>
+  <data name="dialog_maintain80" xml:space="preserve">
+    <value>状態は良好です。電極の校正槽内の位置がずれていないか確認してください。</value>
+  </data>
+  <data name="dialog_maintain70" xml:space="preserve">
+    <value>状態はまずまずです。標準液の測定値が十分かつ正確か確認してください。</value>
+  </data>
+  <data name="dialog_maintain60" xml:space="preserve">
+    <value>関連エンジニアに連絡し、電極のKCLが十分か確認してください。</value>
+  </data>
+  <data name="dialog_maintain30" xml:space="preserve">
+    <value>速やかに電極を交換してください。</value>
+  </data>
+  <data name="dialog_electrode1" xml:space="preserve">
+    <value>でんきょく#1</value>
+  </data>
+  <data name="dialog_electrode2" xml:space="preserve">
+    <value>でんきょく#2</value>
+  </data>
+  <data name="dashboard_endurance" xml:space="preserve">
+    <value>持続力</value>
+  </data>
+  <data name="field_hf" xml:space="preserve">
+    <value>HF</value>
+  </data>
+  <data name="field_nh" xml:space="preserve">
+    <value>NH</value>
+  </data>
+  <data name="field_cucmp" xml:space="preserve">
+    <value>CMP</value>
+  </data>
+  <data name="field_cmp" xml:space="preserve">
+    <value>Cu_CMP</value>
+  </data>
+  <data name="field_bio" xml:space="preserve">
+    <value>Biology</value>
+  </data>
+  <data name="field_aw" xml:space="preserve">
+    <value>AW</value>
+  </data>
+  <data name="field_lsr" xml:space="preserve">
+    <value>LSR</value>
+  </data>
+  <data name="field_pure" xml:space="preserve">
+    <value>Pure Water</value>
+  </data>
+  <data name="nav_ip_url" xml:space="preserve">
+    <value>IPアドレスの設定</value>
+  </data>
+  <data name="dashboard_remaindays" xml:space="preserve">
+    <value>残り日数</value>
+  </data>
+</root>

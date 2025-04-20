@@ -1,0 +1,143 @@
+@page "/login"
+@using System.IdentityModel.Tokens.Jwt
+@using System.Security.Claims
+
+@using Blazored.LocalStorage
+@using Newtonsoft.Json;
+@using Microsoft.AspNetCore.Components.Authorization
+
+@inject IAppService AppService;
+@inject AuthenticationStateProvider authStateProvider
+@inject NavigationManager NavManager;
+@inject TouchKeyboard touchKeyboard
+@inject DevicesDataModel devicesDataModel
+@inject IStringLocalizer<MyStrings> localizer
+@inject ILocalStorageService _localStorage
+@implements IDisposable
+
+<div class="container">
+    <EditForm Model="@loginModel" OnValidSubmit="Submit">
+        <DataAnnotationsValidator />
+        <h3 class="text-center">@localizer[StringDescriptionModel.account_login]</h3><br />
+        <div class="form-group">
+            <label>@localizer[StringDescriptionModel.account_email_address]</label>
+            <input type="email" @bind-value="loginModel.UserName" class="form-control" placeholder=@localizer[StringDescriptionModel.account_ent_email_address]>
+            <ValidationMessage For="@(()=> loginModel.UserName)" />
+        </div>
+        <div class="mt-2 form-group">
+            <label>@localizer[StringDescriptionModel.account_password]</label>
+            <input type="password" @bind-value="loginModel.Password" class="form-control" placeholder=@localizer[StringDescriptionModel.account_ent_password]>
+            <ValidationMessage For="@(()=> loginModel.Password)" />
+        </div>
+        <div class="mt-4 text-secondary">
+            <NavLink class="content-text" style="text-decoration:none;" href="forgotPassword">
+                <span>@localizer[StringDescriptionModel.account_forgot_password]</span>
+            </NavLink>
+        </div>
+        <div class="text-center mt-4">
+            <button class="btn btn-primary w-100" type="submit">
+                @if (!string.IsNullOrEmpty(_spinnerClass))
+                {
+                    <span class="@_spinnerClass" role="status" aria-hidden="true"></span>
+                }
+                <span>@localizer[StringDescriptionModel.account_login]</span>
+            </button>
+        </div>
+        <div class="mt-4 text-center text-secondary">
+            <NavLink class="content-text" style="text-decoration:none" href="registration">
+                <span>@localizer[StringDescriptionModel.account_create_account]</span>
+            </NavLink>
+        </div>
+        <br />
+    </EditForm>
+</div>
+    
+
+
+@code {
+
+    LoginModel loginModel = new();
+
+    private string _spinnerClass = "";
+
+    public static event Func<Task>? flagFunc;
+
+    private static char[] charArray = new char[16];
+    private static bool[] alarmSendRequestFromPLC = new bool[16];
+    private static ushort alarmSendRequestFromDriver;
+
+    protected override void OnInitialized()
+    {
+        MainLayout.OnLanguageChange += StateHasChanged;
+    }
+    
+    private async void Submit()
+    {
+
+        _spinnerClass = "spinner-border spinner-border-sm";
+        var response = await AppService.AuthenticateUser(loginModel);
+
+        if (response.IsSuccess)
+        {
+            var tokenResponse = JsonConvert.DeserializeObject<AuthenticateRequestAndResponse>(response.Content.ToString());
+            var handler = new JwtSecurityTokenHandler();
+            var jsontoken = handler.ReadToken(tokenResponse.AccessToken) as JwtSecurityToken;
+
+            string userID = jsontoken.Claims.FirstOrDefault(f => f.Type == JwtRegisteredClaimNames.NameId).Value;
+            string name = jsontoken.Claims.FirstOrDefault(f => f.Type == JwtRegisteredClaimNames.UniqueName).Value;
+            string userAvatar = jsontoken.Claims.FirstOrDefault(f => f.Type == "UserAvatar").Value;
+            string userRole = jsontoken.Claims.FirstOrDefault(f => f.Type == "role").Value;
+            string email = loginModel.UserName;
+
+            DateTime refreshTokenExpiry = Convert.ToDateTime(tokenResponse.RefreshTokenExpiry);
+            var timer = new System.Timers.Timer(1000);
+            MainLayout.disposeTimer += (() => timer.Dispose());
+            timer.Elapsed += async (sender, e) =>
+            {
+                DateTime dateTimeNow = DateTime.Now;
+                if (refreshTokenExpiry < dateTimeNow)
+                {
+                    await flagFunc.Invoke();
+                    timer.Stop();
+                }
+            };
+            // 启动定时器
+            timer.Start();
+
+            var userBasicDetail = new UserBasicDetail
+                {
+                    Email = email,
+                    Name = name,
+                    AccessToken = tokenResponse.AccessToken,
+                    RefreshToken = tokenResponse.RefreshToken,
+                    UserAvatar = !string.IsNullOrWhiteSpace(userAvatar) ? $"{Setting.BaseUrl}/{userAvatar}" : "",
+                    UserID = userID,
+                    Role = userRole
+                };
+
+            if (userBasicDetail != null)
+            {
+                var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
+                await customAuthStateProvider.UpdateAuthenticationState(userBasicDetail);
+            }
+
+            string userBasicInfoStr = JsonConvert.SerializeObject(userBasicDetail);
+            await _localStorage.SetItemAsync(nameof(Setting.UserBasicDetail), userBasicInfoStr);
+            Setting.UserBasicDetail = userBasicDetail;
+
+            NavManager.NavigateTo("/dashboard");
+        }
+        else
+        {
+      //      await App.Current.MainPage.DisplayAlert("Oops", "Invalid username or password", "OK");
+        }
+
+        _spinnerClass = "";
+        this.StateHasChanged();
+    }
+
+    void IDisposable.Dispose()
+    {
+        MainLayout.OnLanguageChange -= StateHasChanged;
+    }
+}

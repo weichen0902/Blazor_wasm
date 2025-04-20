@@ -1,0 +1,150 @@
+﻿@using Syncfusion.Blazor.CircularGauge
+@using Syncfusion.Blazor.DropDowns
+
+@inject DevicesDataModel devicesDataModel
+@inject IDataService dataService
+@inject GetAllCalData getAllCalData
+@inject IStringLocalizer<MyStrings> localizer
+@implements IDisposable
+
+@* <input type="text" @bind-value="PointerValues1"/> *@
+<CircularGaugeAxes>
+    <CircularGaugeAxis StartAngle="220" EndAngle="140" Radius="90%" Minimum="0" Maximum="100">
+        <CircularGaugeAxisLineStyle Width="0" />
+        <CircularGaugeAxisLabelStyle Position="Syncfusion.Blazor.CircularGauge.Position.Outside" Offset="-5" AutoAngle="true">
+            <CircularGaugeAxisLabelFont Size="0px" FontFamily="inherit" />
+        </CircularGaugeAxisLabelStyle>
+        <CircularGaugeAxisMajorTicks Height="0" />
+        <CircularGaugeAxisMinorTicks Height="0" />
+        <CircularGaugePointers>
+            @for (int i = 0; i < PointerValues; i++)
+            {
+                if (PointerValues >= 0 && PointerValues < 50)
+                {
+                    <CircularGaugePointer Value="@i" Color="@redToOrange[i]" Radius="80%"
+                    MarkerWidth="38" MarkerHeight="3"
+                    Type="PointerType.Marker" MarkerShape="GaugeShape.Rectangle">
+                        <CircularGaugePointerAnimation Enable="false"></CircularGaugePointerAnimation>
+                    </CircularGaugePointer>
+                }
+                else if (PointerValues >= 50 && PointerValues < 60)
+                {
+                    <CircularGaugePointer Value="@i" Color="@orangeToGreen[i]" Radius="80%"
+                    MarkerWidth="38" MarkerHeight="3"
+                    Type="PointerType.Marker" MarkerShape="GaugeShape.Rectangle">
+                        <CircularGaugePointerAnimation Enable="false"></CircularGaugePointerAnimation>
+                    </CircularGaugePointer>
+                }
+                else if (PointerValues >= 60 && PointerValues < 80)
+                {
+                    <CircularGaugePointer Value="@i" Color="@greenToBlue[i]" Radius="80%"
+                    MarkerWidth="38" MarkerHeight="3"
+                    Type="PointerType.Marker" MarkerShape="GaugeShape.Rectangle">
+                        <CircularGaugePointerAnimation Enable="false"></CircularGaugePointerAnimation>
+                    </CircularGaugePointer>
+                }
+                else
+                {
+                    <CircularGaugePointer Value="@i" Color="@blueToPurple[i]" Radius="80%"
+                    MarkerWidth="38" MarkerHeight="3"
+                    Type="PointerType.Marker" MarkerShape="GaugeShape.Rectangle">
+                        <CircularGaugePointerAnimation Enable="false"></CircularGaugePointerAnimation>
+                    </CircularGaugePointer>
+                }
+
+            }
+        </CircularGaugePointers>
+        <CircularGaugeRanges>
+            <CircularGaugeRange Start="0" End="100" StartWidth="38" EndWidth="38" Color="#f6f7f9" Radius="98%"></CircularGaugeRange>
+        </CircularGaugeRanges>
+        <CircularGaugeAnnotations>           
+            <CircularGaugeAnnotation Angle="@GaugeSixAngle" ZIndex="1" Radius="@GaugeSixRadius">
+                <ContentTemplate>
+                    <div class="gaugeSixFirstText" style="font-size:20px;">@PointerValues % <br /> <div style="font-family:inherit"> @localizer[StringDescriptionModel.dashboard_endurance] </div> </div>
+                </ContentTemplate>
+            </CircularGaugeAnnotation>           
+        </CircularGaugeAnnotations>
+    </CircularGaugeAxis>
+</CircularGaugeAxes>
+
+@code {
+    public double GaugeSixAngle = 76;
+    public string GaugeSixRadius = "10%";
+    private double PointerValues;
+
+    private double hbmZero { get; set; }
+    private double hbmSlope { get; set; }
+
+    public void NotifyMaintainMsg(string str, double value) => onMaintainMsg?.Invoke(str, value);
+    public static event Action<string, double>? onMaintainMsg;
+
+    // private int elapsedDays, remainDays, totalDays;
+
+    protected override async void OnInitialized()
+    {
+        MainLayout.OnFieldChange += UpdateRelay;
+        devicesDataModel.OnCalStateChange += UpdateRelay;
+        Blazor_wasm.Pages.Index.onMaintain1Msg += PublishMaintainMsg;
+
+        Update(MainLayout.dropDownFieldBindValue);
+    }
+
+    public void UpdateRelay() => Update(MainLayout.dropDownFieldBindValue);
+
+    private async void Update(string factor)
+    {
+        // for (int i = 0; i < MainLayout.waterFieldRate.Length; i++)
+        // {
+        //     if (MainLayout.dropDownFieldBindValue == MainLayout.waterFieldRate[i])
+        //     {
+        //         var rate = double.Parse(MainLayout.waterFieldRate[i]);
+        //         totalDays = (int)(420 - (285 * (1 - rate) / 0.2));
+        //         remainDays = totalDays - elapsedDays;
+        //         break;
+        //     }            
+        // }
+
+        if (DataService.modbusResponseStatus == true)
+        {
+            hbmZero = (double)devicesDataModel[0, "hbmZero"];
+            hbmSlope = (double)devicesDataModel[0, "hbmSlope"];
+
+            var slopePercentage = Math.Round((Math.Abs(hbmSlope - (-59.16)) / 59.16) * 100 * 0.5);
+            var zeroPercentage = Math.Round(Math.Abs(hbmZero) * 0.05);
+
+            PointerValues = Math.Round((100 - (zeroPercentage + slopePercentage)) * Convert.ToDouble(factor), 1);
+
+            PublishMaintainMsg();
+
+            StateHasChanged();
+        }       
+    }
+
+	public void PublishMaintainMsg()
+	{
+        if (PointerValues <= 100 && PointerValues > 80)
+        {
+            NotifyMaintainMsg($"{localizer[StringDescriptionModel.dialog_electrode1]}_{localizer[StringDescriptionModel.dashboard_endurance]} {PointerValues}%, {localizer[StringDescriptionModel.dialog_maintain80]}", PointerValues);
+        }
+        else if (PointerValues <= 80 && PointerValues > 60)
+        {
+            NotifyMaintainMsg($"{localizer[StringDescriptionModel.dialog_electrode1]}_{localizer[StringDescriptionModel.dashboard_endurance]} {PointerValues}%, {localizer[StringDescriptionModel.dialog_maintain70]}", PointerValues);             
+            
+        }
+        else if (PointerValues <= 60 && PointerValues > 50)
+        {
+            NotifyMaintainMsg($"{localizer[StringDescriptionModel.dialog_electrode1]}_{localizer[StringDescriptionModel.dashboard_endurance]} {PointerValues}%, {localizer[StringDescriptionModel.dialog_maintain60]}", PointerValues);
+        }
+        else
+        {
+            NotifyMaintainMsg($"{localizer[StringDescriptionModel.dialog_electrode1]}_{localizer[StringDescriptionModel.dashboard_endurance]} {PointerValues}%, {localizer[StringDescriptionModel.dialog_maintain30]}", PointerValues);
+        }
+	}
+
+    void IDisposable.Dispose()
+    {
+        MainLayout.OnFieldChange -= UpdateRelay;
+        devicesDataModel.OnCalStateChange -= UpdateRelay;
+        Blazor_wasm.Pages.Index.onMaintain1Msg -= PublishMaintainMsg;
+    }
+}

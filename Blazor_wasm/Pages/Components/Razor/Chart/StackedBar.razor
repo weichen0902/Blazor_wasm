@@ -1,0 +1,58 @@
+﻿@inject DevicesDataModel devicesDataModel
+@inject NavigationManager NavigationManager
+
+<SfChart Title="Comparison of Calibration Counts between HBM-100D Devices" Width="@Width" Theme="@Theme">
+    <ChartArea><ChartAreaBorder Width="0"></ChartAreaBorder></ChartArea>
+    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category">
+        <ChartAxisMajorGridLines Width="0"></ChartAxisMajorGridLines>
+        <ChartAxisMajorTickLines Width="0"></ChartAxisMajorTickLines>
+    </ChartPrimaryXAxis>
+    <ChartPrimaryYAxis LabelFormat="{value} times" EdgeLabelPlacement="EdgeLabelPlacement.Shift">
+        <ChartAxisMajorTickLines Width="0"></ChartAxisMajorTickLines>
+        <ChartAxisLineStyle Width="0"></ChartAxisLineStyle>
+    </ChartPrimaryYAxis>
+    <ChartSeriesCollection>
+        <ChartSeries ColumnWidth="0.8" DataSource="@ChartPoints" XName="DeviceName" YName="SuccessCounts" Width="2" Name="SuccessCounts" Type="ChartSeriesType.StackingBar" ColumnSpacing="0.3">
+            <ChartSeriesBorder Width="1" Color="#ffffff"></ChartSeriesBorder>
+        </ChartSeries>
+        <ChartSeries ColumnWidth="0.8" DataSource="@ChartPoints" XName="DeviceName" YName="FailCounts" Width="2" Name="FailCounts" Type="ChartSeriesType.StackingBar" ColumnSpacing="0.3">
+            <ChartSeriesBorder Width="1" Color="#ffffff"></ChartSeriesBorder>
+        </ChartSeries>
+        <ChartSeries ColumnWidth="0.5" DataSource="@ChartPoints" XName="DeviceName" YName="TotalCounts" Width="2" Name="TotalCounts" Type="ChartSeriesType.Bar" ColumnSpacing="0.3" >
+            <ChartSeriesBorder Width="1" Color="#ffffff"></ChartSeriesBorder>
+        </ChartSeries>
+    </ChartSeriesCollection>
+    <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
+    <ChartLegendSettings Visible="true" EnableHighlight="true"></ChartLegendSettings>
+</SfChart>
+@code {
+
+    private Syncfusion.Blazor.Theme Theme { get; set; }
+    public string Width { get; set; } = "100%";
+    List<StackedBarChartData> ChartPoints{ get; set; }
+
+    protected override void OnInitialized()
+    {     
+        MainLayout.OnLanguageChange += StateHasChanged;
+        devicesDataModel.OnStateChange += Update;
+        devicesDataModel.OnStateChange += StateHasChanged;
+        Update();
+    }
+
+    private void Update()
+    {
+        ChartPoints = new List<StackedBarChartData>
+        {
+            new StackedBarChartData { DeviceName = "HBM-100D-2", TotalCounts = (ushort)devicesDataModel[1, "calSuccessCounts"] + (ushort)devicesDataModel[1, "calFailCounts"], SuccessCounts = (ushort)devicesDataModel[1, "calSuccessCounts"], FailCounts = (ushort)devicesDataModel[1, "calFailCounts"]},
+            new StackedBarChartData { DeviceName = "HBM-100D-1", TotalCounts = (ushort)devicesDataModel[0, "calSuccessCounts"] + (ushort)devicesDataModel[0, "calFailCounts"], SuccessCounts = (ushort)devicesDataModel[0, "calSuccessCounts"], FailCounts = (ushort)devicesDataModel[0, "calFailCounts"]},
+        };
+    }
+    
+    public class StackedBarChartData
+    {
+        public string DeviceName { get; set; }
+        public int TotalCounts { get; set; }
+        public ushort SuccessCounts { get; set; }
+        public ushort FailCounts { get; set; }
+    }
+}

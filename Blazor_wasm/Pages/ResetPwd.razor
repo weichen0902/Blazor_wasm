@@ -1,0 +1,55 @@
+﻿@page "/resetPassword"
+
+@inject IAppService AppService;
+@inject IStringLocalizer<MyStrings> localizer
+@implements IDisposable
+
+<h3>@localizer[StringDescriptionModel.account_reset_password]</h3>
+
+<EditForm Model="@AppService.resetPasswordModel" OnValidSubmit="Submit">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label>@localizer[StringDescriptionModel.account_ent_new_password]</label>
+        <input type="password" @bind-value="AppService.resetPasswordModel.Password" class="form-control" placeholder=@localizer[StringDescriptionModel.account_ent_new_password]>
+        <ValidationMessage For="@(()=> AppService.resetPasswordModel.Password)" />
+    </div>
+    <div class="mt-2 form-group">
+        <label>@localizer[StringDescriptionModel.account_password_again]</label>
+        <input type="password" @bind-value="AppService.resetPasswordModel.ConfirmPassword" class="form-control" placeholder=@localizer[StringDescriptionModel.account_ent_password]>
+        <ValidationMessage For="@(()=> AppService.resetPasswordModel.ConfirmPassword)" />
+    </div>
+    <div class="text-center mt-2">
+        <button class="btn btn-primary" type="submit">
+            <span class="@_spinnerClass" role="status" aria-hidden="true"></span>
+            @localizer[StringDescriptionModel.account_submit]
+        </button>
+    </div>
+</EditForm>
+
+@code {
+    private string _spinnerClass = "";
+
+    protected override void OnInitialized()
+    {
+        MainLayout.OnLanguageChange += StateHasChanged;
+    }
+
+    private async void Submit()
+    {
+        var response = await AppService.ResetPassword(AppService.resetPasswordModel);
+        if (response.IsSuccess)
+        {
+        //    await App.Current.MainPage.DisplayAlert(@localizer[StringDescriptionModel.message_success], @localizer[StringDescriptionModel.message_password_changed], "OK");
+        }
+        else
+        {
+        //    await App.Current.MainPage.DisplayAlert(@localizer[StringDescriptionModel.message_error], @localizer[StringDescriptionModel.message_password_change_failed], "OK");
+        }
+        
+    }
+
+    void IDisposable.Dispose()
+    {
+        MainLayout.OnLanguageChange -= StateHasChanged;
+    }
+}

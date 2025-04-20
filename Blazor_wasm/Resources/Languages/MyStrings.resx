@@ -1,0 +1,813 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="account_login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="account_logout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="charts" xml:space="preserve">
+    <value>&#x8;Charts</value>
+  </data>
+  <data name="cal_datalog" xml:space="preserve">
+    <value>Calibration Datalog</value>
+  </data>
+  <data name="proccess_setting" xml:space="preserve">
+    <value>Proccess Setting</value>
+  </data>
+  <data name="schedule" xml:space="preserve">
+    <value>Schedule</value>
+  </data>
+  <data name="account_modify_account" xml:space="preserve">
+    <value>Modify Account</value>
+  </data>
+  <data name="dashboard_elec_life" xml:space="preserve">
+    <value>Electrode endurance</value>
+  </data>
+  <data name="dashboard_pH_live_chart" xml:space="preserve">
+    <value>Real Time Trend Chart of Measurement</value>
+  </data>
+  <data name="dashboard_alarm_datalog" xml:space="preserve">
+    <value>Alarm Datalog</value>
+  </data>
+  <data name="account_email_address" xml:space="preserve">
+    <value>Email Address</value>
+  </data>
+  <data name="account_password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="account_create_account" xml:space="preserve">
+    <value>Create a new account</value>
+  </data>
+  <data name="account_forgot_password" xml:space="preserve">
+    <value>Forgot the password</value>
+  </data>
+  <data name="dashboard_clear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="modal_stop" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="modal_cylinder" xml:space="preserve">
+    <value>Cylinder</value>
+  </data>
+  <data name="modal_unlock" xml:space="preserve">
+    <value>Hoister Unlock</value>
+  </data>
+  <data name="home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="live_chart" xml:space="preserve">
+    <value>Live Chart</value>
+  </data>
+  <data name="history_chart" xml:space="preserve">
+    <value>History Chart</value>
+  </data>
+  <data name="trendline_generation" xml:space="preserve">
+    <value>Trendline Generation</value>
+  </data>
+  <data name="export_datalog" xml:space="preserve">
+    <value>Export Datalog</value>
+  </data>
+  <data name="clear_datalog" xml:space="preserve">
+    <value>Clear Datalog</value>
+  </data>
+  <data name="d1_cal_datalogger" xml:space="preserve">
+    <value>&#x8;D1_Cal.Datalog</value>
+  </data>
+  <data name="d2_cal_datalogger" xml:space="preserve">
+    <value>D2_Cal.Datalog</value>
+  </data>
+  <data name="washing_step_setting" xml:space="preserve">
+    <value>Washing Step Setting</value>
+  </data>
+  <data name="total_steps" xml:space="preserve">
+    <value>Total Steps</value>
+  </data>
+  <data name="step" xml:space="preserve">
+    <value>Step</value>
+  </data>
+  <data name="select_total_steps" xml:space="preserve">
+    <value>Select Total Steps</value>
+  </data>
+  <data name="select_step_and_set_time" xml:space="preserve">
+    <value>Select Step and Set Time</value>
+  </data>
+  <data name="step_number_setting" xml:space="preserve">
+    <value>Step Setting</value>
+  </data>
+  <data name="set_cleaning_content" xml:space="preserve">
+    <value>Set Cleaning Content</value>
+  </data>
+  <data name="language_selection" xml:space="preserve">
+    <value>Language Selection</value>
+  </data>
+  <data name="set_position" xml:space="preserve">
+    <value>Position Setting</value>
+  </data>
+  <data name="current_position" xml:space="preserve">
+    <value>Current Posistion</value>
+  </data>
+  <data name="account_ent_old_password" xml:space="preserve">
+    <value>Enter your old password</value>
+  </data>
+  <data name="account_submit" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="message_check_email" xml:space="preserve">
+    <value>Please check your email for the verification code and enter it to verify.</value>
+  </data>
+  <data name="message_error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="message_enter_email" xml:space="preserve">
+    <value>Please enter the email.</value>
+  </data>
+  <data name="message_verification_code_invalid" xml:space="preserve">
+    <value>The verification code is invalid.</value>
+  </data>
+  <data name="modal_m_reag" xml:space="preserve">
+    <value>M.REAG</value>
+  </data>
+  <data name="modal_m_bufa" xml:space="preserve">
+    <value>M.BufA</value>
+  </data>
+  <data name="modal_m_bufb" xml:space="preserve">
+    <value>M.BufB</value>
+  </data>
+  <data name="modal_a_wash" xml:space="preserve">
+    <value>A.Wash</value>
+  </data>
+  <data name="modal_a_cal" xml:space="preserve">
+    <value>A.Cal</value>
+  </data>
+  <data name="modal_back_to_original" xml:space="preserve">
+    <value>Back to original</value>
+  </data>
+  <data name="modal_m_wash" xml:space="preserve">
+    <value>M.Wash</value>
+  </data>
+  <data name="account_select_account" xml:space="preserve">
+    <value>Select the account</value>
+  </data>
+  <data name="modal_close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="modal_delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="modal_ent_select_language" xml:space="preserve">
+    <value>Select a language</value>
+  </data>
+  <data name="account_ent_email_address" xml:space="preserve">
+    <value>Enter your email address</value>
+  </data>
+  <data name="account_ent_password" xml:space="preserve">
+    <value>Enter your password</value>
+  </data>
+  <data name="modal_language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="message_success" xml:space="preserve">
+    <value>Success</value>
+  </data>
+  <data name="account_ent_verification_code" xml:space="preserve">
+    <value>Enter the verification code</value>
+  </data>
+  <data name="account_registration" xml:space="preserve">
+    <value>Registration</value>
+  </data>
+  <data name="account_first_name" xml:space="preserve">
+    <value>First Name</value>
+  </data>
+  <data name="account_last_name" xml:space="preserve">
+    <value>Last Name</value>
+  </data>
+  <data name="account_ent_first_name" xml:space="preserve">
+    <value>Enter the first name</value>
+  </data>
+  <data name="account_ent_last_name" xml:space="preserve">
+    <value>Enter the last name</value>
+  </data>
+  <data name="account_already_account" xml:space="preserve">
+    <value>Already have account</value>
+  </data>
+  <data name="account_password_again" xml:space="preserve">
+    <value>Enter the password again</value>
+  </data>
+  <data name="account_delete_account" xml:space="preserve">
+    <value>Delete Account</value>
+  </data>
+  <data name="account_reset_password" xml:space="preserve">
+    <value>Reset Password</value>
+  </data>
+  <data name="account_new_password" xml:space="preserve">
+    <value>New Password</value>
+  </data>
+  <data name="account_ent_new_password" xml:space="preserve">
+    <value>Enter the new password</value>
+  </data>
+  <data name="message_password_changed" xml:space="preserve">
+    <value>The password has been changed</value>
+  </data>
+  <data name="message_password_change_failed" xml:space="preserve">
+    <value>Password change failed</value>
+  </data>
+  <data name="account_old_password" xml:space="preserve">
+    <value>Old Password</value>
+  </data>
+  <data name="btn_expand" xml:space="preserve">
+    <value>Expand</value>
+  </data>
+  <data name="btn_collapse" xml:space="preserve">
+    <value>Collapse</value>
+  </data>
+  <data name="btn_goto_modify" xml:space="preserve">
+    <value>Go to modify</value>
+  </data>
+  <data name="lab_change_password" xml:space="preserve">
+    <value>Click the expand button to change the password</value>
+  </data>
+  <data name="schedule_system" xml:space="preserve">
+    <value>System</value>
+  </data>
+  <data name="schedule_ent_select_system" xml:space="preserve">
+    <value>Select a system</value>
+  </data>
+  <data name="schedule_subject" xml:space="preserve">
+    <value>Subject</value>
+  </data>
+  <data name="schedule_ent_select_subject" xml:space="preserve">
+    <value>Select a subject</value>
+  </data>
+  <data name="schedule_start_time" xml:space="preserve">
+    <value>Start Time</value>
+  </data>
+  <data name="schedule_end_time" xml:space="preserve">
+    <value>End Time</value>
+  </data>
+  <data name="schedule_monthly" xml:space="preserve">
+    <value>Monthly</value>
+  </data>
+  <data name="schedule_weekly" xml:space="preserve">
+    <value>Weekly</value>
+  </data>
+  <data name="schedule_daily" xml:space="preserve">
+    <value>Daily</value>
+  </data>
+  <data name="schedule_description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="modal_cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="modal_confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="schedule_frequency" xml:space="preserve">
+    <value>Frequency</value>
+  </data>
+  <data name="schedule_wash" xml:space="preserve">
+    <value>Wash</value>
+  </data>
+  <data name="schedule_calibration" xml:space="preserve">
+    <value>Calibration</value>
+  </data>
+  <data name="schedule_export" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="schedule_modal_title" xml:space="preserve">
+    <value>Event Setting</value>
+  </data>
+  <data name="calibration_step_setting" xml:space="preserve">
+    <value>Cal. Step Setting</value>
+  </data>
+  <data name="history_start_date" xml:space="preserve">
+    <value>Start Date</value>
+  </data>
+  <data name="history_end_date" xml:space="preserve">
+    <value>End Date</value>
+  </data>
+  <data name="alarm_active" xml:space="preserve">
+    <value>In Alarm</value>
+  </data>
+  <data name="alarm_inactive" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="calgrid_export" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="calgrid_clear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="calgrid_upload" xml:space="preserve">
+    <value>File Upload</value>
+  </data>
+  <data name="account_back_login" xml:space="preserve">
+    <value>Back to login</value>
+  </data>
+  <data name="step_number" xml:space="preserve">
+    <value>Step</value>
+  </data>
+  <data name="wash" xml:space="preserve">
+    <value>Wash</value>
+  </data>
+  <data name="reag" xml:space="preserve">
+    <value>REAG.</value>
+  </data>
+  <data name="buf_a" xml:space="preserve">
+    <value>BUF.A</value>
+  </data>
+  <data name="buf_b" xml:space="preserve">
+    <value>BUF.B</value>
+  </data>
+  <data name="show_history_alarm" xml:space="preserve">
+    <value>Show history alarm</value>
+  </data>
+  <data name="show_inalarm" xml:space="preserve">
+    <value>Show InAlarm</value>
+  </data>
+  <data name="field_selection" xml:space="preserve">
+    <value>Field Selection</value>
+  </data>
+  <data name="alarm_system0" xml:space="preserve">
+    <value>System_Servo communication abnormality</value>
+  </data>
+  <data name="alarm_system1" xml:space="preserve">
+    <value>System_HBM communication abnormality</value>
+  </data>
+  <data name="alarm_system2" xml:space="preserve">
+    <value>System_Abnormal clean water pressure</value>
+  </data>
+  <data name="alarm_system3" xml:space="preserve">
+    <value>System_Acid pressure abnormal</value>
+  </data>
+  <data name="alarm_system4" xml:space="preserve">
+    <value>System_Buf.A pressure is abnormal</value>
+  </data>
+  <data name="alarm_system5" xml:space="preserve">
+    <value>Abnormal pressure in System_Buf.B</value>
+  </data>
+  <data name="alarm_system6" xml:space="preserve">
+    <value>System_Abnormal opening and closing of pneumatic cylinder</value>
+  </data>
+  <data name="alarm_system7" xml:space="preserve">
+    <value>System_Windspan optical fiber signal abnormality</value>
+  </data>
+  <data name="alarm_system8" xml:space="preserve">
+    <value>System_Electrode overwinding abnormality</value>
+  </data>
+  <data name="alarm_system9" xml:space="preserve">
+    <value>System_E_00</value>
+  </data>
+  <data name="alarm_system10" xml:space="preserve">
+    <value>System_E_01</value>
+  </data>
+  <data name="alarm_system11" xml:space="preserve">
+    <value>System_E_02</value>
+  </data>
+  <data name="alarm_system12" xml:space="preserve">
+    <value>System_E_03</value>
+  </data>
+  <data name="alarm_system13" xml:space="preserve">
+    <value>System_E_04</value>
+  </data>
+  <data name="alarm_system14" xml:space="preserve">
+    <value>System_E_05</value>
+  </data>
+  <data name="alarm_system15" xml:space="preserve">
+    <value>System_E_31</value>
+  </data>
+  <data name="alarm_driver1" xml:space="preserve">
+    <value>Driver_Overcurrent</value>
+  </data>
+  <data name="alarm_driver2" xml:space="preserve">
+    <value>Driver_Overvoltage</value>
+  </data>
+  <data name="alarm_driver3" xml:space="preserve">
+    <value>Driver_Low Voltage</value>
+  </data>
+  <data name="alarm_driver4" xml:space="preserve">
+    <value>Driver_Motor matching abnormality</value>
+  </data>
+  <data name="alarm_driver5" xml:space="preserve">
+    <value>Driver_Regeneration Error</value>
+  </data>
+  <data name="alarm_driver6" xml:space="preserve">
+    <value>Driver_Overload</value>
+  </data>
+  <data name="alarm_driver7" xml:space="preserve">
+    <value>Driver_Speed ​​control error is too large</value>
+  </data>
+  <data name="alarm_driver8" xml:space="preserve">
+    <value>Driver_Abnormal pulse control command</value>
+  </data>
+  <data name="alarm_driver9" xml:space="preserve">
+    <value>Driver_Position control error is too large</value>
+  </data>
+  <data name="alarm_driver16" xml:space="preserve">
+    <value>Driver_Abnormal voltage in regeneration state</value>
+  </data>
+  <data name="alarm_driver17" xml:space="preserve">
+    <value>Driver_CN2 communication failed</value>
+  </data>
+  <data name="alarm_driver19" xml:space="preserve">
+    <value>Driver_Emergency Stop</value>
+  </data>
+  <data name="alarm_driver20" xml:space="preserve">
+    <value>Driver_Reverse limit abnormality</value>
+  </data>
+  <data name="alarm_driver21" xml:space="preserve">
+    <value>Driver_Forward limit abnormal</value>
+  </data>
+  <data name="alarm_driver22" xml:space="preserve">
+    <value>Driver_IGBT temperature abnormality</value>
+  </data>
+  <data name="alarm_driver23" xml:space="preserve">
+    <value>Driver_Memory Abnormality</value>
+  </data>
+  <data name="alarm_driver24" xml:space="preserve">
+    <value>Driver_OA and OB output abnormality</value>
+  </data>
+  <data name="alarm_driver32" xml:space="preserve">
+    <value>Driver_Serial communication timeout</value>
+  </data>
+  <data name="alarm_driver34" xml:space="preserve">
+    <value>Driver_Main circuit power supply abnormality</value>
+  </data>
+  <data name="alarm_driver35" xml:space="preserve">
+    <value>Driver_Pre-overload warning</value>
+  </data>
+  <data name="alarm_driver36" xml:space="preserve">
+    <value>Driver_Encoder initial magnetic field error</value>
+  </data>
+  <data name="alarm_driver37" xml:space="preserve">
+    <value>Driver_Encoder internal error</value>
+  </data>
+  <data name="alarm_driver38" xml:space="preserve">
+    <value>Driver_Encoder internal data reliability error</value>
+  </data>
+  <data name="alarm_driver39" xml:space="preserve">
+    <value>Driver_Encoder internal reset error</value>
+  </data>
+  <data name="alarm_driver40" xml:space="preserve">
+    <value>Driver_Battery voltage abnormality or encoder internal error</value>
+  </data>
+  <data name="alarm_driver41" xml:space="preserve">
+    <value>Driver_Gray code error</value>
+  </data>
+  <data name="alarm_driver42" xml:space="preserve">
+    <value>Driver_Encoder circle counting error</value>
+  </data>
+  <data name="alarm_driver43" xml:space="preserve">
+    <value>Driver_Motor data abnormal</value>
+  </data>
+  <data name="alarm_driver44" xml:space="preserve">
+    <value>Driver_Driver overload</value>
+  </data>
+  <data name="alarm_driver45" xml:space="preserve">
+    <value>Driver_Anti-blocking protection</value>
+  </data>
+  <data name="alarm_driver48" xml:space="preserve">
+    <value>Driver_Motor Collision Error</value>
+  </data>
+  <data name="alarm_driver49" xml:space="preserve">
+    <value>Driver_Motor power line fault detection</value>
+  </data>
+  <data name="alarm_driver50" xml:space="preserve">
+    <value>Driver_Encoder vibration abnormality</value>
+  </data>
+  <data name="alarm_driver51" xml:space="preserve">
+    <value>Driver_Motor abnormality</value>
+  </data>
+  <data name="alarm_driver52" xml:space="preserve">
+    <value>Driver_Encoder internal communication abnormality</value>
+  </data>
+  <data name="alarm_driver53" xml:space="preserve">
+    <value>Driver_Encoder temperature exceeds protection upper limit</value>
+  </data>
+  <data name="alarm_driver54" xml:space="preserve">
+    <value>Driver_Encoder abnormal alarm status error</value>
+  </data>
+  <data name="alarm_driver66" xml:space="preserve">
+    <value>Driver_The voltage input of analog speed command is too high</value>
+  </data>
+  <data name="alarm_driver68" xml:space="preserve">
+    <value>Driver_Driver function usage warning</value>
+  </data>
+  <data name="alarm_driver69" xml:space="preserve">
+    <value>Driver_Electronic gear ratio setting error</value>
+  </data>
+  <data name="alarm_driver83" xml:space="preserve">
+    <value>Driver_Motor parameter abnormality</value>
+  </data>
+  <data name="alarm_driver86" xml:space="preserve">
+    <value>Driver_Motor speed too high</value>
+  </data>
+  <data name="alarm_driver92" xml:space="preserve">
+    <value>Driver_Motor position feedback abnormality</value>
+  </data>
+  <data name="alarm_driver96" xml:space="preserve">
+    <value>Driver_absolute position lost</value>
+  </data>
+  <data name="alarm_driver97" xml:space="preserve">
+    <value>Driver_Encoder voltage is too low</value>
+  </data>
+  <data name="alarm_driver98" xml:space="preserve">
+    <value>Driver_Absolute Position Turns Overflow_Encoder</value>
+  </data>
+  <data name="alarm_driver100" xml:space="preserve">
+    <value>Driver_Encoder Vibration Warning</value>
+  </data>
+  <data name="alarm_driver102" xml:space="preserve">
+    <value>Driver_Absolute Position Turns Overflow_Driver</value>
+  </data>
+  <data name="alarm_driver103" xml:space="preserve">
+    <value>Driver_Encoder Temperature Warning</value>
+  </data>
+  <data name="alarm_driver104" xml:space="preserve">
+    <value>Driver_Absolute data IO transmission error</value>
+  </data>
+  <data name="alarm_driver105" xml:space="preserve">
+    <value>Driver_Motor type error</value>
+  </data>
+  <data name="alarm_driver107" xml:space="preserve">
+    <value>Driver_The error between the internal coordinates of the driver and the encoder coordinates is too large</value>
+  </data>
+  <data name="alarm_driver108" xml:space="preserve">
+    <value>Driver_Encoder type cannot be recognized</value>
+  </data>
+  <data name="alarm_driver109" xml:space="preserve">
+    <value>Driver_absolute position establishment is not completed</value>
+  </data>
+  <data name="alarm_driver112" xml:space="preserve">
+    <value>Driver_Encoder read and write incomplete warning</value>
+  </data>
+  <data name="alarm_driver113" xml:space="preserve">
+    <value>Driver_Encoder turns error</value>
+  </data>
+  <data name="alarm_driver114" xml:space="preserve">
+    <value>Driver_Encoder Overspeed</value>
+  </data>
+  <data name="alarm_driver115" xml:space="preserve">
+    <value>Driver_Encoder memory error</value>
+  </data>
+  <data name="alarm_driver116" xml:space="preserve">
+    <value>Driver_Encoder single turn absolute position error</value>
+  </data>
+  <data name="alarm_driver117" xml:space="preserve">
+    <value>Driver_Encoder absolute number of revolutions error</value>
+  </data>
+  <data name="alarm_driver121" xml:space="preserve">
+    <value>Driver_Encoder parameter setting is not completed error</value>
+  </data>
+  <data name="alarm_driver122" xml:space="preserve">
+    <value>Driver_Encoder Z phase position lost</value>
+  </data>
+  <data name="alarm_driver123" xml:space="preserve">
+    <value>Driver_Encoder Memory Busy</value>
+  </data>
+  <data name="alarm_driver124" xml:space="preserve">
+    <value>Driver_When the motor speed exceeds 200rpm, clear the absolute position</value>
+  </data>
+  <data name="alarm_driver125" xml:space="preserve">
+    <value>Driver_The motor stops running when the power is turned on again without releasing AL07C</value>
+  </data>
+  <data name="alarm_driver126" xml:space="preserve">
+    <value>Driver_Encoder Clearer Error</value>
+  </data>
+  <data name="alarm_driver127" xml:space="preserve">
+    <value>Driver_Encoder version number is abnormal</value>
+  </data>
+  <data name="alarm_driver131" xml:space="preserve">
+    <value>Driver_Driver output current is too large</value>
+  </data>
+  <data name="alarm_driver133" xml:space="preserve">
+    <value>Driver_Regeneration setting abnormality</value>
+  </data>
+  <data name="alarm_driver134" xml:space="preserve">
+    <value>Driver_Regenerative resistor overload</value>
+  </data>
+  <data name="alarm_driver136" xml:space="preserve">
+    <value>Driver_Driver function usage alarm</value>
+  </data>
+  <data name="alarm_driver137" xml:space="preserve">
+    <value>Driver_Current sensing is disturbed</value>
+  </data>
+  <data name="alarm_driver138" xml:space="preserve">
+    <value>Driver_Automatic gain adjustment command abnormality</value>
+  </data>
+  <data name="alarm_driver139" xml:space="preserve">
+    <value>Driver_Automatic gain adjustment stop time is too short</value>
+  </data>
+  <data name="alarm_driver140" xml:space="preserve">
+    <value>Driver_Automatic gain adjustment inertia estimation abnormality</value>
+  </data>
+  <data name="alarm_driver153" xml:space="preserve">
+    <value>Driver_DSP firmware error</value>
+  </data>
+  <data name="alarm_driver156" xml:space="preserve">
+    <value>Driver_Parameter reset failed</value>
+  </data>
+  <data name="alarm_driver157" xml:space="preserve">
+    <value>Driver_Capacitor charging abnormality</value>
+  </data>
+  <data name="alarm_driver166" xml:space="preserve">
+    <value>Driver_The absolute position coordinates of the driver and the motor do not match</value>
+  </data>
+  <data name="alarm_driver863" xml:space="preserve">
+    <value>Driver_Emergency Stop_Deceleration</value>
+  </data>
+  <data name="alarm_driver1058" xml:space="preserve">
+    <value>Driver_Control power failure caused write failure</value>
+  </data>
+  <data name="alarm_driver1313" xml:space="preserve">
+    <value>Driver_Flexibility compensation parameter abnormality</value>
+  </data>
+  <data name="alarm_driver3121" xml:space="preserve">
+    <value>Driver_ Motor power line disconnection detection</value>
+  </data>
+  <data name="alarm_driver3291" xml:space="preserve">
+    <value>Driver_Driver model code abnormal</value>
+  </data>
+  <data name="alarm_common0" xml:space="preserve">
+    <value>Acid level too low</value>
+  </data>
+  <data name="alarm_common1" xml:space="preserve">
+    <value>Buf.A liquid level is too low</value>
+  </data>
+  <data name="alarm_common2" xml:space="preserve">
+    <value>Buf.B liquid level is too low</value>
+  </data>
+  <data name="alarm_common3" xml:space="preserve">
+    <value>Abnormal air pressure</value>
+  </data>
+  <data name="dialog_maintain80" xml:space="preserve">
+    <value>Condition is good. Please check if the electrode position in the calibration tank is misaligned.</value>
+  </data>
+  <data name="dialog_maintain70" xml:space="preserve">
+    <value>Condition is acceptable. Please check if the standard solution measurement is sufficient and correct.</value>
+  </data>
+  <data name="dialog_maintain60" xml:space="preserve">
+    <value>Please contact the relevant engineer to check if the electrode KCL is sufficient.</value>
+  </data>
+  <data name="dialog_maintain30" xml:space="preserve">
+    <value>Please replace the electrode as soon as possible.</value>
+  </data>
+  <data name="dialog_electrode1" xml:space="preserve">
+    <value>Electrode #1</value>
+  </data>
+  <data name="dialog_electrode2" xml:space="preserve">
+    <value>Electrode #2</value>
+  </data>
+  <data name="dashboard_endurance" xml:space="preserve">
+    <value>Endurance</value>
+  </data>
+  <data name="field_hf" xml:space="preserve">
+    <value>HF</value>
+  </data>
+  <data name="field_nh" xml:space="preserve">
+    <value>NH</value>
+  </data>
+  <data name="field_cucmp" xml:space="preserve">
+    <value>CMP</value>
+  </data>
+  <data name="field_cmp" xml:space="preserve">
+    <value>Cu_CMP</value>
+  </data>
+  <data name="field_bio" xml:space="preserve">
+    <value>Biology</value>
+  </data>
+  <data name="field_aw" xml:space="preserve">
+    <value>AW</value>
+  </data>
+  <data name="field_lsr" xml:space="preserve">
+    <value>LSR</value>
+  </data>
+  <data name="field_pure" xml:space="preserve">
+    <value>Pure Water</value>
+  </data>
+  <data name="nav_ip_url" xml:space="preserve">
+    <value>IP address configuration</value>
+  </data>
+  <data name="dashboard_remaindays" xml:space="preserve">
+    <value>Remaining days</value>
+  </data>
+</root>

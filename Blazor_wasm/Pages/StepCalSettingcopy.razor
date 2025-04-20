@@ -1,0 +1,22 @@
+@page "/stepCalSettingcopy"
+@inject IDataService dataService
+@inject DevicesDataModel devicesDataModel
+@inject TouchKeyboard touchKeyboard
+@inject IStringLocalizer<MyStrings> localizer
+@implements IDisposable
+
+<StepSettingBase 
+    Title="@localizer[StringDescriptionModel.calibration_step_setting]"
+    BaseRegisterAddress="700" />
+
+@code {
+    protected override void OnInitialized()
+    {
+        MainLayout.OnLanguageChange += StateHasChanged;
+    }
+
+    void IDisposable.Dispose()
+    {
+        MainLayout.OnLanguageChange -= StateHasChanged;
+    }
+}

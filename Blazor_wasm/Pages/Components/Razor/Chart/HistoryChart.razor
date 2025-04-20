@@ -1,0 +1,222 @@
+@page "/historyChart"
+
+@using System.Text.Json
+@inject IJSRuntime JSRuntime
+@inject IDataService dataService
+@inject NavigationManager navigationManager
+@inject IStringLocalizer<MyStrings> localizer
+@implements IDisposable
+
+<h1 class="text-center">@localizer[StringDescriptionModel.history_chart]</h1>
+
+<div class="col-lg-12 control-section mt-2">
+    <div class="d-flex align-items-center gap-4">
+        <div class="d-flex align-items-center">
+            <label class="me-2">@localizer[StringDescriptionModel.history_start_date]:</label>
+            <input type="datetime-local" @bind="startDateTime" @onfocusout="@(async () =>
+            {
+                await Task.Delay(100);
+                startUnixTimeStamp = (long)(startDateTime.ToUniversalTime() - new DateTime(1970, 1, 1)).TotalSeconds;
+                await SaveDateTimeToStorage();
+            })" />
+        </div>
+        <div class="d-flex align-items-center">
+            <label class="me-2">@localizer[StringDescriptionModel.history_end_date]:</label>
+            <input type="datetime-local" @bind="endDateTime" @onfocusout="@(async() =>
+            {
+                await Task.Delay(100);
+                endUnixTimeStamp = (long)(endDateTime.ToUniversalTime() - new DateTime(1970, 1, 1)).TotalSeconds;
+                await SaveDateTimeToStorage();
+            })" />
+        </div>
+        <button class="btn btn-primary" @onclick="OnButtonClicked">@localizer[StringDescriptionModel.trendline_generation]</button>
+    </div>
+</div>
+
+<div class="col-lg-12 control-section" style="height:800px; width:100%; position:relative; top:50px;">
+    <Chart @ref="chart" TItem="double?" Type="ChartType.Line">
+        <ChartTrendline @ref="chartTrendline" TItem="double?" />
+    </Chart>
+</div>
+
+@code {
+
+    private int inputNumber;
+    private const int V = 20;
+    private List<RealTimepH> realTimepHList = new List<RealTimepH>();
+    private List<double?>? pH1List;
+    private List<double?>? pH2List;
+
+    private string D1pH = "D1pH";
+    private string D2pH = "D2pH";
+
+    private DateTime startDateTime { get; set; }
+    private DateTime endDateTime { get; set; }
+
+    private long startUnixTimeStamp, endUnixTimeStamp;
+
+
+    private Chart<double?> chart;
+    private ChartTrendline<double?> chartTrendline;
+
+
+    private bool displayTrendChart = false;
+
+    // string[] Labels = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10",  };
+    // List<string> backgroundColors = new List<string> { ChartColor.FromRgba(255, 99, 132, 0.2f), ChartColor.FromRgba(54, 162, 235, 0.2f), ChartColor.FromRgba(255, 206, 86, 0.2f), ChartColor.FromRgba(75, 192, 192, 0.2f), ChartColor.FromRgba(153, 102, 255, 0.2f), ChartColor.FromRgba(255, 159, 64, 0.2f) };
+    // List<string> borderColors = new List<string> { ChartColor.FromRgba(255, 99, 132, 1f), ChartColor.FromRgba(54, 162, 235, 1f), ChartColor.FromRgba(255, 206, 86, 1f), ChartColor.FromRgba(75, 192, 192, 1f), ChartColor.FromRgba(153, 102, 255, 1f), ChartColor.FromRgba(255, 159, 64, 1f) };
+
+    string[] Labels = { "0", "1", };
+    List<string> backgroundColors = new List<string> { ChartColor.FromRgba(255, 99, 132, 0.2f), ChartColor.FromRgba(54, 162, 235, 0.2f)};
+    List<string> borderColors = new List<string> { ChartColor.FromRgba(255, 99, 132, 1f), ChartColor.FromRgba(54, 162, 235, 1f)};
+ 
+ 
+    [Inject]
+    public IJSRuntime JS { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {        
+        MainLayout.OnLanguageChange += StateHasChanged;
+
+        // Try to load saved dates from localStorage
+        var savedStartDate = await JS.InvokeAsync<string>("historyChartInterop.getStartDateTime");
+        var savedEndDate = await JS.InvokeAsync<string>("historyChartInterop.getEndDateTime");
+
+        if (!string.IsNullOrEmpty(savedStartDate) && !string.IsNullOrEmpty(savedEndDate))
+        {
+            startDateTime = DateTime.Parse(savedStartDate);
+            endDateTime = DateTime.Parse(savedEndDate);
+        }
+        else
+        {
+            endDateTime = DateTime.Now;
+            startDateTime = DateTime.Now.AddDays(-7);
+        }
+
+        startUnixTimeStamp = (long)(startDateTime.ToUniversalTime() - new DateTime(1970, 1, 1)).TotalSeconds;
+        endUnixTimeStamp = (long)(endDateTime.ToUniversalTime() - new DateTime(1970, 1, 1)).TotalSeconds;
+    }
+
+    private async Task SaveDateTimeToStorage()
+    {
+        await JS.InvokeVoidAsync("historyChartInterop.saveDateTime", 
+            startDateTime.ToString("o"), 
+            endDateTime.ToString("o"));
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            //   await HandleRedraw(Labels);
+        }
+    }
+
+    private void Navigate()
+    {
+        navigationManager.NavigateTo("/liveChart");
+    }
+
+    async Task OnButtonClicked()
+    {
+        await Task.Delay(100);
+        realTimepHList = await dataService.GetpH(startUnixTimeStamp, endUnixTimeStamp);
+
+        // pH1List = realTimepHList.Select(pH => pH.D1pH).ToList();
+        // pH2List = realTimepHList.Select(pH => pH.D2pH).ToList();
+
+
+        var groupedData1 = realTimepHList
+            .GroupBy(pH => (pH.DateTime.Ticks / TimeSpan.TicksPerMinute) / 5 ) // 每分鐘一組
+            .Select(group => new
+            {
+                DateTime = new DateTime(group.Key * 5 * TimeSpan.TicksPerMinute), // 該組的代表時間
+                AverageValue = group.Average(pH => pH.D1pH) // 該組的平均值
+            })
+            .ToList();
+
+        var groupedData2 = realTimepHList
+            .GroupBy(pH => (pH.DateTime.Ticks / TimeSpan.TicksPerMinute) / 5 ) // 每分鐘一組
+        .Select(group => new
+            {
+            DateTime = new DateTime(group.Key * 5 * TimeSpan.TicksPerMinute), // 該組的代表時間
+                AverageValue = group.Average(pH => pH.D2pH) // 該組的平均值
+            })
+            .ToList();
+
+        pH1List = groupedData1.Select(s => s.AverageValue).ToList();
+        pH2List = groupedData2.Select(s => s.AverageValue).ToList();
+
+        // Labels = realTimepHList.Select(s => s.DateTime.ToString("yyyy/MM/dd HH:mm:ss")).ToArray();
+
+        Labels = groupedData1.Select(g => g.DateTime.ToString("yyyy/MM/dd HH:mm:ss")).ToArray();
+
+        if (pH1List!=null & pH2List!=null)
+        {
+            await HandleRedraw(Labels);
+        }
+    }
+
+    async Task HandleRedraw(string[] stringLabels)
+    {
+        await chart.Clear();
+
+        await chart.AddLabels(stringLabels);
+        await chart.AddDataSet(await GetLineChartDataset1());
+        await chart.AddDataSet(await GetLineChartDataset2());
+
+        await chart.Update();
+
+        // Add the trendline(s) after you have added the datasets and called await chart.Update();
+        // if (trendlinesOn)
+        // {
+        //     // This will add a trendline to the second dataset.
+        //     // If you want to add it to the first dataset, set DatasetIndex = 0 (or don't set it at all as 0 is default)
+        //     var trendlineData = new List<ChartTrendlineData>
+        //     {
+        //         new ChartTrendlineData
+        //         {
+        //             DatasetIndex = 1,
+        //             Width = 10,
+        //             Color = ChartColor.FromRgba( 54, 162, 235, .6f )
+        //         }
+        //     };
+
+        //     await chartTrendline.AddTrendLineOptions(trendlineData);
+        // }
+    }
+
+    async Task<LineChartDataset<double?>> GetLineChartDataset1()
+    {
+        return new LineChartDataset<double?>
+            {
+                Label = "# of randoms",
+                Data = pH1List,
+                BackgroundColor = backgroundColors[0],
+                BorderColor = borderColors[0],
+                Fill = true,
+                PointRadius = 1,
+                BorderDash = new List<int> { }
+                
+            };
+    }
+
+    async Task<LineChartDataset<double?>> GetLineChartDataset2()
+    {
+        return new LineChartDataset<double?>
+            {
+                Label = "# of randoms",
+                Data = pH2List,
+                BackgroundColor = backgroundColors[1],
+                BorderColor = borderColors[1],
+                Fill = true,
+                PointRadius = 1,
+                BorderDash = new List<int> { }
+            };
+    }
+
+    void IDisposable.Dispose()
+    {
+        MainLayout.OnLanguageChange -= StateHasChanged;
+    }
+}

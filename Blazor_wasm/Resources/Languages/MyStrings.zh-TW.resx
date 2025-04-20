@@ -1,0 +1,813 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="account_login" xml:space="preserve">
+    <value>登入</value>
+  </data>
+  <data name="account_logout" xml:space="preserve">
+    <value>登出</value>
+  </data>
+  <data name="charts" xml:space="preserve">
+    <value>趨勢圖</value>
+  </data>
+  <data name="cal_datalog" xml:space="preserve">
+    <value>校正履歷</value>
+  </data>
+  <data name="proccess_setting" xml:space="preserve">
+    <value>流程設定</value>
+  </data>
+  <data name="schedule" xml:space="preserve">
+    <value>排程表</value>
+  </data>
+  <data name="account_modify_account" xml:space="preserve">
+    <value>修改帳戶資料</value>
+  </data>
+  <data name="dashboard_elec_life" xml:space="preserve">
+    <value>電極續航力</value>
+  </data>
+  <data name="dashboard_pH_live_chart" xml:space="preserve">
+    <value>pH即時走勢</value>
+  </data>
+  <data name="dashboard_alarm_datalog" xml:space="preserve">
+    <value>警報日誌</value>
+  </data>
+  <data name="account_email_address" xml:space="preserve">
+    <value>電子郵件</value>
+  </data>
+  <data name="account_password" xml:space="preserve">
+    <value>密碼</value>
+  </data>
+  <data name="account_create_account" xml:space="preserve">
+    <value>註冊新帳戶</value>
+  </data>
+  <data name="account_forgot_password" xml:space="preserve">
+    <value>忘記密碼</value>
+  </data>
+  <data name="dashboard_clear" xml:space="preserve">
+    <value>清除</value>
+  </data>
+  <data name="modal_stop" xml:space="preserve">
+    <value>停止</value>
+  </data>
+  <data name="modal_cylinder" xml:space="preserve">
+    <value>氣壓缸</value>
+  </data>
+  <data name="modal_unlock" xml:space="preserve">
+    <value>捲揚機解鎖</value>
+  </data>
+  <data name="home" xml:space="preserve">
+    <value>主頁</value>
+  </data>
+  <data name="live_chart" xml:space="preserve">
+    <value>即時趨勢</value>
+  </data>
+  <data name="history_chart" xml:space="preserve">
+    <value>歷史趨勢</value>
+  </data>
+  <data name="trendline_generation" xml:space="preserve">
+    <value>產生趨勢圖</value>
+  </data>
+  <data name="export_datalog" xml:space="preserve">
+    <value>輸出校正履歷</value>
+  </data>
+  <data name="clear_datalog" xml:space="preserve">
+    <value>清除校正履歷</value>
+  </data>
+  <data name="d1_cal_datalogger" xml:space="preserve">
+    <value>系統#1 校正履歷</value>
+  </data>
+  <data name="d2_cal_datalogger" xml:space="preserve">
+    <value>系統#2 校正履歷</value>
+  </data>
+  <data name="washing_step_setting" xml:space="preserve">
+    <value>清洗步驟設定</value>
+  </data>
+  <data name="total_steps" xml:space="preserve">
+    <value>總步數</value>
+  </data>
+  <data name="step" xml:space="preserve">
+    <value>步驟</value>
+  </data>
+  <data name="select_total_steps" xml:space="preserve">
+    <value>先選取總步數</value>
+  </data>
+  <data name="select_step_and_set_time" xml:space="preserve">
+    <value>選定步驟 設定秒數</value>
+  </data>
+  <data name="step_number_setting" xml:space="preserve">
+    <value>步驟設定</value>
+  </data>
+  <data name="set_cleaning_content" xml:space="preserve">
+    <value>設定清洗內容</value>
+  </data>
+  <data name="language_selection" xml:space="preserve">
+    <value>選擇語系</value>
+  </data>
+  <data name="set_position" xml:space="preserve">
+    <value>設定位置</value>
+  </data>
+  <data name="current_position" xml:space="preserve">
+    <value>當前位置</value>
+  </data>
+  <data name="account_ent_old_password" xml:space="preserve">
+    <value>輸入舊密碼</value>
+  </data>
+  <data name="account_submit" xml:space="preserve">
+    <value>提交</value>
+  </data>
+  <data name="message_check_email" xml:space="preserve">
+    <value>請至您的信箱索取驗證碼並返回作驗證以進行密碼修改</value>
+  </data>
+  <data name="message_error" xml:space="preserve">
+    <value>錯誤</value>
+  </data>
+  <data name="message_enter_email" xml:space="preserve">
+    <value>請輸入電子信箱</value>
+  </data>
+  <data name="message_verification_code_invalid" xml:space="preserve">
+    <value>驗證碼錯誤</value>
+  </data>
+  <data name="modal_m_reag" xml:space="preserve">
+    <value>手動酸洗</value>
+  </data>
+  <data name="modal_m_bufa" xml:space="preserve">
+    <value>手動BufA</value>
+  </data>
+  <data name="modal_m_bufb" xml:space="preserve">
+    <value>手動BufB</value>
+  </data>
+  <data name="modal_a_wash" xml:space="preserve">
+    <value>一鍵清洗</value>
+  </data>
+  <data name="modal_a_cal" xml:space="preserve">
+    <value>一鍵校正</value>
+  </data>
+  <data name="modal_back_to_original" xml:space="preserve">
+    <value>原點復歸</value>
+  </data>
+  <data name="modal_m_wash" xml:space="preserve">
+    <value>手動水洗</value>
+  </data>
+  <data name="account_select_account" xml:space="preserve">
+    <value>選擇帳戶</value>
+  </data>
+  <data name="modal_close" xml:space="preserve">
+    <value>關閉</value>
+  </data>
+  <data name="modal_delete" xml:space="preserve">
+    <value>刪除</value>
+  </data>
+  <data name="modal_ent_select_language" xml:space="preserve">
+    <value>選擇語言</value>
+  </data>
+  <data name="account_ent_email_address" xml:space="preserve">
+    <value>輸入電子郵件</value>
+  </data>
+  <data name="account_ent_password" xml:space="preserve">
+    <value>輸入密碼</value>
+  </data>
+  <data name="modal_language" xml:space="preserve">
+    <value>語系</value>
+  </data>
+  <data name="message_success" xml:space="preserve">
+    <value>成功</value>
+  </data>
+  <data name="account_ent_verification_code" xml:space="preserve">
+    <value>輸入驗證碼</value>
+  </data>
+  <data name="account_registration" xml:space="preserve">
+    <value>註冊帳戶</value>
+  </data>
+  <data name="account_first_name" xml:space="preserve">
+    <value>名字</value>
+  </data>
+  <data name="account_last_name" xml:space="preserve">
+    <value>姓氏</value>
+  </data>
+  <data name="account_ent_first_name" xml:space="preserve">
+    <value>輸入名字</value>
+  </data>
+  <data name="account_ent_last_name" xml:space="preserve">
+    <value>輸入姓氏</value>
+  </data>
+  <data name="account_already_account" xml:space="preserve">
+    <value>已擁有帳戶返回進行登入</value>
+  </data>
+  <data name="account_password_again" xml:space="preserve">
+    <value>再次輸入密碼</value>
+  </data>
+  <data name="account_delete_account" xml:space="preserve">
+    <value>帳戶刪除</value>
+  </data>
+  <data name="account_reset_password" xml:space="preserve">
+    <value>修改密碼</value>
+  </data>
+  <data name="account_new_password" xml:space="preserve">
+    <value>新密碼</value>
+  </data>
+  <data name="account_ent_new_password" xml:space="preserve">
+    <value>輸入新密碼</value>
+  </data>
+  <data name="message_password_changed" xml:space="preserve">
+    <value>密碼已修改</value>
+  </data>
+  <data name="message_password_change_failed" xml:space="preserve">
+    <value>密碼修改失敗</value>
+  </data>
+  <data name="account_old_password" xml:space="preserve">
+    <value>舊密碼</value>
+  </data>
+  <data name="btn_expand" xml:space="preserve">
+    <value>延展</value>
+  </data>
+  <data name="btn_collapse" xml:space="preserve">
+    <value>收折</value>
+  </data>
+  <data name="btn_goto_modify" xml:space="preserve">
+    <value>提交修改</value>
+  </data>
+  <data name="lab_change_password" xml:space="preserve">
+    <value>點擊延展修改密碼</value>
+  </data>
+  <data name="schedule_system" xml:space="preserve">
+    <value>系統</value>
+  </data>
+  <data name="schedule_ent_select_system" xml:space="preserve">
+    <value>選擇系統</value>
+  </data>
+  <data name="schedule_subject" xml:space="preserve">
+    <value>項目</value>
+  </data>
+  <data name="schedule_ent_select_subject" xml:space="preserve">
+    <value>選擇項目</value>
+  </data>
+  <data name="schedule_start_time" xml:space="preserve">
+    <value>起始時間</value>
+  </data>
+  <data name="schedule_end_time" xml:space="preserve">
+    <value>結束時間</value>
+  </data>
+  <data name="schedule_monthly" xml:space="preserve">
+    <value>每月</value>
+  </data>
+  <data name="schedule_weekly" xml:space="preserve">
+    <value>每週</value>
+  </data>
+  <data name="schedule_daily" xml:space="preserve">
+    <value>每天</value>
+  </data>
+  <data name="schedule_description" xml:space="preserve">
+    <value>描述</value>
+  </data>
+  <data name="modal_cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="modal_confirm" xml:space="preserve">
+    <value>確認</value>
+  </data>
+  <data name="schedule_frequency" xml:space="preserve">
+    <value>執行週期</value>
+  </data>
+  <data name="schedule_wash" xml:space="preserve">
+    <value>清洗</value>
+  </data>
+  <data name="schedule_calibration" xml:space="preserve">
+    <value>校正</value>
+  </data>
+  <data name="schedule_export" xml:space="preserve">
+    <value>校正紀錄報表輸出</value>
+  </data>
+  <data name="schedule_modal_title" xml:space="preserve">
+    <value>事件設定</value>
+  </data>
+  <data name="calibration_step_setting" xml:space="preserve">
+    <value>校正步驟設定</value>
+  </data>
+  <data name="history_start_date" xml:space="preserve">
+    <value>起始日期</value>
+  </data>
+  <data name="history_end_date" xml:space="preserve">
+    <value>結束日期</value>
+  </data>
+  <data name="alarm_active" xml:space="preserve">
+    <value>警報中</value>
+  </data>
+  <data name="alarm_inactive" xml:space="preserve">
+    <value>已解除</value>
+  </data>
+  <data name="calgrid_export" xml:space="preserve">
+    <value>報表輸出</value>
+  </data>
+  <data name="calgrid_clear" xml:space="preserve">
+    <value>資料清除</value>
+  </data>
+  <data name="calgrid_upload" xml:space="preserve">
+    <value>檔案上傳</value>
+  </data>
+  <data name="account_back_login" xml:space="preserve">
+    <value>返回登入</value>
+  </data>
+  <data name="step_number" xml:space="preserve">
+    <value>步驟</value>
+  </data>
+  <data name="wash" xml:space="preserve">
+    <value>清洗</value>
+  </data>
+  <data name="reag" xml:space="preserve">
+    <value>試劑</value>
+  </data>
+  <data name="buf_a" xml:space="preserve">
+    <value>緩衝液A</value>
+  </data>
+  <data name="buf_b" xml:space="preserve">
+    <value>緩衝液B</value>
+  </data>
+  <data name="show_history_alarm" xml:space="preserve">
+    <value>顯示歷史警報</value>
+  </data>
+  <data name="show_inalarm" xml:space="preserve">
+    <value>顯示警報中</value>
+  </data>
+  <data name="field_selection" xml:space="preserve">
+    <value>選擇水域</value>
+  </data>
+  <data name="alarm_system0" xml:space="preserve">
+    <value>System_伺服通訊異常</value>
+  </data>
+  <data name="alarm_system1" xml:space="preserve">
+    <value>System_HBM通訊異常</value>
+  </data>
+  <data name="alarm_system2" xml:space="preserve">
+    <value>System_清水壓力異常</value>
+  </data>
+  <data name="alarm_system3" xml:space="preserve">
+    <value>System_酸液壓力異常</value>
+  </data>
+  <data name="alarm_system4" xml:space="preserve">
+    <value>System_Buf.A壓力異常</value>
+  </data>
+  <data name="alarm_system5" xml:space="preserve">
+    <value>System_Buf.B壓力異常</value>
+  </data>
+  <data name="alarm_system6" xml:space="preserve">
+    <value>System_氣壓缸開合異常</value>
+  </data>
+  <data name="alarm_system7" xml:space="preserve">
+    <value>System_絞盤光纖訊號異常</value>
+  </data>
+  <data name="alarm_system8" xml:space="preserve">
+    <value>System_電極過捲異常</value>
+  </data>
+  <data name="alarm_system9" xml:space="preserve">
+    <value>System_E_00</value>
+  </data>
+  <data name="alarm_system10" xml:space="preserve">
+    <value>System_E_01</value>
+  </data>
+  <data name="alarm_system11" xml:space="preserve">
+    <value>System_E_02</value>
+  </data>
+  <data name="alarm_system12" xml:space="preserve">
+    <value>System_E_03</value>
+  </data>
+  <data name="alarm_system13" xml:space="preserve">
+    <value>System_E_04</value>
+  </data>
+  <data name="alarm_system14" xml:space="preserve">
+    <value>System_E_05</value>
+  </data>
+  <data name="alarm_system15" xml:space="preserve">
+    <value>System_E_31</value>
+  </data>
+  <data name="alarm_driver1" xml:space="preserve">
+    <value>Driver_過電流</value>
+  </data>
+  <data name="alarm_driver2" xml:space="preserve">
+    <value>Driver_過電壓</value>
+  </data>
+  <data name="alarm_driver3" xml:space="preserve">
+    <value>Driver_低電壓</value>
+  </data>
+  <data name="alarm_driver4" xml:space="preserve">
+    <value>Driver_馬達匹配異常</value>
+  </data>
+  <data name="alarm_driver5" xml:space="preserve">
+    <value>Driver_回生錯誤</value>
+  </data>
+  <data name="alarm_driver6" xml:space="preserve">
+    <value>Driver_過負載</value>
+  </data>
+  <data name="alarm_driver7" xml:space="preserve">
+    <value>Driver_速度控制誤差過大</value>
+  </data>
+  <data name="alarm_driver8" xml:space="preserve">
+    <value>Driver_異常脈波控制命令</value>
+  </data>
+  <data name="alarm_driver9" xml:space="preserve">
+    <value>Driver_位置控制誤差過大</value>
+  </data>
+  <data name="alarm_driver16" xml:space="preserve">
+    <value>Driver_回生狀態下電壓異常</value>
+  </data>
+  <data name="alarm_driver17" xml:space="preserve">
+    <value>Driver_CN2通訊失敗</value>
+  </data>
+  <data name="alarm_driver19" xml:space="preserve">
+    <value>Driver_緊急停止</value>
+  </data>
+  <data name="alarm_driver20" xml:space="preserve">
+    <value>Driver_反向極限異常</value>
+  </data>
+  <data name="alarm_driver21" xml:space="preserve">
+    <value>Driver_正向極限異常</value>
+  </data>
+  <data name="alarm_driver22" xml:space="preserve">
+    <value>Driver_IGBT溫度異常</value>
+  </data>
+  <data name="alarm_driver23" xml:space="preserve">
+    <value>Driver_記憶體異常</value>
+  </data>
+  <data name="alarm_driver24" xml:space="preserve">
+    <value>Driver_OA與OB輸出異常</value>
+  </data>
+  <data name="alarm_driver32" xml:space="preserve">
+    <value>Driver_串列通訊逾時</value>
+  </data>
+  <data name="alarm_driver34" xml:space="preserve">
+    <value>Driver_主迴路電源異常</value>
+  </data>
+  <data name="alarm_driver35" xml:space="preserve">
+    <value>Driver_預先過負載警告</value>
+  </data>
+  <data name="alarm_driver36" xml:space="preserve">
+    <value>Driver_編碼器初始磁場錯誤</value>
+  </data>
+  <data name="alarm_driver37" xml:space="preserve">
+    <value>Driver_編碼器內部錯誤</value>
+  </data>
+  <data name="alarm_driver38" xml:space="preserve">
+    <value>Driver_編碼器內部資料可靠度錯誤</value>
+  </data>
+  <data name="alarm_driver39" xml:space="preserve">
+    <value>Driver_編碼器內部重置錯誤</value>
+  </data>
+  <data name="alarm_driver40" xml:space="preserve">
+    <value>Driver_電池電壓異常或編碼器內部錯誤</value>
+  </data>
+  <data name="alarm_driver41" xml:space="preserve">
+    <value>Driver_格雷碼錯誤</value>
+  </data>
+  <data name="alarm_driver42" xml:space="preserve">
+    <value>Driver_編碼器圈數計數錯誤</value>
+  </data>
+  <data name="alarm_driver43" xml:space="preserve">
+    <value>Driver_馬達資料異常</value>
+  </data>
+  <data name="alarm_driver44" xml:space="preserve">
+    <value>Driver_驅動器過負載</value>
+  </data>
+  <data name="alarm_driver45" xml:space="preserve">
+    <value>Driver_防堵轉保護</value>
+  </data>
+  <data name="alarm_driver48" xml:space="preserve">
+    <value>Driver_馬達碰撞錯誤</value>
+  </data>
+  <data name="alarm_driver49" xml:space="preserve">
+    <value>Driver_馬達動力線錯線偵測</value>
+  </data>
+  <data name="alarm_driver50" xml:space="preserve">
+    <value>Driver_編碼器振動異常</value>
+  </data>
+  <data name="alarm_driver51" xml:space="preserve">
+    <value>Driver_馬達異常</value>
+  </data>
+  <data name="alarm_driver52" xml:space="preserve">
+    <value>Driver_編碼器內部通訊異常</value>
+  </data>
+  <data name="alarm_driver53" xml:space="preserve">
+    <value>Driver_編碼器溫度超過保護上限</value>
+  </data>
+  <data name="alarm_driver54" xml:space="preserve">
+    <value>Driver_編碼器異警狀態錯誤</value>
+  </data>
+  <data name="alarm_driver66" xml:space="preserve">
+    <value>Driver_類比速度指令的電壓輸入過高</value>
+  </data>
+  <data name="alarm_driver68" xml:space="preserve">
+    <value>Driver_驅動器功能使用率警告</value>
+  </data>
+  <data name="alarm_driver69" xml:space="preserve">
+    <value>Driver_電子齒輪比設定錯誤</value>
+  </data>
+  <data name="alarm_driver83" xml:space="preserve">
+    <value>Driver_馬達參數異常</value>
+  </data>
+  <data name="alarm_driver86" xml:space="preserve">
+    <value>Driver_馬達速度過高</value>
+  </data>
+  <data name="alarm_driver92" xml:space="preserve">
+    <value>Driver_馬達位置回授異常</value>
+  </data>
+  <data name="alarm_driver96" xml:space="preserve">
+    <value>Driver_絕對位置遺失</value>
+  </data>
+  <data name="alarm_driver97" xml:space="preserve">
+    <value>Driver_編碼器電壓過低</value>
+  </data>
+  <data name="alarm_driver98" xml:space="preserve">
+    <value>Driver_絕對型位置圈數溢位_編碼器</value>
+  </data>
+  <data name="alarm_driver100" xml:space="preserve">
+    <value>Driver_編碼器振動警告</value>
+  </data>
+  <data name="alarm_driver102" xml:space="preserve">
+    <value>Driver_絕對型位置圈數溢位_驅動器</value>
+  </data>
+  <data name="alarm_driver103" xml:space="preserve">
+    <value>Driver_編碼器溫度警告</value>
+  </data>
+  <data name="alarm_driver104" xml:space="preserve">
+    <value>Driver_絕對型資料IO傳輸錯誤</value>
+  </data>
+  <data name="alarm_driver105" xml:space="preserve">
+    <value>Driver_馬達型式錯誤</value>
+  </data>
+  <data name="alarm_driver107" xml:space="preserve">
+    <value>Driver_驅動器內部座標與編碼器座標誤差過大</value>
+  </data>
+  <data name="alarm_driver108" xml:space="preserve">
+    <value>Driver_編碼器型態無法識別</value>
+  </data>
+  <data name="alarm_driver109" xml:space="preserve">
+    <value>Driver_絕對位置建立未完成</value>
+  </data>
+  <data name="alarm_driver112" xml:space="preserve">
+    <value>Driver_編碼器讀寫未完成警告</value>
+  </data>
+  <data name="alarm_driver113" xml:space="preserve">
+    <value>Driver_編碼器圈數錯誤</value>
+  </data>
+  <data name="alarm_driver114" xml:space="preserve">
+    <value>Driver_編碼器過速度</value>
+  </data>
+  <data name="alarm_driver115" xml:space="preserve">
+    <value>Driver_編碼器記憶體錯誤</value>
+  </data>
+  <data name="alarm_driver116" xml:space="preserve">
+    <value>Driver_編碼器單圈絕對位置錯誤</value>
+  </data>
+  <data name="alarm_driver117" xml:space="preserve">
+    <value>Driver_編碼器絕對圈數錯誤</value>
+  </data>
+  <data name="alarm_driver121" xml:space="preserve">
+    <value>Driver_編碼器參數設置未完成錯誤</value>
+  </data>
+  <data name="alarm_driver122" xml:space="preserve">
+    <value>Driver_編碼器Z相位置遣失</value>
+  </data>
+  <data name="alarm_driver123" xml:space="preserve">
+    <value>Driver_編碼器記憶體忙碌</value>
+  </data>
+  <data name="alarm_driver124" xml:space="preserve">
+    <value>Driver_馬達轉速超過200rpm時下達清除絕對位置</value>
+  </data>
+  <data name="alarm_driver125" xml:space="preserve">
+    <value>Driver_沒有解除AL07C就重新上電馬達停止運轉</value>
+  </data>
+  <data name="alarm_driver126" xml:space="preserve">
+    <value>Driver_編碼器清除程序錯誤</value>
+  </data>
+  <data name="alarm_driver127" xml:space="preserve">
+    <value>Driver_編碼器版號異常</value>
+  </data>
+  <data name="alarm_driver131" xml:space="preserve">
+    <value>Driver_驅動器輸出電流過大</value>
+  </data>
+  <data name="alarm_driver133" xml:space="preserve">
+    <value>Driver_回生設定異常</value>
+  </data>
+  <data name="alarm_driver134" xml:space="preserve">
+    <value>Driver_回生電阻過負載</value>
+  </data>
+  <data name="alarm_driver136" xml:space="preserve">
+    <value>Driver_驅動器功能使用率報警</value>
+  </data>
+  <data name="alarm_driver137" xml:space="preserve">
+    <value>Driver_電流感測遭受干擾</value>
+  </data>
+  <data name="alarm_driver138" xml:space="preserve">
+    <value>Driver_自動增益調整命令異常</value>
+  </data>
+  <data name="alarm_driver139" xml:space="preserve">
+    <value>Driver_自動增益調整停止時間過短</value>
+  </data>
+  <data name="alarm_driver140" xml:space="preserve">
+    <value>Driver_自動增益調整慣量估測異常</value>
+  </data>
+  <data name="alarm_driver153" xml:space="preserve">
+    <value>Driver_DSP韌體錯誤</value>
+  </data>
+  <data name="alarm_driver156" xml:space="preserve">
+    <value>Driver_參數重置失敗</value>
+  </data>
+  <data name="alarm_driver157" xml:space="preserve">
+    <value>Driver_電容充電異常</value>
+  </data>
+  <data name="alarm_driver166" xml:space="preserve">
+    <value>Driver_驅動器與馬達的絕對位置座標不匹配</value>
+  </data>
+  <data name="alarm_driver863" xml:space="preserve">
+    <value>Driver_緊急停止_減速過程中</value>
+  </data>
+  <data name="alarm_driver1058" xml:space="preserve">
+    <value>Driver_控制電源斷電造成寫入失敗</value>
+  </data>
+  <data name="alarm_driver1313" xml:space="preserve">
+    <value>Driver_撓性補償參數異常</value>
+  </data>
+  <data name="alarm_driver3121" xml:space="preserve">
+    <value>Driver_馬達動力線斷線偵測</value>
+  </data>
+  <data name="alarm_driver3291" xml:space="preserve">
+    <value>Driver_驅動器機種碼異常</value>
+  </data>
+  <data name="alarm_common0" xml:space="preserve">
+    <value>酸液液位過低</value>
+  </data>
+  <data name="alarm_common1" xml:space="preserve">
+    <value>Buf.A液位過低</value>
+  </data>
+  <data name="alarm_common2" xml:space="preserve">
+    <value>Buf.B液位過低</value>
+  </data>
+  <data name="alarm_common3" xml:space="preserve">
+    <value>氣壓壓力異常</value>
+  </data>
+  <data name="dialog_maintain80" xml:space="preserve">
+    <value>續航力80%，狀況良好，檢查電極於校正槽的位置是否有偏移狀況</value>
+  </data>
+  <data name="dialog_maintain70" xml:space="preserve">
+    <value>狀況尚可，檢查標準液測值是否充足正確</value>
+  </data>
+  <data name="dialog_maintain60" xml:space="preserve">
+    <value>請聯繫相關工程師檢查電極KCL是否充足</value>
+  </data>
+  <data name="dialog_maintain30" xml:space="preserve">
+    <value>請盡速更換電極</value>
+  </data>
+  <data name="dialog_electrode1" xml:space="preserve">
+    <value>電極#1</value>
+  </data>
+  <data name="dialog_electrode2" xml:space="preserve">
+    <value>電極#2</value>
+  </data>
+  <data name="dashboard_endurance" xml:space="preserve">
+    <value>續航力</value>
+  </data>
+  <data name="field_hf" xml:space="preserve">
+    <value>氫氟系統</value>
+  </data>
+  <data name="field_nh" xml:space="preserve">
+    <value>氨氮系統</value>
+  </data>
+  <data name="field_cucmp" xml:space="preserve">
+    <value>研磨系統</value>
+  </data>
+  <data name="field_cmp" xml:space="preserve">
+    <value>銅系研磨系統</value>
+  </data>
+  <data name="field_bio" xml:space="preserve">
+    <value>生物系統</value>
+  </data>
+  <data name="field_aw" xml:space="preserve">
+    <value>一般酸鹼系統</value>
+  </data>
+  <data name="field_lsr" xml:space="preserve">
+    <value>酸鹼洗滌系統</value>
+  </data>
+  <data name="field_pure" xml:space="preserve">
+    <value>純水系統</value>
+  </data>
+  <data name="nav_ip_url" xml:space="preserve">
+    <value>IP位址設置</value>
+  </data>
+  <data name="dashboard_remaindays" xml:space="preserve">
+    <value>剩餘天數</value>
+  </data>
+</root>

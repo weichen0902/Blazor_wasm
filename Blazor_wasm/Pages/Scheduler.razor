@@ -1,0 +1,376 @@
+@page "/scheduler"
+@using System.Timers
+
+@using Blazor_wasm.Models.DatabaseModels
+@using Syncfusion.Blazor.Schedule
+@using Syncfusion.Blazor.Notifications
+@using Syncfusion.Blazor.Buttons
+@using Syncfusion.Blazor.Calendars
+@using Syncfusion.Blazor.Inputs
+@using Syncfusion.Blazor.DropDowns
+
+@inject IDataService dataService
+@inject DevicesDataModel devicesDataModel
+@inject GetSchedule getSchedule
+@inject IStringLocalizer<MyStrings> localizer
+@implements IDisposable
+
+
+<h1 class="text-center">@localizer[StringDescriptionModel.schedule]</h1>
+<div class="col-lg-12 control-section">
+    <SfSchedule TValue="SchedulerModel" @ref="ScheduleRef" Height="600px" Timezone="UTC">
+        <ScheduleTemplates>
+            <EditorHeaderTemplate>
+                <div class="quick-info-title">
+                    @localizer[StringDescriptionModel.schedule_modal_title]
+                </div>
+            </EditorHeaderTemplate>
+            <EditorTemplate>
+                <div style="height: 280px;">
+                    <table class="custom-event-editor" width="100%" cellpadding="5">
+                        <tbody>
+                            @{
+                                schedulers = (context as SchedulerModel) ?? new SchedulerModel();
+                                schedulers.Subject = schedulers.Subject ?? "";
+
+                                <tr>
+                                    <td class="e-textlabel">@localizer[StringDescriptionModel.schedule_system]:</td>
+                                    <td colspan="4" style="display: flex;">
+                                        <SfDropDownList TValue="string" TItem="DropDownModel" Placeholder=@localizer[StringDescriptionModel.schedule_ent_select_system] DataSource="@DeviceData" @bind-Value="@dropDownDeviceBindValue">
+                                            <DropDownListFieldSettings Value="ID" Text="Text"></DropDownListFieldSettings>
+                                            <DropDownListEvents TValue="string" TItem="DropDownModel" ValueChange="OnDropDownDeviceValueChange"></DropDownListEvents>
+                                        </SfDropDownList>
+                                    </td>
+                                </tr>
+                                <tr style="position: relative; top: 10px">
+                                    <td class="e-textlabel">@localizer[StringDescriptionModel.schedule_subject]:</td>
+                                    <td colspan="4" style="display: flex; gap: 20px;">
+                                        <SfDropDownList TValue="string" TItem="DropDownModel" Placeholder=@localizer[StringDescriptionModel.schedule_ent_select_subject] DataSource="@SubjectData" @bind-Value="@dropDownSubjectBindValue">
+                                            <DropDownListFieldSettings Value="ID" Text="Text"></DropDownListFieldSettings>
+                                            <DropDownListEvents TValue="string" TItem="DropDownModel" ValueChange="OnDropDownSubjectValueChange"></DropDownListEvents>
+                                        </SfDropDownList>
+                                    </td>
+                                </tr>
+                                <tr style="position: relative; top: 10px">
+                                    <td class="e-textlabel">@localizer[StringDescriptionModel.schedule_start_time]:</td>
+                                    <td colspan="4">
+                                        <SfDateTimePicker TValue="DateTime" Value="@schedulers.StartTime">
+                                            <DateTimePickerEvents TValue="DateTime" ValueChange="@((e)=> OnStartTimeChanged(e))"></DateTimePickerEvents>
+                                        </SfDateTimePicker>
+                                    </td>
+                                </tr>
+                                <tr style="position: relative; top: 10px">
+                                    <td class="e-textlabel">@localizer[StringDescriptionModel.schedule_end_time]:</td>
+                                    <td colspan="4">
+                                        <SfDateTimePicker TValue="DateTime" Value="@schedulers.EndTime">
+                                            <DateTimePickerEvents TValue="DateTime" ValueChange="@((e)=> OnEndTimeChanged(e))"></DateTimePickerEvents>
+                                        </SfDateTimePicker>
+                                    </td>
+                                </tr>
+                                <tr style="position: relative; top: 20px">
+                                    <td class="e-textlabel">@localizer[StringDescriptionModel.schedule_frequency]:</td>
+                                    <td colspan="4" style="display: flex; gap: 20px;">
+                                        <SfCheckBox Checked="@monthlyIsChecked" onclick="@(()=> ChangeFrequentStatus(schedulers, 0))">@localizer[StringDescriptionModel.schedule_monthly]</SfCheckBox>
+                                        <SfCheckBox Checked="@weeklyIsChecked" onclick="@(()=> ChangeFrequentStatus(schedulers, 1))">@localizer[StringDescriptionModel.schedule_weekly]</SfCheckBox>
+                                        <SfCheckBox Checked="@dailyIsChecked" onclick="@(()=> ChangeFrequentStatus(schedulers, 2))">@localizer[StringDescriptionModel.schedule_daily]</SfCheckBox>
+                                    </td>
+                                </tr>
+                                <tr style="position: relative; top: 30px">
+                                    <td class="e-textlabel">@localizer[StringDescriptionModel.schedule_description]:</td>
+                                    <td colspan="4" style="display: flex; gap: 20px;">
+                                        <SfTextBox Multiline="true" @bind-Value="@(schedulers.Description)"></SfTextBox>
+                                    </td>
+                                </tr>                           
+                            }                            
+                        </tbody>
+                    </table>
+                </div>
+            </EditorTemplate>
+            <EditorFooterTemplate>
+                <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
+                    <div style="width: 85px">
+                        @if (schedulers != null && schedulers.Id != 0)
+                        {
+                            <SfButton IsPrimary="false" CssClass="e-danger" OnClick="@(() => FooterButtonClick(false, true))">@localizer[StringDescriptionModel.modal_delete]</SfButton>
+                        }
+                    </div>
+                    <div id="right-buttont">
+                        <SfButton IsPrimary="true" CssClass="e-primary" OnClick="@(() => FooterButtonClick(true, false))">@localizer[StringDescriptionModel.modal_confirm]</SfButton>
+                        <SfButton IsPrimary="false" CssClass="e-outline" OnClick="@(() => FooterButtonClick(false, false))">@localizer[StringDescriptionModel.modal_cancel]</SfButton>
+                    </div>
+                </div>
+            </EditorFooterTemplate>
+        </ScheduleTemplates>
+        <ScheduleEventSettings DataSource="@getSchedule.dataSource"></ScheduleEventSettings>
+        <ScheduleEvents TValue="SchedulerModel" ActionCompleted="OnActionCompleted" OnPopupClose="OnPopupClose" OnCellClick="OnCellClick" OnEventClick="OnEventClick" OnPopupOpen="OnPopupOpen"></ScheduleEvents>
+        <ScheduleViews>
+            @*             <ScheduleView Option="View.Day"></ScheduleView>
+            <ScheduleView Option="View.Week"></ScheduleView>
+            <ScheduleView Option="View.WorkWeek"></ScheduleView> *@
+            <ScheduleView Option="View.Month" ShowWeekend="true" MaxEventsPerRow="3"></ScheduleView>
+            @* <ScheduleView Option="View.Agenda"></ScheduleView> *@
+        </ScheduleViews>
+    </SfSchedule>
+    <SfToast @ref="ToastRef" CssClass="e-schedule-reminder e-toast-info" ShowCloseButton="true" Target=".e-schedule" NewestOnTop="true" Timeout=0>
+        <ToastPosition X="Right" Y="Top"></ToastPosition>
+        <ToastAnimationSettings>
+            <ToastShowAnimationSettings Effect="@ToastEffect.SlideRightIn"></ToastShowAnimationSettings>
+            <ToastHideAnimationSettings Effect="@ToastEffect.SlideRightOut"></ToastHideAnimationSettings>
+        </ToastAnimationSettings>
+        <ToastTemplates>
+            <Template>
+                <div class="e-toast-template">
+                    <div class="e-toast-message">
+                        <div class="e-toast-title">@subject</div>
+                        <div class="e-toast-content">@time</div>
+                    </div>
+                </div>
+            </Template>
+        </ToastTemplates>
+    </SfToast>
+</div>
+
+@code {
+
+    SfSchedule<SchedulerModel> ScheduleRef;
+    SfToast? ToastRef;
+    private SchedulerModel schedulers { get; set; } 
+    private string subject = string.Empty;
+    private string time = string.Empty;
+    private Timer? timer;
+
+    private bool washIsChecked, calIsChecked, monthlyIsChecked, weeklyIsChecked, dailyIsChecked, exportIsChecked, isSaveClick, isDeleteClick = false;
+
+    private string? dropDownDeviceBindValue{ get; set; }
+    private string? dropDownSubjectBindValue { get; set; }
+
+    private List<DropDownModel> DeviceData;
+    private List<DropDownModel> SubjectData;
+
+    public class DropDownModel
+    {
+        public string ID { get; set; }
+        public string Text { get; set; }
+    }
+
+    protected override async void OnInitialized()
+    {
+        base.OnInitialized();     
+        MainLayout.OnLanguageChange += StateHasChanged;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        DeviceData = new List<DropDownModel>
+        {
+            new DropDownModel() { ID= "d1", Text= @localizer[StringDescriptionModel.schedule_system] + "#1" },
+            new DropDownModel() { ID= "d2", Text= @localizer[StringDescriptionModel.schedule_system] + "#2" },
+        };
+
+        SubjectData = new List<DropDownModel>
+        {
+            new DropDownModel() { ID= "Wash", Text= @localizer[StringDescriptionModel.schedule_wash] },
+            new DropDownModel() { ID= "Calibration", Text= @localizer[StringDescriptionModel.schedule_calibration] },
+            new DropDownModel() { ID= "Export", Text= @localizer[StringDescriptionModel.schedule_export] },
+        };
+    }
+  
+    private async void OnActionCompleted(ActionEventArgs<SchedulerModel> args)
+    {
+        if (args.ActionType == ActionType.EventCreate || args.ActionType == ActionType.EventChange || args.ActionType == ActionType.EventRemove)
+        {          
+            var added = args.AddedRecords.FirstOrDefault()?? new SchedulerModel();
+            var changed = args.ChangedRecords.FirstOrDefault() ?? new SchedulerModel();
+            var deleted = args.DeletedRecords.FirstOrDefault() ?? new SchedulerModel();
+           
+            switch (args.ActionType)
+            {
+                case ActionType.EventCreate:
+                    await dataService.PostScheduler(added);
+                    break;
+                case ActionType.EventChange:
+                    await dataService.UpdateScheduler(changed);
+                    break;
+                case ActionType.EventRemove:
+                    await dataService.DeleteScheduler(deleted);
+                    break;
+            }
+        }
+    }
+
+    public void OnPopupOpen(PopupOpenEventArgs<SchedulerModel> args)
+    {   
+        
+        if (args.Type == PopupType.Editor && args.Data != null)
+        {
+            dropDownDeviceBindValue = null;
+            if (args.Data.Subject.Contains("d1"))
+                dropDownDeviceBindValue = DeviceData[0].ID;           
+            else if (args.Data.Subject.Contains("d2"))
+                dropDownDeviceBindValue = DeviceData[1].ID; 
+            if (args.Data.Subject.Contains("Wash"))
+                dropDownSubjectBindValue = SubjectData[0].ID;
+            else if (args.Data.Subject.Contains("Calibration"))
+                dropDownSubjectBindValue = SubjectData[1].ID;
+            else if (args.Data.Subject.Contains("Export"))
+                dropDownSubjectBindValue = SubjectData[2].ID;
+        }
+
+        washIsChecked = args.Data != null && args.Data.Subject.Contains("wash") ? true : false;
+        calIsChecked = args.Data != null && args.Data.Subject.Contains("calibration") ? true : false;
+        exportIsChecked = args.Data != null && args.Data.Subject.Contains("export") ? true : false;
+
+        monthlyIsChecked = args.Data != null && args.Data.RecurrenceRule.Contains("MONTHLY") ? true : false;
+        weeklyIsChecked = args.Data != null && args.Data.RecurrenceRule.Contains("WEEKLY") ? true : false;
+        dailyIsChecked = args.Data != null && args.Data.RecurrenceRule.Contains("DAILY") ? true : false;
+    }
+
+    public async Task OnPopupClose(PopupCloseEventArgs<SchedulerModel> args)
+    {
+        if (args.Type == PopupType.Editor && args.Data != null && isSaveClick || isDeleteClick)
+        {
+            if (args.Data.Id != 0)
+            {
+                if (isSaveClick)
+                    await ScheduleRef.SaveEventAsync(args.Data);
+                if (isDeleteClick)
+                    await ScheduleRef.DeleteEventAsync(args.Data);
+            }
+            else
+            {
+                args.Data.Id = await ScheduleRef.GetMaxEventIdAsync<int>();
+                await ScheduleRef.AddEventAsync(args.Data);
+            }
+            isSaveClick = false;
+            isDeleteClick = false;
+        }
+    }
+   
+    private void ChangeFrequentStatus(SchedulerModel s, int i)
+    {
+        var byDay = s.StartTime.Date.Day;
+        var byDayOfWeek = s.StartTime.DayOfWeek.ToString().ToUpper().Substring(0,2);
+
+        if (i == 0)
+        {           
+            schedulers.RecurrenceRule = $"FREQ=MONTHLY;INTERVAL=1;BYMONTHDAY={byDay};";
+
+            if (!monthlyIsChecked)
+            {
+                weeklyIsChecked = monthlyIsChecked;
+                dailyIsChecked = monthlyIsChecked;
+            }           
+            monthlyIsChecked = !monthlyIsChecked;           
+        }
+        else if (i == 1)
+        {
+            schedulers.RecurrenceRule = $"FREQ=WEEKLY;BYDAY={byDayOfWeek};INTERVAL=1;";
+
+            if (!weeklyIsChecked)
+            {
+                monthlyIsChecked = weeklyIsChecked;
+                dailyIsChecked = weeklyIsChecked;
+            }           
+            weeklyIsChecked = !weeklyIsChecked;
+        }
+        else
+        {
+            schedulers.RecurrenceRule = $"FREQ=DAILY;INTERVAL=1;";
+
+            if (!dailyIsChecked)
+            {
+                monthlyIsChecked = dailyIsChecked;
+                weeklyIsChecked = dailyIsChecked;
+            }          
+            dailyIsChecked = !dailyIsChecked;
+        }
+    }
+
+    private void FooterButtonClick(bool isSave, bool isDelete)
+    {
+        // if (isSave)
+        // {
+        //     // 檢查必填欄位
+        //     if (string.IsNullOrEmpty(dropDownDeviceBindValue) || 
+        //         string.IsNullOrEmpty(dropDownSubjectBindValue) || 
+        //         schedulers.StartTime == default || 
+        //         schedulers.EndTime == default ||
+        //         (!monthlyIsChecked && !weeklyIsChecked && !dailyIsChecked))
+        //     {
+        //         return; // 如果有必填欄位未填，直接返回不關閉編輯器
+        //     }
+        // }
+
+        isSaveClick = isSave;
+        isDeleteClick = isDelete;
+        ScheduleRef.CloseEditor();
+    }
+
+    public async Task OnCellClick(CellClickEventArgs args)
+    {
+        args.Cancel = true;
+        await ScheduleRef.OpenEditorAsync(args, CurrentAction.Add);
+    }
+
+    public async Task OnEventClick(EventClickArgs<SchedulerModel> args)
+    {
+        args.Cancel = true;
+        CurrentAction action = CurrentAction.Save;
+        if (args.Event.RecurrenceRule != null)
+        {
+            action = CurrentAction.EditOccurrence;
+        }
+        await ScheduleRef.OpenEditorAsync(args.Event, action);
+    }
+
+    public void OnDropDownDeviceValueChange(ChangeEventArgs<string, DropDownModel> args)
+    {
+        schedulers.Subject = schedulers.Subject ?? "";
+
+        if (schedulers.Subject == "")
+            schedulers.Subject = args.Value;
+        else if (schedulers.Subject.Contains("d"))
+        {
+            schedulers.Subject = schedulers.Subject.Remove(0, 2).Insert(0, args.Value);
+        }
+        else
+            schedulers.Subject = schedulers.Subject.Insert(0, args.Value);
+    }
+
+    public void OnDropDownSubjectValueChange(ChangeEventArgs<string, DropDownModel> args)
+    {
+        if (schedulers.Subject == "")
+            schedulers.Subject = args.Value;
+        else if (schedulers.Subject.Contains("d"))
+            schedulers.Subject = schedulers.Subject.Substring(0, 2).Insert(2, args.Value);
+        schedulers.IsAllDay = false;
+    }
+
+    private void OnStartTimeChanged(ChangedEventArgs<DateTime> args)
+    {
+        schedulers.StartTime = args.Value;
+        schedulers.EndTime = schedulers.StartTime > schedulers.EndTime ? schedulers.StartTime.AddMinutes(30) : schedulers.EndTime;
+
+        var byDay = schedulers.StartTime.Date.Day;
+        var byDayOfWeek = schedulers.StartTime.DayOfWeek.ToString().ToUpper().Substring(0, 2);
+
+        if (monthlyIsChecked)
+            schedulers.RecurrenceRule = $"FREQ=MONTHLY;INTERVAL=1;BYMONTHDAY={byDay};";
+        else if(weeklyIsChecked)
+            schedulers.RecurrenceRule = $"FREQ=WEEKLY;BYDAY={byDayOfWeek};INTERVAL=1;";
+
+        schedulers.StartTimezone = "Europe/London";
+        schedulers.EndTimezone = "Europe/London";
+    }
+
+    private void OnEndTimeChanged(ChangedEventArgs<DateTime> args)
+    {
+        schedulers.EndTime = args.Value < schedulers.StartTime ? schedulers.StartTime.AddMinutes(30) : args.Value;
+    }
+
+    void IDisposable.Dispose()
+    {
+        timer?.Dispose();
+        MainLayout.OnLanguageChange -= StateHasChanged;
+    }
+}

@@ -1,0 +1,109 @@
+﻿@inject DevicesDataModel devicesDataModel
+@inject GetAllCalData getAllCalData
+@inject NavigationManager NavigationManager
+
+<SfChart id="container" Width="@Width" Theme="@Theme">
+    <ChartArea><ChartAreaBorder Width="0"></ChartAreaBorder></ChartArea>
+    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.DateTime" Minimum="getAllCALData.minimumDateTime" Maximum="getAllCALData.maximumDateTime">
+        <ChartAxisMajorGridLines Width="0"></ChartAxisMajorGridLines>
+    </ChartPrimaryXAxis>
+    <ChartPrimaryYAxis Minimum="-60" Maximum="60" Interval="10" Title="Slope Value" RangePadding="ChartRangePadding.None">
+        <ChartAxisMajorTickLines Width="0"></ChartAxisMajorTickLines>
+        <ChartAxisLineStyle Width="0"></ChartAxisLineStyle>
+    </ChartPrimaryYAxis>
+    <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
+    <ChartLegendSettings Visible="true" EnableHighlight="true"></ChartLegendSettings>
+    <ChartSeriesCollection>
+        <ChartSeries DataSource="@hbm1SlopeValue" Name="HBM-100D-1" XName="dateTime" Width="2"
+                     YName="slopeValue" Type="ChartSeriesType.Scatter" Fill="#FF5151">
+            <ChartMarker Height="10" Width="10" Shape="ChartShape.Circle">
+            </ChartMarker>
+        </ChartSeries>
+        <ChartSeries DataSource="@hbm2SlopeValue" Name="HBM-100D-2" XName="dateTime"
+                     YName="slopeValue" Type="ChartSeriesType.Scatter" Fill="#0080FF">
+            <ChartMarker Height="10" Width="10" Shape="ChartShape.Circle">
+            </ChartMarker>
+        </ChartSeries>     
+    </ChartSeriesCollection>
+</SfChart>
+
+@code {
+    private Syncfusion.Blazor.Theme Theme { get; set; }
+    public string Width { get; set; } = "100%";
+
+    private DateTime minimumDateTime { get; set; }
+    private DateTime maximumDateTime { get; set; }
+
+    public List<SlopeValue> hbm1SlopeValue { get; set; } = new List<SlopeValue>();
+
+    public List<SlopeValue> hbm2SlopeValue { get; set; } = new List<SlopeValue>();
+
+    public class SlopeValue
+    {
+        public DateTime dateTime { get; set; }
+        public double slopeValue { get; set; }
+    }
+
+    protected override void OnInitialized()
+    {    
+        MainLayout.OnLanguageChange += StateHasChanged;
+        devicesDataModel.OnCalStateChange += Update;         
+        Update();
+    }
+
+    private void Update()
+    {
+        if (getAllCalData.d1CalData.Count > 0)
+        {
+            foreach (var _d1CalData in getAllCalData.d1CalData)
+            {
+                hbm1SlopeValue.Add
+                (
+                    new SlopeValue()
+                        {
+                            dateTime = _d1CalData.DateTime,
+                            slopeValue = _d1CalData.Slope,
+                        }
+                );
+            }
+        }
+        else
+        {
+            hbm1SlopeValue.Add
+                (
+                    new SlopeValue()
+                        {
+                            dateTime = DateTime.Now,
+                            slopeValue = 0,
+                        }
+                );
+        }
+
+        if (getAllCalData.d2CalData.Count > 0 )
+        {
+            foreach (var _d2CalData in getAllCalData.d2CalData)
+            {
+                hbm2SlopeValue.Add
+                (
+                    new SlopeValue()
+                        {
+                            dateTime = _d2CalData.DateTime,
+                            slopeValue = _d2CalData.Slope,
+                        }
+                );
+            }
+        }
+        else
+        {
+            hbm2SlopeValue.Add
+                (
+                    new SlopeValue()
+                        {
+                            dateTime = DateTime.Now,
+                            slopeValue = 0,
+                        }
+                );
+        }
+        StateHasChanged();
+    }
+}

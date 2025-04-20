@@ -1,0 +1,18 @@
+@using Microsoft.Extensions.Localization
+
+<button class="btn @(Background != null ? "btn-primary" : "btn-outline-danger") rounded-pill"
+        style="width:120px; height:50px; color:red; background-color:@Background; white-space: nowrap; font-size: 14px; padding: 0; border-color: red;"
+        @onclick="@(async () => await OnClick.InvokeAsync())">
+    @ButtonText
+</button>
+
+@code {
+    [Parameter]
+    public string ButtonText { get; set; }
+
+    [Parameter]
+    public string Background { get; set; }
+
+    [Parameter]
+    public EventCallback OnClick { get; set; }
+}

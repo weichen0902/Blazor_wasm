@@ -1,0 +1,63 @@
+@page "/streamingChart"
+
+
+@using Microsoft.JSInterop
+@inject IJSRuntime JS
+@inject IDataService dataService
+@inject DevicesDataModel devicesDataModel
+
+
+<canvas id="myChart" width="700" height="330"></canvas>
+
+
+@code {
+    private bool isPaused = false;
+    private long dateTimeStartUnixTimeStamp, dateTimeEndUnixTimeStamp;
+    private static List<RealTimepH>? realTimepHList = new List<RealTimepH>();
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        dateTimeEndUnixTimeStamp = (long)(DateTime.Now.ToUniversalTime() - new DateTime(1970, 1, 1)).TotalSeconds;
+        dateTimeStartUnixTimeStamp = dateTimeEndUnixTimeStamp - 1800;
+
+
+        realTimepHList = await dataService.GetpH(dateTimeStartUnixTimeStamp, dateTimeEndUnixTimeStamp);
+
+
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("createStreamingChart", "myChart", realTimepHList);
+        }
+    }
+
+
+    [JSInvokable]
+    public static async Task<List<RealTimepH>> GetHistoricalDataAsync()
+    {
+        return await Task.FromResult(realTimepHList);
+    }
+
+
+    [JSInvokable]
+    public static async Task<double> GetY1ValueAsync()
+    {
+        double yValue = MainLayout.d1pH;
+        return await Task.FromResult(yValue);
+    }
+
+
+    [JSInvokable]
+    public static async Task<double> GetY2ValueAsync()
+    {
+        double yValue = MainLayout.d2pH;
+        return await Task.FromResult(yValue);
+    }
+}
+
+
+
+
+
+
+

@@ -1,0 +1,231 @@
+﻿@page "/liveChart"
+
+@using System.Text
+@using System.Text.Json
+
+@inject IDataService dataService
+@inject DevicesDataModel devicesDataModel
+@inject NavigationManager navigationManager
+@inject PageTitleService pageTitleService
+@implements IDisposable
+
+<div class="col-lg-12 control-section" style="height:800px; width:100%; position:relative; top:50px;">
+    <LineChart @ref="@horizontalLineChart" TItem="LiveDataPoint" OptionsObject="@horizontalLineChartOptions" style="transform: scale(0.9); position: relative; bottom: 60px;">
+        <ChartStreaming @ref="@chartStreaming"
+                        TItem="LiveDataPoint"
+                        Options="new ChartStreamingOptions{Delay=2000, Duration=300000}"
+                        Refreshed="OnHorizontalLineRefreshed"
+                        />
+    </LineChart>
+</div>
+
+@* <Row>
+    <Column>
+        <Button Color="Color.Primary" Clicked="@(()=>chartStreaming.Pause())">Pause</Button>
+        <Button Color="Color.Primary" Clicked="@(()=>chartStreaming.Play())">Play</Button>
+    </Column>
+</Row> *@
+
+@code {
+
+    LineChart<LiveDataPoint> horizontalLineChart;
+    ChartStreaming<LiveDataPoint> chartStreaming;
+    Random random = new Random(DateTime.Now.Millisecond);
+
+    string[] Labels = { "0", "1" };
+    List<string> backgroundColors = new List<string> { ChartColor.FromRgba(255, 99, 132, 0.2f), ChartColor.FromRgba(54, 162, 235, 0.2f) };
+    List<string> borderColors = new List<string> { ChartColor.FromRgba(255, 99, 132, 1f), ChartColor.FromRgba(54, 162, 235, 1f) };
+
+
+    List<ChartStreamingData<LiveDataPoint>> dataPoints = new List<ChartStreamingData<LiveDataPoint>>();
+
+    ChartStreamingData<LiveDataPoint> streamData1;
+    ChartStreamingData<LiveDataPoint> streamData2;
+
+    private DateTime dateTime { get; set; }
+
+
+    private long dateTimeStartUnixTimeStamp, dateTimeEndUnixTimeStamp;
+    private List<RealTimepH>? realTimepHList = new List<RealTimepH>();
+
+    protected override void OnInitialized()
+    {
+        MainLayout.OnLanguageChange += StateHasChanged;
+        pageTitleService.Title = "";        
+    }
+
+    private void Navigate()
+    {
+        navigationManager.NavigateTo("historyChart");
+    }
+
+    public struct LiveDataPoint
+    {
+        public object X { get; set; }
+
+        public object Y { get; set; }
+    }
+
+    object horizontalLineChartOptions = new
+    {
+        Scales = new
+        {
+            Y = new
+            {
+                Title = new
+                {
+                    Display = true,
+                    Text = "Value", 
+                }
+            }
+        },
+        Interaction = new
+        {
+            intersect = false
+        },
+        Plugins = new
+        {
+            Legend = new
+            {
+                Display = true,              // 显示图例
+                Position = "bottom",            // 图例位置：可以是 "top", "left", "bottom", "right"
+                Labels = new
+                {
+                    BoxWidth = 50,            // 图例框的宽度
+                    Padding = 25,             // 图例标签之间的间距
+                    Font = new
+                    {
+                        Size = 14,            // 图例标签字体大小
+                        Family = "Arial"      // 图例标签字体
+                    }
+                }
+            }
+        }
+    };
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {     
+        await Task.Delay(1000);
+        if (firstRender)
+        {
+            var historyData1 = await FetchHistoricalData(1);
+            var historyData2 = await FetchHistoricalData(2);
+
+            await Task.WhenAll(
+                HandleRedraw(horizontalLineChart, () => GetLineChartDataset1(historyData1),
+                                              () => GetLineChartDataset2(historyData2)));
+        }
+    }
+
+    async Task<List<LiveDataPoint>> FetchHistoricalData(int datasetIndex)
+    {
+        dateTimeEndUnixTimeStamp = (long)(DateTime.Now.ToUniversalTime() - new DateTime(1970, 1, 1)).TotalSeconds;
+        dateTimeStartUnixTimeStamp = dateTimeEndUnixTimeStamp - 1800;
+
+        realTimepHList = await dataService.GetpH(dateTimeStartUnixTimeStamp, dateTimeEndUnixTimeStamp);
+
+        var historicalData = new List<LiveDataPoint>();
+
+        switch (datasetIndex)
+        {
+            case 1:
+                foreach (var rtph in realTimepHList)
+                {
+                    historicalData.Add(new LiveDataPoint
+                        {
+                            X = rtph.DateTime,
+                            Y = rtph.D1pH
+                        });
+                }
+                break;
+            case 2:
+                foreach (var rtph in realTimepHList)
+                {
+                    historicalData.Add(new LiveDataPoint
+                        {
+                            X = rtph.DateTime,
+                            Y = rtph.D2pH
+                        });
+                }
+                break;
+        }
+
+        await Task.Delay(200);
+        return historicalData;
+    }
+
+    async Task HandleRedraw<TDataSet, TItem, TOptions, TModel>(BaseChart<TDataSet, TItem, TOptions, TModel> chart, params Func<TDataSet>[] getDataSets)
+        where TDataSet : ChartDataset<TItem>
+        where TOptions : ChartOptions
+        where TModel : ChartModel
+    {
+        await chart.Clear();
+
+        await chart.AddLabelsDatasetsAndUpdate(Labels, getDataSets.Select(x => x.Invoke()).ToArray());
+    }
+
+    LineChartDataset<LiveDataPoint> GetLineChartDataset1(List<LiveDataPoint> data)
+    {
+        return new LineChartDataset<LiveDataPoint>
+            {
+                Data = data, //new List<LiveDataPoint>(),
+                Label = "HBM-100D #1",
+                BackgroundColor = backgroundColors[0],
+                BorderColor = borderColors[0],
+                PointRadius = 1,
+                Fill = false,
+                Tension = 0,
+                //  BorderDash = new List<int> { 8, 4 },
+                BorderDash = null,
+            };
+    }
+
+    LineChartDataset<LiveDataPoint> GetLineChartDataset2(List<LiveDataPoint> data)
+    {
+        return new LineChartDataset<LiveDataPoint>
+            {
+                Data = data,//new List<LiveDataPoint>(),
+                Label = "HBM-100D #2",
+                BackgroundColor = backgroundColors[1],
+                BorderColor = borderColors[1],
+                PointRadius = 1,
+                Fill = false,
+                Tension = 0,
+                //  BorderDash = new List<int> { 8, 4 },
+                BorderDash = null,
+            };
+    }
+
+    Task OnHorizontalLineRefreshed(ChartStreamingData<LiveDataPoint> data)
+    {
+        var newValue = new LiveDataPoint
+            {
+                X = DateTime.Now,
+                Y = data.DatasetIndex == 0 ? devicesDataModel[0, "hbmpH"] : devicesDataModel[1, "hbmpH"]
+            };
+
+
+        if (data.DatasetIndex == 0)
+        {
+            data.Value = newValue;
+        }
+        else if (data.DatasetIndex == 1)
+        {
+            data.Value = newValue;
+        }
+
+        return Task.CompletedTask;
+    }
+
+    private async void ClearData()
+    {
+        await dataService.DeletepH();
+        StateHasChanged();
+    }
+
+    void IDisposable.Dispose()
+    {
+        MainLayout.OnLanguageChange -= StateHasChanged;
+    }
+}

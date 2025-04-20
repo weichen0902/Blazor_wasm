@@ -1,0 +1,88 @@
+﻿@page "/forgotPassword"
+@inject IAppService AppService;
+@inject NavigationManager NavManager;
+@inject IStringLocalizer<MyStrings> localizer;
+@implements IDisposable
+
+<div class="container">
+    <EditForm Model="@AppService.forgotPasswordModel" OnValidSubmit="Submit">
+        <h3 class="text-center">@localizer[StringDescriptionModel.account_forgot_password]</h3><br />
+        <DataAnnotationsValidator />
+        <div class="form-group">
+            <label>@localizer[StringDescriptionModel.account_email_address]</label>
+            <input type="text" @bind-value="email" class="form-control" placeholder=@localizer[StringDescriptionModel.account_ent_email_address]><br />
+            <input type="text" @bind-value="verificationCode" class="form-control" placeholder=@localizer[StringDescriptionModel.account_ent_verification_code] hidden="@hidden">
+            <ValidationMessage For="@(()=> email)" />
+        </div>
+        <div class="text-center mt-2">
+            <button class="btn btn-primary w-100" type="submit">
+                <span class="@_spinnerClass" role="status" aria-hidden="true"></span>
+                @localizer[StringDescriptionModel.account_submit]
+            </button>
+        </div>
+        <div class="mt-2 text-end">
+            <NavLink class="content-text" style="text-decoration:none;" href="/">
+                <span>@localizer[StringDescriptionModel.account_back_login]</span>
+            </NavLink>
+        </div>
+    </EditForm>
+</div>
+
+
+
+
+@code {
+
+    string email { get; set; }
+    string verificationCode { get; set; }
+    bool hidden { get; set; } = true;
+    private string _spinnerClass = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        MainLayout.OnLanguageChange += StateHasChanged;
+    }
+
+    private async Task Submit()
+    {
+        if (verificationCode == null)
+        {
+            if (email != null)
+            {
+                var response = await AppService.ForgotPassword(email);
+                hidden = response.IsSuccess == true ? false : true;
+                if (response.IsSuccess)
+                {
+					hidden = false;
+               //     await App.Current.MainPage.DisplayAlert(@localizer[StringDescriptionModel.message_success], @localizer[StringDescriptionModel.message_check_email], "OK");
+                }
+             //   else
+               //     await App.Current.MainPage.DisplayAlert(@localizer[StringDescriptionModel.message_error], $"{response.ErrorMessage}", "OK");
+            }
+            else
+            {
+            //    await App.Current.MainPage.DisplayAlert(@localizer[StringDescriptionModel.message_error], @localizer[StringDescriptionModel.message_enter_email], "OK");
+            }
+
+		}
+		else
+		{
+            if (verificationCode == AppService.forgotPasswordModel.VerificationCode)
+            {
+                NavManager.NavigateTo("resetPassword");
+            }
+            else
+            {
+          //      await App.Current.MainPage.DisplayAlert(@localizer[StringDescriptionModel.message_error], @localizer[StringDescriptionModel.message_verification_code_invalid], "OK");
+            }
+		}
+        
+    }
+
+    void IDisposable.Dispose()
+    {
+        MainLayout.OnLanguageChange -= StateHasChanged;
+    }
+}
+    
+

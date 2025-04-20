@@ -1,0 +1,681 @@
+@using Blazored.LocalStorage
+@using Blazored.Toast.Configuration
+@using CsvHelper
+@using System.Globalization
+@using Blazor_wasm.Authentication
+@using Blazor_wasm.Pages
+@using Microsoft.AspNetCore.Components.Authorization
+
+@inject IJSRuntime JS
+@inject IAppService appService
+@inject IDataService dataService
+@inject Blazored.Toast.Services.IToastService toastService
+@inject DevicesDataModel devicesDataModel
+@inject GetAllCalData getAllCalData
+@inject GetSchedule getSchedule
+@inject AuthenticationStateProvider authStateProvider
+@inject PageTitleService pageTitleService
+@inject NavigationManager NavManager
+@inject ExportFile exportFile
+@inject IStringLocalizer<MyStrings> localizer
+@inject ILocalStorageService _localStorage
+@inherits LayoutComponentBase
+@implements IDisposable
+
+<div class="top-row " @onmousedown="HideFlyout">
+    <p class="top-row-font">
+        @pageTitleService.Title
+    </p>
+
+    <button class="navbar-toggler" @onclick="ShowFlyout">
+        <span class="navbar-toggler-icon "></span>
+    </button>
+</div>
+
+<div class="page" @onmousedown="HideFlyout">
+    @* <div class="sidebar">
+    <NavMenu />
+    </div> *@
+
+    <main>
+        @* <div class="top-row px-4">
+        <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+        </div> *@
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+
+<div style="position:fixed; z-index:9999;">
+    <BlazoredToasts Position="Blazored.Toast.Configuration.ToastPosition.BottomRight"
+    Timeout="20"
+    IconType="IconType.FontAwesome"
+    SuccessClass="success-toast-override"
+    SuccessIcon="fa fa-thumbs-up"
+    ErrorIcon="fa fa-bug" />
+</div>
+
+
+@if (isFlyoutVisible)
+{
+    <div class="flyout">
+        <div class="top-row d-flex justify-content-end">
+            <a class="oi oi-x" aria-hidden="true" style="margin-top:10px" @onclick="HideFlyout"></a>
+        </div>
+        <div class="flyout-content" style="padding:0 0 20px 0;">
+            <a href="/" @onclick="HideFlyout">
+                <img src="hswelogo.png" class="img-fluid" style="padding:20px 80px;" />
+            </a>
+
+            <p class="text-center">
+                <AuthorizeView Roles="Admin,User">
+                    <Authorized>
+                        Hi, @context.User.Identity.Name
+                    </Authorized>
+                    <NotAuthorized>
+                        Hi, Guest
+                    </NotAuthorized>
+                </AuthorizeView>
+            </p>
+
+            <nav class="flex-column px-4">
+                <AuthorizeView Roles="Admin,User">
+                    <Authorized>
+                        <div class="nav-item">
+                            <NavLink class="nav-link px-2" href="/">
+                                <div class="d-flex align-items-center">
+                                    <span class="oi oi-home" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                    <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.home]</span>
+                                </div>
+                            </NavLink>
+                        </div>
+                        <div class="nav-item">
+                            <NavLink class="nav-link px-2" href="javascript:void(0);" @onclick="()=>{collapseNavMenuD1=true; expanSubMenuD1 = !expanSubMenuD1;}">
+                                <div class="d-flex align-items-center">
+                                    <span class="oi oi-graph" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                    <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.charts]</span>
+                                </div>
+                                <span class="arrow-icon" aria-hidden="true">
+                                    @if (!expanSubMenuD1)
+                                    {
+                                        <span class="oi oi-arrow-left"></span>
+                                    }
+                                    else
+                                    {
+                                        <span class="oi oi-arrow-bottom"></span>
+                                    }
+                                </span>
+                            </NavLink>
+                            @if (expanSubMenuD1)
+                            {
+                                <ul class="nav flex-column">
+                                    <li class="nav-item">
+                                        <NavLink class="nav-link" href="streamingChart" @onclick="HideFlyout">
+                                            <div class="d-flex align-items-center">
+                                                <span class="oi oi-graph" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                                <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.live_chart]</span>
+                                            </div>
+                                        </NavLink>
+                                    </li>
+                                    <li class="nav-item">
+                                        <NavLink class="nav-link" href="historyChart" @onclick="HideFlyout">
+                                            <div class="d-flex align-items-center">
+                                                <span class="oi oi-graph" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                                <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.history_chart]</span>
+                                            </div>
+                                        </NavLink>
+                                    </li>
+                                </ul>
+                            }
+                        </div>
+                        <div class="nav-item">
+                            <NavLink class="nav-link px-2" href="javascript:void(0);" @onclick="()=>{collapseNavMenuD2=true; expanSubMenuD2 = !expanSubMenuD2;}">
+                                <div class="d-flex align-items-center">
+                                    <span class="oi oi-list" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                    <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.cal_datalog]</span>
+                                </div>
+                                <span class="arrow-icon" aria-hidden="true">
+                                    @if (!expanSubMenuD2)
+                                    {
+                                        <span class="oi oi-arrow-left"></span>
+                                    }
+                                    else
+                                    {
+                                        <span class="oi oi-arrow-bottom"></span>
+                                    }
+                                </span>
+                            </NavLink>
+                            @if (expanSubMenuD2)
+                            {
+                                <ul class="nav flex-column">
+                                    <li class="nav-item">
+                                        <NavLink class="nav-link" href="D1CalDataGrid" @onclick="HideFlyout">
+                                            <div class="d-flex align-items-center">
+                                                <span class="oi oi-list" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                                <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.d1_cal_datalogger]</span>
+                                            </div>
+                                        </NavLink>
+                                    </li>
+                                    <li class="nav-item">
+                                        <NavLink class="nav-link" href="D2CalDataGrid" @onclick="HideFlyout">
+                                            <div class="d-flex align-items-center">
+                                                <span class="oi oi-list" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                                <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.d2_cal_datalogger]</span>
+                                            </div>
+                                        </NavLink>
+                                    </li>
+                                </ul>
+                            }
+                        </div>
+                        <div class="nav-item">
+                            <NavLink class="nav-link px-2" href="javascript:void(0);" @onclick="()=>{collapseNavMenuD3=true; expanSubMenuD3 = !expanSubMenuD3;}">
+                                <div class="d-flex align-items-center">
+                                    <span class="oi oi-pencil" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                    <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.proccess_setting]</span>
+                                </div>
+                                <span class="arrow-icon" aria-hidden="true">
+                                    @if (!expanSubMenuD3)
+                                    {
+                                        <span class="oi oi-arrow-left"></span>
+                                    }
+                                    else
+                                    {
+                                        <span class="oi oi-arrow-bottom"></span>
+                                    }
+                                </span>
+                            </NavLink>
+                            @if (expanSubMenuD3)
+                            {
+                                <ul class="nav flex-column">
+                                    <li class="nav-item">
+                                        <NavLink class="nav-link" href="stepWashingSetting" @onclick="HideFlyout">
+                                            <div class="d-flex align-items-center">
+                                                <span class="oi oi-pencil" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                                <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.washing_step_setting]</span>
+                                            </div>
+                                        </NavLink>
+                                    </li>
+                                    <li class="nav-item">
+                                        <NavLink class="nav-link" href="stepCalSetting" @onclick="HideFlyout">
+                                            <div class="d-flex align-items-center">
+                                                <span class="oi oi-pencil" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                                <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.calibration_step_setting]</span>
+                                            </div>
+                                        </NavLink>
+                                    </li>
+                                </ul>
+                            }
+                        </div>
+                        <div class="nav-item">
+                            <NavLink class="nav-link px-2" href="scheduler" @onclick="HideFlyout">
+                                <div class="d-flex align-items-center">
+                                    <span class="oi oi-calendar" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                    <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.schedule]</span>
+                                </div>
+                            </NavLink>
+                        </div>
+                        <div class="nav-item">
+                            <NavLink class="nav-link px-2" href="update" @onclick="HideFlyout">
+                                <div class="d-flex align-items-center">
+                                    <span class="oi oi-person" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                    <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.account_modify_account]</span>
+                                </div>
+                            </NavLink>
+                        </div>
+                        <div class="nav-item">
+                            <NavLink class="nav-link px-2" href="javascript:void(0);" @onclick="ShowSwitchLanguageModal">
+                                <div class="d-flex align-items-center">
+                                    <span class="oi oi-transfer" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                    <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.language_selection]</span>
+                                </div>
+                            </NavLink>
+                        </div>
+                        @if (Setting.UserBasicDetail.Role == "Admin")
+                        {
+                            <div class="nav-item">
+                                <NavLink class="nav-link px-2" href="javascript:void(0);" @onclick="ShowFieldModal">
+                                    <div class="d-flex align-items-center">
+                                        <span class="oi oi-check" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                        <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.field_selection]</span>
+                                    </div>
+                                </NavLink>
+                            </div>
+                            <div class="nav-item">
+                                <NavLink class="nav-link px-2" href="javascript:void(0);" @onclick="ShowDelAccountModal">
+                                    <div class="d-flex align-items-center">
+                                        <span class="oi oi-trash" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                        <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.account_delete_account]</span>
+                                    </div>
+                                </NavLink>
+                            </div>
+                        }
+                        <div class="nav-item">
+                            <NavLink class="nav-link px-2" href="login" @onclick="LogoutAsync">
+                                <div class="d-flex align-items-center">
+                                    <span class="oi oi-account-logout" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                    <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.account_logout]</span>
+                                </div>
+                            </NavLink>
+                        </div>
+                    </Authorized>
+                    <NotAuthorized>
+                        <div class="nav-item">
+                            <NavLink class="nav-link" href="login" @onclick="HideFlyout">
+                                <div class="d-flex align-items-center">
+                                    <span class="oi oi-account-login" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                    <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.account_login]</span>
+                                </div>
+                            </NavLink>
+                        </div>
+                        <div class="nav-item">
+                            <NavLink class="nav-link" href="javascript:void(0);" @onclick="ShowSwitchLanguageModal">
+                                <div class="d-flex align-items-center">
+                                    <span class="oi oi-transfer" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                    <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.language_selection]</span>
+                                </div>
+                            </NavLink>
+                        </div>
+                        <div class="nav-item">
+                            <NavLink class="nav-link" href="javascript:void(0);" @onclick="ShowIpSettingModal">
+                                <div class="d-flex align-items-center">
+                                    <span class="oi oi-map-marker" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                    <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.nav_ip_url]</span>
+                                </div>
+                            </NavLink>
+                        </div>
+                    </NotAuthorized>
+                </AuthorizeView>
+                @* <AuthorizeView Roles="Admin">
+                    <Authorized>
+                        <div class="nav-item">
+                            <NavLink class="nav-link px-2" href="javascript:void(0);" @onclick="ShowFieldModal">
+                                <div class="d-flex align-items-center">
+                                    <span class="oi oi-check" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                    <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.field_selection]</span>
+                                </div>
+                            </NavLink>
+                        </div>
+                        <div class="nav-item">
+                            <NavLink class="nav-link px-2" href="javascript:void(0);" @onclick="ShowDelAccountModal">
+                                <div class="d-flex align-items-center">
+                                    <span class="oi oi-trash" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                    <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.account_delete_account]</span>
+                                </div>
+                            </NavLink>
+                        </div>
+                    </Authorized>
+                </AuthorizeView> *@
+            </nav>
+        </div>
+    </div>
+
+}
+
+<Modal @ref="fieldModal">
+    <ModalContent Centered>
+        <ModalHeader>
+            <ModalTitle>@localizer[StringDescriptionModel.field_selection]</ModalTitle>
+            <CloseButton />
+        </ModalHeader>
+        <ModalBody>
+            <Field>
+                <div class="col-lg-12 control-section">
+                    <div class="control-wrapper">
+                        <SfDropDownList TValue="string" TItem="DropDownModel" Placeholder="Select the field" DataSource="@FieldData" @bind-Value="@dropDownFieldBindValue">
+                            <DropDownListFieldSettings Value="ID" Text="Text"></DropDownListFieldSettings>
+                            <DropDownListEvents TValue="string" TItem="DropDownModel" OnValueSelect="OnDropDownFieldValueChange"></DropDownListEvents>
+                        </SfDropDownList>
+                    </div>
+                </div>
+            </Field>
+        </ModalBody>      
+    </ModalContent>
+</Modal>
+
+
+<Modal @ref="delAccountModal">
+    <ModalContent Centered>
+        @* <ModalHeader>
+            <ModalTitle>Employee edit</ModalTitle>
+            <CloseButton />
+        </ModalHeader> *@
+        <ModalBody>
+            <Field>
+                <div class="col-lg-12 control-section">
+                    <div class="control-wrapper">
+                        <label class="example-label">@localizer[StringDescriptionModel.account_select_account]</label>
+                        <SfMultiSelect TValue="List<UsersEmail>" TItem="UsersEmail" Placeholder=@localizer[StringDescriptionModel.account_email_address] DataSource="@roleOfUsersEmail" AllowFiltering="true" @bind-Value="toDeleteUsers">
+                            <MultiSelectFieldSettings Text="Email" Value="Email"></MultiSelectFieldSettings>
+                        </SfMultiSelect>
+                    </div>
+                </div>
+            </Field>
+        </ModalBody>
+        <ModalFooter>
+            <Button Color="Color.Secondary" Clicked="@HideModal2">@localizer[StringDescriptionModel.modal_close]</Button>
+            <Button class="btn btn-primary" @onclick="DeleteUsers">@localizer[StringDescriptionModel.modal_delete]</Button>
+        </ModalFooter>
+    </ModalContent>
+</Modal>
+
+<Modal @ref="switchLanguageModal">
+    <ModalContent Centered>
+        <ModalHeader>
+            <ModalTitle>@localizer[StringDescriptionModel.modal_language]</ModalTitle>
+            <CloseButton />
+        </ModalHeader>
+        <ModalBody>
+            <Field>
+                <div class="col-lg-12 control-section">
+                    <div class="control-wrapper">                   
+                        <SfDropDownList TValue="string" TItem="LanguagesModel" Placeholder=@localizer[StringDescriptionModel.modal_ent_select_language] DataSource="@languagesModel" @bind-Value="@dropDownLanguageBindValue">
+                            <DropDownListFieldSettings Value="SelectLanguage" Text="Name"></DropDownListFieldSettings>
+                            <DropDownListEvents TValue="string" TItem="LanguagesModel" ValueChange="OnDropDownLanguageValueChange"></DropDownListEvents>
+                        </SfDropDownList>
+                    </div>
+                </div>
+            </Field>
+        </ModalBody>
+    </ModalContent>
+</Modal>
+
+<Modal @ref="ipUrlSetting">
+    <ModalContent Centered>
+        <ModalHeader>
+            <ModalTitle>@localizer[StringDescriptionModel.nav_ip_url]</ModalTitle>
+            <CloseButton />
+        </ModalHeader>
+        <ModalBody>
+            <Field>
+                <div class="col-lg-12 control-section">
+                    <div class="control-wrapper">                   
+                        <input type="text" @bind-value="ipUrl" />
+                    </div>
+                </div>
+            </Field>
+        </ModalBody>
+        <ModalFooter>
+            <Button Color="Color.Secondary" Clicked="@(()=>ipUrlSetting.Hide())">@localizer[StringDescriptionModel.modal_close]</Button>
+            <Button class="btn btn-primary" Clicked="@(()=> {Setting.Url = ipUrl; ipUrlSetting.Hide();})" >@localizer[StringDescriptionModel.modal_confirm]</Button>
+        </ModalFooter>
+    </ModalContent>
+</Modal>
+
+@code {
+
+    public static Action disposeTimer;
+    private Modal fieldModal,delAccountModal, switchLanguageModal, ipUrlSetting;
+
+    public static double d1pH, d2pH;
+
+    private bool isFlyoutVisible = false;
+    private bool collapseNavMenuD1 = true;
+    private bool collapseNavMenuD2 = true;
+    private bool collapseNavMenuD3 = true;
+    private bool expanSubMenuD1;
+    private bool expanSubMenuD2;
+    private bool expanSubMenuD3;
+
+    private string NavMenuCssClassD1 => collapseNavMenuD1 ? "collapse" : null;
+    private string NavMenuCssClassD2 => collapseNavMenuD2 ? "collapse" : null;
+    private string NavMenuCssClassD3 => collapseNavMenuD3 ? "collapse" : null;
+
+    private List<UsersEmail> usersEmail, roleOfUsersEmail, toDeleteUsers;
+
+    private List<LanguagesModel> languagesModel;
+
+    private string? dropDownLanguageBindValue { get; set; }
+
+    public void NotifyFieldChanged() => OnFieldChange?.Invoke();
+    public static event Action? OnFieldChange;
+
+    public void NotifyLanguageChanged() => OnLanguageChange?.Invoke();
+    public static event Action? OnLanguageChange;
+
+    public static string dropDownFieldBindValue { get; set; }
+    public static List<DropDownModel> FieldData;
+
+    public static  FieldDataModel fieldData;
+
+    private string ipUrl = "36.226.249.60";
+
+    public static string[] waterFieldRate = new string[]
+        {         
+           "1", "0.903", "0.859", "0.839", "0.823", "0.819", "0.813", "0.800"
+        };
+
+    public static int elapsedDays, remainDays, totalDays;
+
+    public class DropDownModel
+    {
+        public string ID { get; set; }
+        public string Text { get; set; }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        base.OnInitializedAsync();
+        Login.flagFunc += LogoutAsync;
+        pageTitleService.OnChange += StateHasChanged;
+        OnLanguageChange += FieldLangrageChange;
+        CircularGaugeLife1.onMaintainMsg += PublishMaintainMsg;
+        CircularGaugeLife2.onMaintainMsg += PublishMaintainMsg;
+
+        Setting.Url = ipUrl;
+
+        UpdateState();
+        FieldLangrageChange();
+        await RefreshFieldData();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {       
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("registerTouchEnd");
+            await RefreshFieldData();
+        }
+    }
+
+    private void PublishMaintainMsg(string str, double value)
+    {
+        if (value <= 100 && value > 80)
+            toastService.ShowInfo(str);
+        else if (value <= 80 && value > 60)
+            toastService.ShowWarning(str);
+        else if (value <= 60 && value > 50)
+            toastService.ShowError(str);
+        else
+            toastService.ShowError(str);
+    }
+
+    private void FieldLangrageChange()
+    {
+        FieldData = new List<DropDownModel>
+        {
+            new DropDownModel() { ID= waterFieldRate[0], Text= localizer[StringDescriptionModel.field_pure] },
+            new DropDownModel() { ID= waterFieldRate[1] , Text= localizer[StringDescriptionModel.field_lsr] },
+            new DropDownModel() { ID= waterFieldRate[2], Text= localizer[StringDescriptionModel.field_aw] },
+            new DropDownModel() { ID= waterFieldRate[3], Text= localizer[StringDescriptionModel.field_bio] },
+            new DropDownModel() { ID= waterFieldRate[4], Text= localizer[StringDescriptionModel.field_cmp] },
+            new DropDownModel() { ID= waterFieldRate[5], Text= localizer[StringDescriptionModel.field_cucmp] },
+            new DropDownModel() { ID= waterFieldRate[6], Text= localizer[StringDescriptionModel.field_nh] },
+            new DropDownModel() { ID= waterFieldRate[7], Text= localizer[StringDescriptionModel.field_hf] },
+        };
+    }
+
+    private void ToggleD1NavMenu()
+    {
+        collapseNavMenuD1 = !collapseNavMenuD1;
+    }
+
+    private void ToggleD2NavMenu()
+    {
+        collapseNavMenuD2 = !collapseNavMenuD2;
+    }
+
+    private void ToggleD3NavMenu()
+    {
+        collapseNavMenuD3 = !collapseNavMenuD3;
+    }
+
+    private void ShowFlyout()
+    {
+        isFlyoutVisible = true;
+    }
+
+    private void HideFlyout()
+    {
+        isFlyoutVisible = false;
+    }
+
+    private Task ShowFieldModal()
+    {
+        HideFlyout();
+        return fieldModal.Show();
+    }
+
+    private Task ShowIpSettingModal()
+    {
+        HideFlyout();
+        return ipUrlSetting.Show();
+    }
+
+    private Task ShowDelAccountModal()
+    {
+        HideFlyout();
+        GetAllUsers();
+        return delAccountModal.Show();
+    }
+
+    private Task ShowSwitchLanguageModal()
+    {
+        HideFlyout();
+        languagesModel = new List<LanguagesModel>();
+        languagesModel.Add(
+            new LanguagesModel
+                {
+                    Name = "English",
+                    SelectLanguage = "en-US"
+                }
+        );
+        languagesModel.Add(
+            new LanguagesModel
+                {
+                    Name = "繁體中文",
+                    SelectLanguage = "zh-TW"
+                }
+        );
+        languagesModel.Add(
+            new LanguagesModel
+                {
+                    Name = "日本語",
+                    SelectLanguage = "ja-JP"
+                }
+        );
+
+        return switchLanguageModal.Show();
+    }   
+
+    public void OnDropDownLanguageValueChange(ChangeEventArgs<string, LanguagesModel> args)
+    {
+        if (args.Value != null)
+        {
+            dropDownLanguageBindValue = args.Value;
+            var culture = new CultureInfo(dropDownLanguageBindValue);
+            CultureInfo.DefaultThreadCurrentCulture = culture;
+            CultureInfo.DefaultThreadCurrentUICulture = culture;
+        }
+
+        NotifyLanguageChanged();
+        switchLanguageModal.Hide();
+    }
+
+    public async void OnDropDownFieldValueChange(SelectEventArgs<DropDownModel> args)
+    {     
+        FieldDataModel fieldDataModel = new FieldDataModel();
+        fieldDataModel.Field = args.ItemData.Text;
+
+        var response = fieldData.Field == null ? await dataService.PostFieldData(fieldDataModel) : await dataService.UpdateFieldData(fieldDataModel);
+        await RefreshFieldData();
+        NotifyFieldChanged();
+        fieldModal.Hide();
+    }
+
+    private async Task RefreshFieldData()
+    {
+        fieldData = await dataService.GetFieldData();
+
+        dropDownFieldBindValue = fieldData.Field == null ? waterFieldRate[0] :
+         fieldData.Field.Contains(localizer[StringDescriptionModel.field_lsr]) ? waterFieldRate[1] :
+         fieldData.Field.Contains(localizer[StringDescriptionModel.field_aw]) ? waterFieldRate[2] :
+         fieldData.Field.Contains(localizer[StringDescriptionModel.field_bio]) ? waterFieldRate[3] :
+         fieldData.Field.Contains(localizer[StringDescriptionModel.field_cmp]) ? waterFieldRate[4] :
+         fieldData.Field.Contains(localizer[StringDescriptionModel.field_cucmp]) ? waterFieldRate[5] :
+         fieldData.Field.Contains(localizer[StringDescriptionModel.field_nh]) ? waterFieldRate[6] :
+         fieldData.Field.Contains(localizer[StringDescriptionModel.field_hf]) ? waterFieldRate[7] :
+         "1";     
+         
+        for (int i = 0; i < waterFieldRate.Length; i++)
+        {
+            if (dropDownFieldBindValue == waterFieldRate[i])
+            {
+                var rate = double.Parse(waterFieldRate[i]);
+                totalDays = (int)(913 - (778 * (1 - rate) / 0.2));
+                remainDays = totalDays - elapsedDays;
+                break;
+            }
+        }
+    }
+
+    private Task HideModal1()
+    {
+        return fieldModal.Hide();
+    }
+
+    private Task HideModal2()
+    {
+        return delAccountModal.Hide();
+    }
+
+    private async Task GetAllUsers()
+    {
+        roleOfUsersEmail = await appService.GetAllUsers();
+    }
+
+    private async Task DeleteUsers()
+    {
+        var response = await appService.DeleteUsers(toDeleteUsers);
+
+        if (response.IsSuccess)
+        {
+        //    await App.Current.MainPage.DisplayAlert("Success", "User accounts have been deleted", "OK");
+        }
+        else
+        {
+        //    await App.Current.MainPage.DisplayAlert("Oops", response.ErrorMessage, "OK");
+        }
+        toDeleteUsers = null;
+    }
+
+    public async Task LogoutAsync()
+    {
+        HideFlyout();
+        var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
+        await customAuthStateProvider.UpdateAuthenticationState(new UserBasicDetail());
+        disposeTimer.Invoke();
+        await _localStorage.RemoveItemAsync("UserBasicDetail");
+        Setting.UserBasicDetail = null;
+        NavManager.NavigateTo("/login");
+    }
+
+    void IDisposable.Dispose()
+    {
+        pageTitleService.OnChange -= StateHasChanged;
+        Login.flagFunc -= LogoutAsync;
+        CircularGaugeLife1.onMaintainMsg -= PublishMaintainMsg;
+        CircularGaugeLife2.onMaintainMsg -= PublishMaintainMsg;
+    }
+}

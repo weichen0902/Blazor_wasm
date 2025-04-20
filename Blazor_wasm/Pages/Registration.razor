@@ -1,0 +1,172 @@
+﻿@page "/registration"
+
+@using Blazor_wasm.Models
+@using Blazor_wasm.Models.PageModels
+@inject IAppService AppService;
+@inject IStringLocalizer<MyStrings> localizer;
+@inject NavigationManager NavManager
+@implements IDisposable
+
+<div class="container">
+    <EditForm Model="@registrationModel" OnValidSubmit="Submit">
+        <h3 class="text-center">@localizer[StringDescriptionModel.account_registration]</h3><br />
+        <DataAnnotationsValidator />
+        <div class="mb-2 text-center ">
+            <img src="@_userAvatar" @onclick="DisplayAction" height="80" width="80" class="rounded-circle avatar_container" />
+        </div>
+        <div class="form-group">
+            <label>@localizer[StringDescriptionModel.account_first_name]</label>
+            <input class="form-control" @bind-value="@registrationModel.FirstName" placeholder=@localizer[StringDescriptionModel.account_ent_first_name]>
+            <ValidationMessage For="@(()=> registrationModel.FirstName)" />
+        </div>
+
+        <div class="form-group">
+            <label>@localizer[StringDescriptionModel.account_last_name]</label>
+            <input class="form-control" @bind-value="@registrationModel.LastName" placeholder=@localizer[StringDescriptionModel.account_ent_last_name]>
+            <ValidationMessage For="@(()=> registrationModel.LastName)" />
+            @* <input type="checkbox" @bind-value="@registrationModel.Role" @onclick="@(()=> {toggleRole = !toggleRole;if(toggleRole)registrationModel.Role = "Admin";})" />
+        <label class="form-check-label" >
+            Admin
+        </label> *@
+        </div>
+
+        @* <div class="mt-2 form-group">
+        <label>Gender</label>
+        <div class="d-flex flex-row">
+            <div class="d-flex gap-2">
+                <div class="form-check">
+                    <input @onchange="@(()=> registrationModel.Gender="male")" class="form-check-input" type="radio" name="flexRadioDefault" />
+                    <label class="form-check-label" for="flexRadioDefault1">
+                        Male
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input @onchange="@(()=> registrationModel.Gender="female")" class="form-check-input" type="radio" name="flexRadioDefault" />
+                    <label class="form-check-label" for="flexRadioDefault2">
+                        Female
+                    </label>
+                </div>
+            </div>
+        </div>
+        <ValidationMessage For="@(()=> registrationModel.Gender)" />
+    </div> *@
+
+        <div class="mt-2 form-group">
+            <label>@localizer[StringDescriptionModel.account_email_address]</label>
+            <input type="email" @bind-value="@registrationModel.Email" class="form-control" placeholder=@localizer[StringDescriptionModel.account_ent_email_address]>
+            <ValidationMessage For="@(()=> registrationModel.Email)" />
+        </div>
+
+        <div class="mt-2 form-group">
+            <label>@localizer[StringDescriptionModel.account_password]</label>
+            <input type="password" @bind-value="@registrationModel.Password" class="form-control" placeholder=@localizer[StringDescriptionModel.account_ent_password]>
+            <ValidationMessage For="@(()=> registrationModel.Password)" />
+        </div>
+
+        <div class="mt-2 form-group">
+            <label>@localizer[StringDescriptionModel.account_password_again]</label>
+            <input type="password" @bind-value="@registrationModel.ConfirmPassword" class="form-control" placeholder=@localizer[StringDescriptionModel.account_ent_password]>
+            <ValidationMessage For="@(()=> registrationModel.ConfirmPassword)" />
+        </div>
+        <div class="text-center mt-4">
+            <button class="btn btn-primary w-100" type="submit">
+                <span class="@_spinnerClass" role="status" aria-hidden="true"></span>
+                @localizer[StringDescriptionModel.account_registration]
+            </button>
+        </div>
+        <div class="mt-2 text-end">
+            <NavLink class="content-text text-secondary" style="text-decoration:none;" href="/">
+                <span>@localizer[StringDescriptionModel.account_already_account]</span>
+            </NavLink>
+        </div>
+    </EditForm>
+</div>
+
+
+@code {
+    RegistrationModel registrationModel = new();
+    private string _spinnerClass = "";
+    private  string _userAvatar = "images/user.png";
+    private string _imageBase64Data;
+    private bool toggleRole;
+
+    protected override void OnInitialized()
+    {
+        MainLayout.OnLanguageChange += StateHasChanged;
+    }
+
+    private async void Submit()
+    {
+        _spinnerClass = "spinner-border spinner-border-sm";
+
+        if (!string.IsNullOrWhiteSpace(_imageBase64Data))
+        {
+            registrationModel.UserAvatar = _imageBase64Data;
+        }
+
+        var response = await AppService.RegisterUser(registrationModel);
+        if (response.IsSuccess)
+        {
+       //     await App.Current.MainPage.DisplayAlert("Success", "User Registered.", "OK");
+            NavManager.NavigateTo("/login");
+        }
+        else
+        {
+        //    await App.Current.MainPage.DisplayAlert("Oops", response.ErrorMessage, "OK");
+        }
+        _spinnerClass = "";
+        this.StateHasChanged();
+    }
+
+    private async void DisplayAction()
+    {
+        // string response = await App.Current.MainPage.DisplayActionSheet("Select Option", "OK", null, "Take Photo", "Add Photo");
+
+        // if (response == "Take Photo")
+        // {
+        //     if (MediaPicker.Default.IsCaptureSupported)
+        //     {
+        //         var photo = await MediaPicker.Default.CapturePhotoAsync();
+        //         if (photo != null)
+        //         {
+        //             byte[] imageBytes;
+        //             var newFile = Path.Combine(FileSystem.CacheDirectory, photo.FileName);
+        //             var stream = await photo.OpenReadAsync();
+
+        //             using (MemoryStream ms = new MemoryStream())
+        //             {
+        //                 stream.CopyTo(ms);
+        //                 imageBytes = ms.ToArray();
+        //             }
+        //             _imageBase64Data = Convert.ToBase64String(imageBytes);
+        //             _userAvatar = string.Format("data:image/png;base64,{0}", _imageBase64Data);
+        //             this.StateHasChanged();
+        //         }
+        //     }
+        // }
+        // else if (response == "Add Photo")
+        // {
+        //     var photo = await MediaPicker.Default.PickPhotoAsync();
+        //     if (photo != null)
+        //     {
+        //         byte[] imageBytes;
+        //         var newFile = Path.Combine(FileSystem.CacheDirectory, photo.FileName);
+        //         var stream = await photo.OpenReadAsync();
+
+        //         using (MemoryStream ms = new MemoryStream())
+        //         {
+        //             stream.CopyTo(ms);
+        //             imageBytes = ms.ToArray();
+        //         }
+        //         _imageBase64Data = Convert.ToBase64String(imageBytes);
+        //         _userAvatar = string.Format("data:image/png;base64,{0}", _imageBase64Data);
+        //         this.StateHasChanged();
+        //     }
+        // }
+    }
+
+    void IDisposable.Dispose()
+    {
+        MainLayout.OnLanguageChange -= StateHasChanged;
+    }
+}

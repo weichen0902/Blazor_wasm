@@ -1,0 +1,136 @@
+@using Syncfusion.Blazor.Charts
+@using Blazor_wasm.Pages.Components
+
+@inject DevicesDataModel devicesDataModel
+@inject GetAllCalData getAllCalData
+@inject NavigationManager NavigationManager
+
+<div style="position: relative;">
+    <Loading IsLoading="@isLoading" LoadingText="Loading Chart Data..." />
+    <SfAccumulationChart  SelectionMode="AccumulationSelectionMode.Point">
+        <AccumulationChartMargin Left="0" Right="0" Top="20" Bottom="0"></AccumulationChartMargin>
+        <AccumulationChartTooltipSettings Enable="false"></AccumulationChartTooltipSettings>
+        <AccumulationChartLegendSettings ToggleVisibility=false TextWrap="@TextWrap.Wrap" MaximumLabelWidth="70" Position="LegendPosition.Bottom" >
+        </AccumulationChartLegendSettings>
+        <AccumulationChartSeriesCollection>
+            <AccumulationChartSeries DataSource="@PieChartPoints" XName="ExpenseCategory" YName="ExpensePercentage" Name="Revenue" InnerRadius="40%" Radius="80%" PointColorMapping="PieColor">
+                <AccumulationDataLabelSettings Name="DataLabelMappingName" Visible="true">
+                    <AccumulationChartDataLabelFont Color="white" ></AccumulationChartDataLabelFont>
+                </AccumulationDataLabelSettings>
+            </AccumulationChartSeries>
+        </AccumulationChartSeriesCollection>
+
+        <AccumulationChartAnnotations>
+            <AccumulationChartAnnotation Region="Regions.Series" X="50%" Y="50%">
+
+            </AccumulationChartAnnotation>
+        </AccumulationChartAnnotations>
+    </SfAccumulationChart>
+</div>
+
+@code {
+    private bool isLoading = false;
+
+    private Syncfusion.Blazor.Theme Theme { get; set; }
+    private string Content { get; set; } = "";
+    public string Height { get; set; } = "";
+    public string Width { get; set; } = "";
+    public LegendPosition position { get; set; }
+    public double MaxLabel { get; set; } = 100;
+
+    private int TotalCounts { get; set; }
+    private int ZeroPassCounts { get; set; }
+    private int SlopePassCounts { get; set; }
+    private int AllPassCounts { get; set; }
+    private int AllFailCounts { get; set; }
+
+    private double AllPassQualificationRate { get; set; }
+    private double ZeroQualificationRate { get; set; }
+    private double SlopeQualificationRate { get; set; }
+    private double AllFailQualificationRate { get; set; }
+
+    public List<PieData> PieChartPoints { get; set; }
+
+    protected override void OnInitialized()
+
+    {
+        try
+        {
+            isLoading = true;
+            Content = "Browser Market Shares";
+            position = LegendPosition.Bottom;
+            Height = "10%";
+            Width = "80%";
+            MainLayout.OnLanguageChange += StateHasChanged;
+            devicesDataModel.OnCalStateChange += Update;       
+            Update();        
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+  
+    public class PieData
+    {
+        public string ExpenseCategory { get; set; }
+        public double ExpensePercentage { get; set; }
+        public string DataLabelMappingName { get; set; }
+        public string PieColor { get; set; }
+    }
+
+    public async void Update()
+    {
+        if (getAllCalData.d1CalData.Count > 0)
+        {
+            TotalCounts = getAllCalData.d1CalData.Count();
+
+            AllPassCounts = getAllCalData.d1CalData.Where(d => (d.Zero > 0 && d.Zero < 15) && (d.Slope < -50 && d.Slope > -60)).Count();
+            ZeroPassCounts = getAllCalData.d1CalData.Where(d => (d.Zero > 0 && d.Zero < 15) && (d.Slope < -60 || d.Slope > -50)).Count();
+            SlopePassCounts = getAllCalData.d1CalData.Where(d => (d.Slope < -50 && d.Slope > -60) && (d.Zero < 0 || d.Zero > 15)).Count();
+            AllFailCounts = getAllCalData.d1CalData.Where(d => (d.Zero < 0 || d.Zero > 15) && (d.Slope < -60 || d.Slope > -50)).Count();
+
+            AllPassQualificationRate = Math.Round((float)AllPassCounts / TotalCounts * 100, 0, MidpointRounding.AwayFromZero);
+            ZeroQualificationRate = Math.Round((float)ZeroPassCounts / TotalCounts * 100, 0, MidpointRounding.AwayFromZero);
+            SlopeQualificationRate = Math.Round((float)SlopePassCounts / TotalCounts * 100, 0, MidpointRounding.AwayFromZero);
+            AllFailQualificationRate = Math.Round((float)AllFailCounts / TotalCounts * 100, 0, MidpointRounding.AwayFromZero);
+
+            PieChartPoints = new List<PieData>();
+            if (AllPassCounts > 0)
+            {
+                PieChartPoints.Add(
+                   new PieData { ExpenseCategory = "AllPass", ExpensePercentage = AllPassQualificationRate, DataLabelMappingName = $"{AllPassQualificationRate}%", PieColor = "#82D900" }
+                );
+            }
+            if (ZeroPassCounts > 0)
+            {
+                PieChartPoints.Add(
+                    new PieData { ExpenseCategory = "ZeroPass", ExpensePercentage = ZeroQualificationRate, DataLabelMappingName = $"{ZeroQualificationRate}%", PieColor = "#FFD306" }
+                );
+            }
+            if (SlopePassCounts > 0)
+            {
+                PieChartPoints.Add(
+                    new PieData { ExpenseCategory = "SlopePass", ExpensePercentage = SlopeQualificationRate, DataLabelMappingName = $"{SlopeQualificationRate}%", PieColor = "#FFA042" }
+                );
+            }
+            if (AllFailCounts > 0)
+            {
+                PieChartPoints.Add(
+                    new PieData { ExpenseCategory = "AllFail", ExpensePercentage = AllFailQualificationRate, DataLabelMappingName = $"{AllFailQualificationRate}%", PieColor = "#9F4D95" }
+                );
+            }
+        }
+        else
+        {
+            PieChartPoints = new List<PieData>
+            {
+                new PieData { ExpenseCategory =  "AllPass", ExpensePercentage = 25, DataLabelMappingName = $"25%", PieColor="#82D900" },
+                new PieData { ExpenseCategory =  "ZeroPass", ExpensePercentage = 25, DataLabelMappingName = $"25%", PieColor="#FFD306" },
+                new PieData { ExpenseCategory =  "SlopePass", ExpensePercentage = 25, DataLabelMappingName = $"25%", PieColor="#FFA042" },
+                new PieData { ExpenseCategory =  "AllFail", ExpensePercentage = 25, DataLabelMappingName = $"25%", PieColor="#9F4D95" },
+            };
+        }                           
+        StateHasChanged();
+    }
+}

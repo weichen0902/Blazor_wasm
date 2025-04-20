@@ -1,0 +1,168 @@
+﻿@page "/D1CalDataGrid"
+
+@using CsvHelper
+@using CsvHelper.Configuration
+@using System.Text.Json
+@using System.Globalization
+@using System.Text
+@using Syncfusion.Blazor.Grids
+
+@inject IDataService dataService
+@inject GetAllCalData getAllCalData
+@inject DevicesDataModel devicesDataModel
+@inject IStringLocalizer<MyStrings> localizer
+@implements IDisposable
+
+<h1 class="text-center">@localizer[StringDescriptionModel.d1_cal_datalogger]</h1>
+<div class="card mb-2">
+    <div class="card-body d-flex flex-row">
+        <button type="button" class="btn btn-sm btn-primary"  @onclick="DownloadFile">      
+            @localizer[StringDescriptionModel.calgrid_export]
+        </button>
+        <button type="button" class="btn btn-sm btn-danger" style="margin-left: 1rem" @onclick="DeleteData">
+            @localizer[StringDescriptionModel.calgrid_clear]
+        </button>
+        <span class="flex-fill fw-bolder text-end p-1">@localizer[StringDescriptionModel.calgrid_upload]:&nbsp;</span>
+        <InputFile class="form-control form-control-sm w-25" OnChange="UploadFile" />
+    </div>
+</div>
+
+<div class="col-lg-12 control-section">
+    <div class="content-wrapper">
+        <div class="row">
+            <SfTreeGrid DataSource="@TreeGridData" IdMapping="Id" ParentIdMapping="ParentID" Height="550" TreeColumnIndex="1" AllowPaging="true" AllowResizing="true">
+                <TreeGridPageSettings PageSize="10"></TreeGridPageSettings>
+                <TreeGridColumns>
+                    <TreeGridColumn Field="Id" HeaderText="Id" Width="80" MinWidth="8" TextAlign="TextAlign.Right"></TreeGridColumn>
+                    <TreeGridColumn Field="DateTime" HeaderText="DateTime" Width="170" MinWidth="120"></TreeGridColumn>
+                    <TreeGridColumn Field="Health" HeaderText="Health" Format="d" MinWidth="8" Width="135" TextAlign="TextAlign.Right"></TreeGridColumn>
+                    <TreeGridColumn Field="Zero" HeaderText="Zero" MinWidth="8" Width="135" TextAlign="TextAlign.Right"></TreeGridColumn>
+                    <TreeGridColumn Field="Slope" HeaderText="Slope" Width="125" MinWidth="8" TextAlign="TextAlign.Right"></TreeGridColumn>            
+                </TreeGridColumns>
+            </SfTreeGrid>
+        </div>
+    </div>
+</div>
+
+@code {
+    private List<D1SelfReferenceData>? TreeGridData { get; set; }
+    private List<D1CalData>? d1CalData;
+
+    protected override async Task OnInitializedAsync()
+    {
+        MainLayout.OnLanguageChange += StateHasChanged;
+        devicesDataModel.OnCalStateChange += Update;
+        Update();        
+    }
+
+    private async void Update()
+    {
+        await Task.Delay(1000);
+        await getAllCalData.UpdateData();
+        this.d1CalData = getAllCalData.d1CalData;
+
+        await Task.Delay(500);
+        if (d1CalData != null)
+        {
+            this.TreeGridData = D1SelfReferenceData.GetTree(d1CalData).ToList();
+        }
+        StateHasChanged();
+    }
+
+    private async Task UploadFile(InputFileChangeEventArgs e)
+    {
+        if (e.File is not null)
+        {
+            var file = e.File;
+            var config = new CsvConfiguration(CultureInfo.InvariantCulture) { HasHeaderRecord = true };
+            using (var reader = new StreamReader(file.OpenReadStream(maxAllowedSize: 2097152)))
+            {
+                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                {
+                    var postData = new List<D1CalData>();
+                    var products = await csv.GetRecordsAsync<D1CalData>().ToListAsync();
+                    d1CalData = products;
+
+                    if (d1CalData != null)
+                    {
+                        this.TreeGridData = D1SelfReferenceData.GetTree(d1CalData).ToList();
+                    }
+
+                    foreach (var postProducts in products)
+                    {
+                        postData.Add(new D1CalData
+                            {
+                                DateTime = postProducts.DateTime,
+                                Health = postProducts.Health,
+                                Zero = postProducts.Zero,
+                                Slope = postProducts.Slope
+                            });
+                    }
+
+                    var response = await dataService.PostD1CALList(postData);
+                    if (response.IsSuccess)
+                    {
+              //          await App.Current.MainPage.DisplayAlert("Success", "Datalogs have been recorded into the database.", "OK");
+                    }
+                    else
+                    {
+              //          await App.Current.MainPage.DisplayAlert("Oops", response.ErrorMessage, "OK");
+                    }
+                }
+            }
+        }
+    }
+
+    private async Task DownloadFile()
+    {
+        if (d1CalData == null || !d1CalData.Any())
+            return;
+
+        var desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\caldata\\";
+        var fileName = Path.Combine(desktopPath, $"D1CalData_{DateTime.Now:yyyyMMdd}.csv");
+
+        using var writer = new StreamWriter(fileName);
+        using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
+
+        csv.WriteRecords(d1CalData);
+
+        await DisplayAlert("CSV Export", $"CSV file saved to {fileName}", "OK");
+    }
+
+    private async Task DisplayAlert(string title, string message, string cancel)
+    {
+   //     await Application.Current.MainPage.DisplayAlert(title, message, cancel);
+    }
+
+    private async Task DeleteData()
+    {
+        var response = await dataService.DeleteD1CAL();
+        if (response.IsSuccess)
+        {
+       //     await App.Current.MainPage.DisplayAlert("Success", "Datalogs have been recorded into the database.", "OK");
+        }
+        else
+        {
+       //     await App.Current.MainPage.DisplayAlert("Oops", response.ErrorMessage, "OK");
+        }
+        d1CalData = null;
+        getAllCalData.d1CalData = null;
+        TreeGridData = new List<D1SelfReferenceData>();
+
+        D1CalData _d1CalData = new D1CalData
+            {
+                DateTime = DateTime.Now,
+                Zero = (double)devicesDataModel[0, "hbmZero"],
+                Slope = (double)devicesDataModel[0, "hbmSlope"],
+                Health = (ushort)devicesDataModel[0, "hbmHealth"],
+            };
+        await dataService.PostD1CalData(_d1CalData);
+        getAllCalData.UpdateData();
+    }
+
+    void IDisposable.Dispose()
+    {
+        MainLayout.OnLanguageChange -= StateHasChanged;
+        devicesDataModel.OnCalStateChange -= Update;
+    }
+}

@@ -1,0 +1,20 @@
+﻿@keyframes blink {
+    0% {
+        background-color: red; /* 初始背景为红色 */
+    }
+
+    50% {
+        background-color: transparent; /* 闪烁时背景变为透明 */
+    }
+
+    100% {
+        background-color: red; /* 恢复为红色 */
+    }
+}
+
+/* 应用闪烁动画到 .lowgdp 类 */
+.lowgdp {
+    animation: blink 1s infinite; /* 动画持续时间为1秒，无限循环 */
+    color: white; /* 设置字体颜色为白色，以便在红色背景上清晰可见 */
+    padding: 5px; /* 适当的内边距来让背景色更好显示 */
+}

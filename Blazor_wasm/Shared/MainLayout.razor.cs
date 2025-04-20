@@ -1,0 +1,439 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Blazor_wasm.Models.ModbusModels;
+using Blazor_wasm.Pages;
+using Blazor_wasm.Pages.Components.Csharp;
+
+namespace Blazor_wasm.Shared
+{
+    public partial class MainLayout
+    {
+        private Timer dataTimer;
+        public static string[] hbmWashingMotionControl = new string[2];
+        public static string[] hbmCalMotionControl = new string[2];
+
+        public static string[] electrodeReturnUp = new string[2];
+        public static string[] electrodeReturnSpecifyLocation = new string[2];
+        public static string[] electrodeManualInchUp = new string[2];
+        public static string[] electrodeManualInchDown = new string[2];
+        public static string[] electrodeStandbyPointSetting = new string[2];
+
+        public static string[] washingValve = new string[2];
+        public static string[] reagValve = new string[2];
+        public static string[] bufAValve = new string[2];
+        public static string[] bufBValve = new string[2];
+        public static string[] airPressureValve = new string[2];
+
+        ushort[] serverSystemAlarm1ErrorCode = new ushort[2];
+        char[] serverSystemAlarm1ErrorCodeBinaryCharArray = new char[16];
+
+        ushort[] clientSystemAlarm1ErrorCode = new ushort[2];
+        char[] clientSystemAlarm1ErrorCodeBinaryCharArray = new char[16];
+
+        ushort[] serverDriverAlarmErrorCode = new ushort[2];
+        ushort[] clientDriverAlarmErrorCode = new ushort[2];
+
+        ushort[] serverCommonAlarmErrorCode = new ushort[1];
+        char[] serverCommonAlarmErrorCodeBinaryCharArray = new char[16];
+
+        ushort[] clientCommonAlarmErrorCode = new ushort[1];
+        char[] clientCommonAlarmErrorCodeBinaryCharArray = new char[16];
+
+        public static DevicesDataModelDTO response;
+
+        private void UpdateState()
+        {
+            dataTimer = new Timer(new TimerCallback(async (s) =>
+            {
+                response = await dataService.GetModbusDevicesData();
+                await InvokeAsync(async () =>
+                {
+                    for (int i = 0; i < 2; i++)
+                    {
+                        if ((double)devicesDataModel[i, "hbmSlope"] != response.hbmSlope[i])
+                        {
+                            getAllCalData.UpdateData();
+                            StateHasChanged();
+                        }
+
+                        await Task.Delay(2000);
+                        
+                        devicesDataModel[i, "hbmpH"] = response.hbmpH[i];
+                        if (i == 0)
+                            d1pH = (double)devicesDataModel[i, "hbmpH"];
+                        else if (i == 1)
+                            d2pH = (double)devicesDataModel[i, "hbmpH"];
+
+                        devicesDataModel[i, "hbmElec"] = response.hbmElec[i];
+                        devicesDataModel[i, "hbmTemp"] = response.hbmTemp[i];
+                        devicesDataModel[i, "hbmZero"] = response.hbmZero[i];
+                        devicesDataModel[i, "hbmSlope"] = response.hbmSlope[i];
+                        devicesDataModel[i, "hbmHealth"] = response.hbmHealth[i];
+
+                        devicesDataModel[i, "systemAlarm1"] = response.systemAlarm1[i];
+                        devicesDataModel[i, "driverAlarm"] = response.driverAlarm[i];
+
+                        devicesDataModel[i, "totalNumberOfSteps"] = response.totalNumberOfSteps[i];
+                        devicesDataModel[i, "totalCycleOfSteps"] = response.totalCycleOfSteps[i];
+                        devicesDataModel[i, "totalCurrentCycleOfSteps"] = response.totalCurrentCycleOfSteps[i];
+                        devicesDataModel[i, "currentStep"] = response.currentStep[i];
+                        devicesDataModel[i, "countdown"] = response.countdown[i];
+                        devicesDataModel[i, "countdownAdd"] = response.countdownAdd[i];
+
+                        devicesDataModel[i, "motionControl"] = response.motionControl[i];
+                        devicesDataModel[i, "hbmRunState"] = response.hbmRunState[i];
+                        devicesDataModel[i, "hbmFailRetryCount"] = response.hbmFailRetryCount[i];
+                        devicesDataModel[i, "hbmStbyLiftTimeSetting"] = response.hbmStbyLiftTimeSetting[i];
+                        devicesDataModel[i, "hoisterDownCycleSettingCount"] = response.hoisterDownCycleSettingCount[i];
+                        devicesDataModel[i, "hoisterDownCycleCount"] = response.hoisterDownCycleCount[i];
+                        devicesDataModel[i, "hoisterDownSpecifiedCountToSlowDown"] = response.hoisterDownSpecifiedCountToSlowDown[i];
+                        devicesDataModel[i, "hoisterLimitTriggerCount"] = response.hoisterLimitTriggerCount[i];
+                        devicesDataModel[i, "hoisterResetButtonPressCount"] = response.hoisterResetButtonPressCount[i];
+
+                        devicesDataModel[i, "electrodeCommand"] = response.electrodeCommand[i];
+                        devicesDataModel[i, "valveState"] = response.valveState[i];
+
+                        var system1MotionControlBinary = Convert.ToString((ushort)devicesDataModel[0, "motionControl"], 2);
+                        var _system1MotionControlBinaryCharArray = system1MotionControlBinary.ToCharArray();
+                        Array.Reverse(_system1MotionControlBinaryCharArray);
+
+                        var system2MotionControlBinary = Convert.ToString((ushort)devicesDataModel[1, "motionControl"], 2);
+                        var _system2MotionControlBinaryCharArray = system2MotionControlBinary.ToCharArray();
+                        Array.Reverse(_system2MotionControlBinaryCharArray);
+
+                        var d1ElectrodeCommandBinary = Convert.ToString((ushort)devicesDataModel[0, "electrodeCommand"], 2);
+                        var _d1ElectrodeCommandBinaryCharArray = d1ElectrodeCommandBinary.ToCharArray();
+                        Array.Reverse(_d1ElectrodeCommandBinaryCharArray);
+
+                        var d2ElectrodeCommandBinary = Convert.ToString((ushort)devicesDataModel[1, "electrodeCommand"], 2);
+                        var _d2ElectrodeCommandBinaryCharArray = d2ElectrodeCommandBinary.ToCharArray();
+                        Array.Reverse(_d2ElectrodeCommandBinaryCharArray);
+
+                        var d1valveStateBinary = Convert.ToString((ushort)devicesDataModel[0, "valveState"], 2);
+                        var _d1valveStateBinaryCharArray = d1valveStateBinary.ToCharArray();
+                        Array.Reverse(_d1valveStateBinaryCharArray);
+
+                        var d2valveStateBinary = Convert.ToString((ushort)devicesDataModel[1, "valveState"], 2);
+                        var _d2valveStateBinaryCharArray = d2valveStateBinary.ToCharArray();
+                        Array.Reverse(_d2valveStateBinaryCharArray);
+
+                        if (i == 0)
+                        {                         
+                            devicesDataModel[i, "preMotionCountdown"] = response.preMotionCountdown[i];
+                            devicesDataModel[i, "motorState"] = response.motorState[i];
+
+                            if (Pages.Index.waitFeedback == false)
+                            {
+                                if (_system1MotionControlBinaryCharArray.Contains('1'))
+                                {
+                                    if (_system1MotionControlBinaryCharArray.Length >= 4)
+                                        hbmWashingMotionControl[i] = _system1MotionControlBinaryCharArray[3] == '1' ? "yellow" : null;
+                                    if (_system1MotionControlBinaryCharArray.Length >= 5)
+                                        hbmCalMotionControl[i] = _system1MotionControlBinaryCharArray[4] == '1' ? "yellow" : null;                                 
+                                }
+                                else
+                                {
+                                    hbmWashingMotionControl[i] = null;
+                                    hbmCalMotionControl[i] = null;
+                                }
+
+                                if (_d1ElectrodeCommandBinaryCharArray.Length >= 1)
+                                    electrodeReturnUp[i] = _d1ElectrodeCommandBinaryCharArray[0] == '1' ? "yellow" : null;
+                                else if (_d1ElectrodeCommandBinaryCharArray.Length < 1)
+                                    electrodeReturnUp[i] = null;
+                                if (_d1ElectrodeCommandBinaryCharArray.Length >= 2)
+                                    electrodeReturnSpecifyLocation[i] = _d1ElectrodeCommandBinaryCharArray[1] == '1' ? "yellow" : null;
+                                else if (_d1ElectrodeCommandBinaryCharArray.Length < 2)
+                                    electrodeReturnSpecifyLocation[i] = null;
+                                //if (_d1ElectrodeCommandBinaryCharArray.Length >= 3)
+                                //    electrodeManualInchUp[i] = _d1ElectrodeCommandBinaryCharArray[2] == '1' ? "yellow" : null;
+                                //else if (_d1ElectrodeCommandBinaryCharArray.Length < 3)
+                                //    electrodeManualInchUp[i] = null;
+                                //if (_d1ElectrodeCommandBinaryCharArray.Length >= 4)
+                                //    electrodeManualInchDown[i] = _d1ElectrodeCommandBinaryCharArray[3] == '1' ? "yellow" : null;
+                                //else if (_d1ElectrodeCommandBinaryCharArray.Length < 4)
+                                //    electrodeManualInchDown[i] = null;
+                                if (_d1ElectrodeCommandBinaryCharArray.Length >= 6)
+                                    electrodeStandbyPointSetting[i] = _d1ElectrodeCommandBinaryCharArray[5] == '1' ? "yellow" : null;
+                                else if (_d1ElectrodeCommandBinaryCharArray.Length < 6)
+                                    electrodeStandbyPointSetting[i] = null;
+
+
+                                for (int j = 0; j < _d1valveStateBinaryCharArray.Length; j++)
+                                {
+                                    if (_d1valveStateBinaryCharArray.Contains('1'))
+                                    {
+                                        if (_d1valveStateBinaryCharArray[j] == '1')
+                                        {
+                                            switch (j)
+                                            {
+                                                case 0:
+                                                    washingValve[i] = "yellow";
+                                                    Pages.Index.d1ToggleInput[0] = true;
+                                                    break;
+                                                case 1:
+                                                    reagValve[i] = "yellow";
+                                                    Pages.Index.d1ToggleInput[1] = true;
+                                                    break;
+                                                case 2:
+                                                    bufAValve[i] = "yellow";
+                                                    Pages.Index.d1ToggleInput[2] = true;
+                                                    break;
+                                                case 3:
+                                                    bufBValve[i] = "yellow";
+                                                    Pages.Index.d1ToggleInput[3] = true;
+                                                    break;
+                                                case 4:
+                                                    airPressureValve[i] = "yellow";
+                                                    Pages.Index.d1ToggleInput[4] = true;
+                                                    break;
+                                            }                                          
+                                        }
+                                        else
+                                        {
+                                            switch (j)
+                                            {
+                                                case 0:
+                                                    washingValve[i] = null;
+                                                    Pages.Index.d1ToggleInput[0] = false;
+                                                    break;
+                                                case 1:
+                                                    reagValve[i] = null;
+                                                    Pages.Index.d1ToggleInput[1] = false;
+                                                    break;
+                                                case 2:
+                                                    bufAValve[i] = null;
+                                                    Pages.Index.d1ToggleInput[2] = false;
+                                                    break;
+                                                case 3:
+                                                    bufBValve[i] = null;
+                                                    Pages.Index.d1ToggleInput[3] = false;
+                                                    break;
+                                                case 4:
+                                                    airPressureValve[i] = null;
+                                                    Pages.Index.d1ToggleInput[4] = false;
+                                                    break;
+                                            }                                          
+                                        }
+                                    }
+                                    else
+                                    {
+                                        washingValve[i] = null;
+                                        reagValve[i] = null;
+                                        bufAValve[i] = null;
+                                        bufBValve[i] = null;
+                                        airPressureValve[i] = null;
+                                        Pages.Index.d1ToggleInput[0] = false;
+                                        Pages.Index.d1ToggleInput[1] = false;
+                                        Pages.Index.d1ToggleInput[2] = false;
+                                        Pages.Index.d1ToggleInput[3] = false;
+                                        Pages.Index.d1ToggleInput[4] = false;
+                                    }
+                                }
+                            }
+
+                        
+                            devicesDataModel[i, "commonAlarm"] = response.commonAlarm[i];
+                            serverCommonAlarmErrorCode[i] = response.commonAlarm[i];
+
+                            if (clientCommonAlarmErrorCode[i] != serverCommonAlarmErrorCode[i])
+                            {
+                                var serverCommonAlarmErrorCodeBinary = Convert.ToString(serverCommonAlarmErrorCode[i], 2);
+                                var _serverCommonAlarmErrorCodeBinaryCharArray = serverCommonAlarmErrorCodeBinary.ToCharArray();
+                                Array.Reverse(_serverCommonAlarmErrorCodeBinaryCharArray);
+
+                                var clientCommonAlarmErrorCodeBinary = Convert.ToString(clientCommonAlarmErrorCode[i], 2);
+                                var _clientCommonAlarmErrorCodeBinaryCharArray = clientCommonAlarmErrorCodeBinary.ToCharArray();
+                                Array.Reverse(_clientCommonAlarmErrorCodeBinaryCharArray);
+
+                                for (int j = 0; j < clientCommonAlarmErrorCodeBinaryCharArray.Length; j++)
+                                {
+                                    serverCommonAlarmErrorCodeBinaryCharArray[j] = (_serverCommonAlarmErrorCodeBinaryCharArray.Length > j) ? _serverCommonAlarmErrorCodeBinaryCharArray[j] : '0';
+                                    clientCommonAlarmErrorCodeBinaryCharArray[j] = (_clientCommonAlarmErrorCodeBinaryCharArray.Length > j) ? _clientCommonAlarmErrorCodeBinaryCharArray[j] : '0';
+
+                                    //if (clientCommonAlarmErrorCodeBinaryCharArray[j] < serverCommonAlarmErrorCodeBinaryCharArray[j])
+                                    //    toastService.ShowWarning(AlarmCollection.CollectionOfCommonAlarm[j]);
+
+                                    clientCommonAlarmErrorCodeBinaryCharArray[j] = serverCommonAlarmErrorCodeBinaryCharArray[j];
+                                }
+                                clientCommonAlarmErrorCode[i] = serverCommonAlarmErrorCode[i];
+                            }
+                        }
+
+                        if (i == 1)
+                        {
+                            if (Pages.Index.waitFeedback == false)
+                            {
+                                if (_system2MotionControlBinaryCharArray.Contains('1'))
+                                {
+                                    if (_system2MotionControlBinaryCharArray.Length >= 4)
+                                        hbmWashingMotionControl[i] = _system2MotionControlBinaryCharArray[3] == '1' ? "yellow" : null;
+                                    if (_system2MotionControlBinaryCharArray.Length >= 5)
+                                        hbmCalMotionControl[i] = _system2MotionControlBinaryCharArray[4] == '1' ? "yellow" : null;                                  
+                                }
+                                else
+                                {
+                                    hbmWashingMotionControl[i] = null;
+                                    hbmCalMotionControl[i] = null;
+                                }
+
+                                if (_d2ElectrodeCommandBinaryCharArray.Length >= 1)
+                                    electrodeReturnUp[i] = _d2ElectrodeCommandBinaryCharArray[0] == '1' ? "yellow" : null;
+                                else if (_d2ElectrodeCommandBinaryCharArray.Length < 1)
+                                    electrodeReturnUp[i] = null;
+                                if (_d2ElectrodeCommandBinaryCharArray.Length >= 2)
+                                    electrodeReturnSpecifyLocation[i] = _d2ElectrodeCommandBinaryCharArray[1] == '1' ? "yellow" : null;
+                                else if (_d2ElectrodeCommandBinaryCharArray.Length < 2)
+                                    electrodeReturnSpecifyLocation[i] = null;
+                                //if (_d2ElectrodeCommandBinaryCharArray.Length >= 3)
+                                //    electrodeManualInchUp[i] = _d2ElectrodeCommandBinaryCharArray[2] == '1' ? "yellow" : null;
+                                //else if (_d2ElectrodeCommandBinaryCharArray.Length < 3)
+                                //    electrodeManualInchUp[i] = null;
+                                //if (_d2ElectrodeCommandBinaryCharArray.Length >= 4)
+                                //    electrodeManualInchDown[i] = _d2ElectrodeCommandBinaryCharArray[3] == '1' ? "yellow" : null;
+                                //else if (_d2ElectrodeCommandBinaryCharArray.Length < 4)
+                                //    electrodeManualInchDown[i] = null;
+                                if (_d2ElectrodeCommandBinaryCharArray.Length >= 6)
+                                    electrodeStandbyPointSetting[i] = _d2ElectrodeCommandBinaryCharArray[5] == '1' ? "yellow" : null;
+                                else if (_d2ElectrodeCommandBinaryCharArray.Length < 6)
+                                    electrodeStandbyPointSetting[i] = null;
+
+
+                                for (int j = 0; j < _d2valveStateBinaryCharArray.Length; j++)
+                                {
+                                    if (_d2valveStateBinaryCharArray.Contains('1'))
+                                    {
+                                        if (_d2valveStateBinaryCharArray[j] == '1')
+                                        {
+                                            if (Pages.Index.waitFeedback == false)
+                                            {
+                                                switch (j)
+                                                {
+                                                    case 0:
+                                                        washingValve[i] = "yellow";
+                                                        Pages.Index.d2ToggleInput[0] = true;
+                                                        break;
+                                                    case 1:
+                                                        reagValve[i] = "yellow";
+                                                        Pages.Index.d2ToggleInput[1] = true;
+                                                        break;
+                                                    case 2:
+                                                        bufAValve[i] = "yellow";
+                                                        Pages.Index.d2ToggleInput[2] = true;
+                                                        break;
+                                                    case 3:
+                                                        bufBValve[i] = "yellow";
+                                                        Pages.Index.d2ToggleInput[3] = true;
+                                                        break;
+                                                    case 4:
+                                                        airPressureValve[i] = "yellow";
+                                                        Pages.Index.d2ToggleInput[4] = true;
+                                                        break;
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (Pages.Index.waitFeedback == false)
+                                            {
+                                                switch (j)
+                                                {
+                                                    case 0:
+                                                        washingValve[i] = null;
+                                                        Pages.Index.d2ToggleInput[0] = false;
+                                                        break;
+                                                    case 1:
+                                                        reagValve[i] = null;
+                                                        Pages.Index.d2ToggleInput[1] = false;
+                                                        break;
+                                                    case 2:
+                                                        bufAValve[i] = null;
+                                                        Pages.Index.d2ToggleInput[2] = false;
+                                                        break;
+                                                    case 3:
+                                                        bufBValve[i] = null;
+                                                        Pages.Index.d2ToggleInput[3] = false;
+                                                        break;
+                                                    case 4:
+                                                        airPressureValve[i] = null;
+                                                        Pages.Index.d2ToggleInput[4] = false;
+                                                        break;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (Pages.Index.waitFeedback == false)
+                                        {
+                                            washingValve[i] = null;
+                                            reagValve[i] = null;
+                                            bufAValve[i] = null;
+                                            bufBValve[i] = null;
+                                            airPressureValve[i] = null;
+                                            Pages.Index.d2ToggleInput[0] = false;
+                                            Pages.Index.d2ToggleInput[1] = false;
+                                            Pages.Index.d2ToggleInput[2] = false;
+                                            Pages.Index.d2ToggleInput[3] = false;
+                                            Pages.Index.d2ToggleInput[4] = false;
+                                        }
+                                    }
+                                }
+                            }                                
+                        }
+
+                        serverSystemAlarm1ErrorCode[i] = response.systemAlarm1[i];
+
+                        if (clientSystemAlarm1ErrorCode[i] != serverSystemAlarm1ErrorCode[i])
+                        {
+                            var serverSystemAlarm1ErrorCodeBinary = Convert.ToString(serverSystemAlarm1ErrorCode[i], 2);
+                            var _serverSystemAlarm1ErrorCodeBinaryCharArray = serverSystemAlarm1ErrorCodeBinary.ToCharArray();
+                            Array.Reverse(_serverSystemAlarm1ErrorCodeBinaryCharArray);
+
+                            var clientSystemAlarm1ErrorCodeBinary = Convert.ToString(clientSystemAlarm1ErrorCode[i], 2);
+                            var _clientSystemAlarm1ErrorCodeBinaryCharArray = clientSystemAlarm1ErrorCodeBinary.ToCharArray();
+                            Array.Reverse(_clientSystemAlarm1ErrorCodeBinaryCharArray);
+
+                            for (int j = 0; j < clientSystemAlarm1ErrorCodeBinaryCharArray.Length; j++)
+                            {
+                                serverSystemAlarm1ErrorCodeBinaryCharArray[j] = (_serverSystemAlarm1ErrorCodeBinaryCharArray.Length > j) ? _serverSystemAlarm1ErrorCodeBinaryCharArray[j] : '0';
+                                clientSystemAlarm1ErrorCodeBinaryCharArray[j] = (_clientSystemAlarm1ErrorCodeBinaryCharArray.Length > j) ? _clientSystemAlarm1ErrorCodeBinaryCharArray[j] : '0';
+
+                                //if (clientSystemAlarm1ErrorCodeBinaryCharArray[j] < serverSystemAlarm1ErrorCodeBinaryCharArray[j])
+                                //    toastService.ShowWarning($"#{i + 1}_" + AlarmCollection.CollectionOfSystemAlarm1[j]);
+
+                                clientSystemAlarm1ErrorCodeBinaryCharArray[j] = serverSystemAlarm1ErrorCodeBinaryCharArray[j];
+                            }
+                            clientSystemAlarm1ErrorCode[i] = serverSystemAlarm1ErrorCode[i];
+                        }
+
+                        serverDriverAlarmErrorCode[i] = response.driverAlarm[i];
+
+                        //if (clientDriverAlarmErrorCode[i] != serverDriverAlarmErrorCode[i])
+                        //    toastService.ShowWarning($"#{i + 1}_" + AlarmCollection.CollectionOfDriverAlarm[serverDriverAlarmErrorCode[i]]);
+                    }
+
+                    for (int i = 0; i < 12; i++)
+                    {
+                        devicesDataModel[i, "washingStepSetting"] = response.washingStepSetting[i];
+                        devicesDataModel[i, "washingStepTimeSetting"] = response.washingStepTimeSetting[i];
+                    }
+
+                    for (int i = 0; i < 24; i++)
+                    {
+                        devicesDataModel[i, "calStepSetting"] = response.calStepSetting[i];
+                        devicesDataModel[i, "calStepTimeSetting"] = response.calStepTimeSetting[i];
+                    }
+
+                    if (devicesDataModel.boolStateChanged || devicesDataModel.boolCalStateChanged || devicesDataModel.boolAlarmStateChanged)
+                    {
+                        devicesDataModel.TriggerNotifyChanged();
+                    }
+                });
+            }), null, TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(0.5));
+        }
+    }
+}

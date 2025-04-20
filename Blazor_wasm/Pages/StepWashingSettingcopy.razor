@@ -1,0 +1,22 @@
+@page "/stepWashingSettingcopy"
+@inject IDataService dataService
+@inject DevicesDataModel devicesDataModel
+@inject TouchKeyboard touchKeyboard
+@inject IStringLocalizer<MyStrings> localizer
+@implements IDisposable
+
+<StepSettingBase 
+    Title="@localizer[StringDescriptionModel.washing_step_setting]"
+    BaseRegisterAddress="600" />
+
+@code {
+    protected override void OnInitialized()
+    {
+        MainLayout.OnLanguageChange += StateHasChanged;
+    }
+
+    void IDisposable.Dispose()
+    {
+        MainLayout.OnLanguageChange -= StateHasChanged;
+    }
+}

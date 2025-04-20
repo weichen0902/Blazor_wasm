@@ -1,0 +1,69 @@
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
+	<BlazorWebAssemblyLoadAllGlobalizationData>true</BlazorWebAssemblyLoadAllGlobalizationData>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.11" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.11" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
+  </ItemGroup>
+	
+	<ItemGroup>
+		<PackageReference Include="Blazored.LocalStorage" Version="4.5.0" />
+		<PackageReference Include="Blazored.Toast" Version="4.2.1" />
+		<PackageReference Include="Blazorise.Bootstrap5" Version="1.7.0" />
+		<PackageReference Include="Blazorise.Charts.Streaming" Version="1.7.0" />
+		<PackageReference Include="Blazorise.Charts.Trendline" Version="1.7.0" />
+		<PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.7.0" />
+		<PackageReference Include="CsvHelper" Version="31.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Localization" Version="9.0.1" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="Syncfusion.Blazor.Buttons" Version="26.2.8" />
+		<PackageReference Include="Syncfusion.Blazor.Cards" Version="26.2.8" />
+		<PackageReference Include="Syncfusion.Blazor.DropDowns" Version="26.2.8" />
+		<PackageReference Include="Syncfusion.Blazor.Schedule" Version="26.2.8" />
+		<PackageReference Include="Syncfusion.Blazor.TreeGrid" Version="26.2.8" />
+		<PackageReference Include="System.Drawing.Common" Version="8.0.7" />
+
+
+		<PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
+		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.0.1" />
+
+		<PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="8.0.7" />
+		<PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
+		<PackageReference Include="NModbus" Version="3.0.81" />
+		<PackageReference Include="NModbus4" Version="2.1.0" />
+		<PackageReference Include="System.IO.Ports" Version="8.0.0" />
+		<PackageReference Include="Syncfusion.Blazor.Charts" Version="26.2.8" />
+		<PackageReference Include="Syncfusion.Blazor.CircularGauge" Version="26.2.8" />
+		<PackageReference Include="Syncfusion.Blazor.Grid" Version="26.2.8" />
+		<PackageReference Include="Syncfusion.Blazor.Layouts" Version="26.2.8" />
+		<PackageReference Include="Syncfusion.Blazor.Themes" Version="26.2.8" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Update="Resources\Languages\MyStrings.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>MyStrings.resx</DependentUpon>
+		</Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Update="Resources\Languages\MyStrings.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>MyStrings.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
+
+</Project>

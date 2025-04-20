@@ -1,0 +1,86 @@
+﻿@using Syncfusion.Blazor.CircularGauge
+
+@inject DevicesDataModel devicesDataModel
+@implements IDisposable
+
+<CircularGaugeAxes>
+    <CircularGaugeAxis StartAngle="230" EndAngle="130" Radius="75%" Minimum="0" Maximum="14">
+        <CircularGaugeAxisLineStyle Width="30" Color="#f6f7f9"></CircularGaugeAxisLineStyle>
+        <CircularGaugeAxisLabelStyle Position="Syncfusion.Blazor.CircularGauge.Position.Outside" Offset="25">
+            <CircularGaugeAxisLabelFont Size="12px" FontFamily="inherit">
+            </CircularGaugeAxisLabelFont>
+        </CircularGaugeAxisLabelStyle>
+        <CircularGaugeAxisMajorTicks Interval="2" Width="0">
+        </CircularGaugeAxisMajorTicks>
+        <CircularGaugeAxisMinorTicks Height="0" Width="0">
+        </CircularGaugeAxisMinorTicks>
+        <CircularGaugePointers>
+            <CircularGaugePointer Value="@hbmpH" Type="PointerType.RangeBar" PointerWidth="28" Radius="118%" Color="@color">
+                <CircularGaugePointerAnimation Duration="1800" />
+            </CircularGaugePointer>        
+            <CircularGaugePointer Value="@hbmpH" Type="PointerType.Marker" MarkerShape="GaugeShape.Rectangle" MarkerHeight="3" MarkerWidth="28" Radius="100%" Color="black">
+                <CircularGaugePointerAnimation Duration="1800" />
+            </CircularGaugePointer>
+        </CircularGaugePointers>
+        <CircularGaugeRanges>
+            <CircularGaugeRange Start="0" End="5.2" StartWidth="10" EndWidth="10" Radius="87%" Color="#e96920"></CircularGaugeRange>
+            <CircularGaugeRange Start="5.2" End="6" StartWidth="10" EndWidth="10" Radius="87%" Color="#f99d4c"></CircularGaugeRange>
+            <CircularGaugeRange Start="6" End="7.2" StartWidth="10" EndWidth="10" Radius="87%" Color="#7edfb4"></CircularGaugeRange>
+            <CircularGaugeRange Start="7.2" End="8" StartWidth="10" EndWidth="10" Radius="87%" Color="#f99d4c"></CircularGaugeRange>
+            <CircularGaugeRange Start="8" End="14" StartWidth="10" EndWidth="10" Radius="87%" Color="#e96920"></CircularGaugeRange>
+        </CircularGaugeRanges>
+        <CircularGaugeAnnotations>
+            <CircularGaugeAnnotation Angle="@GaugeOneAngle" ZIndex="1" Radius="@GaugeOneRadius">
+                <ContentTemplate>
+                    <div class="gaugeOneText" style="font-size:30px;">@hbmpH</div>
+                </ContentTemplate>
+            </CircularGaugeAnnotation>
+        </CircularGaugeAnnotations>
+    </CircularGaugeAxis>
+</CircularGaugeAxes>
+
+@code{
+    public double GaugeOneAngle = 160;
+    public string GaugeOneRadius = "25%";
+
+    private string input{ get; set; }
+    private double hbmpH{ get; set; }
+    private string color{ get; set; }
+
+    Timer timer = null;
+
+    protected override async void OnInitialized()
+    {
+        GaugeOneAngle = 182;
+        GaugeOneRadius = "2%";
+
+        MainLayout.OnLanguageChange += StateHasChanged;
+        devicesDataModel.OnStateChange += Update;
+        
+        Update();
+    }
+
+    private async void Update()
+    {
+        hbmpH = (double)devicesDataModel[0, "hbmpH"];
+        if (hbmpH >= 0 & hbmpH < 5.2)
+            color = "#e96920";
+        else if (hbmpH >= 5.2 & hbmpH < 6)
+            color = "#f99d4c";
+        else if (hbmpH >= 6 & hbmpH < 7.2)
+            color = "#7edfb4";
+        else if (hbmpH >= 7.2 & hbmpH < 8)
+            color = "#f99d4c";
+        else if (hbmpH >= 8 & hbmpH < 14)
+            color = "#e96920";
+
+        StateHasChanged();
+    }
+
+    void IDisposable.Dispose()
+    {
+        MainLayout.OnLanguageChange -= StateHasChanged;
+        devicesDataModel.OnStateChange -= Update;
+    }
+}
+                                        
