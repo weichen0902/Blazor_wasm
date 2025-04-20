@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Syncfusion.Blazor;
+using Blazored.LocalStorage;
 
 namespace Blazor_wasm
 {
@@ -25,13 +26,13 @@ namespace Blazor_wasm
             builder.RootComponents.Add<HeadOutlet>("head::after");
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-
+            builder.Services.AddBlazoredLocalStorage();
             builder.Services.AddHttpClient();
             builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
             builder.Services.AddAuthorizationCore();
             builder.Services.AddSingleton<DevicesDataModel>();
-            builder.Services.AddSingleton<GetAllCalData>();
-            builder.Services.AddSingleton<GetSchedule>();
+            builder.Services.AddScoped<GetAllCalData>();
+            builder.Services.AddScoped<GetSchedule>();
             builder.Services.AddSingleton<AlarmCollection>();
             builder.Services.AddScoped<TouchKeyboard>();
             builder.Services.AddScoped<PageTitleService>();
@@ -49,8 +50,8 @@ namespace Blazor_wasm
             CultureInfo.DefaultThreadCurrentUICulture = culture;
 
 
-            builder.Services.AddSingleton<IAppService, AppService>();
-            builder.Services.AddSingleton<IDataService, DataService>();
+            builder.Services.AddScoped<IAppService, AppService>();
+            builder.Services.AddScoped<IDataService, DataService>();
 
             await builder.Build().RunAsync();
         }
