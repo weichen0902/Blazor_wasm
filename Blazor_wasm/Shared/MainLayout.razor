@@ -439,7 +439,7 @@
 
     public static  FieldDataModel fieldData;
 
-    private string ipUrl = "36.226.249.60";
+    private string ipUrl = "localhost";
 
     public static string[] waterFieldRate = new string[]
         {         
@@ -464,6 +464,9 @@
         CircularGaugeLife2.onMaintainMsg += PublishMaintainMsg;
 
         Setting.Url = ipUrl;
+
+        if (Setting.UserBasicDetail == null)
+            NavManager.NavigateTo("/");            
 
         UpdateState();
         FieldLangrageChange();

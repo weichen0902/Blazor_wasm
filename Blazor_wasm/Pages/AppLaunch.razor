@@ -6,25 +6,31 @@
 @using Blazor_wasm.Models.AuthModels
 @using Blazor_wasm.Authentication
 
+@using Blazored.LocalStorage
 @using Newtonsoft.Json;
 @using Microsoft.AspNetCore.Components.Authorization
 
 @inject IAppService AppService
 @inject NavigationManager NavManager;
 @inject AuthenticationStateProvider authStateProvider
+@inject ILocalStorageService _localStorage
 
 @code {
 
     protected async override Task OnInitializedAsync()
     {
+
+        var response = await _localStorage.GetItemAsync<string>(nameof(Setting.UserBasicDetail));
+        Setting.UserBasicDetail = JsonConvert.DeserializeObject<UserBasicDetail>(response);
+
         if (Setting.UserBasicDetail != null)
         {
+            var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
+            await customAuthStateProvider.UpdateAuthenticationState(Setting.UserBasicDetail);
             NavManager.NavigateTo("/dashboard");
         }
         else
         {
-            var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
-            await customAuthStateProvider.UpdateAuthenticationState(new UserBasicDetail());
             NavManager.NavigateTo("/login");
         }            
     }
