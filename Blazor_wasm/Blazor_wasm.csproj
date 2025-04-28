@@ -51,19 +51,4 @@
 		<PackageReference Include="Syncfusion.Blazor.Themes" Version="26.2.8" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<Compile Update="Resources\Languages\MyStrings.Designer.cs">
-			<DesignTime>True</DesignTime>
-			<AutoGen>True</AutoGen>
-			<DependentUpon>MyStrings.resx</DependentUpon>
-		</Compile>
-	</ItemGroup>
-
-	<ItemGroup>
-		<EmbeddedResource Update="Resources\Languages\MyStrings.resx">
-			<Generator>ResXFileCodeGenerator</Generator>
-			<LastGenOutput>MyStrings.Designer.cs</LastGenOutput>
-		</EmbeddedResource>
-	</ItemGroup>
-
 </Project>

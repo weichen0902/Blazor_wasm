@@ -18,20 +18,45 @@
 @code {
 
     protected async override Task OnInitializedAsync()
-    {
-
-        var response = await _localStorage.GetItemAsync<string>(nameof(Setting.UserBasicDetail));
-        Setting.UserBasicDetail = JsonConvert.DeserializeObject<UserBasicDetail>(response);
-
-        if (Setting.UserBasicDetail != null)
+    {    
+        try
         {
-            var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
-            await customAuthStateProvider.UpdateAuthenticationState(Setting.UserBasicDetail);
-            NavManager.NavigateTo("/dashboard");
+            Console.WriteLine("開始讀取LocalStorage...");
+
+            var response = await _localStorage.GetItemAsync<string>(nameof(Setting.UserBasicDetail));
+
+            if (string.IsNullOrWhiteSpace(response))
+            {
+                Console.WriteLine("LocalStorage沒有資料或是空字串。");
+            }
+            else
+            {
+                try
+                {
+                    Setting.UserBasicDetail = JsonConvert.DeserializeObject<UserBasicDetail>(response);
+                    Console.WriteLine("反序列化成功。");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"反序列化失敗：{ex.Message}");
+                }
+            }
+
+            if (Setting.UserBasicDetail != null)
+            {
+                var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
+                await customAuthStateProvider.UpdateAuthenticationState(Setting.UserBasicDetail);
+                NavManager.NavigateTo("/dashboard");
+            }
+            else
+            {
+                NavManager.NavigateTo("/login");
+            }
         }
-        else
+        catch (Exception ex)
         {
+            Console.WriteLine($"整個初始化失敗：{ex.Message}");
             NavManager.NavigateTo("/login");
-        }            
+        }
     }
 }

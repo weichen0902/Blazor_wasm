@@ -153,5 +153,8 @@ namespace Blazor_wasm.Models.LanguagesModels
         public const string field_pure = "field_pure";
 
         public const string nav_ip_url = "nav_ip_url";
+
+        public const string system_manual = "system_manual";
+        public const string system_auto = "system_auto";
     }
 }

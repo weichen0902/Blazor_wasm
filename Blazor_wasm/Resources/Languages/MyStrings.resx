@@ -810,4 +810,10 @@
   <data name="dashboard_remaindays" xml:space="preserve">
     <value>Remaining days</value>
   </data>
+  <data name="system_manual" xml:space="preserve">
+    <value>Manual</value>
+  </data>
+  <data name="system_auto" xml:space="preserve">
+    <value>Auto</value>
+  </data>
 </root>

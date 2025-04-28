@@ -24,6 +24,51 @@
     <DashboardLayoutEvents Created="Created" ></DashboardLayoutEvents>
     
     <DashboardLayoutPanels>
+
+        <DashboardLayoutPanel Id="LayoutOne" Row="0" Col="0" SizeX="7" SizeY="8">
+            <HeaderTemplate>
+                <div>
+                    HBM-100D
+                    <a style="margin-right:auto">#1</a>
+                    <div style="display:flex; text-align:center; align-items:center; position:absolute; top:5px; right:5px; height:30px;">
+                        <button class="btn btn-primary" style="padding:0 0 0 0; width:30px;" @onclick="ShowModal1">...</button>
+                    </div>
+                </div>
+            </HeaderTemplate>
+            <ContentTemplate>
+                @if (IsInitialRender)
+                {
+                    <div style="height:280px; width:280px; position:relative; top:10px;">
+                        <SfCircularGauge ID="GaugeOne" @ref="GaugeOne" Width="100%" Height="100%" MoveToCenter="true">
+                            <CircularGauge1></CircularGauge1>
+                        </SfCircularGauge>
+                    </div>
+                    
+                }
+            </ContentTemplate>
+        </DashboardLayoutPanel>
+        <DashboardLayoutPanel Id="LayoutTwo" Row="0" Col="7" SizeX="7" SizeY="8">
+            <HeaderTemplate>
+                <div>
+                    HBM-100D
+                    <a style="margin-right:auto">#2</a>
+                    <div style="display:flex; text-align:center; align-items:center; position:absolute; top:5px; right:5px; height:30px;">
+                        <button class="btn btn-primary" style="padding:0 0 0 0; width:30px;" @onclick="ShowModal2">...</button>
+                    </div>
+                </div>
+            </HeaderTemplate>
+            <ContentTemplate>
+                @if (IsInitialRender)
+                {
+                    <div style="height:280px; width:280px; position:relative; top:10px;">
+                        <SfCircularGauge ID="GaugeTwo" @ref="GaugeTwo" Width="100%" Height="100%" MoveToCenter="true">
+                            <CircularGauge2></CircularGauge2>
+                        </SfCircularGauge>
+                    </div>                    
+                }
+            </ContentTemplate>
+        </DashboardLayoutPanel>
+
         <DashboardLayoutPanel Id="LayoutFive" Row="0" Col="14" SizeX="15" SizeY="8">
             <HeaderTemplate>
                 <div>
@@ -40,10 +85,441 @@
                 }
             </ContentTemplate>
         </DashboardLayoutPanel>
-       
+        <DashboardLayoutPanel Id="LayoutSix" Row="8" Col="14" SizeX="15" SizeY="8">
+            <HeaderTemplate>
+                <div>
+                    @localizer[StringDescriptionModel.dashboard_alarm_datalog]
+                    @* <div style="display:flex; text-align:center; align-items:center; position:absolute; top:5px; right:5px;">
+                        <button class="btn btn-primary" style="padding:0 5px 0 5px; " @onclick="ToDeleteAlarmData">@localizer[StringDescriptionModel.dashboard_clear]</button>
+                    </div>   *@    
+                    @{
+                        if (historyAlarmActive)
+                        {
+                            <div style="display:flex; text-align:center; align-items:center; position:absolute; top:5px; right:5px; height:30px;">
+                                <button class="btn btn-primary" style="padding:0 5px 0 5px; " onclick="@(()=> { ShowHistoryAlarmData(false); historyAlarmActive = false;})">@localizer[StringDescriptionModel.show_inalarm]</button>
+                            </div>
+                        }
+                        else
+                        {
+                            <div style="display:flex; text-align:center; align-items:center; position:absolute; top:5px; right:5px; height:30px;">
+                                <button class="btn btn-primary" style="padding:0 5px 0 5px; " onclick="@(()=> { ShowHistoryAlarmData(true); historyAlarmActive = true;})">@localizer[StringDescriptionModel.show_history_alarm]</button>
+                            </div>
+                        }
+                    }
+
+                </div>
+            </HeaderTemplate>
+            <ContentTemplate>
+                @if (IsInitialRender)
+                {
+                    <AlarmDataGrid></AlarmDataGrid>
+                }
+            </ContentTemplate>
+        </DashboardLayoutPanel>
+
+        <DashboardLayoutPanel Id="LayoutSeven" Row="8" Col="0" SizeX="7" SizeY="8">
+            <HeaderTemplate><div> @localizer[StringDescriptionModel.dashboard_elec_life] System#1 </div></HeaderTemplate>
+            <ContentTemplate>
+                
+                @if (IsInitialRender)
+                {
+                    <div style="
+                        position: absolute;
+                        top: 40px;
+                        left: 10px;
+                        font-size: calc(10px + 0.5vw);
+                        color: #333;
+                        white-space: nowrap;
+                        z-index: 1000;
+                        ">
+                        @MainLayout.fieldData.Field - 220
+                    </div>
+                    <div style="width:280px; height:280px" onmousedown="@(()=>NotifyMaintain1Msg())">                     
+                        <SfCircularGauge ID="GaugeThree" @ref="GaugeThree" Width="100%" Height="100%" MoveToCenter="true">
+                            <CircularGaugeLife1></CircularGaugeLife1>
+                        </SfCircularGauge>
+                    </div>
+                    <div style="position: absolute;
+                        bottom: 10px;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        font-size: calc(12px + 0.5vw);
+                        color: #333;
+                        white-space: nowrap;
+                        z-index: 1000;">
+                        @if (Setting.UserBasicDetail.Role == "Admin")
+                        {
+                            MainLayout.elapsedDays = (int)(DateTime.Now - startDate).TotalDays;
+                            MainLayout.remainDays = MainLayout.totalDays - MainLayout.elapsedDays;
+                            @*<div>
+                                <label>啟用日期：</label>
+                                <input type="date" @bind="startDate" />
+
+                                <label>已過天數：</label>
+                                <span>@elapsedDays</span>
+                            </div> *@
+                            <div>
+                                <label>@localizer[StringDescriptionModel.dashboard_remaindays]：</label>
+                                <span>@MainLayout.remainDays</span>
+                            </div>
+                        }
+                        else
+                        {
+                            MainLayout.elapsedDays = (int)(DateTime.Now - startDate).TotalDays;
+                            <div>
+                                <label>@localizer[StringDescriptionModel.dashboard_remaindays]：</label>
+                                <span>@MainLayout.remainDays</span>
+                            </div>
+                        }
+                    </div>
+                }
+            </ContentTemplate>
+        </DashboardLayoutPanel>
+        <DashboardLayoutPanel Id="LayoutEight" Row="8" Col="7" SizeX="7" SizeY="8">
+            <HeaderTemplate><div> @localizer[StringDescriptionModel.dashboard_elec_life] System#2 </div></HeaderTemplate>
+            <ContentTemplate>
+                @if (IsInitialRender)
+                {
+                    <div style="
+                        position: absolute;
+                        top: 40px;
+                        left: 10px;
+                        font-size: calc(10px + 0.5vw);
+                        color: #333;
+                        white-space: nowrap;
+                        z-index: 1000;
+                        ">
+                        @MainLayout.fieldData.Field - 220
+                    </div>
+                    <div style="width:100%; height:100%" onmousedown="@(()=>NotifyMaintain2Msg())">
+                        <SfCircularGauge ID="GaugeFour" @ref="GaugeFour" Width="100%" Height="100%" MoveToCenter="true">
+                            <CircularGaugeLife2></CircularGaugeLife2>
+                        </SfCircularGauge>
+                    </div>
+                    <div style="position: absolute;
+                        bottom: 10px;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        font-size: calc(12px + 0.5vw);
+                        color: #333;
+                        white-space: nowrap;
+                        z-index: 1000;">
+                        @if (Setting.UserBasicDetail.Role == "Admin")
+                        {
+                            MainLayout.elapsedDays = (int)(DateTime.Now - startDate).TotalDays;
+                            MainLayout.remainDays = MainLayout.totalDays - MainLayout.elapsedDays;
+                            @*<div>
+                                <label>啟用日期：</label>
+                                <input type="date" @bind="startDate" />
+
+                                <label>已過天數：</label>
+                                <span>@elapsedDays</span>
+                            </div> *@
+                            <div>
+                                <label>@localizer[StringDescriptionModel.dashboard_remaindays]：</label>
+                                <span>@MainLayout.remainDays</span>
+                            </div>
+                        }
+                        else
+                        {
+                            MainLayout.elapsedDays = (int)(DateTime.Now - startDate).TotalDays;
+                            <div>
+                                <label>@localizer[StringDescriptionModel.dashboard_remaindays]：</label>
+                                <span>@MainLayout.remainDays</span>
+                            </div>
+                        }
+                    </div>
+                }
+            </ContentTemplate>
+        </DashboardLayoutPanel>
+        
     </DashboardLayoutPanels>
 </SfDashboardLayout>
 
+<Modal @ref="modalRef1">
+    <ModalContent Centered>
+        <ModalHeader>
+            <ModalTitle>HBM-100D #1</ModalTitle>
+            <CloseButton />
+        </ModalHeader>
+        <ModalBody>
+            <Field>
+                <SfCard>
+                    <CardContent>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;">
+                            @foreach (var (label, key) in HbmReadings)
+                            {
+                                <div class="d-flex flex-column gap-2 text-center" style="font-size: 30px; ">
+                                    <label class="text-primary">@label:</label>
+                                    <span class="">@devicesDataModel[0, key]</span>
+                                </div>
+                            }
+                        </div>
+
+                        @if (Expand)
+                        {
+                            <hr />                           
+                            <div style="display: flex; flex-direction: row; justify-content: space-evenly;">
+                                <div class="control-wrapper flex-column d-flex align-items-center" style="height: 150px; width: 120px;">
+                                    <div style="font-size: 16px">@localizer[StringDescriptionModel.set_position]</div>                                   
+                                    <input min="0" max="10" type="number" 
+                                    class="form-control text-center"
+                                    style="border-radius:8px; width:60px; height:40px;" 
+                                    value="@hoisterDownCycleSettingCount[0]"
+                                    @onkeydown="@(e => HandleKeyDown(e))"
+                                    @onchange="@(async(e)=> await UpdateNumber(15, e))" />                                       
+                                    <button class="btn btn-outline-primary" style="width: 60px; height:50px; white-space: nowrap; font-size: 14px;" 
+                                    onclick="@(()=> WriteToRegister(1100, 64))">
+                                        Up
+                                    </button> 
+                                    <button class="btn btn-outline-primary " style="width: 60px; height:50px;  white-space: nowrap; font-size: 14px; " 
+                                    onclick="@(()=> WriteToRegister(1100, 128))">
+                                        Down
+                                    </button>
+                                    <div style="font-size: 16px" class="text-nowrap">
+                                        @localizer[StringDescriptionModel.current_position]: <span>@hoisterDownCycleCount[0]</span>
+                                    </div>
+                                </div>
+
+                                <div class="control-wrapper" style="display: flex; flex-direction: column; gap:15px; position:relative; left: 20px;">
+                                    <div class="row row-cols-2 g-3">
+                                        @{
+                                            var buttons1 = new List<ButtonModel>();
+
+                                            if(MainLayout.systemStatusIntBinaryCharArray[0] == '0')
+                                            {
+                                                buttons1 = new List<ButtonModel>
+                                                {
+                                                    new ButtonModel { Name = localizer[StringDescriptionModel.modal_a_wash], ButtonStyle = "btn-primary", Background = MainLayout.hbmWashingMotionControl[0], Address = 10, Value = 1 },
+                                                    new ButtonModel { Name = localizer[StringDescriptionModel.system_manual], ButtonStyle = "btn-primary", Background = MainLayout.systemStatus[0], Address = 0, Value = 1 },
+                                                    new ButtonModel { Name = localizer[StringDescriptionModel.modal_a_cal], ButtonStyle = "btn-success", Background = MainLayout.hbmCalMotionControl[0], Address = 10, Value = 2 },
+                                                    new ButtonModel { Name = localizer[StringDescriptionModel.modal_cylinder], ButtonStyle = "btn-outline-success", Background = MainLayout.airPressureValve[0], Address = 1100, Value = 16 },                                                                                                     
+                                                };
+                                            }
+                                            else
+                                            {
+                                                buttons1 = new List<ButtonModel>
+                                                {
+                                                    new ButtonModel { Name = localizer[StringDescriptionModel.modal_a_wash], ButtonStyle = "btn-primary", Background = MainLayout.hbmWashingMotionControl[0], Address = 10, Value = 1 },
+                                                    new ButtonModel { Name = localizer[StringDescriptionModel.system_auto], ButtonStyle = "btn-primary", Background = MainLayout.systemStatus[0], Address = 0, Value = 1 },
+                                                    new ButtonModel { Name = localizer[StringDescriptionModel.modal_a_cal], ButtonStyle = "btn-success", Background = MainLayout.hbmCalMotionControl[0], Address = 10, Value = 2 },
+                                                    new ButtonModel { Name = localizer[StringDescriptionModel.modal_cylinder], ButtonStyle = "btn-outline-success", Background = MainLayout.airPressureValve[0], Address = 1100, Value = 16 },
+                                                };
+                                            }
+                                        }
+
+                                        @foreach (var button in buttons1)
+                                        {
+                                            <div class="col text-center">
+                                                <button class="btn @button.ButtonStyle rounded-pill"
+                                                style="width:120px; height:50px; white-space: nowrap; font-size: 14px; background-color: @(button.Background)"
+                                                @onclick="@(async () => WriteToRegister(button.Address, button.Value))">
+                                                    @button.Name
+                                                </button>
+                                            </div>
+                                        }
+
+                                        <div class="col text-center">
+                                            <button class="btn btn-danger rounded-pill"
+                                            style="width:120px; height:50px; white-space: nowrap; font-size: 14px;"
+                                            @onclick="@(async() => WriteToRegister(10, 4))"
+                                            onmousedown="this.classList.remove('btn-danger'); this.classList.add('btn-outline-danger');"
+                                            onmouseup="this.classList.remove('btn-outline-danger'); this.classList.add('btn-danger');">
+                                                @localizer[StringDescriptionModel.modal_stop]
+                                            </button>
+                                        </div>
+                                        <div class="col text-center">
+                                            <button class="btn btn-outline-secondary rounded-pill"
+                                            style="width:120px; height:50px; white-space: nowrap; font-size: 14px;"
+                                            @onclick="@(async() => WriteToRegister(1100, 1024))" >
+                                                @localizer[StringDescriptionModel.modal_back_to_original]
+                                            </button>
+                                        </div>
+                                    </div>
+
+
+                                    <hr style="margin: 0; padding: 0;" />
+                                    <div class="row row-cols-2 g-3">
+                                        @{
+                                            var buttons2 = new[]
+                                            {
+                                                new { Name = localizer[StringDescriptionModel.modal_m_wash], Background = MainLayout.washingValve[0], RegisterValue = 1 },
+                                                new { Name = localizer[StringDescriptionModel.modal_m_reag], Background = MainLayout.reagValve[0], RegisterValue = 2 },
+                                                new { Name = localizer[StringDescriptionModel.modal_m_bufa], Background = MainLayout.bufAValve[0], RegisterValue = 4 },
+                                                new { Name = localizer[StringDescriptionModel.modal_m_bufb], Background = MainLayout.bufBValve[0], RegisterValue = 8 }
+                                            };
+                                        }
+                                        @foreach (var button in buttons2)
+                                        {
+                                            <div class="col text-center">
+                                                <button class="btn btn-outline-success rounded-pill"
+                                                style="width:120px; height:50px; background-color:@(button.Background);
+                                                            white-space: nowrap; font-size: 14px; padding: 0;"
+                                                @onclick="@(async () => WriteToRegister(1100, button.RegisterValue))">
+                                                    @button.Name
+                                                </button>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </CardContent>
+                    <CardContent EnableSeparator="true"></CardContent>
+                    <Syncfusion.Blazor.Cards.CardFooter>
+                        <CardFooterContent>
+                            <SfButton CssClass="e-outline" @onclick="@ExpandHandler">@(Expand ? "Collapse" : "Expand")</SfButton>
+                        </CardFooterContent>
+                    </Syncfusion.Blazor.Cards.CardFooter>
+                </SfCard>
+            </Field>
+        </ModalBody>
+    </ModalContent>
+</Modal>
+
+
+
+
+<Modal @ref="modalRef2">
+    <ModalContent Centered>
+        <ModalHeader>
+            <ModalTitle>HBM-100D #2</ModalTitle>
+            <CloseButton />
+        </ModalHeader>
+        <ModalBody>
+            <Field>
+                <SfCard>
+                    <CardContent>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;">
+                            @foreach (var (label, key) in HbmReadings)
+                            {
+                                <div class="d-flex flex-column gap-2 text-center" style="font-size: 30px; ">
+                                    <label class="text-primary">@label:</label>
+                                    <span class="">@devicesDataModel[1, key]</span>
+                                </div>
+                            }
+                        </div>
+
+                        @if (Expand)
+                        {
+                            <hr />
+
+                            <div style="display: flex; flex-direction: row; justify-content: space-evenly;">
+                                <div class="control-wrapper flex-column d-flex align-items-center justify-content-between" style="height: 150px; width: 120px;">
+                                    <div class="text-center" style="font-size: 16px;">@localizer[StringDescriptionModel.set_position]</div>
+                                    <input type="number" min="0" max="10" class="form-control text-center" 
+                                    style="border-radius:8px; width:60px; height:40px;"
+                                    value="@hoisterDownCycleSettingCount[1]"
+                                    @onkeydown="@(e => HandleKeyDown(e))"
+                                    @onchange="@(async(e)=> await UpdateNumber(25, e))" />
+                                    <button class="btn btn-outline-primary" style="width: 60px; height:50px; font-size: 14px; padding: 0;" 
+                                    onclick="@(()=> WriteToRegister(2100, 64))">
+                                        Up
+                                    </button>
+                                    <button class="btn btn-outline-primary" style="width: 60px; height:50px; font-size: 14px; padding: 0;" 
+                                    onclick="@(()=> WriteToRegister(2100, 128))">
+                                        Down
+                                    </button>
+                                    <div class="text-nowrap" style="font-size: 16px;">
+                                        @localizer[StringDescriptionModel.current_position]: <span>@hoisterDownCycleCount[1]</span>
+                                    </div>
+                                </div>
+                                <div class="control-wrapper" style="display: flex; flex-direction: column; gap:15px; position:relative; left: 20px;">
+                                    <div class="row row-cols-2 g-3">
+                                        @{
+                                            var buttons1 = new List<ButtonModel>();
+
+                                            if (MainLayout.systemStatusIntBinaryCharArray[0] == '0')
+                                            {
+                                                buttons1 = new List<ButtonModel>
+                                                {
+                                                    new ButtonModel { Name = localizer[StringDescriptionModel.modal_a_wash], ButtonStyle = "btn-primary", Background = MainLayout.hbmWashingMotionControl[0], Address = 20, Value = 1 },
+                                                    new ButtonModel { Name = localizer[StringDescriptionModel.system_manual], ButtonStyle = "btn-primary", Background = MainLayout.systemStatus[0], Address = 0, Value = 1 },
+                                                    new ButtonModel { Name = localizer[StringDescriptionModel.modal_a_cal], ButtonStyle = "btn-success", Background = MainLayout.hbmCalMotionControl[0], Address = 20, Value = 2 },
+                                                    new ButtonModel { Name = localizer[StringDescriptionModel.modal_cylinder], ButtonStyle = "btn-outline-success", Background = MainLayout.airPressureValve[0], Address = 2100, Value = 16 },
+                                                };
+                                            }
+                                            else
+                                            {
+                                                buttons1 = new List<ButtonModel>
+                                                {
+                                                    new ButtonModel { Name = localizer[StringDescriptionModel.modal_a_wash], ButtonStyle = "btn-primary", Background = MainLayout.hbmWashingMotionControl[0], Address = 20, Value = 1 },
+                                                    new ButtonModel { Name = localizer[StringDescriptionModel.system_auto], ButtonStyle = "btn-primary", Background = MainLayout.systemStatus[0], Address = 0, Value = 1 },
+                                                    new ButtonModel { Name = localizer[StringDescriptionModel.modal_a_cal], ButtonStyle = "btn-success", Background = MainLayout.hbmCalMotionControl[0], Address = 20, Value = 2 },
+                                                    new ButtonModel { Name = localizer[StringDescriptionModel.modal_cylinder], ButtonStyle = "btn-outline-success", Background = MainLayout.airPressureValve[0], Address = 2100, Value = 16 },
+                                                };
+                                            }
+                                        }
+
+                                        @foreach (var button in buttons1)
+                                        {
+                                            <div class="col text-center">
+                                                <button class="btn @button.ButtonStyle rounded-pill"
+                                                style="width:120px; height:50px; white-space: nowrap; font-size: 14px; background-color: @(button.Background)"
+                                                @onclick="@(async () => WriteToRegister(button.Address, button.Value))">
+                                                    @button.Name
+                                                </button>
+                                            </div>
+                                        }
+
+                                        <div class="col text-center">
+                                            <button class="btn btn-danger rounded-pill"
+                                            style="width:120px; height:50px; white-space: nowrap; font-size: 14px;"
+                                            @onclick="@(async() => WriteToRegister(20, 4))"
+                                            onmousedown="this.classList.remove('btn-danger'); this.classList.add('btn-outline-danger');"
+                                            onmouseup="this.classList.remove('btn-outline-danger'); this.classList.add('btn-danger');">
+                                                @localizer[StringDescriptionModel.modal_stop]
+                                            </button>
+                                        </div>
+
+                                        <div class="col text-center">
+                                            <button class="btn btn-outline-secondary rounded-pill"
+                                            style="width:120px; height:50px; white-space: nowrap; font-size: 14px;"
+                                            @onclick="@(async() => WriteToRegister(2100, 1024))"
+                                            onmousedown="this.classList.remove('btn-danger'); this.classList.add('btn-outline-danger');"
+                                            onmouseup="this.classList.remove('btn-outline-danger'); this.classList.add('btn-danger');">
+                                                @localizer[StringDescriptionModel.modal_back_to_original]
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <hr style="margin: 0; padding: 0;" />
+                                    <div class="row row-cols-2 g-3">
+                                        @{
+                                            var buttons4 = new[]
+                                            {
+                                                new { Name = localizer[StringDescriptionModel.modal_m_wash], Background = MainLayout.washingValve[1], RegisterValue = 1 },
+                                                new { Name = localizer[StringDescriptionModel.modal_m_reag], Background = MainLayout.reagValve[1], RegisterValue = 2 },
+                                                new { Name = localizer[StringDescriptionModel.modal_m_bufa], Background = MainLayout.bufAValve[1], RegisterValue = 4 },
+                                                new { Name = localizer[StringDescriptionModel.modal_m_bufb], Background = MainLayout.bufBValve[1], RegisterValue = 8 }
+                                            };
+                                        }
+                                        @foreach (var button in buttons4)
+                                        {
+                                            <div class="col text-center">
+                                                <button class="btn btn-outline-success rounded-pill"
+                                                style="width:120px; height:50px; background-color:@(button.Background);
+                                                            white-space: nowrap; font-size: 14px; padding: 0;"
+                                                @onclick="@(async () => WriteToRegister(2100, button.RegisterValue))">
+                                                    @button.Name
+                                                </button>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </CardContent>
+                    <CardContent EnableSeparator="true"></CardContent>
+                    <Syncfusion.Blazor.Cards.CardFooter>
+                        <CardFooterContent>
+                            <SfButton CssClass="e-outline" @onclick="@ExpandHandler">@(Expand ? "Collapse" : "Expand")</SfButton>
+                        </CardFooterContent>
+                    </Syncfusion.Blazor.Cards.CardFooter>
+                </SfCard>
+            </Field>
+        </ModalBody>
+    </ModalContent>
+</Modal>
 
 @code {
     SfCircularGauge GaugeOne;
@@ -116,28 +592,26 @@
         devicesDataModel.OnStateChange += Update;
         AlarmDataGrid.toChangeAlarmBtnState += StateHasChanged;
 
-        for (int i = 0; i < 1; i++)
+        for (int i = 0; i < 2; i++)
         {
             hoisterDownCycleSettingCount[i] = (ushort)devicesDataModel[i, "hoisterDownCycleSettingCount"];
         }
 
-        
-       if (Setting.UserBasicDetail.Role == "Admin" || Setting.UserBasicDetail.Role == "User")
+        if (Setting.UserBasicDetail.Role == "Admin" || Setting.UserBasicDetail.Role == "User")
         {
             getAllCalData.UpdateData();
             await Task.Delay(500);
             getSchedule.UpdateData();
             await Task.Delay(500);
-            Update();
         }
 
-        
+        Update();
     }
 
     private async void Update()
     {
-        for (int i = 0; i < 1; i++)
-        {          
+        for (int i = 0; i < 2; i++)
+        {
             hoisterDownCycleCount[i] = MainLayout.response.hoisterDownCycleCount[i];
         }
 
@@ -146,6 +620,7 @@
 
     public async void Created(Object args)
     {
+        await Task.Delay(100);
         IsInitialRender = true;
     }
 
@@ -224,14 +699,26 @@
         return Task.CompletedTask;
     }
 
-    private async Task UpdateNumber(ushort address, int value)
+    private async Task UpdateNumber(ushort address, Microsoft.AspNetCore.Components.ChangeEventArgs value)
     {
         PostModbusApiModel postModbusApiModel = new PostModbusApiModel();
 
         postModbusApiModel.startAddress = address;
-        postModbusApiModel.value = value;
+        postModbusApiModel.value = Convert.ToInt32(value.Value);
         await dataService.PostModbusDevicesData(postModbusApiModel);
         return;
+    }
+
+    private void HandleKeyDown(KeyboardEventArgs e)
+    {
+        bool isDigit = e.Key.Length == 1 && char.IsDigit(e.Key[0]);
+        bool isControl = e.Key == "Backspace" ||
+                        e.Key == "Delete" ||
+                        e.Key == "ArrowLeft" ||
+                        e.Key == "ArrowRight" ||
+                        e.Key == "Tab";
+
+        if (!isDigit && !isControl) return;
     }
 
     void IDisposable.Dispose()

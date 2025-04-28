@@ -46,5 +46,7 @@ namespace Blazor_wasm.Models.ModbusModels
         public ushort[] driverAlarm { get; set; } = new ushort[2];
         public ushort[] systemAlarm1 { get; set; } = new ushort[2];
         public ushort[] commonAlarm { get; set; } = new ushort[1];
+        public ushort[] manualAuto { get; set; } = new ushort[1];
+        public ushort[] systemStatus { get; set; } = new ushort[1];
     }
 }

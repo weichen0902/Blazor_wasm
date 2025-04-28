@@ -2104,6 +2104,24 @@ namespace Blazor_wasm.Resources.Languages {
         }
         
         /// <summary>
+        ///   查詢類似 Auto 的當地語系化字串。
+        /// </summary>
+        internal static string system_auto {
+            get {
+                return ResourceManager.GetString("system_auto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Manual 的當地語系化字串。
+        /// </summary>
+        internal static string system_manual {
+            get {
+                return ResourceManager.GetString("system_manual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Total Steps 的當地語系化字串。
         /// </summary>
         internal static string total_steps {

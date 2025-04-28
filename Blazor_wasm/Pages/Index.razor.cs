@@ -148,5 +148,14 @@ namespace Blazor_wasm.Pages
             PostModbusApiModel postModbusApiModel = new PostModbusApiModel() { startAddress = address, value = value };
             await dataService.PostModbusDevicesData(postModbusApiModel);
         }
+
+        public class ButtonModel
+        {
+            public string Name { get; set; }
+            public string ButtonStyle { get; set; }
+            public string Background { get; set; }
+            public ushort Address { get; set; }
+            public ushort Value { get; set; }
+        }
     }
 }

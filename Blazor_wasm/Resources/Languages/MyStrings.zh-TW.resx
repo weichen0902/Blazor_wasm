@@ -810,4 +810,10 @@
   <data name="dashboard_remaindays" xml:space="preserve">
     <value>剩餘天數</value>
   </data>
+  <data name="system_manual" xml:space="preserve">
+    <value>手動</value>
+  </data>
+  <data name="system_auto" xml:space="preserve">
+    <value>自動</value>
+  </data>
 </root>

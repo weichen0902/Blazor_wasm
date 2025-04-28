@@ -27,6 +27,8 @@ namespace Blazor_wasm.Shared
         public static string[] bufBValve = new string[2];
         public static string[] airPressureValve = new string[2];
 
+        public static string[] systemStatus = new string[1];
+
         ushort[] serverSystemAlarm1ErrorCode = new ushort[2];
         char[] serverSystemAlarm1ErrorCodeBinaryCharArray = new char[16];
 
@@ -41,6 +43,9 @@ namespace Blazor_wasm.Shared
 
         ushort[] clientCommonAlarmErrorCode = new ushort[1];
         char[] clientCommonAlarmErrorCodeBinaryCharArray = new char[16];
+
+        ushort[] systemStatusInt = new ushort[1];
+        public static char[] systemStatusIntBinaryCharArray = new char[16];
 
         public static DevicesDataModelDTO response;
 
@@ -60,7 +65,7 @@ namespace Blazor_wasm.Shared
                         }
 
                         await Task.Delay(2000);
-                        
+
                         devicesDataModel[i, "hbmpH"] = response.hbmpH[i];
                         if (i == 0)
                             d1pH = (double)devicesDataModel[i, "hbmpH"];
@@ -121,9 +126,14 @@ namespace Blazor_wasm.Shared
                         Array.Reverse(_d2valveStateBinaryCharArray);
 
                         if (i == 0)
-                        {                         
+                        {
                             devicesDataModel[i, "preMotionCountdown"] = response.preMotionCountdown[i];
                             devicesDataModel[i, "motorState"] = response.motorState[i];
+                            devicesDataModel[i, "systemStatus"] = response.systemStatus[i];
+
+                            var systemStatusInt = Convert.ToString((ushort)devicesDataModel[0, "systemStatus"], 2);
+                            var _systemStatusIntBinaryCharArray = systemStatusInt.ToCharArray();
+                            Array.Reverse(_systemStatusIntBinaryCharArray);
 
                             if (Pages.Index.waitFeedback == false)
                             {
@@ -132,7 +142,7 @@ namespace Blazor_wasm.Shared
                                     if (_system1MotionControlBinaryCharArray.Length >= 4)
                                         hbmWashingMotionControl[i] = _system1MotionControlBinaryCharArray[3] == '1' ? "yellow" : null;
                                     if (_system1MotionControlBinaryCharArray.Length >= 5)
-                                        hbmCalMotionControl[i] = _system1MotionControlBinaryCharArray[4] == '1' ? "yellow" : null;                                 
+                                        hbmCalMotionControl[i] = _system1MotionControlBinaryCharArray[4] == '1' ? "yellow" : null;
                                 }
                                 else
                                 {
@@ -190,7 +200,7 @@ namespace Blazor_wasm.Shared
                                                     airPressureValve[i] = "yellow";
                                                     Pages.Index.d1ToggleInput[4] = true;
                                                     break;
-                                            }                                          
+                                            }
                                         }
                                         else
                                         {
@@ -216,7 +226,7 @@ namespace Blazor_wasm.Shared
                                                     airPressureValve[i] = null;
                                                     Pages.Index.d1ToggleInput[4] = false;
                                                     break;
-                                            }                                          
+                                            }
                                         }
                                     }
                                     else
@@ -233,11 +243,48 @@ namespace Blazor_wasm.Shared
                                         Pages.Index.d1ToggleInput[4] = false;
                                     }
                                 }
+
+                                for (int j = 0; j < _systemStatusIntBinaryCharArray.Length; j++)
+                                {
+                                    if (_systemStatusIntBinaryCharArray.Contains('1'))
+                                    {
+                                        if (_systemStatusIntBinaryCharArray[j] == '1')
+                                        {
+                                            switch (j)
+                                            {
+                                                case 0:
+                                                    systemStatus[i] = "red";
+                                                    systemStatusIntBinaryCharArray[j] = _systemStatusIntBinaryCharArray[j];
+                                                    Pages.Index.d1ToggleInput[0] = true;
+                                                    break;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            switch (j)
+                                            {
+                                                case 0:
+                                                    systemStatus[i] = "blue";
+                                                    systemStatusIntBinaryCharArray[j] = _systemStatusIntBinaryCharArray[j];
+                                                    Pages.Index.d1ToggleInput[0] = false;
+                                                    break;
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        systemStatus[i] = "blue";
+                                        systemStatusIntBinaryCharArray[j] = _systemStatusIntBinaryCharArray[j];
+                                        Pages.Index.d1ToggleInput[0] = false;
+                                    }
+                                }
+
                             }
 
-                        
+
                             devicesDataModel[i, "commonAlarm"] = response.commonAlarm[i];
                             serverCommonAlarmErrorCode[i] = response.commonAlarm[i];
+
 
                             if (clientCommonAlarmErrorCode[i] != serverCommonAlarmErrorCode[i])
                             {
@@ -272,7 +319,7 @@ namespace Blazor_wasm.Shared
                                     if (_system2MotionControlBinaryCharArray.Length >= 4)
                                         hbmWashingMotionControl[i] = _system2MotionControlBinaryCharArray[3] == '1' ? "yellow" : null;
                                     if (_system2MotionControlBinaryCharArray.Length >= 5)
-                                        hbmCalMotionControl[i] = _system2MotionControlBinaryCharArray[4] == '1' ? "yellow" : null;                                  
+                                        hbmCalMotionControl[i] = _system2MotionControlBinaryCharArray[4] == '1' ? "yellow" : null;
                                 }
                                 else
                                 {
@@ -382,7 +429,7 @@ namespace Blazor_wasm.Shared
                                         }
                                     }
                                 }
-                            }                                
+                            }
                         }
 
                         serverSystemAlarm1ErrorCode[i] = response.systemAlarm1[i];
@@ -419,13 +466,13 @@ namespace Blazor_wasm.Shared
                     for (int i = 0; i < 12; i++)
                     {
                         devicesDataModel[i, "washingStepSetting"] = response.washingStepSetting[i];
-                        devicesDataModel[i, "washingStepTimeSetting"] = response.washingStepTimeSetting[i];
+                        devicesDataModel[i, "washingStepTimeSetting"] = (response.washingStepTimeSetting[i]);
                     }
 
                     for (int i = 0; i < 24; i++)
                     {
                         devicesDataModel[i, "calStepSetting"] = response.calStepSetting[i];
-                        devicesDataModel[i, "calStepTimeSetting"] = response.calStepTimeSetting[i];
+                        devicesDataModel[i, "calStepTimeSetting"] = (response.calStepTimeSetting[i]);
                     }
 
                     if (devicesDataModel.boolStateChanged || devicesDataModel.boolCalStateChanged || devicesDataModel.boolAlarmStateChanged)

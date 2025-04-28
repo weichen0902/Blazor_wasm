@@ -58,6 +58,8 @@ namespace Blazor_wasm.Models.ModbusModels
         private ushort[] systemAlarm1 = new ushort[2];
         private ushort[] commonAlarm = new ushort[1];
 
+        public ushort[]? manualAuto = new ushort[1];
+        public ushort[]? systemStatus = new ushort[1];
         public void TriggerNotifyChanged()
         {
             if (boolStateChanged)
@@ -149,6 +151,10 @@ namespace Blazor_wasm.Models.ModbusModels
                         return systemAlarm1[index];
                     case "commonAlarm":
                         return commonAlarm[index];
+                    case "manualAuto":
+                        return manualAuto[index];
+                    case "systemStatus":
+                        return systemStatus[index];
                     default:
                         throw new ArgumentException("Invalid array type.");
                 }
@@ -207,7 +213,7 @@ namespace Blazor_wasm.Models.ModbusModels
                         case "washingStepTimeSetting":
                             if (washingStepTimeSetting[index] != (ushort)value)
                             {
-                                washingStepTimeSetting[index] = (ushort)value;
+                                washingStepTimeSetting[index] = Convert.ToUInt16((ushort)value/10);                               
                                 boolStateChanged = true;
                             }
                             break;
@@ -221,7 +227,7 @@ namespace Blazor_wasm.Models.ModbusModels
                         case "calStepTimeSetting":
                             if (calStepTimeSetting[index] != (ushort)value)
                             {
-                                calStepTimeSetting[index] = (ushort)value;
+                                calStepTimeSetting[index] = Convert.ToUInt16((ushort)value / 10);
                                 boolStateChanged = true;
                             }
                             break;
@@ -365,6 +371,18 @@ namespace Blazor_wasm.Models.ModbusModels
                             {
                                 commonAlarm[index] = (ushort)value;
                                 boolAlarmStateChanged = true;
+                            }
+                            break;
+                        case "manualAuto":
+                            if (manualAuto[index] != (ushort)value)
+                            {
+                                manualAuto[index] = (ushort)value;                    
+                            }
+                            break;
+                        case "systemStatus":
+                            if (systemStatus[index] != (ushort)value)
+                            {
+                                systemStatus[index] = (ushort)value;
                             }
                             break;
                         default:
