@@ -467,7 +467,7 @@
             {
                 var js = (IJSInProcessRuntime)JS;
                 js.InvokeVoid("blazorCulture.set", value.Name);//設定JS中blazorCulture的值
-                NavManager.NavigateTo(NavManager.Uri, forceLoad: true);
+                NavManager.NavigateTo(NavManager.Uri, forceLoad: true);				
             }
         }
     }
