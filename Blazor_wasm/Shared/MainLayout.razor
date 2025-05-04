@@ -112,7 +112,7 @@
                             {
                                 <ul class="nav flex-column">
                                     <li class="nav-item">
-                                        <NavLink class="nav-link" href="streamingChart" @onclick="HideFlyout">
+                                        <NavLink class="nav-link" href="liveChart" @onclick="HideFlyout">
                                             <div class="d-flex align-items-center">
                                                 <span class="oi oi-graph" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
                                                 <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.live_chart]</span>
@@ -667,7 +667,7 @@
         HideFlyout();
         var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
         await customAuthStateProvider.UpdateAuthenticationState(new UserBasicDetail());
-        disposeTimer.Invoke();
+        
         await _localStorage.RemoveItemAsync("UserBasicDetail");
         Setting.UserBasicDetail = null;
         NavManager.NavigateTo("/login");
