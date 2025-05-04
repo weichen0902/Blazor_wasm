@@ -370,6 +370,10 @@
             <Field>
                 <div class="col-lg-12 control-section">
                     <div class="control-wrapper">                   
+                        @* <SfDropDownList TValue="string" TItem="LanguagesModel" Placeholder=@localizer[StringDescriptionModel.modal_ent_select_language] DataSource="@languagesModel" @bind-Value="@dropDownLanguageBindValue">
+                            <DropDownListFieldSettings Value="SelectLanguage" Text="Name"></DropDownListFieldSettings>
+                            <DropDownListEvents TValue="string" TItem="LanguagesModel" ValueChange="OnDropDownLanguageValueChange"></DropDownListEvents>
+                        </SfDropDownList>    *@
                         <SfDropDownList TValue="string" TItem="LanguagesModel" Placeholder=@localizer[StringDescriptionModel.modal_ent_select_language] DataSource="@languagesModel" @bind-Value="@dropDownLanguageBindValue">
                             <DropDownListFieldSettings Value="SelectLanguage" Text="Name"></DropDownListFieldSettings>
                             <DropDownListEvents TValue="string" TItem="LanguagesModel" ValueChange="OnDropDownLanguageValueChange"></DropDownListEvents>
@@ -452,6 +456,26 @@
     {
         public string ID { get; set; }
         public string Text { get; set; }
+    }
+
+    CultureInfo[] supportedCultures = new[]
+    {
+        new CultureInfo("en-US"),
+        new CultureInfo("zh-TW"),
+    };
+
+    CultureInfo Culture
+    {
+        get => CultureInfo.CurrentCulture;
+        set
+        {
+            if (CultureInfo.CurrentCulture != value)
+            {
+                var js = (IJSInProcessRuntime)JS;
+                js.InvokeVoid("blazorCulture.set", value.Name);//設定JS中blazorCulture的值
+                NavManager.NavigateTo(NavManager.Uri, forceLoad: true);
+            }
+        }
     }
 
     protected override async Task OnInitializedAsync()
@@ -587,8 +611,7 @@
         {
             dropDownLanguageBindValue = args.Value;
             var culture = new CultureInfo(dropDownLanguageBindValue);
-            CultureInfo.DefaultThreadCurrentCulture = culture;
-            CultureInfo.DefaultThreadCurrentUICulture = culture;
+            Culture = culture;
         }
 
         NotifyLanguageChanged();

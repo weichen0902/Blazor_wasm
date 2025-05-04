@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Syncfusion.Blazor;
 using Blazored.LocalStorage;
+using Microsoft.JSInterop;
 
 namespace Blazor_wasm
 {
@@ -44,14 +45,30 @@ namespace Blazor_wasm
             builder.Services.AddSyncfusionBlazor();
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzM2MjgzNEAzMjM2MmUzMDJlMzBFWUpiYU1GSmFpL0tLaVdEaCtRV0cxSnNxTmZZNUVha0JzQXpXZG5SclowPQ==");
 
-            builder.Services.AddLocalization();
-            var culture = new CultureInfo("en-US");
-            CultureInfo.DefaultThreadCurrentCulture = culture;
-            CultureInfo.DefaultThreadCurrentUICulture = culture;
-
+            //builder.Services.AddLocalization();
+            //var culture = new CultureInfo("en-US");
+            //CultureInfo.DefaultThreadCurrentCulture = culture;
+            //CultureInfo.DefaultThreadCurrentUICulture = culture;
 
             builder.Services.AddScoped<IAppService, AppService>();
             builder.Services.AddScoped<IDataService, DataService>();
+
+            builder.Services.AddLocalization();
+            var host = builder.Build();
+            CultureInfo culture;
+            var js = host.Services.GetRequiredService<IJSRuntime>();
+            var result = await js.InvokeAsync<string>("blazorCulture.get");//取得 JS localStorage的儲存內容
+            if (result != null)
+            {
+                culture = new CultureInfo(result);
+            }
+            else
+            {
+                culture = new CultureInfo("en-US");
+                await js.InvokeVoidAsync("blazorCulture.set", "en-US");
+            }
+            CultureInfo.DefaultThreadCurrentCulture = culture;
+            CultureInfo.DefaultThreadCurrentUICulture = culture;
 
             await builder.Build().RunAsync();
         }

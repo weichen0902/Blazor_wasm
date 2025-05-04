@@ -38,7 +38,7 @@
             <ContentTemplate>
                 @if (IsInitialRender)
                 {
-                    <div style="height:280px; width:280px; position:relative; top:10px;">
+                    <div style="height:100%; width:100%;">
                         <SfCircularGauge ID="GaugeOne" @ref="GaugeOne" Width="100%" Height="100%" MoveToCenter="true">
                             <CircularGauge1></CircularGauge1>
                         </SfCircularGauge>
@@ -60,7 +60,7 @@
             <ContentTemplate>
                 @if (IsInitialRender)
                 {
-                    <div style="height:280px; width:280px; position:relative; top:10px;">
+                    <div style="height:100%; width:100%;">
                         <SfCircularGauge ID="GaugeTwo" @ref="GaugeTwo" Width="100%" Height="100%" MoveToCenter="true">
                             <CircularGauge2></CircularGauge2>
                         </SfCircularGauge>
@@ -134,7 +134,7 @@
                         ">
                         @MainLayout.fieldData.Field - 220
                     </div>
-                    <div style="width:280px; height:280px" onmousedown="@(()=>NotifyMaintain1Msg())">                     
+                    <div style="width:100%; height:100%;" onmousedown="@(()=>NotifyMaintain1Msg())">
                         <SfCircularGauge ID="GaugeThree" @ref="GaugeThree" Width="100%" Height="100%" MoveToCenter="true">
                             <CircularGaugeLife1></CircularGaugeLife1>
                         </SfCircularGauge>
@@ -191,7 +191,7 @@
                         ">
                         @MainLayout.fieldData.Field - 220
                     </div>
-                    <div style="width:100%; height:100%" onmousedown="@(()=>NotifyMaintain2Msg())">
+                    <div style="width:100%; height:100%;" onmousedown="@(()=>NotifyMaintain2Msg())">
                         <SfCircularGauge ID="GaugeFour" @ref="GaugeFour" Width="100%" Height="100%" MoveToCenter="true">
                             <CircularGaugeLife2></CircularGaugeLife2>
                         </SfCircularGauge>

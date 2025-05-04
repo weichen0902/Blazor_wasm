@@ -57,7 +57,14 @@
 
     <script src="_content/BootstrapBlazor/js/bootstrap.blazor.bundle.min.js"></script>
 
-    
+    <script>
+        window.blazorCulture = {
+            get: () => window.localStorage['BlazorCulture'],
+            set: (value) => window.localStorage['BlazorCulture'] = value
+        };
+    </script>
+
+
 </body>
 
 </html>

@@ -5,6 +5,7 @@
 @using Blazored.LocalStorage
 @using Newtonsoft.Json;
 @using Microsoft.AspNetCore.Components.Authorization
+@using System.Globalization
 
 @inject IAppService AppService;
 @inject AuthenticationStateProvider authStateProvider
@@ -13,6 +14,8 @@
 @inject DevicesDataModel devicesDataModel
 @inject IStringLocalizer<MyStrings> localizer
 @inject ILocalStorageService _localStorage
+@inject IJSRuntime JS
+@inject NavigationManager Nav
 @implements IDisposable
 
 <div class="container">
@@ -51,8 +54,6 @@
         <br />
     </EditForm>
 </div>
-
-
 
 @code {
 
