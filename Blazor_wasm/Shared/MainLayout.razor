@@ -477,26 +477,18 @@
         base.OnInitializedAsync();
         Login.flagFunc += LogoutAsync;
         pageTitleService.OnChange += StateHasChanged;
-        OnLanguageChange += FieldLangrageChange;
+        OnLanguageChange += FieldLanguageChange;
         CircularGaugeLife1.onMaintainMsg += PublishMaintainMsg;
         CircularGaugeLife2.onMaintainMsg += PublishMaintainMsg;
 
         Setting.Url = ipUrl;
 
         if (Setting.UserBasicDetail == null)
-            NavManager.NavigateTo("/");            
+            NavManager.NavigateTo("/");      
 
         UpdateState();
-        FieldLangrageChange();
+        FieldLanguageChange();
         await RefreshFieldData();
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {       
-        if (firstRender)
-        {
-            await RefreshFieldData();
-        }
     }
 
     private void PublishMaintainMsg(string str, double value)
@@ -511,7 +503,7 @@
             toastService.ShowError(str);
     }
 
-    private void FieldLangrageChange()
+    private void FieldLanguageChange()
     {
         FieldData = new List<DropDownModel>
         {
@@ -625,6 +617,7 @@
 
     private async Task RefreshFieldData()
     {
+        await Task.Delay(100);
         fieldData = await dataService.GetFieldData();
 
         dropDownFieldBindValue = fieldData.Field == null ? waterFieldRate[0] :

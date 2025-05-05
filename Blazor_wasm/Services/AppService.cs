@@ -87,7 +87,7 @@ namespace Blazor_wasm.Services
             using (var client = new HttpClient())
             {
                 var url = $"{Setting.BaseUrl}{APIs.GetUser}?email={Setting.UserBasicDetail.Email}";
-                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
 
                 var result = await client.GetAsync(url);
 				if (result.IsSuccessStatusCode)
@@ -114,7 +114,7 @@ namespace Blazor_wasm.Services
 			using (var client = new HttpClient())
 			{
 				var url = $"{Setting.BaseUrl}{APIs.GetAllUsers}";
-				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
+				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
 				
 				var result = await client.GetAsync(url);
 				if (result.IsSuccessStatusCode)
@@ -204,7 +204,7 @@ namespace Blazor_wasm.Services
 			using (var client = new HttpClient())
 			{
 				var url = $"{Setting.BaseUrl}{APIs.UpdateUser}";
-				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
+				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
 				var serializedStr = JsonConvert.SerializeObject(updateModel);
 				var response = await client.PutAsync(url, new StringContent(serializedStr, Encoding.UTF8, "application/json"));
 				if (response.IsSuccessStatusCode)
@@ -227,7 +227,7 @@ namespace Blazor_wasm.Services
 			{
 				var url = $"{Setting.BaseUrl}{APIs.DeleteUsers}";
 
-				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
+				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
 				var request = new HttpRequestMessage(HttpMethod.Delete, url)
 				{
 					Content = new StringContent(JsonConvert.SerializeObject(userEmail), Encoding.UTF8, "application/json")

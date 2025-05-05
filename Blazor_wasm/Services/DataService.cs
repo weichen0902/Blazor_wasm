@@ -33,7 +33,7 @@ namespace Blazor_wasm.Services
                 using (var client = new HttpClient())
                 {
                     var url = $"{Setting.BaseUrl}{APIs.GetpH}?startTimestamp={startTimestamp}&endTimestamp={endTimestamp}";
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _appService.accessToken);
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
 
                     var result = await client.GetAsync(url);
                     if (result.IsSuccessStatusCode)
@@ -67,7 +67,7 @@ namespace Blazor_wasm.Services
                 using (var client = new HttpClient())
                 {
                     var url = $"{Setting.BaseUrl}{APIs.GetD1AllCAL}";
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _appService.accessToken);
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
 
                     var result = await client.GetAsync(url);
                     if (result.IsSuccessStatusCode)
@@ -102,7 +102,7 @@ namespace Blazor_wasm.Services
                 using (var client = new HttpClient())
                 {
                     var url = $"{Setting.BaseUrl}{APIs.GetD2AllCAL}";
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _appService.accessToken);
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
 
                     var result = await client.GetAsync(url);
                     if (result.IsSuccessStatusCode)
@@ -137,7 +137,7 @@ namespace Blazor_wasm.Services
                 using (var client = new HttpClient())
                 {
                     var url = $"{Setting.BaseUrl}{APIs.GetAllAlarm}";
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _appService.accessToken);
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
 
                     var result = await client.GetAsync(url);
                     if (result.IsSuccessStatusCode)
@@ -171,7 +171,7 @@ namespace Blazor_wasm.Services
                 using (var client = new HttpClient())
                 {
                     var url = $"{Setting.BaseUrl}{APIs.GetScheduler}";
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _appService.accessToken);
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
 
                     var result = await client.GetAsync(url);
                     if (result.IsSuccessStatusCode)
@@ -205,7 +205,7 @@ namespace Blazor_wasm.Services
                 using (var client = new HttpClient())
                 {
                     var url = $"{Setting.BaseUrl}{APIs.GetModbusDevicesData}";
-                       client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _appService.accessToken);
+                       client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
 
                     var result = await client.GetAsync(url);
                     if (result.IsSuccessStatusCode)
@@ -240,7 +240,7 @@ namespace Blazor_wasm.Services
                 using (var client = new HttpClient())
                 {
                     var url = $"{Setting.BaseUrl}{APIs.GetFieldData}";
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _appService.accessToken);
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
 
                     var result = await client.GetAsync(url);
                     if (result.IsSuccessStatusCode)
@@ -276,7 +276,7 @@ namespace Blazor_wasm.Services
                 using (var client = new HttpClient())
                 {
                     var url = $"{Setting.BaseUrl}{APIs.PostpH}";
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _appService.accessToken);
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
                     var serializedStr = JsonConvert.SerializeObject(realTimepH);
                     var response = await client.PostAsync(url, new StringContent(serializedStr, Encoding.UTF8, "application/json"));
                     if (response.IsSuccessStatusCode)
@@ -311,7 +311,7 @@ namespace Blazor_wasm.Services
                 using (var client = new HttpClient())
                 {
                     var url = $"{Setting.BaseUrl}{APIs.PostD1CALList}";
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _appService.accessToken);
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
                     var serializedStr = JsonConvert.SerializeObject(data);
                     var response = await client.PostAsync(url, new StringContent(serializedStr, Encoding.UTF8, "application/json"));
                     if (response.IsSuccessStatusCode)
@@ -346,7 +346,7 @@ namespace Blazor_wasm.Services
                 using (var client = new HttpClient())
                 {
                     var url = $"{Setting.BaseUrl}{APIs.PostD2CALList}";
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _appService.accessToken);
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
                     var serializedStr = JsonConvert.SerializeObject(data);
                     var response = await client.PostAsync(url, new StringContent(serializedStr, Encoding.UTF8, "application/json"));
                     if (response.IsSuccessStatusCode)
@@ -381,7 +381,7 @@ namespace Blazor_wasm.Services
                 using (var client = new HttpClient())
                 {
                     var url = $"{Setting.BaseUrl}{APIs.PostD1CalData}";
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _appService.accessToken);
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
                     var serializedStr = JsonConvert.SerializeObject(data);
                     var response = await client.PostAsync(url, new StringContent(serializedStr, Encoding.UTF8, "application/json"));
                     if (response.IsSuccessStatusCode)
@@ -416,7 +416,7 @@ namespace Blazor_wasm.Services
                 using (var client = new HttpClient())
                 {
                     var url = $"{Setting.BaseUrl}{APIs.PostD2CalData}";
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _appService.accessToken);
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
                     var serializedStr = JsonConvert.SerializeObject(data);
                     var response = await client.PostAsync(url, new StringContent(serializedStr, Encoding.UTF8, "application/json"));
                     if (response.IsSuccessStatusCode)
@@ -451,7 +451,7 @@ namespace Blazor_wasm.Services
                 using (var client = new HttpClient())
                 {
                     var url = $"{Setting.BaseUrl}{APIs.PostAlarmData}";
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _appService.accessToken);
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
                     var serializedStr = JsonConvert.SerializeObject(alarmData);
                     var response = await client.PostAsync(url, new StringContent(serializedStr, Encoding.UTF8, "application/json"));
                     if (response.IsSuccessStatusCode)
@@ -486,7 +486,7 @@ namespace Blazor_wasm.Services
                 using (var client = new HttpClient())
                 {
                     var url = $"{Setting.BaseUrl}{APIs.PostScheduler}";
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _appService.accessToken);
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
                     var serializedStr = JsonConvert.SerializeObject(schedulerData);
                     var response = await client.PostAsync(url, new StringContent(serializedStr, Encoding.UTF8, "application/json"));
                     if (response.IsSuccessStatusCode)
@@ -521,7 +521,7 @@ namespace Blazor_wasm.Services
                 using (var client = new HttpClient())
                 {
                     var url = $"{Setting.BaseUrl}{APIs.PostModbusDevicesData}";
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _appService.accessToken);
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
                     var serializedStr = JsonConvert.SerializeObject(postModbusApiModel);
                     var response = await client.PostAsync(url, new StringContent(serializedStr, Encoding.UTF8, "application/json"));
                     if (response.IsSuccessStatusCode)
@@ -556,7 +556,7 @@ namespace Blazor_wasm.Services
                 using (var client = new HttpClient())
                 {
                     var url = $"{Setting.BaseUrl}{APIs.PostFieldData}";
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _appService.accessToken);
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
                     var serializedStr = JsonConvert.SerializeObject(fieldData);
                     var response = await client.PostAsync(url, new StringContent(serializedStr, Encoding.UTF8, "application/json"));
                     if (response.IsSuccessStatusCode)
@@ -591,7 +591,7 @@ namespace Blazor_wasm.Services
                 using (var client = new HttpClient())
                 {
                     var url = $"{Setting.BaseUrl}{APIs.UpdateAlarmStatus}";
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _appService.accessToken);
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
                     var serializedStr = JsonConvert.SerializeObject(alarmData);
                     var response = await client.PutAsync(url, new StringContent(serializedStr, Encoding.UTF8, "application/json"));
                     if (response.IsSuccessStatusCode)
@@ -626,7 +626,7 @@ namespace Blazor_wasm.Services
                 using (var client = new HttpClient())
                 {
                     var url = $"{Setting.BaseUrl}{APIs.UpdateScheduler}";
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _appService.accessToken);
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
                     var serializedStr = JsonConvert.SerializeObject(schedulerData);
                     var response = await client.PutAsync(url, new StringContent(serializedStr, Encoding.UTF8, "application/json"));
                     if (response.IsSuccessStatusCode)
@@ -661,15 +661,17 @@ namespace Blazor_wasm.Services
                 using (var client = new HttpClient())
                 {
                     var url = $"{Setting.BaseUrl}{APIs.UpdateFieldData}";
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _appService.accessToken);
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
                     var serializedStr = JsonConvert.SerializeObject(fieldData);
                     var response = await client.PutAsync(url, new StringContent(serializedStr, Encoding.UTF8, "application/json"));
                     if (response.IsSuccessStatusCode)
                     {
+                        Console.WriteLine($"Error: {Setting.UserBasicDetail.AccessToken}");
                         isSuccess = true;
                     }
                     else
                     {
+                        Console.WriteLine($"Error: {Setting.UserBasicDetail.AccessToken}");
                         if (Setting.UserBasicDetail != null)
                         {
                             if (_appService.jwtAccessToken.ValidTo < DateTime.UtcNow)
@@ -696,7 +698,7 @@ namespace Blazor_wasm.Services
                 using (var client = new HttpClient())
                 {
                     var url = $"{Setting.BaseUrl}{APIs.DeletepH}";
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _appService.accessToken);
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
                     var responseDelete = await client.DeleteAsync(url);
 
                     if (responseDelete.IsSuccessStatusCode)
@@ -731,7 +733,7 @@ namespace Blazor_wasm.Services
                 using (var client = new HttpClient())
                 {
                     var url = $"{Setting.BaseUrl}{APIs.DeleteD1CAL}";
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _appService.accessToken);
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
                     var responseDelete = await client.DeleteAsync(url);
 
                     if (responseDelete.IsSuccessStatusCode)
@@ -766,7 +768,7 @@ namespace Blazor_wasm.Services
                 using (var client = new HttpClient())
                 {
                     var url = $"{Setting.BaseUrl}{APIs.DeleteD2CAL}";
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _appService.accessToken);
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
                     var responseDelete = await client.DeleteAsync(url);
 
                     if (responseDelete.IsSuccessStatusCode)
@@ -801,7 +803,7 @@ namespace Blazor_wasm.Services
                 using (var client = new HttpClient())
                 {
                     var url = $"{Setting.BaseUrl}{APIs.DeleteAlarmData}";
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _appService.accessToken);
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
                     var responseDelete = await client.DeleteAsync(url);
 
                     if (responseDelete.IsSuccessStatusCode)
@@ -837,7 +839,7 @@ namespace Blazor_wasm.Services
                 {
                     var url = $"{Setting.BaseUrl}{APIs.DeleteScheduler}";
 
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _appService.accessToken);
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
                     var request = new HttpRequestMessage(HttpMethod.Delete, url)
                     {
                         Content = new StringContent(JsonConvert.SerializeObject(schedulerData), Encoding.UTF8, "application/json")
@@ -871,7 +873,7 @@ namespace Blazor_wasm.Services
                 using (var client = new HttpClient())
                 {
                     var url = $"{Setting.BaseUrl}{APIs.WriteRegister}";
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _appService.accessToken);
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
 
                     var data = new { Address = address, Value = value };
                     var content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
