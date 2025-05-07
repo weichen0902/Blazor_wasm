@@ -24,7 +24,7 @@
         <h3 class="text-center">@localizer[StringDescriptionModel.account_login]</h3><br />
         <div class="form-group">
             <label>@localizer[StringDescriptionModel.account_email_address]</label>
-            <input type="email" @bind-value="loginModel.UserName" class="form-control" placeholder=@localizer[StringDescriptionModel.account_ent_email_address]>
+            <input type="email" id="emailField" @bind-value="loginModel.UserName" class="form-control" placeholder=@localizer[StringDescriptionModel.account_ent_email_address]>
             <ValidationMessage For="@(()=> loginModel.UserName)" />
         </div>
         <div class="mt-2 form-group">
