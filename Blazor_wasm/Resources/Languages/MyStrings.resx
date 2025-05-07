@@ -816,4 +816,7 @@
   <data name="system_auto" xml:space="preserve">
     <value>Auto</value>
   </data>
+  <data name="modal_stabling" xml:space="preserve">
+    <value>Stabling...</value>
+  </data>
 </root>

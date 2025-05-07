@@ -816,4 +816,7 @@
   <data name="system_auto" xml:space="preserve">
     <value>自動</value>
   </data>
+  <data name="modal_stabling" xml:space="preserve">
+    <value>穩定判斷中...</value>
+  </data>
 </root>

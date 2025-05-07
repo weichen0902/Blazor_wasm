@@ -21,7 +21,21 @@ namespace Blazor_wasm.Pages
                 dataTimer?.Dispose();
             }), null, 8000, Timeout.Infinite);
 
-            if(address == 10)
+            if (address == 0)
+            {
+                if (MainLayout.systemStatusIntBinaryCharArray[0] == '0')
+                {
+                    MainLayout.systemStatusIntBinaryCharArray[0] = '1';
+                    MainLayout.systemStatus[0] = "red";
+                }
+                else
+                {
+                    MainLayout.systemStatusIntBinaryCharArray[0] = '0';
+                    MainLayout.systemStatus[0] = "blue";
+                }
+            }
+
+            if (address == 10)
             {
                 switch (value) 
                 {

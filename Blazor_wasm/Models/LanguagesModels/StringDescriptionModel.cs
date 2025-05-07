@@ -25,6 +25,7 @@ namespace Blazor_wasm.Models.LanguagesModels
         public const string modal_language = "modal_language";
         public const string modal_confirm = "modal_confirm";
         public const string modal_cancel = "modal_cancel";
+        public const string modal_stabling = "modal_stabling";
 
         public const string account_create_account = "account_create_account";
         public const string account_forgot_password = "account_forgot_password";

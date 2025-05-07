@@ -22,7 +22,7 @@
 
 <SfDashboardLayout ID="DashBoard" @ref="DashboardLayout" AllowDragging="false" AllowResizing="false" AllowFloating="true" CellSpacing="@CellSpacing" Columns="30">
     <DashboardLayoutEvents Created="Created" ></DashboardLayoutEvents>
-    
+
     <DashboardLayoutPanels>
 
         <DashboardLayoutPanel Id="LayoutOne" Row="0" Col="0" SizeX="7" SizeY="8">
@@ -43,7 +43,7 @@
                             <CircularGauge1></CircularGauge1>
                         </SfCircularGauge>
                     </div>
-                    
+
                 }
             </ContentTemplate>
         </DashboardLayoutPanel>
@@ -120,7 +120,7 @@
         <DashboardLayoutPanel Id="LayoutSeven" Row="8" Col="0" SizeX="7" SizeY="8">
             <HeaderTemplate><div> @localizer[StringDescriptionModel.dashboard_elec_life] System#1 </div></HeaderTemplate>
             <ContentTemplate>
-                
+
                 @if (IsInitialRender)
                 {
                     <div style="
@@ -131,7 +131,7 @@
                         color: #333;
                         white-space: nowrap;
                         z-index: 1000;
-                        ">
+                    ">
                         @MainLayout.fieldData.Field - 220
                     </div>
                     <div style="width:100%; height:100%;" onmousedown="@(()=>NotifyMaintain1Msg())">
@@ -188,7 +188,7 @@
                         color: #333;
                         white-space: nowrap;
                         z-index: 1000;
-                        ">
+                    ">
                         @MainLayout.fieldData.Field - 220
                     </div>
                     <div style="width:100%; height:100%;" onmousedown="@(()=>NotifyMaintain2Msg())">
@@ -232,7 +232,7 @@
                 }
             </ContentTemplate>
         </DashboardLayoutPanel>
-        
+
     </DashboardLayoutPanels>
 </SfDashboardLayout>
 
@@ -279,6 +279,13 @@
                                     <div style="font-size: 16px" class="text-nowrap">
                                         @localizer[StringDescriptionModel.current_position]: <span>@hoisterDownCycleCount[0]</span>
                                     </div>
+                                    @if (MainLayout.systemStatusIntBinaryCharArray[10] == '1')
+                                    {
+                                        <div style="font-size: 16px" class="text-nowrap">
+                                            <label style="background-color:yellow">@localizer[StringDescriptionModel.modal_stabling]: </label>
+                                        </div>
+                                    }
+                                    
                                 </div>
 
                                 <div class="control-wrapper" style="display: flex; flex-direction: column; gap:15px; position:relative; left: 20px;">
@@ -423,6 +430,12 @@
                                     <div class="text-nowrap" style="font-size: 16px;">
                                         @localizer[StringDescriptionModel.current_position]: <span>@hoisterDownCycleCount[1]</span>
                                     </div>
+                                    @if (MainLayout.systemStatusIntBinaryCharArray[10] == '1')
+                                    {
+                                        <div style="font-size: 16px" class="text-nowrap">
+                                            <label style="background-color:yellow">@localizer[StringDescriptionModel.modal_stabling] </label>
+                                        </div>
+                                    }
                                 </div>
                                 <div class="control-wrapper" style="display: flex; flex-direction: column; gap:15px; position:relative; left: 20px;">
                                     <div class="row row-cols-2 g-3">

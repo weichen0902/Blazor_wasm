@@ -257,6 +257,10 @@ namespace Blazor_wasm.Shared
                                                     systemStatusIntBinaryCharArray[j] = _systemStatusIntBinaryCharArray[j];
                                                     Pages.Index.d1ToggleInput[0] = true;
                                                     break;
+                                                case 10:
+                                                    systemStatusIntBinaryCharArray[j] = _systemStatusIntBinaryCharArray[j];
+                                                    Pages.Index.d1ToggleInput[0] = true;
+                                                    break;
                                             }
                                         }
                                         else
@@ -265,6 +269,10 @@ namespace Blazor_wasm.Shared
                                             {
                                                 case 0:
                                                     systemStatus[i] = "blue";
+                                                    systemStatusIntBinaryCharArray[j] = _systemStatusIntBinaryCharArray[j];
+                                                    Pages.Index.d1ToggleInput[0] = false;
+                                                    break;
+                                                case 10:
                                                     systemStatusIntBinaryCharArray[j] = _systemStatusIntBinaryCharArray[j];
                                                     Pages.Index.d1ToggleInput[0] = false;
                                                     break;

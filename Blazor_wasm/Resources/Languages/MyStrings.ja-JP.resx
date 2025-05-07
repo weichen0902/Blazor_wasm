@@ -816,4 +816,7 @@
   <data name="system_auto" xml:space="preserve">
     <value>自動モード</value>
   </data>
+  <data name="modal_stabling" xml:space="preserve">
+    <value>安定判定中...</value>
+  </data>
 </root>
