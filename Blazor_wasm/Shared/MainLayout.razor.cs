@@ -15,6 +15,9 @@ namespace Blazor_wasm.Shared
         public static string[] hbmWashingMotionControl = new string[2];
         public static string[] hbmCalMotionControl = new string[2];
 
+        public static bool[] systemPreWash = new bool[2];
+        public static bool[] systemPreCal = new bool[2];
+
         public static string[] electrodeReturnUp = new string[2];
         public static string[] electrodeReturnSpecifyLocation = new string[2];
         public static string[] electrodeManualInchUp = new string[2];
@@ -28,6 +31,7 @@ namespace Blazor_wasm.Shared
         public static string[] airPressureValve = new string[2];
 
         public static string[] systemStatus = new string[1];
+        public static string[] deviceStatus = new string[2];
 
         ushort[] serverSystemAlarm1ErrorCode = new ushort[2];
         char[] serverSystemAlarm1ErrorCodeBinaryCharArray = new char[16];
@@ -44,8 +48,11 @@ namespace Blazor_wasm.Shared
         ushort[] clientCommonAlarmErrorCode = new ushort[1];
         char[] clientCommonAlarmErrorCodeBinaryCharArray = new char[16];
 
-        ushort[] systemStatusInt = new ushort[1];
         public static char[] systemStatusIntBinaryCharArray = new char[16];
+
+        public static char[] d1DeviceStatusIntBinaryCharArray = new char[16];
+
+        public static char[] d2DeviceStatusIntBinaryCharArray = new char[16];
 
         public static DevicesDataModelDTO response;
 
@@ -101,54 +108,68 @@ namespace Blazor_wasm.Shared
                         devicesDataModel[i, "electrodeCommand"] = response.electrodeCommand[i];
                         devicesDataModel[i, "valveState"] = response.valveState[i];
 
-                        var system1MotionControlBinary = Convert.ToString((ushort)devicesDataModel[0, "motionControl"], 2);
-                        var _system1MotionControlBinaryCharArray = system1MotionControlBinary.ToCharArray();
-                        Array.Reverse(_system1MotionControlBinaryCharArray);
-
-                        var system2MotionControlBinary = Convert.ToString((ushort)devicesDataModel[1, "motionControl"], 2);
-                        var _system2MotionControlBinaryCharArray = system2MotionControlBinary.ToCharArray();
-                        Array.Reverse(_system2MotionControlBinaryCharArray);
-
-                        var d1ElectrodeCommandBinary = Convert.ToString((ushort)devicesDataModel[0, "electrodeCommand"], 2);
-                        var _d1ElectrodeCommandBinaryCharArray = d1ElectrodeCommandBinary.ToCharArray();
-                        Array.Reverse(_d1ElectrodeCommandBinaryCharArray);
-
-                        var d2ElectrodeCommandBinary = Convert.ToString((ushort)devicesDataModel[1, "electrodeCommand"], 2);
-                        var _d2ElectrodeCommandBinaryCharArray = d2ElectrodeCommandBinary.ToCharArray();
-                        Array.Reverse(_d2ElectrodeCommandBinaryCharArray);
-
-                        var d1valveStateBinary = Convert.ToString((ushort)devicesDataModel[0, "valveState"], 2);
-                        var _d1valveStateBinaryCharArray = d1valveStateBinary.ToCharArray();
-                        Array.Reverse(_d1valveStateBinaryCharArray);
-
-                        var d2valveStateBinary = Convert.ToString((ushort)devicesDataModel[1, "valveState"], 2);
-                        var _d2valveStateBinaryCharArray = d2valveStateBinary.ToCharArray();
-                        Array.Reverse(_d2valveStateBinaryCharArray);
-
+                        devicesDataModel[i, "deviceStatus"] = response.deviceStatus[i];
+                                            
                         if (i == 0)
                         {
                             devicesDataModel[i, "preMotionCountdown"] = response.preMotionCountdown[i];
                             devicesDataModel[i, "motorState"] = response.motorState[i];
-                            devicesDataModel[i, "systemStatus"] = response.systemStatus[i];
+                            devicesDataModel[i, "systemStatus"] = response.systemStatus[i];                          
 
-                            var systemStatusInt = Convert.ToString((ushort)devicesDataModel[0, "systemStatus"], 2);
+                            var system1MotionControlBinary = Convert.ToString((ushort)devicesDataModel[i, "motionControl"], 2);
+                            var _system1MotionControlBinaryCharArray = system1MotionControlBinary.ToCharArray();
+                            Array.Reverse(_system1MotionControlBinaryCharArray);
+
+                            var d1ElectrodeCommandBinary = Convert.ToString((ushort)devicesDataModel[i, "electrodeCommand"], 2);
+                            var _d1ElectrodeCommandBinaryCharArray = d1ElectrodeCommandBinary.ToCharArray();
+                            Array.Reverse(_d1ElectrodeCommandBinaryCharArray);
+
+                            var systemStatusInt = Convert.ToString((ushort)devicesDataModel[i, "systemStatus"], 2);
                             var _systemStatusIntBinaryCharArray = systemStatusInt.ToCharArray();
                             Array.Reverse(_systemStatusIntBinaryCharArray);
 
-                            if (Pages.Index.waitFeedback == false)
+                            var d1valveStateBinary = Convert.ToString((ushort)devicesDataModel[i, "valveState"], 2);
+                            var _d1valveStateBinaryCharArray = d1valveStateBinary.ToCharArray();
+                            Array.Reverse(_d1valveStateBinaryCharArray);
+
+                            var d1DeviceStatusInt = Convert.ToString((ushort)devicesDataModel[i, "deviceStatus"], 2);
+                            var _d1DeviceStatusIntBinaryCharArray = d1DeviceStatusInt.ToCharArray();
+                            Array.Reverse(_d1DeviceStatusIntBinaryCharArray);
+
+                            var serverCommonAlarmErrorCodeBinary = Convert.ToString(serverCommonAlarmErrorCode[i], 2);
+                            var _serverCommonAlarmErrorCodeBinaryCharArray = serverCommonAlarmErrorCodeBinary.ToCharArray();
+                            Array.Reverse(_serverCommonAlarmErrorCodeBinaryCharArray);
+
+                            var clientCommonAlarmErrorCodeBinary = Convert.ToString(clientCommonAlarmErrorCode[i], 2);
+                            var _clientCommonAlarmErrorCodeBinaryCharArray = clientCommonAlarmErrorCodeBinary.ToCharArray();
+                            Array.Reverse(_clientCommonAlarmErrorCodeBinaryCharArray);
+
+                            for (int j = 0; j < _d1DeviceStatusIntBinaryCharArray.Length; j++)
                             {
-                                if (_system1MotionControlBinaryCharArray.Contains('1'))
+                                for (int k = _d1DeviceStatusIntBinaryCharArray.Length; k < 16; k++)
                                 {
-                                    if (_system1MotionControlBinaryCharArray.Length >= 4)
-                                        hbmWashingMotionControl[i] = _system1MotionControlBinaryCharArray[3] == '1' ? "yellow" : null;
-                                    if (_system1MotionControlBinaryCharArray.Length >= 5)
-                                        hbmCalMotionControl[i] = _system1MotionControlBinaryCharArray[4] == '1' ? "yellow" : null;
+                                    d1DeviceStatusIntBinaryCharArray[k] = '0';
                                 }
-                                else
+
+                                d1DeviceStatusIntBinaryCharArray[j] = _d1DeviceStatusIntBinaryCharArray[j];                               
+                            }
+
+                            for (int j = 0; j < _systemStatusIntBinaryCharArray.Length; j++)
+                            {
+                                for (int k = _systemStatusIntBinaryCharArray.Length; k < 16; k++)
                                 {
-                                    hbmWashingMotionControl[i] = null;
-                                    hbmCalMotionControl[i] = null;
+                                    systemStatusIntBinaryCharArray[k] = '0';
                                 }
+
+                                systemStatusIntBinaryCharArray[j] = _systemStatusIntBinaryCharArray[j];                            
+                            }
+
+                            if (Pages.Index.waitFeedback == false)
+                            { 
+                                hbmWashingMotionControl[i] = d1DeviceStatusIntBinaryCharArray[3] == '1' ? "yellow" : null;
+                                hbmCalMotionControl[i] = d1DeviceStatusIntBinaryCharArray[4] == '1' ? "yellow" : null;
+
+                                systemStatus[i] = d1DeviceStatusIntBinaryCharArray[0] == '1' ? "red" : "blue";
 
                                 if (_d1ElectrodeCommandBinaryCharArray.Length >= 1)
                                     electrodeReturnUp[i] = _d1ElectrodeCommandBinaryCharArray[0] == '1' ? "yellow" : null;
@@ -242,68 +263,14 @@ namespace Blazor_wasm.Shared
                                         Pages.Index.d1ToggleInput[3] = false;
                                         Pages.Index.d1ToggleInput[4] = false;
                                     }
-                                }
-
-                                for (int j = 0; j < _systemStatusIntBinaryCharArray.Length; j++)
-                                {
-                                    if (_systemStatusIntBinaryCharArray.Contains('1'))
-                                    {
-                                        if (_systemStatusIntBinaryCharArray[j] == '1')
-                                        {
-                                            switch (j)
-                                            {
-                                                case 0:
-                                                    systemStatus[i] = "red";
-                                                    systemStatusIntBinaryCharArray[j] = _systemStatusIntBinaryCharArray[j];
-                                                    Pages.Index.d1ToggleInput[0] = true;
-                                                    break;
-                                                case 10:
-                                                    systemStatusIntBinaryCharArray[j] = _systemStatusIntBinaryCharArray[j];
-                                                    Pages.Index.d1ToggleInput[0] = true;
-                                                    break;
-                                            }
-                                        }
-                                        else
-                                        {
-                                            switch (j)
-                                            {
-                                                case 0:
-                                                    systemStatus[i] = "blue";
-                                                    systemStatusIntBinaryCharArray[j] = _systemStatusIntBinaryCharArray[j];
-                                                    Pages.Index.d1ToggleInput[0] = false;
-                                                    break;
-                                                case 10:
-                                                    systemStatusIntBinaryCharArray[j] = _systemStatusIntBinaryCharArray[j];
-                                                    Pages.Index.d1ToggleInput[0] = false;
-                                                    break;
-                                            }
-                                        }
-                                    }
-                                    else
-                                    {
-                                        systemStatus[i] = "blue";
-                                        systemStatusIntBinaryCharArray[j] = _systemStatusIntBinaryCharArray[j];
-                                        Pages.Index.d1ToggleInput[0] = false;
-                                    }
-                                }
-
+                                }                                                                  
                             }
-
 
                             devicesDataModel[i, "commonAlarm"] = response.commonAlarm[i];
                             serverCommonAlarmErrorCode[i] = response.commonAlarm[i];
-
-
+                          
                             if (clientCommonAlarmErrorCode[i] != serverCommonAlarmErrorCode[i])
-                            {
-                                var serverCommonAlarmErrorCodeBinary = Convert.ToString(serverCommonAlarmErrorCode[i], 2);
-                                var _serverCommonAlarmErrorCodeBinaryCharArray = serverCommonAlarmErrorCodeBinary.ToCharArray();
-                                Array.Reverse(_serverCommonAlarmErrorCodeBinaryCharArray);
-
-                                var clientCommonAlarmErrorCodeBinary = Convert.ToString(clientCommonAlarmErrorCode[i], 2);
-                                var _clientCommonAlarmErrorCodeBinaryCharArray = clientCommonAlarmErrorCodeBinary.ToCharArray();
-                                Array.Reverse(_clientCommonAlarmErrorCodeBinaryCharArray);
-
+                            {                             
                                 for (int j = 0; j < clientCommonAlarmErrorCodeBinaryCharArray.Length; j++)
                                 {
                                     serverCommonAlarmErrorCodeBinaryCharArray[j] = (_serverCommonAlarmErrorCodeBinaryCharArray.Length > j) ? _serverCommonAlarmErrorCodeBinaryCharArray[j] : '0';
@@ -315,25 +282,42 @@ namespace Blazor_wasm.Shared
                                     clientCommonAlarmErrorCodeBinaryCharArray[j] = serverCommonAlarmErrorCodeBinaryCharArray[j];
                                 }
                                 clientCommonAlarmErrorCode[i] = serverCommonAlarmErrorCode[i];
-                            }
+                            }                           
                         }
 
                         if (i == 1)
                         {
+                            var system2MotionControlBinary = Convert.ToString((ushort)devicesDataModel[1, "motionControl"], 2);
+                            var _system2MotionControlBinaryCharArray = system2MotionControlBinary.ToCharArray();
+                            Array.Reverse(_system2MotionControlBinaryCharArray);
+
+                            var d2ElectrodeCommandBinary = Convert.ToString((ushort)devicesDataModel[1, "electrodeCommand"], 2);
+                            var _d2ElectrodeCommandBinaryCharArray = d2ElectrodeCommandBinary.ToCharArray();
+                            Array.Reverse(_d2ElectrodeCommandBinaryCharArray);
+
+                            var d2valveStateBinary = Convert.ToString((ushort)devicesDataModel[1, "valveState"], 2);
+                            var _d2valveStateBinaryCharArray = d2valveStateBinary.ToCharArray();
+                            Array.Reverse(_d2valveStateBinaryCharArray);
+
+                            var d2DeviceStatusInt = Convert.ToString((ushort)devicesDataModel[1, "deviceStatus"], 2);
+                            var _d2DeviceStatusIntBinaryCharArray = d2DeviceStatusInt.ToCharArray();
+                            Array.Reverse(_d2DeviceStatusIntBinaryCharArray);
+
+                            for (int j = 0; j < _d2DeviceStatusIntBinaryCharArray.Length; j++)
+                            {
+                                for (int k = _d2DeviceStatusIntBinaryCharArray.Length; k < 16; k++)
+                                {
+                                    d2DeviceStatusIntBinaryCharArray[k] = '0';
+                                }
+
+                                d2DeviceStatusIntBinaryCharArray[j] = _d2DeviceStatusIntBinaryCharArray[j];
+                            }
+
                             if (Pages.Index.waitFeedback == false)
                             {
-                                if (_system2MotionControlBinaryCharArray.Contains('1'))
-                                {
-                                    if (_system2MotionControlBinaryCharArray.Length >= 4)
-                                        hbmWashingMotionControl[i] = _system2MotionControlBinaryCharArray[3] == '1' ? "yellow" : null;
-                                    if (_system2MotionControlBinaryCharArray.Length >= 5)
-                                        hbmCalMotionControl[i] = _system2MotionControlBinaryCharArray[4] == '1' ? "yellow" : null;
-                                }
-                                else
-                                {
-                                    hbmWashingMotionControl[i] = null;
-                                    hbmCalMotionControl[i] = null;
-                                }
+
+                                hbmWashingMotionControl[i] = d2DeviceStatusIntBinaryCharArray[3] == '1' ? "yellow" : null;
+                                hbmCalMotionControl[i] = d2DeviceStatusIntBinaryCharArray[4] == '1' ? "yellow" : null;
 
                                 if (_d2ElectrodeCommandBinaryCharArray.Length >= 1)
                                     electrodeReturnUp[i] = _d2ElectrodeCommandBinaryCharArray[0] == '1' ? "yellow" : null;
@@ -437,11 +421,11 @@ namespace Blazor_wasm.Shared
                                         }
                                     }
                                 }
-                            }
+                            }                           
                         }
 
                         serverSystemAlarm1ErrorCode[i] = response.systemAlarm1[i];
-
+                   
                         if (clientSystemAlarm1ErrorCode[i] != serverSystemAlarm1ErrorCode[i])
                         {
                             var serverSystemAlarm1ErrorCodeBinary = Convert.ToString(serverSystemAlarm1ErrorCode[i], 2);
@@ -451,7 +435,6 @@ namespace Blazor_wasm.Shared
                             var clientSystemAlarm1ErrorCodeBinary = Convert.ToString(clientSystemAlarm1ErrorCode[i], 2);
                             var _clientSystemAlarm1ErrorCodeBinaryCharArray = clientSystemAlarm1ErrorCodeBinary.ToCharArray();
                             Array.Reverse(_clientSystemAlarm1ErrorCodeBinaryCharArray);
-
                             for (int j = 0; j < clientSystemAlarm1ErrorCodeBinaryCharArray.Length; j++)
                             {
                                 serverSystemAlarm1ErrorCodeBinaryCharArray[j] = (_serverSystemAlarm1ErrorCodeBinaryCharArray.Length > j) ? _serverSystemAlarm1ErrorCodeBinaryCharArray[j] : '0';

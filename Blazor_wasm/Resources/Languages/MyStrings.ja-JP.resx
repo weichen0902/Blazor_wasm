@@ -819,4 +819,10 @@
   <data name="modal_stabling" xml:space="preserve">
     <value>安定判定中...</value>
   </data>
+  <data name="modal_prewash" xml:space="preserve">
+    <value>洗浄中...</value>
+  </data>
+  <data name="modal_precal" xml:space="preserve">
+    <value>校正中...</value>
+  </data>
 </root>

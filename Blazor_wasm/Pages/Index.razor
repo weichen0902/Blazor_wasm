@@ -279,13 +279,27 @@
                                     <div style="font-size: 16px" class="text-nowrap">
                                         @localizer[StringDescriptionModel.current_position]: <span>@hoisterDownCycleCount[0]</span>
                                     </div>
+                                    @if (MainLayout.d1DeviceStatusIntBinaryCharArray[3] == '1' || MainLayout.d1DeviceStatusIntBinaryCharArray[4] == '1')
+                                    {
+                                        @if (MainLayout.d1DeviceStatusIntBinaryCharArray[3] == '1')
+                                        {
+                                            <div style="font-size: 16px" class="text-nowrap">
+                                                <label style="background-color:yellow">@localizer[StringDescriptionModel.modal_prewash] </label>
+                                            </div>
+                                        }
+                                        else if (MainLayout.d1DeviceStatusIntBinaryCharArray[4] == '1')
+                                        {
+                                            <div style="font-size: 16px" class="text-nowrap">
+                                                <label style="background-color:yellow">@localizer[StringDescriptionModel.modal_precal] </label>
+                                            </div>
+                                        }                               
+                                    }
                                     @if (MainLayout.systemStatusIntBinaryCharArray[10] == '1')
                                     {
                                         <div style="font-size: 16px" class="text-nowrap">
-                                            <label style="background-color:yellow">@localizer[StringDescriptionModel.modal_stabling]: </label>
+                                            <label style="background-color:yellow">@localizer[StringDescriptionModel.modal_stabling] </label>
                                         </div>
                                     }
-                                    
                                 </div>
 
                                 <div class="control-wrapper" style="display: flex; flex-direction: column; gap:15px; position:relative; left: 20px;">
@@ -293,7 +307,7 @@
                                         @{
                                             var buttons1 = new List<ButtonModel>();
 
-                                            if(MainLayout.systemStatusIntBinaryCharArray[0] == '0')
+                                            @if(MainLayout.systemStatusIntBinaryCharArray[0] == '0')
                                             {
                                                 buttons1 = new List<ButtonModel>
                                                 {
@@ -430,36 +444,52 @@
                                     <div class="text-nowrap" style="font-size: 16px;">
                                         @localizer[StringDescriptionModel.current_position]: <span>@hoisterDownCycleCount[1]</span>
                                     </div>
+                                    @if (MainLayout.d2DeviceStatusIntBinaryCharArray[3] == '1' || MainLayout.d2DeviceStatusIntBinaryCharArray[4] == '1')
+                                    {
+                                        @if (MainLayout.d2DeviceStatusIntBinaryCharArray[3] == '1')
+                                        {
+                                            <div style="font-size: 16px" class="text-nowrap">
+                                                <label style="background-color:yellow">@localizer[StringDescriptionModel.modal_prewash] </label>
+                                            </div>
+                                        }
+                                        else if (MainLayout.d2DeviceStatusIntBinaryCharArray[4] == '1')
+                                        {
+                                            <div style="font-size: 16px" class="text-nowrap">
+                                                <label style="background-color:yellow">@localizer[StringDescriptionModel.modal_precal] </label>
+                                            </div>
+                                        }                                                                   
+                                    }
                                     @if (MainLayout.systemStatusIntBinaryCharArray[10] == '1')
                                     {
                                         <div style="font-size: 16px" class="text-nowrap">
                                             <label style="background-color:yellow">@localizer[StringDescriptionModel.modal_stabling] </label>
                                         </div>
                                     }
+
                                 </div>
                                 <div class="control-wrapper" style="display: flex; flex-direction: column; gap:15px; position:relative; left: 20px;">
                                     <div class="row row-cols-2 g-3">
                                         @{
                                             var buttons1 = new List<ButtonModel>();
 
-                                            if (MainLayout.systemStatusIntBinaryCharArray[0] == '0')
+                                            @if (MainLayout.systemStatusIntBinaryCharArray[0] == '0')
                                             {
                                                 buttons1 = new List<ButtonModel>
                                                 {
-                                                    new ButtonModel { Name = localizer[StringDescriptionModel.modal_a_wash], ButtonStyle = "btn-primary", Background = MainLayout.hbmWashingMotionControl[0], Address = 20, Value = 1 },
+                                                    new ButtonModel { Name = localizer[StringDescriptionModel.modal_a_wash], ButtonStyle = "btn-primary", Background = MainLayout.hbmWashingMotionControl[1], Address = 20, Value = 1 },
                                                     new ButtonModel { Name = localizer[StringDescriptionModel.system_manual], ButtonStyle = "btn-primary", Background = MainLayout.systemStatus[0], Address = 0, Value = 1 },
-                                                    new ButtonModel { Name = localizer[StringDescriptionModel.modal_a_cal], ButtonStyle = "btn-success", Background = MainLayout.hbmCalMotionControl[0], Address = 20, Value = 2 },
-                                                    new ButtonModel { Name = localizer[StringDescriptionModel.modal_cylinder], ButtonStyle = "btn-outline-success", Background = MainLayout.airPressureValve[0], Address = 2100, Value = 16 },
+                                                    new ButtonModel { Name = localizer[StringDescriptionModel.modal_a_cal], ButtonStyle = "btn-success", Background = MainLayout.hbmCalMotionControl[1], Address = 20, Value = 2 },
+                                                    new ButtonModel { Name = localizer[StringDescriptionModel.modal_cylinder], ButtonStyle = "btn-outline-success", Background = MainLayout.airPressureValve[1], Address = 2100, Value = 16 },
                                                 };
                                             }
                                             else
                                             {
                                                 buttons1 = new List<ButtonModel>
                                                 {
-                                                    new ButtonModel { Name = localizer[StringDescriptionModel.modal_a_wash], ButtonStyle = "btn-primary", Background = MainLayout.hbmWashingMotionControl[0], Address = 20, Value = 1 },
+                                                    new ButtonModel { Name = localizer[StringDescriptionModel.modal_a_wash], ButtonStyle = "btn-primary", Background = MainLayout.hbmWashingMotionControl[1], Address = 20, Value = 1 },
                                                     new ButtonModel { Name = localizer[StringDescriptionModel.system_auto], ButtonStyle = "btn-primary", Background = MainLayout.systemStatus[0], Address = 0, Value = 1 },
-                                                    new ButtonModel { Name = localizer[StringDescriptionModel.modal_a_cal], ButtonStyle = "btn-success", Background = MainLayout.hbmCalMotionControl[0], Address = 20, Value = 2 },
-                                                    new ButtonModel { Name = localizer[StringDescriptionModel.modal_cylinder], ButtonStyle = "btn-outline-success", Background = MainLayout.airPressureValve[0], Address = 2100, Value = 16 },
+                                                    new ButtonModel { Name = localizer[StringDescriptionModel.modal_a_cal], ButtonStyle = "btn-success", Background = MainLayout.hbmCalMotionControl[1], Address = 20, Value = 2 },
+                                                    new ButtonModel { Name = localizer[StringDescriptionModel.modal_cylinder], ButtonStyle = "btn-outline-success", Background = MainLayout.airPressureValve[1], Address = 2100, Value = 16 },
                                                 };
                                             }
                                         }

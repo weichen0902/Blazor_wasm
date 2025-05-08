@@ -60,6 +60,8 @@ namespace Blazor_wasm.Models.ModbusModels
 
         public ushort[]? manualAuto = new ushort[1];
         public ushort[]? systemStatus = new ushort[1];
+        public ushort[]? deviceStatus = new ushort[2];
+
         public void TriggerNotifyChanged()
         {
             if (boolStateChanged)
@@ -155,6 +157,8 @@ namespace Blazor_wasm.Models.ModbusModels
                         return manualAuto[index];
                     case "systemStatus":
                         return systemStatus[index];
+                    case "deviceStatus":
+                        return deviceStatus[index];
                     default:
                         throw new ArgumentException("Invalid array type.");
                 }
@@ -383,6 +387,12 @@ namespace Blazor_wasm.Models.ModbusModels
                             if (systemStatus[index] != (ushort)value)
                             {
                                 systemStatus[index] = (ushort)value;
+                            }
+                            break;
+                        case "deviceStatus":
+                            if (deviceStatus[index] != (ushort)value)
+                            {
+                                deviceStatus[index] = (ushort)value;
                             }
                             break;
                         default:

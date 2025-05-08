@@ -819,4 +819,10 @@
   <data name="modal_stabling" xml:space="preserve">
     <value>Stabling...</value>
   </data>
+  <data name="modal_prewash" xml:space="preserve">
+    <value>Washing...</value>
+  </data>
+  <data name="modal_precal" xml:space="preserve">
+    <value>Calibration...</value>
+  </data>
 </root>
