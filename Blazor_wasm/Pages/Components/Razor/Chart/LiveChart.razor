@@ -14,8 +14,7 @@
         <ChartStreaming @ref="@chartStreaming"
                         TItem="LiveDataPoint"
                         Options="new ChartStreamingOptions{Delay=2000, Duration=300000}"
-                        Refreshed="OnHorizontalLineRefreshed"
-                        />
+                        Refreshed="@(async(e) => await OnHorizontalLineRefreshed(e))" />
     </LineChart>
 </div>
 
@@ -197,25 +196,16 @@
             };
     }
 
-    Task OnHorizontalLineRefreshed(ChartStreamingData<LiveDataPoint> data)
+    async Task OnHorizontalLineRefreshed(ChartStreamingData<LiveDataPoint> data)
     {
+        await Task.Delay(1000);
         var newValue = new LiveDataPoint
             {
                 X = DateTime.Now,
                 Y = data.DatasetIndex == 0 ? devicesDataModel[0, "hbmpH"] : devicesDataModel[1, "hbmpH"]
             };
 
-
-        if (data.DatasetIndex == 0)
-        {
-            data.Value = newValue;
-        }
-        else if (data.DatasetIndex == 1)
-        {
-            data.Value = newValue;
-        }
-
-        return Task.CompletedTask;
+        data.Value = newValue;            
     }
 
     private async void ClearData()
