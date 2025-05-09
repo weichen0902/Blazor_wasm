@@ -632,7 +632,7 @@
         pageTitleService.Title = "";
         MainLayout.OnLanguageChange += StateHasChanged;
         MainLayout.OnFieldChange += Update;
-      //  devicesDataModel.OnStateChange += Update;
+        devicesDataModel.OnStateChange += Update;
         AlarmDataGrid.toChangeAlarmBtnState += StateHasChanged;
 
         for (int i = 0; i < 2; i++)
