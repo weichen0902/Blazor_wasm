@@ -121,7 +121,7 @@
             <HeaderTemplate><div> @localizer[StringDescriptionModel.dashboard_elec_life] System#1 </div></HeaderTemplate>
             <ContentTemplate>
 
-                @if (IsInitialRender)
+                @if (IsInitialRender && MainLayout.fieldData != null)
                 {
                     <div style="
                         position: absolute;
@@ -131,8 +131,8 @@
                         color: #333;
                         white-space: nowrap;
                         z-index: 1000;
-                    ">
-                        @MainLayout.fieldData.Field - 220
+                    ">            
+                        @MainLayout.fieldData.Field - 220                                      
                     </div>
                     <div style="width:100%; height:100%;" onmousedown="@(()=>NotifyMaintain1Msg())">
                         <SfCircularGauge ID="GaugeThree" @ref="GaugeThree" Width="100%" Height="100%" MoveToCenter="true">
@@ -178,7 +178,7 @@
         <DashboardLayoutPanel Id="LayoutEight" Row="8" Col="7" SizeX="7" SizeY="8">
             <HeaderTemplate><div> @localizer[StringDescriptionModel.dashboard_elec_life] System#2 </div></HeaderTemplate>
             <ContentTemplate>
-                @if (IsInitialRender)
+                @if (IsInitialRender && MainLayout.fieldData != null)
                 {
                     <div style="
                         position: absolute;
@@ -648,16 +648,19 @@
             await Task.Delay(500);
         }
 
-         Update();
+        Update();
     }
 
     private async void Update()
     {
-        for (int i = 0; i < 2; i++)
+        if (MainLayout.response != null)
         {
-            hoisterDownCycleCount[i] = MainLayout.response.hoisterDownCycleCount[i];
+            for (int i = 0; i < 2; i++)
+            {
+                hoisterDownCycleCount[i] = MainLayout.response.hoisterDownCycleCount[i];
+            }
         }
-
+        
         StateHasChanged();
     }
 
