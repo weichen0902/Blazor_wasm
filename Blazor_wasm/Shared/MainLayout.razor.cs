@@ -433,7 +433,7 @@ namespace Blazor_wasm.Shared
                         devicesDataModel.TriggerNotifyChanged();
                     }
                 });
-            }), null, TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(0.5));
+            }), null, TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(1));
         }
     }
 }
