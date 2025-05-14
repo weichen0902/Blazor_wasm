@@ -12,33 +12,35 @@
     <div class="row justify-content-center">
         <div class="col-10">
             <div class="d-flex flex-column align-items-center mb-2">
-                <h5 class="mb-3">@localizer[StringDescriptionModel.step]1: <span>@localizer[StringDescriptionModel.select_total_steps]</span></h5>
-                <h5 class="mb-3">@localizer[StringDescriptionModel.step]: <span>@totalStepsNumber</span></h5>
-                <input type="range" 
-                    class="form-range"
-                    style="width: 200px;"
-                    min="0" max="12" step="1"
-                    value="@totalStepsNumber"
-                    @oninput="@(async(e)=> await UpdateTotalStepsNumber(e))" />
-                
-                <div class="d-flex justify-content-between" style="width: 200px;">
-                    <span class="text-muted small">0</span>
-                    <span class="text-muted small">12</span>
-                </div>
+                <h5 class="mb-3" style="font-size: 25px;">@localizer[StringDescriptionModel.step]1: <span>@localizer[StringDescriptionModel.select_total_steps]</span></h5>
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <h5 class="mb-3">
+                        @localizer[StringDescriptionModel.total_steps]:
+                        <span>
+                            @totalStepsNumber
+                        </span>
+                    </h5>
+                    <input type="range"
+                            class="form-range"
+                            style="width: 200px;"
+                            min="0" max="12" step="1"
+                            value="@totalStepsNumber"
+                            @oninput="@(async(e)=> await UpdateTotalStepsNumber(e))" />                    
+                </div>                                                          
             </div>
 
             <div class="card shadow-sm">
-                <div class="card-body p-4">
-                    <div class="row justify-content-center">
-                        <div class="col-4">
-                            <h5 class="mb-4">@localizer[StringDescriptionModel.step]2: <span>@localizer[StringDescriptionModel.select_step_and_set_time]</span></h5>
-                            <div class="d-flex flex-column gap-2" style="max-height: 400px; overflow-y: auto;">
+                <div class="card-body p-1">
+                    <div class="row justify-content-center" style="gap: 100px;">
+                        <div class="col-5">
+                            <h5 class="mb-4" style="font-size: 25px;">@localizer[StringDescriptionModel.step]2: <span>@localizer[StringDescriptionModel.select_step_and_set_time]</span></h5>
+                            <div class="d-flex flex-column gap-4" style="max-height: 400px; overflow-y: auto;">
                                 @for (int i = 0; i < @totalStepsNumber; i++)
                                 {
                                     var currentIndex = i;
-                                    <div class="d-flex align-items-center gap-2" hidden="@hidden[i]">
+                                    <div class="d-flex align-items-center gap-5" hidden="@hidden[i]">
                                         <button class="btn @(timeSettingDisabled[currentIndex] ? "btn-primary" : "btn-outline-primary") rounded-pill"
-                                                style="width: 100px; height: 30px; font-size: 14px; padding: 0;"
+                                                style="font-size: 20px; width: 150px; height: 50px; padding: 0;"
                                                 @onclick="@(()=> GetSpecifiedState(currentIndex))">
                                             No.@(currentIndex + 1)
                                         </button>
@@ -47,12 +49,12 @@
                                                    min="0" max="600" step="1"
                                                    class="form-control @(!timeSettingDisabled[currentIndex] ? "disabled-input" : "")"
                                                    placeholder="輸入秒數"
-                                                   style="width: 80px; height: 30px; border-right: none;"
+                                                   style="font-size: 30px; width: 100px; height: 50px; border-right: none;"
                                                    @onkeydown="@(e => HandleKeyDown(e))"
                                                    @onchange="@(async(e)=> await UpdateTimerNumber(e))"
                                                    value="@stepTime[currentIndex]"
                                                    disabled="@(!timeSettingDisabled[currentIndex])" />
-                                            <span class="input-group-text" style="height: 30px; border-left: none;">s</span>
+                                            <span class="input-group-text" style="font-size: 25px; height: 50px; border-left: none;">s</span>
                                         </div>
                                     </div>
                                 }
@@ -63,9 +65,9 @@
                             {
                                 <div class="card border-primary">
                                     <div class="card-header bg-primary text-white">
-                                        <h6 class="mb-0">No.@(Array.IndexOf(timeSettingDisabled, true) + 1) @localizer[StringDescriptionModel.step_number_setting]</h6>
+                                        <h6 class="mb-0" style="font-size: 25px;">No.@(Array.IndexOf(timeSettingDisabled, true) + 1) @localizer[StringDescriptionModel.step_number_setting]</h6>
                                     </div>
-                                    <div class="card-body">
+                                    <div class="card-body" style="height: 450px; font-size: 25px;">
                                         <p class="mb-3">@localizer[StringDescriptionModel.set_cleaning_content]</p>
                                         @{
                                             var labels = new[] { "Wash", "REAG.", "BUF.A", "BUF.B" };
@@ -75,7 +77,7 @@
                                         {
                                             var index = i;
                                             var value = values[index];
-                                            <div class="form-check">
+                                            <div class="form-check mb-4">
                                                 <input class="form-check-input" type="checkbox" 
                                                        @bind="@_checked[index]"
                                                        @onclick="@(async()=> {
@@ -127,7 +129,7 @@
 
     protected override void OnInitialized()
     {
-    //    MainLayout.OnLanguageChange += StateHasChanged;
+        MainLayout.OnLanguageChange += StateHasChanged;
         totalStepsNumber = (ushort)devicesDataModel[0, "totalNumberOfSteps"];
 
         for (int i = 0; i < 12; i++)
@@ -228,7 +230,7 @@
                     stepTime[i] = ushort.Parse((string)e.Value);
 
                 postModbusApiModel.startAddress = 501 + i;
-                postModbusApiModel.value = stepTime[i];
+                postModbusApiModel.value = stepTime[i]*10;
                 await dataService.PostModbusDevicesData(postModbusApiModel);
                 return;
             }
@@ -265,6 +267,6 @@
 
     void IDisposable.Dispose()
     {
-    //    MainLayout.OnLanguageChange -= StateHasChanged;
+        MainLayout.OnLanguageChange -= StateHasChanged;
     }
 }

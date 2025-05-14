@@ -9,7 +9,7 @@
 
 <h1 class="text-center">@localizer[StringDescriptionModel.history_chart]</h1>
 
-<div class="col-lg-12 control-section mt-2">
+<div class="col-lg-12 control-section mt-2 d-flex justify-content-center">
     <div class="d-flex align-items-center gap-4">
         <div class="d-flex align-items-center">
             <label class="me-2">@localizer[StringDescriptionModel.history_start_date]:</label>
@@ -33,7 +33,7 @@
     </div>
 </div>
 
-<div class="col-lg-12 control-section" style="height:800px; width:100%; position:relative; top:50px;">
+<div class="col-lg-12 control-section d-flex justify-content-center" style="height:70%; width:85%; position:relative; top:50px;">
     <Chart @ref="chart" TItem="double?" Type="ChartType.Line">
         <ChartTrendline @ref="chartTrendline" TItem="double?" />
     </Chart>

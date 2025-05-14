@@ -19,15 +19,15 @@
 <h1 class="text-center">@localizer[StringDescriptionModel.schedule]</h1>
 <div class="col-lg-12 control-section">
     <SfSchedule TValue="SchedulerModel" @ref="ScheduleRef" Height="600px" Timezone="UTC">
-        <ScheduleTemplates>
+        <ScheduleTemplates >
             <EditorHeaderTemplate>
-                <div class="quick-info-title">
+                <div class="quick-info-title" style="font-size: 20px;">
                     @localizer[StringDescriptionModel.schedule_modal_title]
-                </div>
+                </div>            
             </EditorHeaderTemplate>
             <EditorTemplate>
-                <div style="height: 280px;">
-                    <table class="custom-event-editor" width="100%" cellpadding="5">
+                <div style="font-size: 20px; height:400px;">
+                    <table class="custom-event-editor" cellpadding="5">
                         <tbody>
                             @{
                                 schedulers = (context as SchedulerModel) ?? new SchedulerModel();
@@ -35,44 +35,60 @@
 
                                 <tr>
                                     <td class="e-textlabel">@localizer[StringDescriptionModel.schedule_system]:</td>
-                                    <td colspan="4" style="display: flex;">
-                                        <SfDropDownList TValue="string" TItem="DropDownModel" Placeholder=@localizer[StringDescriptionModel.schedule_ent_select_system] DataSource="@DeviceData" @bind-Value="@dropDownDeviceBindValue">
-                                            <DropDownListFieldSettings Value="ID" Text="Text"></DropDownListFieldSettings>
-                                            <DropDownListEvents TValue="string" TItem="DropDownModel" ValueChange="OnDropDownDeviceValueChange"></DropDownListEvents>
-                                        </SfDropDownList>
+                                    <td colspan="4">
+                                        <div style="display: flex; align-items: center; height: 50px;">
+                                            <SfDropDownList TValue="string"
+                                                            TItem="DropDownModel"
+                                                            Placeholder="@localizer[StringDescriptionModel.schedule_ent_select_system]"
+                                                            DataSource="@DeviceData"
+                                                            @bind-Value="@dropDownDeviceBindValue"
+                                                            CssClass="custom-dropdown"
+                                                            style="height: 50px; font-size: 20px;">
+                                                <DropDownListFieldSettings Value="ID" Text="Text"></DropDownListFieldSettings>
+                                                <DropDownListEvents TValue="string" TItem="DropDownModel" ValueChange="OnDropDownDeviceValueChange" />
+                                            </SfDropDownList>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr style="position: relative; top: 10px">
                                     <td class="e-textlabel">@localizer[StringDescriptionModel.schedule_subject]:</td>
-                                    <td colspan="4" style="display: flex; gap: 20px;">
-                                        <SfDropDownList TValue="string" TItem="DropDownModel" Placeholder=@localizer[StringDescriptionModel.schedule_ent_select_subject] DataSource="@SubjectData" @bind-Value="@dropDownSubjectBindValue">
-                                            <DropDownListFieldSettings Value="ID" Text="Text"></DropDownListFieldSettings>
-                                            <DropDownListEvents TValue="string" TItem="DropDownModel" ValueChange="OnDropDownSubjectValueChange"></DropDownListEvents>
-                                        </SfDropDownList>
+                                    <td colspan="4">
+                                        <div class="dropdown-wrapper">
+                                            <SfDropDownList TValue="string"
+                                                            TItem="DropDownModel"
+                                                            Placeholder="@localizer[StringDescriptionModel.schedule_ent_select_subject]"
+                                                            DataSource="@SubjectData"
+                                                            @bind-Value="@dropDownSubjectBindValue"
+                                                            CssClass="custom-dropdown"
+                                                            style="height: 50px; font-size: 20px;">
+                                                <DropDownListFieldSettings Value="ID" Text="Text" />
+                                                <DropDownListEvents TValue="string" TItem="DropDownModel" ValueChange="OnDropDownSubjectValueChange" />
+                                            </SfDropDownList>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr style="position: relative; top: 10px">
                                     <td class="e-textlabel">@localizer[StringDescriptionModel.schedule_start_time]:</td>
                                     <td colspan="4">
-                                        <SfDateTimePicker TValue="DateTime" Value="@schedulers.StartTime">
+                                        <SfDateTimePicker TValue="DateTime" Value="@schedulers.StartTime" style="height: 50px; font-size: 20px;">
                                             <DateTimePickerEvents TValue="DateTime" ValueChange="@((e)=> OnStartTimeChanged(e))"></DateTimePickerEvents>
                                         </SfDateTimePicker>
                                     </td>
                                 </tr>
-                                <tr style="position: relative; top: 10px">
+                                <tr style="position: relative; top: 10px;">
                                     <td class="e-textlabel">@localizer[StringDescriptionModel.schedule_end_time]:</td>
                                     <td colspan="4">
-                                        <SfDateTimePicker TValue="DateTime" Value="@schedulers.EndTime">
+                                        <SfDateTimePicker TValue="DateTime" Value="@schedulers.EndTime" style="height: 50px; font-size: 20px;">
                                             <DateTimePickerEvents TValue="DateTime" ValueChange="@((e)=> OnEndTimeChanged(e))"></DateTimePickerEvents>
                                         </SfDateTimePicker>
                                     </td>
                                 </tr>
-                                <tr style="position: relative; top: 20px">
+                                <tr style="position: relative; top: 20px;">
                                     <td class="e-textlabel">@localizer[StringDescriptionModel.schedule_frequency]:</td>
                                     <td colspan="4" style="display: flex; gap: 20px;">
-                                        <SfCheckBox Checked="@monthlyIsChecked" onclick="@(()=> ChangeFrequentStatus(schedulers, 0))">@localizer[StringDescriptionModel.schedule_monthly]</SfCheckBox>
-                                        <SfCheckBox Checked="@weeklyIsChecked" onclick="@(()=> ChangeFrequentStatus(schedulers, 1))">@localizer[StringDescriptionModel.schedule_weekly]</SfCheckBox>
-                                        <SfCheckBox Checked="@dailyIsChecked" onclick="@(()=> ChangeFrequentStatus(schedulers, 2))">@localizer[StringDescriptionModel.schedule_daily]</SfCheckBox>
+                                        <input style="transform: scale(1.5);" type="checkbox" checked="@monthlyIsChecked" onclick="@(()=> ChangeFrequentStatus(schedulers, 0))" /><label class="form-check-label">@localizer[StringDescriptionModel.schedule_monthly]</label>
+                                        <input style="transform: scale(1.5);" type="checkbox" checked="@weeklyIsChecked" onclick="@(()=> ChangeFrequentStatus(schedulers, 1))" /><label class="form-check-label">@localizer[StringDescriptionModel.schedule_weekly]</label>
+                                        <input style="transform: scale(1.5);" type="checkbox" checked="@dailyIsChecked" onclick="@(()=> ChangeFrequentStatus(schedulers, 2))" /><label class="form-check-label">@localizer[StringDescriptionModel.schedule_daily]</label>
                                     </td>
                                 </tr>
                                 <tr style="position: relative; top: 30px">
@@ -130,6 +146,18 @@
     </SfToast>
 </div>
 
+<style>
+
+    .e-dialog.e-popup {
+        width: 550px !important;
+    }
+
+    .custom-dropdown .e-dropdownbase .e-list-item {
+        font-size: 20px;
+    }
+
+</style>
+
 @code {
 
     SfSchedule<SchedulerModel> ScheduleRef;
@@ -156,7 +184,7 @@
     protected override async void OnInitialized()
     {
         base.OnInitialized();     
-    //    MainLayout.OnLanguageChange += StateHasChanged;
+        MainLayout.OnLanguageChange += StateHasChanged;
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -371,6 +399,6 @@
     void IDisposable.Dispose()
     {
         timer?.Dispose();
-    //    MainLayout.OnLanguageChange -= StateHasChanged;
+        MainLayout.OnLanguageChange -= StateHasChanged;
     }
 }
