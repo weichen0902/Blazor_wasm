@@ -45,7 +45,7 @@ namespace Blazor_wasm.Services
                     {
                         if (Setting.UserBasicDetail != null)
                         {
-                            if (_appService.jwtAccessToken.ValidTo < DateTime.UtcNow)
+                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                             {
                                 await _appService.RefreshToken();
                                 await GetpH(startTimestamp, endTimestamp);
@@ -79,7 +79,7 @@ namespace Blazor_wasm.Services
                     {
                         if (Setting.UserBasicDetail != null)
                         {
-                            if (_appService.jwtAccessToken.ValidTo < DateTime.UtcNow)
+                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                             {
                                 await _appService.RefreshToken();
                                 await GetD1AllCAL();
@@ -114,7 +114,7 @@ namespace Blazor_wasm.Services
                     {
                         if (Setting.UserBasicDetail != null)
                         {
-                            if (_appService.jwtAccessToken.ValidTo < DateTime.UtcNow)
+                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                             {
                                 await _appService.RefreshToken();
                                 await GetD2AllCAL();
@@ -149,7 +149,7 @@ namespace Blazor_wasm.Services
                     {
                         if (Setting.UserBasicDetail != null)
                         {
-                            if (_appService.jwtAccessToken.ValidTo < DateTime.UtcNow)
+                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                             {
                                 await _appService.RefreshToken();
                                 await GetAllAlarm();
@@ -183,7 +183,7 @@ namespace Blazor_wasm.Services
                     {
                         if (Setting.UserBasicDetail != null)
                         {
-                            if (_appService.jwtAccessToken.ValidTo < DateTime.UtcNow)
+                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                             {
                                 await _appService.RefreshToken();
                                 await GetScheduler();
@@ -218,7 +218,7 @@ namespace Blazor_wasm.Services
                     {
                         if (Setting.UserBasicDetail != null)
                         {
-                            if (_appService.jwtAccessToken.ValidTo < DateTime.UtcNow)
+                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                             {
                                 await _appService.RefreshToken();
                                 await GetModbusDevicesData();
@@ -252,7 +252,7 @@ namespace Blazor_wasm.Services
                     {
                         if (Setting.UserBasicDetail != null)
                         {
-                            if (_appService.jwtAccessToken.ValidTo < DateTime.UtcNow)
+                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                             {
                                 await _appService.RefreshToken();
                                 await GetFieldData();
@@ -287,7 +287,7 @@ namespace Blazor_wasm.Services
                     {
                         if (Setting.UserBasicDetail != null)
                         {
-                            if (_appService.jwtAccessToken.ValidTo < DateTime.UtcNow)
+                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                             {
                                 await _appService.RefreshToken();
                                 await PostpH(realTimepH);
@@ -322,7 +322,7 @@ namespace Blazor_wasm.Services
                     {
                         if (Setting.UserBasicDetail != null)
                         {
-                            if (_appService.jwtAccessToken.ValidTo < DateTime.UtcNow)
+                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                             {
                                 await _appService.RefreshToken();
                                 await PostD1CALList(data);
@@ -357,7 +357,7 @@ namespace Blazor_wasm.Services
                     {
                         if (Setting.UserBasicDetail != null)
                         {
-                            if (_appService.jwtAccessToken.ValidTo < DateTime.UtcNow)
+                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                             {
                                 await _appService.RefreshToken();
                                 await PostD2CALList(data);
@@ -392,7 +392,7 @@ namespace Blazor_wasm.Services
                     {
                         if (Setting.UserBasicDetail != null)
                         {
-                            if (_appService.jwtAccessToken.ValidTo < DateTime.UtcNow)
+                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                             {
                                 await _appService.RefreshToken();
                                 await PostD1CalData(data);
@@ -427,7 +427,7 @@ namespace Blazor_wasm.Services
                     {
                         if (Setting.UserBasicDetail != null)
                         {
-                            if (_appService.jwtAccessToken.ValidTo < DateTime.UtcNow)
+                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                             {
                                 await _appService.RefreshToken();
                                 await PostD2CalData(data);
@@ -462,7 +462,7 @@ namespace Blazor_wasm.Services
                     {
                         if (Setting.UserBasicDetail != null)
                         {
-                            if (_appService.jwtAccessToken.ValidTo < DateTime.UtcNow)
+                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                             {
                                 await _appService.RefreshToken();
                                 await PostAlarmData(alarmData);
@@ -497,7 +497,7 @@ namespace Blazor_wasm.Services
                     {
                         if (Setting.UserBasicDetail != null)
                         {
-                            if (_appService.jwtAccessToken.ValidTo < DateTime.UtcNow)
+                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                             {
                                 await _appService.RefreshToken();
                                 await PostScheduler(schedulerData);
@@ -532,7 +532,7 @@ namespace Blazor_wasm.Services
                     {
                         if (Setting.UserBasicDetail != null)
                         {
-                            if (_appService.jwtAccessToken.ValidTo < DateTime.UtcNow)
+                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                             {
                                 await _appService.RefreshToken();
                                 await PostModbusDevicesData(postModbusApiModel);
@@ -567,7 +567,7 @@ namespace Blazor_wasm.Services
                     {
                         if (Setting.UserBasicDetail != null)
                         {
-                            if (_appService.jwtAccessToken.ValidTo < DateTime.UtcNow)
+                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                             {
                                 await _appService.RefreshToken();
                                 await PostFieldData(fieldData);
@@ -602,7 +602,7 @@ namespace Blazor_wasm.Services
                     {
                         if (Setting.UserBasicDetail != null)
                         {
-                            if (_appService.jwtAccessToken.ValidTo < DateTime.UtcNow)
+                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                             {
                                 await _appService.RefreshToken();
                                 await UpdateAlarmStatus(alarmData);
@@ -637,7 +637,7 @@ namespace Blazor_wasm.Services
                     {
                         if (Setting.UserBasicDetail != null)
                         {
-                            if (_appService.jwtAccessToken.ValidTo < DateTime.UtcNow)
+                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                             {
                                 await _appService.RefreshToken();
                                 await UpdateScheduler(schedulerData);
@@ -674,7 +674,7 @@ namespace Blazor_wasm.Services
                         Console.WriteLine($"Error: {Setting.UserBasicDetail.AccessToken}");
                         if (Setting.UserBasicDetail != null)
                         {
-                            if (_appService.jwtAccessToken.ValidTo < DateTime.UtcNow)
+                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                             {
                                 await _appService.RefreshToken();
                                 await UpdateFieldData(fieldData);
@@ -709,7 +709,7 @@ namespace Blazor_wasm.Services
                     {
                         if (Setting.UserBasicDetail != null)
                         {
-                            if (_appService.jwtAccessToken.ValidTo < DateTime.UtcNow)
+                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                             {
                                 await _appService.RefreshToken();
                                 await DeletepH();
@@ -744,7 +744,7 @@ namespace Blazor_wasm.Services
                     {
                         if (Setting.UserBasicDetail != null)
                         {
-                            if (_appService.jwtAccessToken.ValidTo < DateTime.UtcNow)
+                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                             {
                                 await _appService.RefreshToken();
                                 await DeleteD1CAL();
@@ -779,7 +779,7 @@ namespace Blazor_wasm.Services
                     {
                         if (Setting.UserBasicDetail != null)
                         {
-                            if (_appService.jwtAccessToken.ValidTo < DateTime.UtcNow)
+                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                             {
                                 await _appService.RefreshToken();
                                 await DeleteD2CAL();
@@ -814,7 +814,7 @@ namespace Blazor_wasm.Services
                     {
                         if (Setting.UserBasicDetail != null)
                         {
-                            if (_appService.jwtAccessToken.ValidTo < DateTime.UtcNow)
+                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                             {
                                 await _appService.RefreshToken();
                                 await DeleteAlarmData();
@@ -852,12 +852,15 @@ namespace Blazor_wasm.Services
                     }
                     else
                     {
-                        if (_appService.jwtAccessToken.ValidTo < DateTime.UtcNow)
+                        if (Setting.UserBasicDetail != null)
                         {
-                            await _appService.RefreshToken();
-                            await DeleteScheduler(schedulerData);
-                        }
-                        errorMessage = await responseDelete.Content.ReadAsStringAsync();
+                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
+                            {
+                                await _appService.RefreshToken();
+                                await DeleteScheduler(schedulerData);
+                            }
+                            errorMessage = await responseDelete.Content.ReadAsStringAsync();
+                        }                          
                     }                   
                 }
             }
@@ -885,10 +888,13 @@ namespace Blazor_wasm.Services
                     }
                     else
                     {
-                        if (Setting.UserBasicDetail != null && _appService.jwtAccessToken.ValidTo < DateTime.UtcNow)
+                        if (Setting.UserBasicDetail != null)
                         {
-                            await _appService.RefreshToken();
-                            return await WriteRegister(address, value);
+                            if(Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
+                            {
+                                await _appService.RefreshToken();
+                                return await WriteRegister(address, value);
+                            }                           
                         }
                         return (false, $"Failed to write register. Status code: {result.StatusCode}");
                     }

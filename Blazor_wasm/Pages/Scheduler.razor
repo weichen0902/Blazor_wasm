@@ -156,7 +156,7 @@
     protected override async void OnInitialized()
     {
         base.OnInitialized();     
-        MainLayout.OnLanguageChange += StateHasChanged;
+    //    MainLayout.OnLanguageChange += StateHasChanged;
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -371,6 +371,6 @@
     void IDisposable.Dispose()
     {
         timer?.Dispose();
-        MainLayout.OnLanguageChange -= StateHasChanged;
+    //    MainLayout.OnLanguageChange -= StateHasChanged;
     }
 }

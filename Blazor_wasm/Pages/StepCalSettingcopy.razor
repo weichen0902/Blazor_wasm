@@ -12,11 +12,11 @@
 @code {
     protected override void OnInitialized()
     {
-        MainLayout.OnLanguageChange += StateHasChanged;
+    //    MainLayout.OnLanguageChange += StateHasChanged;
     }
 
     void IDisposable.Dispose()
     {
-        MainLayout.OnLanguageChange -= StateHasChanged;
+    //    MainLayout.OnLanguageChange -= StateHasChanged;
     }
 }

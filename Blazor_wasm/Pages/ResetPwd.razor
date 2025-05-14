@@ -31,7 +31,7 @@
 
     protected override void OnInitialized()
     {
-        MainLayout.OnLanguageChange += StateHasChanged;
+     //   MainLayout.OnLanguageChange += StateHasChanged;
     }
 
     private async void Submit()
@@ -50,6 +50,6 @@
 
     void IDisposable.Dispose()
     {
-        MainLayout.OnLanguageChange -= StateHasChanged;
+    //    MainLayout.OnLanguageChange -= StateHasChanged;
     }
 }

@@ -71,7 +71,7 @@ namespace Blazor_wasm.Services
 
 						var tokenResponse = JsonConvert.DeserializeObject<AuthenticateRequestAndResponse>(returnResponse.Content.ToString());
 						var handler = new JwtSecurityTokenHandler();
-						jwtAccessToken = handler.ReadToken(tokenResponse.AccessToken) as JwtSecurityToken;
+						jwtAccessToken = handler.ReadToken(tokenResponse.AccessToken) as JwtSecurityToken;						
 						accessToken = tokenResponse.AccessToken;
 					}
 				}
@@ -280,6 +280,7 @@ namespace Blazor_wasm.Services
                             accessToken = tokenDetails.AccessToken;
                             var handler = new JwtSecurityTokenHandler();
                             jwtAccessToken = handler.ReadToken(tokenDetails.AccessToken) as JwtSecurityToken;
+							Setting.UserBasicDetail.AccessTokenExpire = jwtAccessToken.ValidTo;
 
                             string userDetailsStr = JsonConvert.SerializeObject(Setting.UserBasicDetail);
                             await _localStorage.SetItemAsStringAsync(nameof(Setting.UserBasicDetail), userDetailsStr);

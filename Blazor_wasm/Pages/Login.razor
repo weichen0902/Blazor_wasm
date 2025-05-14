@@ -69,7 +69,7 @@
 
     protected override void OnInitialized()
     {
-        MainLayout.OnLanguageChange += StateHasChanged;
+     //   MainLayout.OnLanguageChange += StateHasChanged;
     }
 
     private async void Submit()
@@ -110,6 +110,7 @@
                     Email = email,
                     Name = name,
                     AccessToken = tokenResponse.AccessToken,
+                    AccessTokenExpire = jsontoken.ValidTo,
                     RefreshToken = tokenResponse.RefreshToken,
                     UserAvatar = !string.IsNullOrWhiteSpace(userAvatar) ? $"{Setting.BaseUrl}/{userAvatar}" : "",
                     UserID = userID,
@@ -147,6 +148,6 @@
 
     void IDisposable.Dispose()
     {
-        MainLayout.OnLanguageChange -= StateHasChanged;
+     //   MainLayout.OnLanguageChange -= StateHasChanged;
     }
 }

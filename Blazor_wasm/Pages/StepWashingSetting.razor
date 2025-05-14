@@ -127,7 +127,7 @@
 
     protected override void OnInitialized()
     {
-        MainLayout.OnLanguageChange += StateHasChanged;
+    //    MainLayout.OnLanguageChange += StateHasChanged;
         totalStepsNumber = (ushort)devicesDataModel[0, "totalNumberOfSteps"];
 
         for (int i = 0; i < 12; i++)
@@ -265,6 +265,6 @@
 
     void IDisposable.Dispose()
     {
-        MainLayout.OnLanguageChange -= StateHasChanged;
+    //    MainLayout.OnLanguageChange -= StateHasChanged;
     }
 }

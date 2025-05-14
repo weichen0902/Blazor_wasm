@@ -52,7 +52,7 @@
         GaugeOneAngle = 182;
         GaugeOneRadius = "2%";
 
-        MainLayout.OnLanguageChange += StateHasChanged;
+     //   MainLayout.OnLanguageChange += StateHasChanged;
         devicesDataModel.OnStateChange += Update;
         
         Update();    
@@ -72,12 +72,12 @@
         else if (hbmpH >= 8 & hbmpH < 14)
             color = "#e96920";
 
-        StateHasChanged();
+    //    StateHasChanged();
     }   
     
     void IDisposable.Dispose()
     {
-        MainLayout.OnLanguageChange -= StateHasChanged;
+    //    MainLayout.OnLanguageChange -= StateHasChanged;
         devicesDataModel.OnStateChange -= Update;
     }
 }

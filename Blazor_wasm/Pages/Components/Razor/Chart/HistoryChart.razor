@@ -76,7 +76,7 @@
 
     protected override async Task OnInitializedAsync()
     {        
-        MainLayout.OnLanguageChange += StateHasChanged;
+  //      MainLayout.OnLanguageChange += StateHasChanged;
 
         // Try to load saved dates from localStorage
         var savedStartDate = await JS.InvokeAsync<string>("historyChartInterop.getStartDateTime");
@@ -217,6 +217,6 @@
 
     void IDisposable.Dispose()
     {
-        MainLayout.OnLanguageChange -= StateHasChanged;
+   //     MainLayout.OnLanguageChange -= StateHasChanged;
     }
 }

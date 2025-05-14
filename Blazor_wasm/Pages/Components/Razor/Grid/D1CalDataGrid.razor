@@ -50,7 +50,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        MainLayout.OnLanguageChange += StateHasChanged;
+    //    MainLayout.OnLanguageChange += StateHasChanged;
         devicesDataModel.OnCalStateChange += Update;
         Update();        
     }
@@ -162,7 +162,7 @@
 
     void IDisposable.Dispose()
     {
-        MainLayout.OnLanguageChange -= StateHasChanged;
+     //   MainLayout.OnLanguageChange -= StateHasChanged;
         devicesDataModel.OnCalStateChange -= Update;
     }
 }

@@ -74,13 +74,13 @@ namespace Blazor_wasm.Shared
                 {
                     for (int i = 0; i < 2; i++)
                     {
-                        if ((double)devicesDataModel[i, "hbmSlope"] != response.hbmSlope[i])
-                        {
-                            getAllCalData.UpdateData();
-                            StateHasChanged();
-                        }
+                        //if ((double)devicesDataModel[i, "hbmSlope"] != response.hbmSlope[i])
+                        //{
+                        //    getAllCalData.UpdateData();
+                        //    StateHasChanged();
+                        //}
 
-                        await Task.Delay(2000);
+                        //await Task.Delay(2000);
 
                         devicesDataModel[i, "hbmpH"] = response.hbmpH[i];
                         if (i == 0)

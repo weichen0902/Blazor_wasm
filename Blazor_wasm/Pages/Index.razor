@@ -630,7 +630,7 @@
     protected override async Task OnInitializedAsync()
     {
         pageTitleService.Title = "";
-        MainLayout.OnLanguageChange += StateHasChanged;
+  //      MainLayout.OnLanguageChange += StateHasChanged;
         MainLayout.OnFieldChange += Update;
         devicesDataModel.OnStateChange += Update;
         AlarmDataGrid.toChangeAlarmBtnState += StateHasChanged;

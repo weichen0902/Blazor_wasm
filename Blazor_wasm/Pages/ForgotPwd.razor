@@ -40,7 +40,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        MainLayout.OnLanguageChange += StateHasChanged;
+   //     MainLayout.OnLanguageChange += StateHasChanged;
     }
 
     private async Task Submit()
@@ -81,7 +81,7 @@
 
     void IDisposable.Dispose()
     {
-        MainLayout.OnLanguageChange -= StateHasChanged;
+    //    MainLayout.OnLanguageChange -= StateHasChanged;
     }
 }
     

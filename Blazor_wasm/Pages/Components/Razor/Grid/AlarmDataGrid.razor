@@ -86,7 +86,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        MainLayout.OnLanguageChange += StateHasChanged;
+     //   MainLayout.OnLanguageChange += StateHasChanged;
         devicesDataModel.OnAlarmStateChange += UpdateRelay;
         Blazor_wasm.Pages.Index.showHistoryAlarmData += UpdateRelay;
         Blazor_wasm.Pages.Index.toDeleteAlarmData += DeleteAlarmData;
@@ -125,7 +125,7 @@
 
     void IDisposable.Dispose()
     {
-        MainLayout.OnLanguageChange -= StateHasChanged;
+     //   MainLayout.OnLanguageChange -= StateHasChanged;
         devicesDataModel.OnAlarmStateChange -= UpdateRelay;
         Blazor_wasm.Pages.Index.showHistoryAlarmData -= UpdateRelay;
         Blazor_wasm.Pages.Index.toDeleteAlarmData -= DeleteAlarmData;

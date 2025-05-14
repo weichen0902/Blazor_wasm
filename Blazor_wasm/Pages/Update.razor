@@ -134,7 +134,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        MainLayout.OnLanguageChange += StateHasChanged;
+    //    MainLayout.OnLanguageChange += StateHasChanged;
         await GetUser();
     }
 
@@ -224,7 +224,7 @@
     }
     void IDisposable.Dispose()
     {
-        MainLayout.OnLanguageChange -= StateHasChanged;
+     //   MainLayout.OnLanguageChange -= StateHasChanged;
     }
 }
 
