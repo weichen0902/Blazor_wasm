@@ -78,7 +78,7 @@
 
 let chartInstance;
 
-window.createStreamingChart111 = async (canvasId, historicalData) => {
+window.createStreamingChart = async (canvasId, historicalData) => {
     const ctx = document.getElementById(canvasId).getContext('2d');
 
     chartInstance = new Chart(ctx, {

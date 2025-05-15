@@ -18,7 +18,7 @@
 
 <h1 class="text-center">@localizer[StringDescriptionModel.schedule]</h1>
 <div class="col-lg-12 control-section">
-    <SfSchedule TValue="SchedulerModel" @ref="ScheduleRef" Height="600px" Timezone="UTC">
+    <SfSchedule TValue="SchedulerModel" @ref="ScheduleRef" Height="600px" Timezone="Asia/Taipei">
         <ScheduleTemplates >
             <EditorHeaderTemplate>
                 <div class="quick-info-title" style="font-size: 20px;">
@@ -38,12 +38,12 @@
                                     <td colspan="4">
                                         <div style="display: flex; align-items: center; height: 50px;">
                                             <SfDropDownList TValue="string"
-                                                            TItem="DropDownModel"
-                                                            Placeholder="@localizer[StringDescriptionModel.schedule_ent_select_system]"
-                                                            DataSource="@DeviceData"
-                                                            @bind-Value="@dropDownDeviceBindValue"
-                                                            CssClass="custom-dropdown"
-                                                            style="height: 50px; font-size: 20px;">
+                                            TItem="DropDownModel"
+                                            Placeholder="@localizer[StringDescriptionModel.schedule_ent_select_system]"
+                                            DataSource="@DeviceData"
+                                            value="dropDownDeviceBindValue"
+                                            CssClass="custom-dropdown"
+                                            style="height: 50px; font-size: 20px;">
                                                 <DropDownListFieldSettings Value="ID" Text="Text"></DropDownListFieldSettings>
                                                 <DropDownListEvents TValue="string" TItem="DropDownModel" ValueChange="OnDropDownDeviceValueChange" />
                                             </SfDropDownList>
@@ -55,12 +55,12 @@
                                     <td colspan="4">
                                         <div class="dropdown-wrapper">
                                             <SfDropDownList TValue="string"
-                                                            TItem="DropDownModel"
-                                                            Placeholder="@localizer[StringDescriptionModel.schedule_ent_select_subject]"
-                                                            DataSource="@SubjectData"
-                                                            @bind-Value="@dropDownSubjectBindValue"
-                                                            CssClass="custom-dropdown"
-                                                            style="height: 50px; font-size: 20px;">
+                                            TItem="DropDownModel"
+                                            Placeholder="@localizer[StringDescriptionModel.schedule_ent_select_subject]"
+                                            DataSource="@SubjectData"
+                                            Value="dropDownSubjectBindValue"
+                                            CssClass="custom-dropdown"
+                                            style="height: 50px; font-size: 20px;">
                                                 <DropDownListFieldSettings Value="ID" Text="Text" />
                                                 <DropDownListEvents TValue="string" TItem="DropDownModel" ValueChange="OnDropDownSubjectValueChange" />
                                             </SfDropDownList>
@@ -149,11 +149,11 @@
 <style>
 
     .e-dialog.e-popup {
-        width: 550px !important;
+    width: 550px !important;
     }
 
     .custom-dropdown .e-dropdownbase .e-list-item {
-        font-size: 20px;
+    font-size: 20px;
     }
 
 </style>
@@ -184,7 +184,7 @@
     protected override async void OnInitialized()
     {
         base.OnInitialized();     
-        MainLayout.OnLanguageChange += StateHasChanged;
+        MainLayout.OnLanguageChange += StateHasChanged;        
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -202,7 +202,7 @@
             new DropDownModel() { ID= "Export", Text= @localizer[StringDescriptionModel.schedule_export] },
         };
     }
-  
+
     private async void OnActionCompleted(ActionEventArgs<SchedulerModel> args)
     {
         if (args.ActionType == ActionType.EventCreate || args.ActionType == ActionType.EventChange || args.ActionType == ActionType.EventRemove)
@@ -210,7 +210,7 @@
             var added = args.AddedRecords.FirstOrDefault()?? new SchedulerModel();
             var changed = args.ChangedRecords.FirstOrDefault() ?? new SchedulerModel();
             var deleted = args.DeletedRecords.FirstOrDefault() ?? new SchedulerModel();
-           
+
             switch (args.ActionType)
             {
                 case ActionType.EventCreate:
@@ -227,21 +227,25 @@
     }
 
     public void OnPopupOpen(PopupOpenEventArgs<SchedulerModel> args)
-    {   
-        
+    {
+
         if (args.Type == PopupType.Editor && args.Data != null)
-        {
-            dropDownDeviceBindValue = null;
+        {                         
             if (args.Data.Subject.Contains("d1"))
                 dropDownDeviceBindValue = DeviceData[0].ID;           
             else if (args.Data.Subject.Contains("d2"))
                 dropDownDeviceBindValue = DeviceData[1].ID; 
+            else
+                dropDownDeviceBindValue = string.Empty;
+
             if (args.Data.Subject.Contains("Wash"))
                 dropDownSubjectBindValue = SubjectData[0].ID;
             else if (args.Data.Subject.Contains("Calibration"))
                 dropDownSubjectBindValue = SubjectData[1].ID;
             else if (args.Data.Subject.Contains("Export"))
                 dropDownSubjectBindValue = SubjectData[2].ID;
+            else
+                dropDownSubjectBindValue = string.Empty;
         }
 
         washIsChecked = args.Data != null && args.Data.Subject.Contains("wash") ? true : false;
@@ -273,7 +277,7 @@
             isDeleteClick = false;
         }
     }
-   
+
     private void ChangeFrequentStatus(SchedulerModel s, int i)
     {
         var byDay = s.StartTime.Date.Day;
@@ -367,10 +371,14 @@
 
     public void OnDropDownSubjectValueChange(ChangeEventArgs<string, DropDownModel> args)
     {
-        if (schedulers.Subject == "")
-            schedulers.Subject = args.Value;
+
+        if (schedulers.Subject == null)
+            schedulers.Subject = "";
+        else if (schedulers.Subject == "")
+            schedulers.Subject = args.Value;        
         else if (schedulers.Subject.Contains("d"))
             schedulers.Subject = schedulers.Subject.Substring(0, 2).Insert(2, args.Value);
+
         schedulers.IsAllDay = false;
     }
 
@@ -378,7 +386,7 @@
     {
         schedulers.StartTime = args.Value;
         schedulers.EndTime = schedulers.StartTime > schedulers.EndTime ? schedulers.StartTime.AddMinutes(30) : schedulers.EndTime;
-
+        Console.WriteLine($"{schedulers.StartTime}");
         var byDay = schedulers.StartTime.Date.Day;
         var byDayOfWeek = schedulers.StartTime.DayOfWeek.ToString().ToUpper().Substring(0, 2);
 
@@ -387,8 +395,8 @@
         else if(weeklyIsChecked)
             schedulers.RecurrenceRule = $"FREQ=WEEKLY;BYDAY={byDayOfWeek};INTERVAL=1;";
 
-        schedulers.StartTimezone = "Europe/London";
-        schedulers.EndTimezone = "Europe/London";
+        // schedulers.StartTimezone = "Asia/Taipei";
+        // schedulers.EndTimezone = "Asia/Taipei";
     }
 
     private void OnEndTimeChanged(ChangedEventArgs<DateTime> args)
