@@ -159,5 +159,7 @@ namespace Blazor_wasm.Models.LanguagesModels
 
         public const string system_manual = "system_manual";
         public const string system_auto = "system_auto";
+
+        public const string loading = "loading";
     }
 }

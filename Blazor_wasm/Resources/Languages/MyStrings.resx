@@ -825,4 +825,7 @@
   <data name="modal_precal" xml:space="preserve">
     <value>Calibration...</value>
   </data>
+  <data name="loading" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
 </root>

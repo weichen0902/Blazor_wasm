@@ -28,6 +28,7 @@ namespace Blazor_wasm.Services
         public async Task<List<RealTimepH>> GetpH(long startTimestamp, long endTimestamp)
         {
             List<RealTimepH> realTimepH = new List<RealTimepH>();
+
             try
             {
                 using (var client = new HttpClient())
@@ -50,14 +51,13 @@ namespace Blazor_wasm.Services
                                 await _appService.RefreshToken();
                                 await GetpH(startTimestamp, endTimestamp);
                             }
-                        }
+                        }                                               
                     }                   
-                }
+                }               
             }
             catch (Exception ex) { }
 
             return realTimepH;
-
         }
         public async Task<List<D1CalData>> GetD1AllCAL()
         {

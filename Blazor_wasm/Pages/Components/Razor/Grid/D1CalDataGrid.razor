@@ -27,6 +27,11 @@
     </div>
 </div>
 
+@if (fetchData == true)
+{
+    <Loading IsLoading="fetchData" LoadingText="@localizer[StringDescriptionModel.loading]" />
+}
+
 <div class="col-lg-12 control-section">
     <div class="content-wrapper">
         <div class="row">
@@ -48,6 +53,8 @@
     private List<D1SelfReferenceData>? TreeGridData { get; set; }
     private List<D1CalData>? d1CalData;
 
+    private bool fetchData = false;
+
     protected override async Task OnInitializedAsync()
     {
     //    MainLayout.OnLanguageChange += StateHasChanged;
@@ -57,11 +64,13 @@
 
     private async void Update()
     {
+        fetchData = true;
         await Task.Delay(1000);
         await getAllCalData.UpdateData();
         this.d1CalData = getAllCalData.d1CalData;
 
         await Task.Delay(500);
+        fetchData = false;
         if (d1CalData != null)
         {
             this.TreeGridData = D1SelfReferenceData.GetTree(d1CalData).ToList();

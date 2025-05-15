@@ -825,4 +825,7 @@
   <data name="modal_precal" xml:space="preserve">
     <value>校正中...</value>
   </data>
+  <data name="loading" xml:space="preserve">
+    <value>讀取中...</value>
+  </data>
 </root>
