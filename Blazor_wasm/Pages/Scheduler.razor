@@ -41,7 +41,7 @@
                                             TItem="DropDownModel"
                                             Placeholder="@localizer[StringDescriptionModel.schedule_ent_select_system]"
                                             DataSource="@DeviceData"
-                                            value="dropDownDeviceBindValue"
+                                            @bind-value="@dropDownDeviceBindValue"
                                             CssClass="custom-dropdown"
                                             style="height: 50px; font-size: 20px;">
                                                 <DropDownListFieldSettings Value="ID" Text="Text"></DropDownListFieldSettings>
@@ -58,7 +58,7 @@
                                             TItem="DropDownModel"
                                             Placeholder="@localizer[StringDescriptionModel.schedule_ent_select_subject]"
                                             DataSource="@SubjectData"
-                                            Value="dropDownSubjectBindValue"
+                                            @bind-value="@dropDownSubjectBindValue"
                                             CssClass="custom-dropdown"
                                             style="height: 50px; font-size: 20px;">
                                                 <DropDownListFieldSettings Value="ID" Text="Text" />
@@ -197,9 +197,9 @@
 
         SubjectData = new List<DropDownModel>
         {
-            new DropDownModel() { ID= "Wash", Text= @localizer[StringDescriptionModel.schedule_wash] },
-            new DropDownModel() { ID= "Calibration", Text= @localizer[StringDescriptionModel.schedule_calibration] },
-            new DropDownModel() { ID= "Export", Text= @localizer[StringDescriptionModel.schedule_export] },
+            new DropDownModel() { ID= "wash", Text= @localizer[StringDescriptionModel.schedule_wash] },
+            new DropDownModel() { ID= "calibration", Text= @localizer[StringDescriptionModel.schedule_calibration] },
+            new DropDownModel() { ID= "export", Text= @localizer[StringDescriptionModel.schedule_export] },
         };
     }
 
@@ -238,11 +238,11 @@
             else
                 dropDownDeviceBindValue = string.Empty;
 
-            if (args.Data.Subject.Contains("Wash"))
+            if (args.Data.Subject.Contains("wash"))
                 dropDownSubjectBindValue = SubjectData[0].ID;
-            else if (args.Data.Subject.Contains("Calibration"))
+            else if (args.Data.Subject.Contains("calibration"))
                 dropDownSubjectBindValue = SubjectData[1].ID;
-            else if (args.Data.Subject.Contains("Export"))
+            else if (args.Data.Subject.Contains("export"))
                 dropDownSubjectBindValue = SubjectData[2].ID;
             else
                 dropDownSubjectBindValue = string.Empty;
