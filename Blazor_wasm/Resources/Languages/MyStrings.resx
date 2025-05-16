@@ -828,4 +828,7 @@
   <data name="loading" xml:space="preserve">
     <value>Loading...</value>
   </data>
+  <data name="account_account_management" xml:space="preserve">
+    <value>Account Management</value>
+  </data>
 </root>

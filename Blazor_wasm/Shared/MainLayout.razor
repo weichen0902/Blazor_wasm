@@ -91,6 +91,58 @@
                                 </div>
                             </NavLink>
                         </div>
+
+                        @if (Setting.UserBasicDetail.Role == "Admin")
+                        {                         
+                            <div class="nav-item">
+                                <NavLink class="nav-link px-2" href="javascript:void(0);" @onclick="()=>{collapseNavMenuD4=true; expanSubMenuD4 = !expanSubMenuD4;}">
+                                    <div class="d-flex align-items-center">
+                                        <span class="oi oi-person" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                        <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.account_account_management]</span>
+                                    </div>
+                                    <span class="arrow-icon" aria-hidden="true">
+                                        @if (!expanSubMenuD4)
+                                        {
+                                            <span class="oi oi-chevron-left"></span>
+                                        }
+                                        else
+                                        {
+                                            <span class="oi oi-chevron-bottom"></span>
+                                        }
+                                    </span>
+                                </NavLink>
+                                @if (expanSubMenuD4)
+                                {
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <NavLink class="nav-link" href="registration" @onclick="HideFlyout">
+                                                <div class="d-flex align-items-center">
+                                                    <span class="oi oi-person" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                                    <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.account_registration]</span>
+                                                </div>
+                                            </NavLink>
+                                        </li>
+                                        <li class="nav-item">
+                                            <NavLink class="nav-link" href="update" @onclick="HideFlyout">
+                                                <div class="d-flex align-items-center">
+                                                    <span class="oi oi-person" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                                    <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.account_modify_account]</span>
+                                                </div>
+                                            </NavLink>
+                                        </li>
+                                        <li class="nav-item">
+                                            <NavLink class="nav-link" href="javascript:void(0);" @onclick="ShowDelAccountModal">
+                                                <div class="d-flex align-items-center">
+                                                    <span class="oi oi-person" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                                    <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.account_delete_account]</span>
+                                                </div>
+                                            </NavLink>
+                                        </li>
+                                    </ul>
+                                }
+                            </div>
+                        }
+
                         <div class="nav-item">
                             <NavLink class="nav-link px-2" href="javascript:void(0);" @onclick="()=>{collapseNavMenuD1=true; expanSubMenuD1 = !expanSubMenuD1;}">
                                 <div class="d-flex align-items-center">
@@ -100,11 +152,11 @@
                                 <span class="arrow-icon" aria-hidden="true">
                                     @if (!expanSubMenuD1)
                                     {
-                                        <span class="oi oi-arrow-left"></span>
+                                        <span class="oi oi-chevron-left"></span>
                                     }
                                     else
                                     {
-                                        <span class="oi oi-arrow-bottom"></span>
+                                        <span class="oi oi-chevron-bottom"></span>
                                     }
                                 </span>
                             </NavLink>
@@ -139,11 +191,11 @@
                                 <span class="arrow-icon" aria-hidden="true">
                                     @if (!expanSubMenuD2)
                                     {
-                                        <span class="oi oi-arrow-left"></span>
+                                        <span class="oi oi-chevron-left"></span>
                                     }
                                     else
                                     {
-                                        <span class="oi oi-arrow-bottom"></span>
+                                        <span class="oi oi-chevron-bottom"></span>
                                     }
                                 </span>
                             </NavLink>
@@ -169,6 +221,7 @@
                                 </ul>
                             }
                         </div>
+
                         <div class="nav-item">
                             <NavLink class="nav-link px-2" href="javascript:void(0);" @onclick="()=>{collapseNavMenuD3=true; expanSubMenuD3 = !expanSubMenuD3;}">
                                 <div class="d-flex align-items-center">
@@ -178,11 +231,11 @@
                                 <span class="arrow-icon" aria-hidden="true">
                                     @if (!expanSubMenuD3)
                                     {
-                                        <span class="oi oi-arrow-left"></span>
+                                        <span class="oi oi-chevron-left"></span>
                                     }
                                     else
                                     {
-                                        <span class="oi oi-arrow-bottom"></span>
+                                        <span class="oi oi-chevron-bottom"></span>
                                     }
                                 </span>
                             </NavLink>
@@ -208,6 +261,7 @@
                                 </ul>
                             }
                         </div>
+
                         <div class="nav-item">
                             <NavLink class="nav-link px-2" href="scheduler" @onclick="HideFlyout">
                                 <div class="d-flex align-items-center">
@@ -216,22 +270,19 @@
                                 </div>
                             </NavLink>
                         </div>
-                        <div class="nav-item">
-                            <NavLink class="nav-link px-2" href="update" @onclick="HideFlyout">
-                                <div class="d-flex align-items-center">
-                                    <span class="oi oi-person" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
-                                    <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.account_modify_account]</span>
-                                </div>
-                            </NavLink>
-                        </div>
-                        <div class="nav-item">
-                            <NavLink class="nav-link px-2" href="javascript:void(0);" @onclick="ShowSwitchLanguageModal">
-                                <div class="d-flex align-items-center">
-                                    <span class="oi oi-transfer" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
-                                    <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.language_selection]</span>
-                                </div>
-                            </NavLink>
-                        </div>
+
+                        @if(Setting.UserBasicDetail.Role == "User")
+                        {
+                            <div class="nav-item">
+                                <NavLink class="nav-link px-2" href="update" @onclick="HideFlyout">
+                                    <div class="d-flex align-items-center">
+                                        <span class="oi oi-person" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                        <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.account_modify_account]</span>
+                                    </div>
+                                </NavLink>
+                            </div>
+                        }
+
                         @if (Setting.UserBasicDetail.Role == "Admin")
                         {
                             <div class="nav-item">
@@ -242,15 +293,17 @@
                                     </div>
                                 </NavLink>
                             </div>
-                            <div class="nav-item">
-                                <NavLink class="nav-link px-2" href="javascript:void(0);" @onclick="ShowDelAccountModal">
-                                    <div class="d-flex align-items-center">
-                                        <span class="oi oi-trash" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
-                                        <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.account_delete_account]</span>
-                                    </div>
-                                </NavLink>
-                            </div>
                         }
+                                               
+                        <div class="nav-item">
+                            <NavLink class="nav-link px-2" href="javascript:void(0);" @onclick="ShowSwitchLanguageModal">
+                                <div class="d-flex align-items-center">
+                                    <span class="oi oi-transfer" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                    <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.language_selection]</span>
+                                </div>
+                            </NavLink>
+                        </div>
+                        
                         <div class="nav-item">
                             <NavLink class="nav-link px-2" href="login" @onclick="LogoutAsync">
                                 <div class="d-flex align-items-center">
@@ -418,13 +471,16 @@
     private bool collapseNavMenuD1 = true;
     private bool collapseNavMenuD2 = true;
     private bool collapseNavMenuD3 = true;
+    private bool collapseNavMenuD4 = true;
     private bool expanSubMenuD1;
     private bool expanSubMenuD2;
     private bool expanSubMenuD3;
+    private bool expanSubMenuD4;
 
     private string NavMenuCssClassD1 => collapseNavMenuD1 ? "collapse" : null;
     private string NavMenuCssClassD2 => collapseNavMenuD2 ? "collapse" : null;
     private string NavMenuCssClassD3 => collapseNavMenuD3 ? "collapse" : null;
+    private string NavMenuCssClassD4 => collapseNavMenuD4 ? "collapse" : null;
 
     private List<UsersEmail> usersEmail, roleOfUsersEmail, toDeleteUsers;
 
@@ -531,6 +587,11 @@
     private void ToggleD3NavMenu()
     {
         collapseNavMenuD3 = !collapseNavMenuD3;
+    }
+
+    private void ToggleD4NavMenu()
+    {
+        collapseNavMenuD4 = !collapseNavMenuD4;
     }
 
     private void ShowFlyout()
@@ -640,6 +701,8 @@
                 break;
             }
         }
+
+        NotifyFieldChanged();
     }
 
     private Task HideModal1()

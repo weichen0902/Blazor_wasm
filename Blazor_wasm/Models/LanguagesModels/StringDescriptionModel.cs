@@ -55,6 +55,7 @@ namespace Blazor_wasm.Models.LanguagesModels
         public const string account_ent_new_password = "account_ent_new_password";
         public const string account_old_password = "account_old_password";
         public const string account_new_password = "account_new_password";
+        public const string account_account_management = "account_account_management";
 
         public const string dashboard_alarm_datalog = "dashboard_alarm_datalog";
         public const string dashboard_clear = "dashboard_clear";

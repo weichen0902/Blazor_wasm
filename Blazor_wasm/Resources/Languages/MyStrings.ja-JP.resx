@@ -828,4 +828,7 @@
   <data name="loading" xml:space="preserve">
     <value>読み込み中...</value>
   </data>
+  <data name="account_account_management" xml:space="preserve">
+    <value>アカウント管理</value>
+  </data>
 </root>

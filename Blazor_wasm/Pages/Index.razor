@@ -631,7 +631,7 @@
     {
         pageTitleService.Title = "";
   //      MainLayout.OnLanguageChange += StateHasChanged;
-        MainLayout.OnFieldChange += Update;
+        MainLayout.OnFieldChange += StateHasChanged;
         devicesDataModel.OnStateChange += Update;
         AlarmDataGrid.toChangeAlarmBtnState += StateHasChanged;
 
@@ -770,7 +770,7 @@
     void IDisposable.Dispose()
     {
         MainLayout.OnLanguageChange -= StateHasChanged;
-        MainLayout.OnFieldChange -= Update;
+        MainLayout.OnFieldChange -= StateHasChanged;
         devicesDataModel.OnStateChange -= Update;
         AlarmDataGrid.toChangeAlarmBtnState -= StateHasChanged;
     }

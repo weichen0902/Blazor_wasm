@@ -146,11 +146,11 @@ namespace Blazor_wasm.Shared
                             var d1ElectrodeCommandBinary = Convert.ToString((ushort)devicesDataModel[i, "electrodeCommand"], 2);
                             var _d1ElectrodeCommandBinaryCharArray = d1ElectrodeCommandBinary.ToCharArray();
                             Array.Reverse(_d1ElectrodeCommandBinaryCharArray);
-                           
+
                             var d1valveStateBinary = Convert.ToString((ushort)devicesDataModel[i, "valveState"], 2);
                             var _d1valveStateBinaryCharArray = d1valveStateBinary.ToCharArray();
                             Array.Reverse(_d1valveStateBinaryCharArray);
-                            
+
                             var serverCommonAlarmErrorCodeBinary = Convert.ToString(serverCommonAlarmErrorCode[i], 2);
                             var _serverCommonAlarmErrorCodeBinaryCharArray = serverCommonAlarmErrorCodeBinary.ToCharArray();
                             Array.Reverse(_serverCommonAlarmErrorCodeBinaryCharArray);
@@ -209,7 +209,7 @@ namespace Blazor_wasm.Shared
                                 electrodeReturnUp[i] = d1ElectrodeCommandBinaryCharArray[0] == '1' ? "yellow" : null;
                                 electrodeReturnSpecifyLocation[i] = d1ElectrodeCommandBinaryCharArray[1] == '1' ? "yellow" : null;
                                 electrodeStandbyPointSetting[i] = d1ElectrodeCommandBinaryCharArray[5] == '1' ? "yellow" : null;
-                           
+
                                 if (d1valveStateBinaryCharArray[0] == '1')
                                 {
                                     washingValve[i] = "yellow";
@@ -263,11 +263,11 @@ namespace Blazor_wasm.Shared
                                 {
                                     airPressureValve[i] = null;
                                     Pages.Index.d1ToggleInput[4] = false;
-                                }                                                                                            
+                                }
                             }
-                                                    
+
                             if (clientCommonAlarmErrorCode[i] != serverCommonAlarmErrorCode[i])
-                            {                             
+                            {
                                 for (int j = 0; j < clientCommonAlarmErrorCodeBinaryCharArray.Length; j++)
                                 {
                                     serverCommonAlarmErrorCodeBinaryCharArray[j] = (_serverCommonAlarmErrorCodeBinaryCharArray.Length > j) ? _serverCommonAlarmErrorCodeBinaryCharArray[j] : '0';
@@ -279,7 +279,7 @@ namespace Blazor_wasm.Shared
                                     clientCommonAlarmErrorCodeBinaryCharArray[j] = serverCommonAlarmErrorCodeBinaryCharArray[j];
                                 }
                                 clientCommonAlarmErrorCode[i] = serverCommonAlarmErrorCode[i];
-                            }                           
+                            }
                         }
 
                         if (i == 1)
@@ -295,7 +295,7 @@ namespace Blazor_wasm.Shared
                             var d2valveStateBinary = Convert.ToString((ushort)devicesDataModel[1, "valveState"], 2);
                             var _d2valveStateBinaryCharArray = d2valveStateBinary.ToCharArray();
                             Array.Reverse(_d2valveStateBinaryCharArray);
-                           
+
                             for (int j = 0; j < _d2DeviceStatusIntBinaryCharArray.Length; j++)
                             {
                                 for (int k = _d2DeviceStatusIntBinaryCharArray.Length; k < 16; k++)
@@ -390,13 +390,13 @@ namespace Blazor_wasm.Shared
                                     airPressureValve[i] = null;
                                     Pages.Index.d2ToggleInput[4] = false;
                                 }
-                            }                           
+                            }
                         }
 
                         serverSystemAlarm1ErrorCode[i] = response.systemAlarm1[i];
-                   
+
                         if (clientSystemAlarm1ErrorCode[i] != serverSystemAlarm1ErrorCode[i])
-                        {                           
+                        {
                             for (int j = 0; j < clientSystemAlarm1ErrorCodeBinaryCharArray.Length; j++)
                             {
                                 serverSystemAlarm1ErrorCodeBinaryCharArray[j] = (_serverSystemAlarm1ErrorCodeBinaryCharArray.Length > j) ? _serverSystemAlarm1ErrorCodeBinaryCharArray[j] : '0';
@@ -433,7 +433,7 @@ namespace Blazor_wasm.Shared
                         devicesDataModel.TriggerNotifyChanged();
                     }
                 });
-            }), null, TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(1));
+            }), null, TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(10));
         }
     }
 }
