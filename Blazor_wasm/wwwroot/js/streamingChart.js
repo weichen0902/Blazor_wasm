@@ -127,6 +127,7 @@ window.createStreamingChart = async (canvasId, historicalData) => {
                     realtime: {
                         delay: 2000,
                         duration: 300000,
+                        refresh: 10000,
                         onRefresh: async function (chart) {
                             let yValue1 = await DotNet.invokeMethodAsync('Blazor_wasm', 'GetY1ValueAsync');
                             let yValue2 = await DotNet.invokeMethodAsync('Blazor_wasm', 'GetY2ValueAsync');
