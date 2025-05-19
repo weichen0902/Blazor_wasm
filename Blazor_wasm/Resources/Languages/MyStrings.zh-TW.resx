@@ -831,4 +831,19 @@
   <data name="account_account_management" xml:space="preserve">
     <value>帳戶管理</value>
   </data>
+  <data name="httpcode_401" xml:space="preserve">
+    <value>帳號或密碼錯誤</value>
+  </data>
+  <data name="httpcode_400" xml:space="preserve">
+    <value>伺服器無法處理此無效的請求</value>
+  </data>
+  <data name="httpcode_403" xml:space="preserve">
+    <value>您無訪問內容的權限</value>
+  </data>
+  <data name="httpcode_404" xml:space="preserve">
+    <value>伺服器找不到請求的資源</value>
+  </data>
+  <data name="httpcode_urlerr" xml:space="preserve">
+    <value>訪問API位址錯誤</value>
+  </data>
 </root>

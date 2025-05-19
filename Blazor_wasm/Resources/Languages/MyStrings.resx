@@ -831,4 +831,19 @@
   <data name="account_account_management" xml:space="preserve">
     <value>Account Management</value>
   </data>
+  <data name="httpcode_401" xml:space="preserve">
+    <value>Incorrect username or password.</value>
+  </data>
+  <data name="httpcode_400" xml:space="preserve">
+    <value>The server cannot process this invalid request.</value>
+  </data>
+  <data name="httpcode_403" xml:space="preserve">
+    <value>You do not have permission to access this content.</value>
+  </data>
+  <data name="httpcode_404" xml:space="preserve">
+    <value>The server could not find the requested resource.</value>
+  </data>
+  <data name="httpcode_urlerr" xml:space="preserve">
+    <value>Incorrect API endpoint accessed.</value>
+  </data>
 </root>

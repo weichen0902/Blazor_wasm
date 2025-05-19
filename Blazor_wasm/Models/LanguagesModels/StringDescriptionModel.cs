@@ -162,5 +162,12 @@ namespace Blazor_wasm.Models.LanguagesModels
         public const string system_auto = "system_auto";
 
         public const string loading = "loading";
+
+        public const string httpcode_400 = "httpcode_400";
+        public const string httpcode_401 = "httpcode_401";
+        public const string httpcode_403 = "httpcode_403";
+        public const string httpcode_404 = "httpcode_404";
+        public const string httpcode_urlerr = "httpcode_urlerr";
+
     }
 }

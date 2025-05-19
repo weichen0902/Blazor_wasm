@@ -294,7 +294,7 @@
                                 </NavLink>
                             </div>
                         }
-                                               
+
                         <div class="nav-item">
                             <NavLink class="nav-link px-2" href="javascript:void(0);" @onclick="ShowSwitchLanguageModal">
                                 <div class="d-flex align-items-center">
@@ -303,7 +303,7 @@
                                 </div>
                             </NavLink>
                         </div>
-                        
+
                         <div class="nav-item">
                             <NavLink class="nav-link px-2" href="login" @onclick="LogoutAsync">
                                 <div class="d-flex align-items-center">
@@ -690,7 +690,7 @@
          fieldData.Field.Contains(localizer[StringDescriptionModel.field_nh]) ? waterFieldRate[6] :
          fieldData.Field.Contains(localizer[StringDescriptionModel.field_hf]) ? waterFieldRate[7] :
          "1";     
-         
+
         for (int i = 0; i < waterFieldRate.Length; i++)
         {
             if (dropDownFieldBindValue == waterFieldRate[i])
@@ -717,7 +717,8 @@
 
     private async Task GetAllUsers()
     {
-        roleOfUsersEmail = await appService.GetAllUsers();
+        var result = await appService.GetAllUsers();
+        roleOfUsersEmail = result.Item2;
     }
 
     private async Task DeleteUsers()

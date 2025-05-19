@@ -13,7 +13,7 @@
 
 
         <DataAnnotationsValidator />
- 
+
         <div class="mb-2 text-center ">
             <img src="@_userAvatar" @onclick="DisplayAction" height="80" width="80" class="rounded-circle avatar_container" />
         </div>
@@ -134,13 +134,14 @@
 
     protected override async Task OnInitializedAsync()
     {
-    //    MainLayout.OnLanguageChange += StateHasChanged;
+        //    MainLayout.OnLanguageChange += StateHasChanged;
         await GetUser();
     }
 
     private async Task GetUser()
     {
-        updateModel = await AppService.GetUser();
+        var result = await AppService.GetUser();
+        updateModel = result.Item2;
         // maleChecked = updateModel.Gender == "male" ? "checked" : "";
         // femaleChecked = updateModel.Gender == "female" ? "checked" : "";
         // adminChecked = updateModel.Role == "Admin" ? "checked" : null;

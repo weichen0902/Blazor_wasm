@@ -19,14 +19,14 @@ namespace Blazor_wasm.Services
 
         public ForgotPasswordModel forgotPasswordModel { get; set; }
         public ResetPasswordModel resetPasswordModel { get; set; }
-        Task<bool> RefreshToken();
+        Task<MainResponse> RefreshToken();
         public Task<MainResponse> AuthenticateUser(LoginModel loginModel);
-        Task<(bool IsSuccess, string ErrorMessage)> RegisterUser(RegistrationModel registerUser);
-        Task<(bool IsSuccess, string ErrorMessage)> ForgotPassword(string email);
-        Task<(bool IsSuccess, string ErrorMessage)> ResetPassword(ResetPasswordModel resetPasswordModel);
-        Task<(bool IsSuccess, string ErrorMessage)> UpdateUser(UpdateModel updateModel);
-        Task<(bool IsSuccess, string ErrorMessage)> DeleteUsers(List<UsersEmail> usersEmail);
-        Task<UpdateModel> GetUser();
-        Task<List<UsersEmail>> GetAllUsers();
+        Task<MainResponse> RegisterUser(RegistrationModel registerUser);
+        Task<MainResponse> ForgotPassword(string email);
+        Task<MainResponse> ResetPassword(ResetPasswordModel resetPasswordModel);
+        Task<MainResponse> UpdateUser(UpdateModel updateModel);
+        Task<MainResponse> DeleteUsers(List<UsersEmail> usersEmail);
+        Task<(MainResponse, UpdateModel)> GetUser();
+        Task<(MainResponse, List<UsersEmail>)> GetAllUsers();
     }
 }

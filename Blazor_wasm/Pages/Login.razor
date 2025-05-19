@@ -69,7 +69,7 @@
 
     protected override void OnInitialized()
     {
-     //   MainLayout.OnLanguageChange += StateHasChanged;
+        //   MainLayout.OnLanguageChange += StateHasChanged;
     }
 
     private async void Submit()
@@ -132,14 +132,31 @@
             {
                 Console.WriteLine($"Error saving to local storage: {ex.Message}");
             }
-    
+
             Setting.UserBasicDetail = userBasicDetail;
 
             NavManager.NavigateTo("/dashboard");
         }
         else
         {
-      //      await App.Current.MainPage.DisplayAlert("Oops", "Invalid username or password", "OK");
+            switch (response.StatusCode)
+            {
+                case 400:
+                    await JS.InvokeVoidAsync("alertMessage", $"{localizer[StringDescriptionModel.httpcode_400]}");
+                    break;
+                case 401:
+                    await JS.InvokeVoidAsync("alertMessage", $"{localizer[StringDescriptionModel.httpcode_401]}");
+                    break;
+                case 403:
+                    await JS.InvokeVoidAsync("alertMessage", $"{localizer[StringDescriptionModel.httpcode_403]}");
+                    break;
+                case 404:
+                    await JS.InvokeVoidAsync("alertMessage", $"{localizer[StringDescriptionModel.httpcode_404]}");
+                    break;     
+                default:
+                    await JS.InvokeVoidAsync("alertMessage", $"{localizer[StringDescriptionModel.httpcode_urlerr]}");
+                    break;
+            }           
         }
 
         _spinnerClass = "";
