@@ -141,7 +141,7 @@
     private async Task GetUser()
     {
         var result = await AppService.GetUser();
-        updateModel = result.Item2;
+        updateModel = result.Content;
         // maleChecked = updateModel.Gender == "male" ? "checked" : "";
         // femaleChecked = updateModel.Gender == "female" ? "checked" : "";
         // adminChecked = updateModel.Role == "Admin" ? "checked" : null;

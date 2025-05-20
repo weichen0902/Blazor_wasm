@@ -499,7 +499,7 @@
 
     public static  FieldDataModel fieldData;
 
-    private string ipUrl = "localhost";
+    private string ipUrl = "192.168.212.108";
 
     public static string[] waterFieldRate = new string[]
         {         
@@ -679,7 +679,8 @@
     private async Task RefreshFieldData()
     {
         await Task.Delay(100);
-        fieldData = await dataService.GetFieldData();
+        var result = await dataService.GetFieldData();
+        fieldData = result.Content;
 
         dropDownFieldBindValue = fieldData.Field == null ? waterFieldRate[0] :
          fieldData.Field.Contains(localizer[StringDescriptionModel.field_lsr]) ? waterFieldRate[1] :
@@ -718,7 +719,7 @@
     private async Task GetAllUsers()
     {
         var result = await appService.GetAllUsers();
-        roleOfUsersEmail = result.Item2;
+        roleOfUsersEmail = result.Content;
     }
 
     private async Task DeleteUsers()

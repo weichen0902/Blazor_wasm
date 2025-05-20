@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Blazor_wasm.Models.APIModels;
+using Blazor_wasm.Models.AuthModels;
 using Blazor_wasm.Models.DatabaseModels;
 using Blazor_wasm.Models.ModbusModels;
 
@@ -18,859 +19,888 @@ namespace Blazor_wasm.Services
     {
         private IAppService _appService;
         private DevicesDataModel _devicesDataModel;
-        public static bool modbusResponseStatus;
+        private readonly HttpClient client = new HttpClient();        
+
         public DataService(IAppService appService, DevicesDataModel devicesDataModel)
         {
             _appService = appService;
             _devicesDataModel = devicesDataModel;
         }
        
-        public async Task<List<RealTimepH>> GetpH(long startTimestamp, long endTimestamp)
+        public async Task<MainResponse<List<RealTimepH>>> GetpH(long startTimestamp, long endTimestamp)
         {
-            List<RealTimepH> realTimepH = new List<RealTimepH>();
-
+            var result = new MainResponse<List<RealTimepH>>();
+            
             try
             {
-                using (var client = new HttpClient())
+                var url = $"{Setting.BaseUrl}{APIs.GetpH}?startTimestamp={startTimestamp}&endTimestamp={endTimestamp}";
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
+
+                var response = await client.GetAsync(url);
+                if (response.IsSuccessStatusCode)
                 {
-                    var url = $"{Setting.BaseUrl}{APIs.GetpH}?startTimestamp={startTimestamp}&endTimestamp={endTimestamp}";
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
-
-                    var result = await client.GetAsync(url);
-                    if (result.IsSuccessStatusCode)
-                    {
-                        var response = await result.Content.ReadAsStringAsync();
-                        realTimepH = JsonConvert.DeserializeObject<List<RealTimepH>>(response);
-                    }
-                    else
-                    {
-                        if (Setting.UserBasicDetail != null)
-                        {
-                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
-                            {
-                                await _appService.RefreshToken();
-                                await GetpH(startTimestamp, endTimestamp);
-                            }
-                        }                                               
-                    }                   
-                }               
-            }
-            catch (Exception ex) { }
-
-            return realTimepH;
-        }
-        public async Task<List<D1CalData>> GetD1AllCAL()
-        {
-            List<D1CalData> d1CalData = new List<D1CalData>();
-            try
-            {
-                using (var client = new HttpClient())
-                {
-                    var url = $"{Setting.BaseUrl}{APIs.GetD1AllCAL}";
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
-
-                    var result = await client.GetAsync(url);
-                    if (result.IsSuccessStatusCode)
-                    {
-                        var response = await result.Content.ReadAsStringAsync();
-                        d1CalData = JsonConvert.DeserializeObject<List<D1CalData>>(response);
-                    }
-                    else
-                    {
-                        if (Setting.UserBasicDetail != null)
-                        {
-                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
-                            {
-                                await _appService.RefreshToken();
-                                await GetD1AllCAL();
-                            }
-                        }
-                    }                   
+                    result.IsSuccess = true;
+                    var responseStr = await response.Content.ReadAsStringAsync();
+                    var data = JsonConvert.DeserializeObject<List<RealTimepH>>(responseStr);
+                    result.Content = data;
                 }
-            }
-            catch (Exception ex) { }
-
-            return d1CalData;
-
-        }
-
-        public async Task<List<D2CalData>> GetD2AllCAL()
-        {
-            List<D2CalData> d2CalData = new List<D2CalData>();
-            try
-            {
-                using (var client = new HttpClient())
+                else
                 {
-                    var url = $"{Setting.BaseUrl}{APIs.GetD2AllCAL}";
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
+                    result.StatusCode = (int)response.StatusCode;
 
-                    var result = await client.GetAsync(url);
-                    if (result.IsSuccessStatusCode)
+                    if (Setting.UserBasicDetail != null)
                     {
-                        var response = await result.Content.ReadAsStringAsync();
-                        d2CalData = JsonConvert.DeserializeObject<List<D2CalData>>(response);
-                    }
-                    else
-                    {
-                        if (Setting.UserBasicDetail != null)
+                        if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                         {
-                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
-                            {
-                                await _appService.RefreshToken();
-                                await GetD2AllCAL();
-                            }
-                        }
-                    }                    
-                }
-            }
-            catch (Exception ex) { }
-
-            return d2CalData;
-
-        }
-
-        public async Task<List<AlarmData>> GetAllAlarm()
-        {
-            List<AlarmData> alarmData = new List<AlarmData>();
-            try
-            {
-                using (var client = new HttpClient())
-                {
-                    var url = $"{Setting.BaseUrl}{APIs.GetAllAlarm}";
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
-
-                    var result = await client.GetAsync(url);
-                    if (result.IsSuccessStatusCode)
-                    {
-                        var response = await result.Content.ReadAsStringAsync();
-                        alarmData = JsonConvert.DeserializeObject<List<AlarmData>>(response);
-                    }
-                    else
-                    {
-                        if (Setting.UserBasicDetail != null)
-                        {
-                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
-                            {
-                                await _appService.RefreshToken();
-                                await GetAllAlarm();
-                            }
-                        }
-                    }                  
-                }
-            }
-            catch (Exception ex) { }
-
-            return alarmData;
-        }
-
-        public async Task<List<SchedulerModel>> GetScheduler()
-        {
-            List<SchedulerModel> schedulerData = new List<SchedulerModel>();
-            try
-            {
-                using (var client = new HttpClient())
-                {
-                    var url = $"{Setting.BaseUrl}{APIs.GetScheduler}";
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
-
-                    var result = await client.GetAsync(url);
-                    if (result.IsSuccessStatusCode)
-                    {
-                        var response = await result.Content.ReadAsStringAsync();
-                        schedulerData = JsonConvert.DeserializeObject<List<SchedulerModel>>(response);
-                    }
-                    else
-                    {
-                        if (Setting.UserBasicDetail != null)
-                        {
-                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
-                            {
-                                await _appService.RefreshToken();
-                                await GetScheduler();
-                            }
-                        }
-                    }                   
-                }
-            }
-            catch (Exception ex) { }
-
-            return schedulerData;
-        }
-
-        public async Task<DevicesDataModelDTO> GetModbusDevicesData()
-        {      
-            DevicesDataModelDTO devicesDataModelDTO = new DevicesDataModelDTO();
-            try
-            {
-                using (var client = new HttpClient())
-                {
-                    var url = $"{Setting.BaseUrl}{APIs.GetModbusDevicesData}";
-                       client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
-
-                    var result = await client.GetAsync(url);
-                    if (result.IsSuccessStatusCode)
-                    {
-                        modbusResponseStatus = true;
-                        var response = await result.Content.ReadAsStringAsync();
-                        devicesDataModelDTO = JsonConvert.DeserializeObject<List<DevicesDataModelDTO>>(response).FirstOrDefault();
-                    }
-                    else
-                    {
-                        if (Setting.UserBasicDetail != null)
-                        {
-                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
-                            {
-                                await _appService.RefreshToken();
-                                await GetModbusDevicesData();
-                            }
-                        }
-                    }                   
-                }
-            }
-            catch (Exception ex) { }
-            return devicesDataModelDTO;
-
-        }
-
-        public async Task<FieldDataModel> GetFieldData()
-        {
-            FieldDataModel fieldData = new FieldDataModel();
-            try
-            {
-                using (var client = new HttpClient())
-                {
-                    var url = $"{Setting.BaseUrl}{APIs.GetFieldData}";
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
-
-                    var result = await client.GetAsync(url);
-                    if (result.IsSuccessStatusCode)
-                    {
-                        var response = await result.Content.ReadAsStringAsync();
-                        fieldData = JsonConvert.DeserializeObject<FieldDataModel>(response);
-                    }
-                    else
-                    {
-                        if (Setting.UserBasicDetail != null)
-                        {
-                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
-                            {
-                                await _appService.RefreshToken();
-                                await GetFieldData();
-                            }
+                            await _appService.RefreshToken();
+                            return await GetpH(startTimestamp, endTimestamp);
                         }
                     }
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception ex)
+            {
+                result.ExMessage = ex.Message;
+            }
 
-            return fieldData;
-
+            return result;                             
         }
-
-        public async Task<(bool IsSuccess, string ErrorMessage)> PostpH(RealTimepH realTimepH)
+        public async Task<MainResponse<List<D1CalData>>> GetD1AllCAL()
         {
-            string errorMessage = string.Empty;
-            bool isSuccess = false;
+            var result = new MainResponse<List<D1CalData>>();
+
             try
             {
-                using (var client = new HttpClient())
-                {
-                    var url = $"{Setting.BaseUrl}{APIs.PostpH}";
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
-                    var serializedStr = JsonConvert.SerializeObject(realTimepH);
-                    var response = await client.PostAsync(url, new StringContent(serializedStr, Encoding.UTF8, "application/json"));
-                    if (response.IsSuccessStatusCode)
-                    {
-                        isSuccess = true;
-                    }
-                    else
-                    {
-                        if (Setting.UserBasicDetail != null)
-                        {
-                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
-                            {
-                                await _appService.RefreshToken();
-                                await PostpH(realTimepH);
-                            }
-                            errorMessage = await response.Content.ReadAsStringAsync();
-                        }
-                    }                    
-                }
-            }
-            catch (Exception ex) { }
-            return (isSuccess, errorMessage);
+                var url = $"{Setting.BaseUrl}{APIs.GetD1AllCAL}";
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
 
+                var response = await client.GetAsync(url);
+                if (response.IsSuccessStatusCode)
+                {
+                    result.IsSuccess = true;
+                    var responseStr = await response.Content.ReadAsStringAsync();
+                    var data = JsonConvert.DeserializeObject<List<D1CalData>>(responseStr);
+                    result.Content = data;
+                }
+                else
+                {
+                    result.StatusCode = (int)response.StatusCode;
+
+                    if (Setting.UserBasicDetail != null)
+                    {
+                        if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
+                        {
+                            await _appService.RefreshToken();
+                            return await GetD1AllCAL();
+                        }
+                    }
+                }                                  
+            }
+            catch (Exception ex)
+            {
+                result.ExMessage = ex.Message;
+            }
+
+            return result;
         }
 
-        public async Task<(bool IsSuccess, string ErrorMessage)> PostD1CALList(List<D1CalData> data)
+        public async Task<MainResponse<List<D2CalData>>> GetD2AllCAL()
         {
-            string errorMessage = string.Empty;
-            bool isSuccess = false;
+            var result = new MainResponse<List<D2CalData>>();
+
             try
             {
-                using (var client = new HttpClient())
-                {
-                    var url = $"{Setting.BaseUrl}{APIs.PostD1CALList}";
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
-                    var serializedStr = JsonConvert.SerializeObject(data);
-                    var response = await client.PostAsync(url, new StringContent(serializedStr, Encoding.UTF8, "application/json"));
-                    if (response.IsSuccessStatusCode)
-                    {
-                        isSuccess = true;
-                    }
-                    else
-                    {
-                        if (Setting.UserBasicDetail != null)
-                        {
-                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
-                            {
-                                await _appService.RefreshToken();
-                                await PostD1CALList(data);
-                            }
-                            errorMessage = await response.Content.ReadAsStringAsync();
-                        }
-                    }                    
-                }
-            }
-            catch (Exception ex) { }
-            return (isSuccess, errorMessage);
+                var url = $"{Setting.BaseUrl}{APIs.GetD2AllCAL}";
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
 
+                var response = await client.GetAsync(url);
+                if (response.IsSuccessStatusCode)
+                {
+                    result.IsSuccess = true;
+                    var responseStr = await response.Content.ReadAsStringAsync();
+                    var data = JsonConvert.DeserializeObject<List<D2CalData>>(responseStr);
+                    result.Content = data;
+                }
+                else
+                {
+                    result.StatusCode = (int)response.StatusCode;
+
+                    if (Setting.UserBasicDetail != null)
+                    {
+                        if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
+                        {
+                            await _appService.RefreshToken();
+                            return await GetD2AllCAL();
+                        }
+                    }
+                }                                  
+            }
+            catch (Exception ex)
+            {
+                result.ExMessage = ex.Message;
+            }
+
+            return result;
         }
 
-        public async Task<(bool IsSuccess, string ErrorMessage)> PostD2CALList(List<D2CalData> data)
+        public async Task<MainResponse<List<AlarmData>>> GetAllAlarm()
         {
-            string errorMessage = string.Empty;
-            bool isSuccess = false;
+            var result = new MainResponse<List<AlarmData>>();
+
             try
             {
-                using (var client = new HttpClient())
-                {
-                    var url = $"{Setting.BaseUrl}{APIs.PostD2CALList}";
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
-                    var serializedStr = JsonConvert.SerializeObject(data);
-                    var response = await client.PostAsync(url, new StringContent(serializedStr, Encoding.UTF8, "application/json"));
-                    if (response.IsSuccessStatusCode)
-                    {
-                        isSuccess = true;
-                    }
-                    else
-                    {
-                        if (Setting.UserBasicDetail != null)
-                        {
-                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
-                            {
-                                await _appService.RefreshToken();
-                                await PostD2CALList(data);
-                            }
-                            errorMessage = await response.Content.ReadAsStringAsync();
-                        }
-                    }                   
-                }
-            }
-            catch (Exception ex) { }
-            return (isSuccess, errorMessage);
+                var url = $"{Setting.BaseUrl}{APIs.GetAllAlarm}";
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
 
+                var response = await client.GetAsync(url);
+                if (response.IsSuccessStatusCode)
+                {
+                    result.IsSuccess = true;
+                    var responseStr = await response.Content.ReadAsStringAsync();
+                    var data = JsonConvert.DeserializeObject<List<AlarmData>>(responseStr);
+                    result.Content = data;
+                }
+                else
+                {
+                    result.StatusCode = (int)response.StatusCode;
+
+                    if (Setting.UserBasicDetail != null)
+                    {
+                        if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
+                        {
+                            await _appService.RefreshToken();
+                            return await GetAllAlarm();
+                        }
+                    }
+                }                                  
+            }
+            catch (Exception ex)
+            {
+                result.ExMessage = ex.Message;
+            }
+
+            return result;
         }
 
-        public async Task<(bool IsSuccess, string ErrorMessage)> PostD1CalData(D1CalData data)
+        public async Task<MainResponse<List<SchedulerModel>>> GetScheduler()
         {
-            string errorMessage = string.Empty;
-            bool isSuccess = false;
+            var result = new MainResponse<List<SchedulerModel>>();
+
             try
             {
-                using (var client = new HttpClient())
-                {
-                    var url = $"{Setting.BaseUrl}{APIs.PostD1CalData}";
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
-                    var serializedStr = JsonConvert.SerializeObject(data);
-                    var response = await client.PostAsync(url, new StringContent(serializedStr, Encoding.UTF8, "application/json"));
-                    if (response.IsSuccessStatusCode)
-                    {
-                        isSuccess = true;
-                    }
-                    else
-                    {
-                        if (Setting.UserBasicDetail != null)
-                        {
-                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
-                            {
-                                await _appService.RefreshToken();
-                                await PostD1CalData(data);
-                            }
-                            errorMessage = await response.Content.ReadAsStringAsync();
-                        }
-                    }                   
-                }
-            }
-            catch (Exception ex) { }
-            return (isSuccess, errorMessage);
+                var url = $"{Setting.BaseUrl}{APIs.GetScheduler}";
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
 
+                var response = await client.GetAsync(url);
+                if (response.IsSuccessStatusCode)
+                {
+                    result.IsSuccess = true ;
+                    var responseStr = await response.Content.ReadAsStringAsync();
+                    var data = JsonConvert.DeserializeObject<List<SchedulerModel>>(responseStr);
+                    result.Content = data;
+                }
+                else
+                {
+                    result.StatusCode = (int)response.StatusCode;
+
+                    if (Setting.UserBasicDetail != null)
+                    {
+                        if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
+                        {
+                            await _appService.RefreshToken();
+                            return await GetScheduler();
+                        }
+                    }
+                }                                   
+            }
+            catch (Exception ex)
+            {
+                result.ExMessage = ex.Message;
+            }
+
+            return result;
         }
 
-        public async Task<(bool IsSuccess, string ErrorMessage)> PostD2CalData(D2CalData data)
+        public async Task<MainResponse<DevicesDataModelDTO>> GetModbusDevicesData()
         {
-            string errorMessage = string.Empty;
-            bool isSuccess = false;
+            var result = new MainResponse<DevicesDataModelDTO>();
+
             try
             {
-                using (var client = new HttpClient())
-                {
-                    var url = $"{Setting.BaseUrl}{APIs.PostD2CalData}";
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
-                    var serializedStr = JsonConvert.SerializeObject(data);
-                    var response = await client.PostAsync(url, new StringContent(serializedStr, Encoding.UTF8, "application/json"));
-                    if (response.IsSuccessStatusCode)
-                    {
-                        isSuccess = true;
-                    }
-                    else
-                    {
-                        if (Setting.UserBasicDetail != null)
-                        {
-                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
-                            {
-                                await _appService.RefreshToken();
-                                await PostD2CalData(data);
-                            }
-                            errorMessage = await response.Content.ReadAsStringAsync();
-                        }
-                    }                   
-                }
-            }
-            catch (Exception ex) { }
-            return (isSuccess, errorMessage);
+                var url = $"{Setting.BaseUrl}{APIs.GetModbusDevicesData}";
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
 
+                var response = await client.GetAsync(url);
+                if (response.IsSuccessStatusCode)
+                {
+                    result.IsSuccess = true ;
+                    var responseStr = await response.Content.ReadAsStringAsync();
+                    var data = JsonConvert.DeserializeObject<List<DevicesDataModelDTO>>(responseStr).FirstOrDefault();
+                    result.Content = data;
+                }
+                else
+                {
+                    result.StatusCode = (int)response.StatusCode;
+
+                    if (Setting.UserBasicDetail != null)
+                    {
+                        if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
+                        {
+                            await _appService.RefreshToken();
+                            return await GetModbusDevicesData();
+                        }
+                    }
+                }                                   
+            }
+            catch (Exception ex)
+            {
+                result.ExMessage = ex.Message;
+            }
+
+            return result;
         }
 
-        public async Task<(bool IsSuccess, string ErrorMessage)> PostAlarmData(AlarmData alarmData)
+        public async Task<MainResponse<FieldDataModel>> GetFieldData()
         {
-            string errorMessage = string.Empty;
-            bool isSuccess = false;
+            var result = new MainResponse<FieldDataModel>();
+
             try
             {
-                using (var client = new HttpClient())
-                {
-                    var url = $"{Setting.BaseUrl}{APIs.PostAlarmData}";
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
-                    var serializedStr = JsonConvert.SerializeObject(alarmData);
-                    var response = await client.PostAsync(url, new StringContent(serializedStr, Encoding.UTF8, "application/json"));
-                    if (response.IsSuccessStatusCode)
-                    {
-                        isSuccess = true;
-                    }
-                    else
-                    {
-                        if (Setting.UserBasicDetail != null)
-                        {
-                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
-                            {
-                                await _appService.RefreshToken();
-                                await PostAlarmData(alarmData);
-                            }
-                            errorMessage = await response.Content.ReadAsStringAsync();
-                        }
-                    }                    
-                }
-            }
-            catch (Exception ex) { }
-            return (isSuccess, errorMessage);
+                var url = $"{Setting.BaseUrl}{APIs.GetFieldData}";
+                var rew = Setting.UserBasicDetail.AccessToken;
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
 
+                var response = await client.GetAsync(url);
+                if (response.IsSuccessStatusCode)
+                {
+                    result.IsSuccess = true;
+                    var responseStr = await response.Content.ReadAsStringAsync();                   
+                    var data = JsonConvert.DeserializeObject<FieldDataModel>(responseStr);
+                    result.Content = data;
+                }
+                else
+                {
+                    result.StatusCode = (int)response.StatusCode;
+
+                    if (Setting.UserBasicDetail != null)
+                    {
+                        if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
+                        {
+                            await _appService.RefreshToken();
+                            return await GetFieldData();
+                        }
+                    }
+                }                
+            }
+            catch (Exception ex)
+            {
+                result.ExMessage = ex.Message;
+                return await GetFieldData();
+            }
+
+            return result;
         }
 
-        public async Task<(bool IsSuccess, string ErrorMessage)> PostScheduler(SchedulerModel schedulerData)
+        public async Task<MainResponse<object>> PostpH(RealTimepH realTimepH)
         {
-            string errorMessage = string.Empty;
-            bool isSuccess = false;
+            var result = new MainResponse<object>();
+
             try
             {
-                using (var client = new HttpClient())
-                {
-                    var url = $"{Setting.BaseUrl}{APIs.PostScheduler}";
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
-                    var serializedStr = JsonConvert.SerializeObject(schedulerData);
-                    var response = await client.PostAsync(url, new StringContent(serializedStr, Encoding.UTF8, "application/json"));
-                    if (response.IsSuccessStatusCode)
-                    {
-                        isSuccess = true;
-                    }
-                    else
-                    {
-                        if (Setting.UserBasicDetail != null)
-                        {
-                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
-                            {
-                                await _appService.RefreshToken();
-                                await PostScheduler(schedulerData);
-                            }
-                            errorMessage = await response.Content.ReadAsStringAsync();
-                        }
-                    }                   
-                }
-            }
-            catch (Exception ex) { }
-            return (isSuccess, errorMessage);
+                var url = $"{Setting.BaseUrl}{APIs.PostpH}";
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
+                var json = JsonConvert.SerializeObject(realTimepH);
 
+                var response = await client.PostAsync(url, new StringContent(json, Encoding.UTF8, "application/json"));
+                if (response.IsSuccessStatusCode)
+                    result.IsSuccess = true;
+                else
+                {
+                    result.StatusCode = (int)response.StatusCode;
+
+                    if (Setting.UserBasicDetail != null)
+                    {
+                        if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
+                        {
+                            await _appService.RefreshToken();
+                            return await PostpH(realTimepH);
+                        }                      
+                    }
+                }                                  
+            }
+            catch (Exception ex)
+            {
+                result.ExMessage = ex.Message;
+            }
+
+            return result;
         }
 
-        public async Task<(bool IsSuccess, string ErrorMessage)> PostModbusDevicesData(PostModbusApiModel postModbusApiModel)
+        public async Task<MainResponse<object>> PostD1CALList(List<D1CalData> data)
         {
-            string errorMessage = string.Empty;
-            bool isSuccess = false;
+            var result = new MainResponse<object>();
+
             try
             {
-                using (var client = new HttpClient())
-                {
-                    var url = $"{Setting.BaseUrl}{APIs.PostModbusDevicesData}";
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
-                    var serializedStr = JsonConvert.SerializeObject(postModbusApiModel);
-                    var response = await client.PostAsync(url, new StringContent(serializedStr, Encoding.UTF8, "application/json"));
-                    if (response.IsSuccessStatusCode)
-                    {
-                        isSuccess = true;
-                    }
-                    else
-                    {
-                        if (Setting.UserBasicDetail != null)
-                        {
-                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
-                            {
-                                await _appService.RefreshToken();
-                                await PostModbusDevicesData(postModbusApiModel);
-                            }
-                            errorMessage = await response.Content.ReadAsStringAsync();
-                        }
-                    }                    
-                }
-            }
-            catch (Exception ex) { }
-            return (isSuccess, errorMessage);
+                var url = $"{Setting.BaseUrl}{APIs.PostD1CALList}";
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
+                var json = JsonConvert.SerializeObject(data);
 
+                var response = await client.PostAsync(url, new StringContent(json, Encoding.UTF8, "application/json"));
+                if (response.IsSuccessStatusCode)
+                    result.IsSuccess = true;                   
+                else
+                {
+                    result.StatusCode = (int)response.StatusCode;
+
+                    if (Setting.UserBasicDetail != null)
+                    {
+                        if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
+                        {
+                            await _appService.RefreshToken();
+                            return await PostD1CALList(data);
+                        }                    
+                    }
+                }                                   
+            }
+            catch (Exception ex)
+            {
+                result.ExMessage = ex.Message;
+            }
+
+            return result;
         }
 
-        public async Task<(bool IsSuccess, string ErrorMessage)> PostFieldData(FieldDataModel fieldData)
+        public async Task<MainResponse<object>> PostD2CALList(List<D2CalData> data)
         {
-            string errorMessage = string.Empty;
-            bool isSuccess = false;
+            var result = new MainResponse<object>();
+
             try
             {
-                using (var client = new HttpClient())
+                var url = $"{Setting.BaseUrl}{APIs.PostD2CALList}";
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
+                var json = JsonConvert.SerializeObject(data);
+
+                var response = await client.PostAsync(url, new StringContent(json, Encoding.UTF8, "application/json"));
+                if (response.IsSuccessStatusCode)
+                    result.IsSuccess = true;
+                else
                 {
-                    var url = $"{Setting.BaseUrl}{APIs.PostFieldData}";
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
-                    var serializedStr = JsonConvert.SerializeObject(fieldData);
-                    var response = await client.PostAsync(url, new StringContent(serializedStr, Encoding.UTF8, "application/json"));
-                    if (response.IsSuccessStatusCode)
+                    result.StatusCode = (int)response.StatusCode;
+
+                    if (Setting.UserBasicDetail != null)
                     {
-                        isSuccess = true;
-                    }
-                    else
-                    {
-                        if (Setting.UserBasicDetail != null)
+                        if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                         {
-                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
-                            {
-                                await _appService.RefreshToken();
-                                await PostFieldData(fieldData);
-                            }
-                            errorMessage = await response.Content.ReadAsStringAsync();
+                            await _appService.RefreshToken();
+                            return await PostD2CALList(data);
+                        }
+                    }
+                }                   
+            }
+            catch (Exception ex)
+            {
+                result.ExMessage = ex.Message;
+            }
+
+            return result;
+        }
+
+        public async Task<MainResponse<object>> PostD1CalData(D1CalData data)
+        {
+            var result = new MainResponse<object>();
+
+            try
+            {
+                var url = $"{Setting.BaseUrl}{APIs.PostD1CalData}";
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
+                var json = JsonConvert.SerializeObject(data);
+
+                var response = await client.PostAsync(url, new StringContent(json, Encoding.UTF8, "application/json"));
+                if (response.IsSuccessStatusCode)
+                    result.IsSuccess = true;
+                else
+                {
+                    result.StatusCode = (int)response.StatusCode;
+
+                    if (Setting.UserBasicDetail != null)
+                    {
+                        if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
+                        {
+                            await _appService.RefreshToken();
+                            return await PostD1CalData(data);
+                        }
+                    }
+                }                   
+            }
+            catch (Exception ex)
+            {
+                result.ExMessage = ex.Message;
+            }
+
+            return result;
+        }
+
+        public async Task<MainResponse<object>> PostD2CalData(D2CalData data)
+        {
+            var result = new MainResponse<object>();
+
+            try
+            {
+                var url = $"{Setting.BaseUrl}{APIs.PostD2CalData}";
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
+                var json = JsonConvert.SerializeObject(data);
+
+                var response = await client.PostAsync(url, new StringContent(json, Encoding.UTF8, "application/json"));
+                if (response.IsSuccessStatusCode)
+                    result.IsSuccess = true;
+                else
+                {
+                    result.StatusCode = (int)response.StatusCode;
+
+                    if (Setting.UserBasicDetail != null)
+                    {
+                        if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
+                        {
+                            await _appService.RefreshToken();
+                            return await PostD2CalData(data);
+                        }
+                    }
+                }                   
+            }
+            catch (Exception ex)
+            {
+                result.ExMessage = ex.Message;
+            }
+
+            return result;
+        }
+
+        public async Task<MainResponse<object>> PostAlarmData(AlarmData alarmData)
+        {
+            var result = new MainResponse<object>();
+
+            try
+            {
+                var url = $"{Setting.BaseUrl}{APIs.PostAlarmData}";
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
+                var json = JsonConvert.SerializeObject(alarmData);
+
+                var response = await client.PostAsync(url, new StringContent(json, Encoding.UTF8, "application/json"));
+                if (response.IsSuccessStatusCode)
+                    result.IsSuccess = true;
+                else
+                {
+                    result.StatusCode = (int)response.StatusCode;
+
+                    if (Setting.UserBasicDetail != null)
+                    {
+                        if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
+                        {
+                            await _appService.RefreshToken();
+                            return await PostAlarmData(alarmData);
+                        }
+                    }
+                }                    
+            }
+            catch (Exception ex)
+            {
+                result.ExMessage = ex.Message;
+            }
+
+            return result;
+        }
+
+        public async Task<MainResponse<object>> PostScheduler(SchedulerModel schedulerData)
+        {
+            var result = new MainResponse<object>();
+
+            try
+            {
+                var url = $"{Setting.BaseUrl}{APIs.PostScheduler}";
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
+                var json = JsonConvert.SerializeObject(schedulerData);
+
+                var response = await client.PostAsync(url, new StringContent(json, Encoding.UTF8, "application/json"));
+                if (response.IsSuccessStatusCode)
+                    result.IsSuccess = true;
+                else
+                {
+                    result.StatusCode = (int)response.StatusCode;
+
+                    if (Setting.UserBasicDetail != null)
+                    {
+                        if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
+                        {
+                            await _appService.RefreshToken();
+                            return await PostScheduler(schedulerData);
+                        }
+                    }
+                }                   
+            }
+            catch (Exception ex)
+            {
+                result.ExMessage = ex.Message;
+            }
+
+            return result;
+        }
+
+        public async Task<MainResponse<object>> PostModbusDevicesData(PostModbusApiModel postModbusApiModel)
+        {
+            var result = new MainResponse<object>();
+
+            try
+            {
+                var url = $"{Setting.BaseUrl}{APIs.PostModbusDevicesData}";
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
+                var json = JsonConvert.SerializeObject(postModbusApiModel);
+
+                var response = await client.PostAsync(url, new StringContent(json, Encoding.UTF8, "application/json"));
+                if (response.IsSuccessStatusCode)
+                    result.IsSuccess = true;
+                else
+                {
+                    result.StatusCode = (int)response.StatusCode;
+
+                    if (Setting.UserBasicDetail != null)
+                    {
+                        if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
+                        {
+                            await _appService.RefreshToken();
+                            return await PostModbusDevicesData(postModbusApiModel);
+                        }
+                    }
+                }                    
+            }
+            catch (Exception ex)
+            {
+                result.ExMessage = ex.Message;
+            }
+
+            return result;
+        }
+
+        public async Task<MainResponse<object>> PostFieldData(FieldDataModel fieldData)
+        {
+            var result = new MainResponse<object>();
+
+            try
+            {
+                var url = $"{Setting.BaseUrl}{APIs.PostFieldData}";
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
+                var json = JsonConvert.SerializeObject(fieldData);
+
+                var response = await client.PostAsync(url, new StringContent(json, Encoding.UTF8, "application/json"));
+                if (response.IsSuccessStatusCode)
+                    result.IsSuccess = true;
+                else
+                {
+                    result.StatusCode = (int)response.StatusCode;
+
+                    if (Setting.UserBasicDetail != null)
+                    {
+                        if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
+                        {
+                            await _appService.RefreshToken();
+                            return await PostFieldData(fieldData);
                         }
                     }
                 }
             }
-            catch (Exception ex) { }
-            return (isSuccess, errorMessage);
+            catch (Exception ex)
+            {
+                result.ExMessage = ex.Message;
+            }
+
+            return result;
         }
 
 
-        public async Task<(bool IsSuccess, string ErrorMessage)> UpdateAlarmStatus(AlarmData alarmData)
+        public async Task<MainResponse<object>> UpdateAlarmStatus(AlarmData alarmData)
         {
-            string errorMessage = string.Empty;
-            bool isSuccess = false;
+            var result = new MainResponse<object>();
+
             try
             {
-                using (var client = new HttpClient())
-                {
-                    var url = $"{Setting.BaseUrl}{APIs.UpdateAlarmStatus}";
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
-                    var serializedStr = JsonConvert.SerializeObject(alarmData);
-                    var response = await client.PutAsync(url, new StringContent(serializedStr, Encoding.UTF8, "application/json"));
-                    if (response.IsSuccessStatusCode)
-                    {
-                        isSuccess = true;
-                    }
-                    else
-                    {
-                        if (Setting.UserBasicDetail != null)
-                        {
-                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
-                            {
-                                await _appService.RefreshToken();
-                                await UpdateAlarmStatus(alarmData);
-                            }
-                            errorMessage = await response.Content.ReadAsStringAsync();
-                        }
-                    }                   
-                }
-            }
-            catch (Exception ex) { }
-            return (isSuccess, errorMessage);
+                var url = $"{Setting.BaseUrl}{APIs.UpdateAlarmStatus}";
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
+                var json = JsonConvert.SerializeObject(alarmData);
 
+                var response = await client.PutAsync(url, new StringContent(json, Encoding.UTF8, "application/json"));
+                if (response.IsSuccessStatusCode)
+                    result.IsSuccess = true;
+                else
+                {
+                    result.StatusCode = (int)response.StatusCode;
+
+                    if (Setting.UserBasicDetail != null)
+                    {
+                        if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
+                        {
+                            await _appService.RefreshToken();
+                            return await UpdateAlarmStatus(alarmData);
+                        }
+                    }
+                }                   
+            }
+            catch (Exception ex)
+            {
+                result.ExMessage = ex.Message;
+            }
+
+            return result;
         }
 
-        public async Task<(bool IsSuccess, string ErrorMessage)> UpdateScheduler(SchedulerModel schedulerData)
+        public async Task<MainResponse<object>> UpdateScheduler(SchedulerModel schedulerData)
         {
-            string errorMessage = string.Empty;
-            bool isSuccess = false;
+            var result = new MainResponse<object>();
+
             try
             {
-                using (var client = new HttpClient())
-                {
-                    var url = $"{Setting.BaseUrl}{APIs.UpdateScheduler}";
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
-                    var serializedStr = JsonConvert.SerializeObject(schedulerData);
-                    var response = await client.PutAsync(url, new StringContent(serializedStr, Encoding.UTF8, "application/json"));
-                    if (response.IsSuccessStatusCode)
-                    {
-                        isSuccess = true;
-                    }
-                    else
-                    {
-                        if (Setting.UserBasicDetail != null)
-                        {
-                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
-                            {
-                                await _appService.RefreshToken();
-                                await UpdateScheduler(schedulerData);
-                            }
-                            errorMessage = await response.Content.ReadAsStringAsync();
-                        }
-                    }                   
-                }
-            }
-            catch (Exception ex) { }
-            return (isSuccess, errorMessage);
+                var url = $"{Setting.BaseUrl}{APIs.UpdateScheduler}";
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
+                var json = JsonConvert.SerializeObject(schedulerData);
 
+                var response = await client.PutAsync(url, new StringContent(json, Encoding.UTF8, "application/json"));
+                if (response.IsSuccessStatusCode)
+                    result.IsSuccess = true;
+                else
+                {
+                    result.StatusCode = (int)response.StatusCode;
+
+                    if (Setting.UserBasicDetail != null)
+                    {
+                        if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
+                        {
+                            await _appService.RefreshToken();
+                            return await UpdateScheduler(schedulerData);
+                        }
+                    }
+                }                   
+            }
+            catch (Exception ex)
+            {
+                result.ExMessage = ex.Message;
+            }
+
+            return result;
         }
 
-        public async Task<(bool IsSuccess, string ErrorMessage)> UpdateFieldData(FieldDataModel fieldData)
+        public async Task<MainResponse<object>> UpdateFieldData(FieldDataModel fieldData)
         {
-            string errorMessage = string.Empty;
-            bool isSuccess = false;
+            var result = new MainResponse<object>();
+
             try
             {
-                using (var client = new HttpClient())
+                var url = $"{Setting.BaseUrl}{APIs.UpdateFieldData}";
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
+                var json = JsonConvert.SerializeObject(fieldData);
+
+                var response = await client.PutAsync(url, new StringContent(json, Encoding.UTF8, "application/json"));
+                if (response.IsSuccessStatusCode)
+                    result.IsSuccess = true;
+                else
                 {
-                    var url = $"{Setting.BaseUrl}{APIs.UpdateFieldData}";
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
-                    var serializedStr = JsonConvert.SerializeObject(fieldData);
-                    var response = await client.PutAsync(url, new StringContent(serializedStr, Encoding.UTF8, "application/json"));
-                    if (response.IsSuccessStatusCode)
+                    result.StatusCode = (int)response.StatusCode;
+
+                    if (Setting.UserBasicDetail != null)
                     {
-                        Console.WriteLine($"Error: {Setting.UserBasicDetail.AccessToken}");
-                        isSuccess = true;
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Error: {Setting.UserBasicDetail.AccessToken}");
-                        if (Setting.UserBasicDetail != null)
+                        if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                         {
-                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
-                            {
-                                await _appService.RefreshToken();
-                                await UpdateFieldData(fieldData);
-                            }
-                            errorMessage = await response.Content.ReadAsStringAsync();
+                            await _appService.RefreshToken();
+                            return await UpdateFieldData(fieldData);
                         }
                     }
                 }
             }
-            catch (Exception ex) { }
-            return (isSuccess, errorMessage);
+            catch (Exception ex)
+            {
+                result.ExMessage = ex.Message;
+            }
 
+            return result;
         }
       
-        public async Task<(bool IsSuccess, string ErrorMessage)> DeletepH()
+        public async Task<MainResponse<object>> DeletepH()
         {
-            string errorMessage = string.Empty;
-            bool isSuccess = false;
+            var result = new MainResponse<object>();
+
             try
             {
-                using (var client = new HttpClient())
+                var url = $"{Setting.BaseUrl}{APIs.DeletepH}";
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
+                
+                var response = await client.DeleteAsync(url);
+                if (response.IsSuccessStatusCode)
+                    result.IsSuccess = true;
+                else
                 {
-                    var url = $"{Setting.BaseUrl}{APIs.DeletepH}";
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
-                    var responseDelete = await client.DeleteAsync(url);
+                    result.StatusCode = (int)response.StatusCode;
 
-                    if (responseDelete.IsSuccessStatusCode)
+                    if (Setting.UserBasicDetail != null)
                     {
-                        isSuccess = true;
-                    }
-                    else
-                    {
-                        if (Setting.UserBasicDetail != null)
+                        if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                         {
-                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
-                            {
-                                await _appService.RefreshToken();
-                                await DeletepH();
-                            }
-                            errorMessage = await responseDelete.Content.ReadAsStringAsync();
+                            await _appService.RefreshToken();
+                            return await DeletepH();
                         }
-                    }                   
-                }
+                    }
+                }                   
             }
-            catch (Exception ex) { }
-            return (isSuccess, errorMessage);
+            catch (Exception ex)
+            {
+                result.ExMessage = ex.Message;
+            }
 
+            return result;
         }
 
-        public async Task<(bool IsSuccess, string ErrorMessage)> DeleteD1CAL()
+        public async Task<MainResponse<object>> DeleteD1CAL()
         {
-            string errorMessage = string.Empty;
-            bool isSuccess = false;
+            var result = new MainResponse<object>();
+
             try
             {
-                using (var client = new HttpClient())
+                var url = $"{Setting.BaseUrl}{APIs.DeleteD1CAL}";
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
+                
+                var response = await client.DeleteAsync(url);
+                if (response.IsSuccessStatusCode)
+                    result.IsSuccess = true;
+                else
                 {
-                    var url = $"{Setting.BaseUrl}{APIs.DeleteD1CAL}";
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
-                    var responseDelete = await client.DeleteAsync(url);
+                    result.StatusCode = (int)response.StatusCode;
 
-                    if (responseDelete.IsSuccessStatusCode)
+                    if (Setting.UserBasicDetail != null)
                     {
-                        isSuccess = true;
-                    }
-                    else
-                    {
-                        if (Setting.UserBasicDetail != null)
+                        if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                         {
-                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
-                            {
-                                await _appService.RefreshToken();
-                                await DeleteD1CAL();
-                            }
-                            errorMessage = await responseDelete.Content.ReadAsStringAsync();
+                            await _appService.RefreshToken();
+                            return await DeleteD1CAL();
                         }
-                    }                   
-                }
+                    }
+                }                   
             }
-            catch (Exception ex) { }
-            return (isSuccess, errorMessage);
+            catch (Exception ex)
+            {
+                result.ExMessage = ex.Message;
+            }
 
+            return result;
         }
 
-        public async Task<(bool IsSuccess, string ErrorMessage)> DeleteD2CAL()
+        public async Task<MainResponse<object>> DeleteD2CAL()
         {
-            string errorMessage = string.Empty;
-            bool isSuccess = false;
+            var result = new MainResponse<object>();
+
             try
             {
-                using (var client = new HttpClient())
-                {
-                    var url = $"{Setting.BaseUrl}{APIs.DeleteD2CAL}";
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
-                    var responseDelete = await client.DeleteAsync(url);
+                var url = $"{Setting.BaseUrl}{APIs.DeleteD2CAL}";
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
+                var response = await client.DeleteAsync(url);
 
-                    if (responseDelete.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
+                    result.IsSuccess = true;
+                else
+                {
+                    result.StatusCode = (int)response.StatusCode;
+
+                    if (Setting.UserBasicDetail != null)
                     {
-                        isSuccess = true;
-                    }
-                    else
-                    {
-                        if (Setting.UserBasicDetail != null)
+                        if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                         {
-                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
-                            {
-                                await _appService.RefreshToken();
-                                await DeleteD2CAL();
-                            }
-                            errorMessage = await responseDelete.Content.ReadAsStringAsync();
+                            await _appService.RefreshToken();
+                            return await DeleteD2CAL();
                         }
-                    }                  
-                }
+                    }
+                }                  
             }
-            catch (Exception ex) { }
-            return (isSuccess, errorMessage);
+            catch (Exception ex)
+            {
+                result.ExMessage = ex.Message;
+            }
 
+            return result;
         }
 
-        public async Task<(bool IsSuccess, string ErrorMessage)> DeleteAlarmData()
+        public async Task<MainResponse<object>> DeleteAlarmData()
         {
-            string errorMessage = string.Empty;
-            bool isSuccess = false;
+            var result = new MainResponse<object>();
+
             try
             {
-                using (var client = new HttpClient())
+                var url = $"{Setting.BaseUrl}{APIs.DeleteAlarmData}";
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
+                
+                var response = await client.DeleteAsync(url);
+                if (response.IsSuccessStatusCode)
+                    result.IsSuccess = true;
+                else
                 {
-                    var url = $"{Setting.BaseUrl}{APIs.DeleteAlarmData}";
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
-                    var responseDelete = await client.DeleteAsync(url);
+                    result.StatusCode = (int)response.StatusCode;
 
-                    if (responseDelete.IsSuccessStatusCode)
+                    if (Setting.UserBasicDetail != null)
                     {
-                        isSuccess = true;
-                    }
-                    else
-                    {
-                        if (Setting.UserBasicDetail != null)
+                        if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                         {
-                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
-                            {
-                                await _appService.RefreshToken();
-                                await DeleteAlarmData();
-                            }
-                            errorMessage = await responseDelete.Content.ReadAsStringAsync();
+                            await _appService.RefreshToken();
+                            return await DeleteAlarmData();
                         }
-                    }                  
-                }
+                    }
+                }                  
             }
-            catch (Exception ex) { }
-            return (isSuccess, errorMessage);
+            catch (Exception ex)
+            {
+                result.ExMessage = ex.Message;
+            }
 
+            return result;
         }
 
-        public async Task<(bool IsSuccess, string ErrorMessage)> DeleteScheduler(SchedulerModel schedulerData)
+        public async Task<MainResponse<object>> DeleteScheduler(SchedulerModel schedulerData)
         {
-            string errorMessage = string.Empty;
-            bool isSuccess = false;
+            var result = new MainResponse<object>();
+
             try
             {
-                using (var client = new HttpClient())
+                var url = $"{Setting.BaseUrl}{APIs.DeleteScheduler}";
+
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
+                var request = new HttpRequestMessage(HttpMethod.Delete, url)
                 {
-                    var url = $"{Setting.BaseUrl}{APIs.DeleteScheduler}";
+                    Content = new StringContent(JsonConvert.SerializeObject(schedulerData), Encoding.UTF8, "application/json")
+                };
 
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
-                    var request = new HttpRequestMessage(HttpMethod.Delete, url)
-                    {
-                        Content = new StringContent(JsonConvert.SerializeObject(schedulerData), Encoding.UTF8, "application/json")
-                    };
+                var response = await client.SendAsync(request);
+                if (response.IsSuccessStatusCode)
+                    result.IsSuccess = true;
+                else
+                {
+                    result.StatusCode = (int)response.StatusCode;
 
-                    var responseDelete = await client.SendAsync(request);
-                    if (responseDelete.IsSuccessStatusCode)
+                    if (Setting.UserBasicDetail != null)
                     {
-                        isSuccess = true;
-                    }
-                    else
-                    {
-                        if (Setting.UserBasicDetail != null)
+                        if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                         {
-                            if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
-                            {
-                                await _appService.RefreshToken();
-                                await DeleteScheduler(schedulerData);
-                            }
-                            errorMessage = await responseDelete.Content.ReadAsStringAsync();
-                        }                          
-                    }                   
-                }
+                            await _appService.RefreshToken();
+                            return await DeleteScheduler(schedulerData);
+                        }
+                    }                          
+                }                   
             }
-            catch (Exception ex) { }
-            return (isSuccess, errorMessage);
+            catch (Exception ex)
+            {
+                result.ExMessage = ex.Message;
+            }
 
+            return result;
         }
 
-        public async Task<(bool IsSuccess, string ErrorMessage)> WriteRegister(int address, int value)
+        public async Task<MainResponse<object>> WriteRegister(int address, int value)
         {
+            var result = new MainResponse<object>();
+
             try
             {
                 using (var client = new HttpClient())
@@ -881,13 +911,13 @@ namespace Blazor_wasm.Services
                     var data = new { Address = address, Value = value };
                     var content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
 
-                    var result = await client.PostAsync(url, content);
-                    if (result.IsSuccessStatusCode)
-                    {
-                        return (true, string.Empty);
-                    }
+                    var response = await client.PostAsync(url, content);
+                    if (response.IsSuccessStatusCode)
+                        result.IsSuccess = true;
                     else
                     {
+                        result.StatusCode = (int)response.StatusCode;
+
                         if (Setting.UserBasicDetail != null)
                         {
                             if(Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
@@ -896,14 +926,15 @@ namespace Blazor_wasm.Services
                                 return await WriteRegister(address, value);
                             }                           
                         }
-                        return (false, $"Failed to write register. Status code: {result.StatusCode}");
                     }
                 }
             }
             catch (Exception ex)
             {
-                return (false, $"Error writing register: {ex.Message}");
+                result.ExMessage = ex.Message;
             }
+
+            return result;
         }
     }
 }

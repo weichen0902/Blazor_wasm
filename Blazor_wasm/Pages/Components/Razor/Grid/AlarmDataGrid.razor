@@ -86,7 +86,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-     //   MainLayout.OnLanguageChange += StateHasChanged;
+        //   MainLayout.OnLanguageChange += StateHasChanged;
         devicesDataModel.OnAlarmStateChange += UpdateRelay;
         Blazor_wasm.Pages.Index.showHistoryAlarmData += UpdateRelay;
         Blazor_wasm.Pages.Index.toDeleteAlarmData += DeleteAlarmData;
@@ -95,15 +95,16 @@
         Blazor_wasm.Pages.Index.historyAlarmActive = true; 
     }
 
-	private void UpdateRelay(bool historyAlarmActive)
-	{
-		Update(historyAlarmActive);
-	}
+    private void UpdateRelay(bool historyAlarmActive)
+    {
+        Update(historyAlarmActive);
+    }
 
     private async void Update(bool historyAlarmActive)
     {
-        this.alarmData = await dataService.GetAllAlarm();
-        this.inAlarmData = alarmData.Where(x => x.AlarmStatus == "警報中").ToList();
+        var result = await dataService.GetAllAlarm();
+        alarmData = result.Content;
+        inAlarmData = alarmData.Where(x => x.AlarmStatus == "警報中").ToList();
 
         await Task.Delay(500);
         if (alarmData != null)

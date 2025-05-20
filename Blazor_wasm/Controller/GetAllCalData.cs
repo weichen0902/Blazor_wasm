@@ -26,10 +26,12 @@ namespace Blazor_wasm.Controller
 
         public async Task UpdateData()
         {
-            d1CalData = await _dataService.GetD1AllCAL();
+            var result1 = await _dataService.GetD1AllCAL();
+            d1CalData = result1.Content;
             d1CalData.Sort((a, b) => b.DateTime.CompareTo(a.DateTime));
 
-            d2CalData = await _dataService.GetD2AllCAL();
+            var result2 = await _dataService.GetD2AllCAL();
+            d2CalData = result2.Content;
             d2CalData.Sort((a, b) => b.DateTime.CompareTo(a.DateTime));
 
             if(d1CalData.Count > 0)

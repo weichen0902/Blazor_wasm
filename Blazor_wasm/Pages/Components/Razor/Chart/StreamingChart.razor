@@ -21,9 +21,8 @@
         dateTimeEndUnixTimeStamp = (long)(DateTime.Now.ToUniversalTime() - new DateTime(1970, 1, 1)).TotalSeconds;
         dateTimeStartUnixTimeStamp = dateTimeEndUnixTimeStamp - 1800;
 
-
-        realTimepHList = await dataService.GetpH(dateTimeStartUnixTimeStamp, dateTimeEndUnixTimeStamp);
-
+        var result = await dataService.GetpH(dateTimeStartUnixTimeStamp, dateTimeEndUnixTimeStamp);
+        realTimepHList = result.Content;
 
         if (firstRender)
         {

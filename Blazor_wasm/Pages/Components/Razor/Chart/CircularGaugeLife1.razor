@@ -104,20 +104,19 @@
         //     }            
         // }
 
-        if (DataService.modbusResponseStatus == true)
-        {
-            hbmZero = (double)devicesDataModel[0, "hbmZero"];
-            hbmSlope = (double)devicesDataModel[0, "hbmSlope"];
 
-            var slopePercentage = Math.Round((Math.Abs(hbmSlope - (-59.16)) / 59.16) * 100 * 0.5);
-            var zeroPercentage = Math.Round(Math.Abs(hbmZero) * 0.05);
+        hbmZero = (double)devicesDataModel[0, "hbmZero"];
+        hbmSlope = (double)devicesDataModel[0, "hbmSlope"];
 
-            PointerValues = Math.Round((100 - (zeroPercentage + slopePercentage)) * Convert.ToDouble(factor), 1);
+        var slopePercentage = Math.Round((Math.Abs(hbmSlope - (-59.16)) / 59.16) * 100 * 0.5);
+        var zeroPercentage = Math.Round(Math.Abs(hbmZero) * 0.05);
 
-            PublishMaintainMsg();
+        PointerValues = Math.Round((100 - (zeroPercentage + slopePercentage)) * Convert.ToDouble(factor), 1);
 
-            StateHasChanged();
-        }       
+        PublishMaintainMsg();
+
+        StateHasChanged();
+              
     }
 
 	public void PublishMaintainMsg()

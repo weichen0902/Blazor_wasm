@@ -27,13 +27,14 @@ namespace Blazor_wasm.Services
         public ResetPasswordModel resetPasswordModel { get; set; } = new ResetPasswordModel();
 
         private static readonly HttpClient client = new HttpClient();
+        
         public AppService(ILocalStorageService localStorage)
         {
             _localStorage = localStorage;
         }
-        public async Task<MainResponse> RegisterUser(RegistrationModel registerUser)
-		{         
-            MainResponse result = new MainResponse();
+        public async Task<MainResponse<object>> RegisterUser(RegistrationModel registerUser)
+		{
+            var result = new MainResponse<object>();
 
             try
             {
@@ -41,10 +42,10 @@ namespace Blazor_wasm.Services
 
                 var json = JsonConvert.SerializeObject(registerUser);
                 var response = await client.PostAsync(url, new StringContent(json, Encoding.UTF8, "application/json"));
-                var responseStr = await response.Content.ReadAsStringAsync();
-                result = JsonConvert.DeserializeObject<MainResponse>(responseStr);
-
-                if (!response.IsSuccessStatusCode)
+               
+                if (response.IsSuccessStatusCode)
+                    result.IsSuccess = true;
+                else
                     result.StatusCode = (int)response.StatusCode;        
             }
 
@@ -56,29 +57,38 @@ namespace Blazor_wasm.Services
 			return result;
 		}
 
-		public async Task<MainResponse> AuthenticateUser(LoginModel loginModel)
+		public async Task<MainResponse<object>> AuthenticateUser(LoginModel loginModel)
         {
-            MainResponse result = new MainResponse();
-            
-			try
+            var result = new MainResponse<object>();
+
+            try
 			{
 				var url = $"{Setting.BaseUrl}{APIs.AuthenticateUser}";
 
-				var serializedStr = JsonConvert.SerializeObject(loginModel);
+				var json = JsonConvert.SerializeObject(loginModel);
 
-				var response = await client.PostAsync(url, new StringContent(serializedStr, Encoding.UTF8, "application/json"));
-                var responseStr = await response.Content.ReadAsStringAsync();
-                result = JsonConvert.DeserializeObject<MainResponse>(responseStr);
-
+				var response = await client.PostAsync(url, new StringContent(json, Encoding.UTF8, "application/json"));
+               
                 if (response.IsSuccessStatusCode)
 				{
-                    var tokenResponse = JsonConvert.DeserializeObject<AuthenticateRequestAndResponse>(result.Content.ToString());
+                    result.IsSuccess = true;
+                    var responseStr = await response.Content.ReadAsStringAsync();
+                    var mainResponse = JsonConvert.DeserializeObject<MainResponse<object>>(responseStr);
+
+                    var tokenResponse = JsonConvert.DeserializeObject<AuthenticateRequestAndResponse>(mainResponse.Content.ToString());
 					var handler = new JwtSecurityTokenHandler();
 					jwtAccessToken = handler.ReadToken(tokenResponse.AccessToken) as JwtSecurityToken;
+
+                    //if (Setting.UserBasicDetail == null)
+                    //    Setting.UserBasicDetail = new UserBasicDetail();
                     Setting.UserBasicDetail.AccessTokenExpire = jwtAccessToken.ValidTo;
                     Setting.UserBasicDetail.AccessToken = tokenResponse.AccessToken;
                     Setting.UserBasicDetail.RefreshToken = tokenResponse.RefreshToken;
-				}
+                    Console.WriteLine(Setting.UserBasicDetail.AccessTokenExpire);
+                    Console.WriteLine(Setting.UserBasicDetail.AccessToken);
+                    Console.WriteLine(Setting.UserBasicDetail.RefreshToken);
+                    result.Content = mainResponse.Content.ToString();
+                }
 				else
 				{
                     result.StatusCode = (int)response.StatusCode;
@@ -92,21 +102,24 @@ namespace Blazor_wasm.Services
             return result;
         }
 
-		public async Task<(MainResponse, UpdateModel)> GetUser()
+		public async Task<MainResponse<UpdateModel>> GetUser()
 		{
-			UpdateModel updateModel = new UpdateModel();
-            MainResponse result = new MainResponse();
+            var result = new MainResponse<UpdateModel>();
 
             try
             {
                 var url = $"{Setting.BaseUrl}{APIs.GetUser}?email={Setting.UserBasicDetail.Email}";
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
                 var response = await client.GetAsync(url);
-                var responseStr = await response.Content.ReadAsStringAsync();
-                result = JsonConvert.DeserializeObject<MainResponse>(responseStr);
-
+               
                 if (response.IsSuccessStatusCode)
-                    updateModel = JsonConvert.DeserializeObject<UpdateModel>(responseStr);
+                {
+                    result.IsSuccess = true;    
+                    var responseStr = await response.Content.ReadAsStringAsync();
+                    var data = JsonConvert.DeserializeObject<UpdateModel>(responseStr);
+                    result.Content = data;
+                }
+                    
                 else
                 {
                     result.StatusCode = (int)response.StatusCode;
@@ -126,30 +139,33 @@ namespace Blazor_wasm.Services
                 result.ExMessage = ex.Message;
             }
 
-            return (result, updateModel);
+            return result;
         }
 
-		public async Task<(MainResponse, List<UsersEmail>)> GetAllUsers()
+		public async Task<MainResponse<List<UsersEmail>>> GetAllUsers()
 		{
-            MainResponse result = new MainResponse();
-            List<UsersEmail> roleOfUsersEmail = new List<UsersEmail>();
+            var result = new MainResponse<List<UsersEmail>>();
+            var roleOfUsersEmail = new List<UsersEmail>();
             
             try
             {
                 var url = $"{Setting.BaseUrl}{APIs.GetAllUsers}";
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
                 var response = await client.GetAsync(url);
-                var responseStr = await response.Content.ReadAsStringAsync();
-                result = JsonConvert.DeserializeObject<MainResponse>(responseStr);
-
+               
                 if (response.IsSuccessStatusCode)
-                {     
-                    var usersEmail = JsonConvert.DeserializeObject<List<UsersEmail>>(responseStr);
-                    roleOfUsersEmail = usersEmail.Where(r => r.Role == "User").Select(r => new UsersEmail
+                {
+                    result.IsSuccess = true;
+                    var responseStr = await response.Content.ReadAsStringAsync();
+                    var data = JsonConvert.DeserializeObject<List<UsersEmail>>(responseStr);
+                   
+                    roleOfUsersEmail = data.Where(r => r.Role == "User").Select(r => new UsersEmail
                     {
                         Role = r.Role,
                         Email = r.Email
                     }).ToList();
+
+                    result.Content = roleOfUsersEmail;
                 }
                 else
                 {
@@ -170,12 +186,12 @@ namespace Blazor_wasm.Services
                 result.ExMessage = ex.Message;
             }
 
-            return (result, roleOfUsersEmail);
+            return result;
 		}
 
-		public async Task<MainResponse> ForgotPassword(string email)
+		public async Task<MainResponse<object>> ForgotPassword(string email)
         {
-            MainResponse result = new MainResponse();
+            var result = new MainResponse<object>();
             resetPasswordModel.Email = email;
 
             try
@@ -184,13 +200,13 @@ namespace Blazor_wasm.Services
                 var serializedStr = JsonConvert.SerializeObject(email);
 
                 var response = await client.PostAsync(url, new StringContent(serializedStr, Encoding.UTF8, "application/json"));
-                var responseStr = await response.Content.ReadAsStringAsync();
-                result = JsonConvert.DeserializeObject<MainResponse>(responseStr);
-
+               
                 if (response.IsSuccessStatusCode)
                 {
-                    forgotPasswordModel = JsonConvert.DeserializeObject<ForgotPasswordModel>(responseStr);
-                    resetPasswordModel.Token = forgotPasswordModel.Token;
+                    result.IsSuccess = true;
+                    var responseStr = await response.Content.ReadAsStringAsync();
+                    var data = JsonConvert.DeserializeObject<ForgotPasswordModel>(responseStr);
+                    resetPasswordModel.Token = data?.Token ;
                 }
                 else
                 {
@@ -214,9 +230,9 @@ namespace Blazor_wasm.Services
             return result;
         }                        
         
-		public async Task<MainResponse> ResetPassword(ResetPasswordModel resetPwdModel)
+		public async Task<MainResponse<object>> ResetPassword(ResetPasswordModel resetPwdModel)
         {
-            MainResponse result = new MainResponse();
+            var result = new MainResponse<object>();
             resetPwdModel.Token = forgotPasswordModel!.Token;
 
             try
@@ -224,10 +240,10 @@ namespace Blazor_wasm.Services
                 var url = $"{Setting.BaseUrl}{APIs.ResetPassword}";
                 var serializedStr = JsonConvert.SerializeObject(resetPwdModel);
                 var response = await client.PostAsync(url, new StringContent(serializedStr, Encoding.UTF8, "application/json"));
-                var responseStr = await response.Content.ReadAsStringAsync();
-                result = JsonConvert.DeserializeObject<MainResponse>(responseStr);
 
-                if (!response.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
+                    result.IsSuccess = true;
+                else
                 {
                     result.StatusCode = (int)response.StatusCode;
 
@@ -249,9 +265,9 @@ namespace Blazor_wasm.Services
             return result;
         }
 
-        public async Task<MainResponse> UpdateUser(UpdateModel updateModel)
+        public async Task<MainResponse<object>> UpdateUser(UpdateModel updateModel)
 		{
-            MainResponse result = new MainResponse();
+            var result = new MainResponse<object>();
 
             try
             {
@@ -259,10 +275,10 @@ namespace Blazor_wasm.Services
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
                 var serializedStr = JsonConvert.SerializeObject(updateModel);
                 var response = await client.PutAsync(url, new StringContent(serializedStr, Encoding.UTF8, "application/json"));
-                var responseStr = await response.Content.ReadAsStringAsync();
-                result = JsonConvert.DeserializeObject<MainResponse>(responseStr);
-
-                if (!response.IsSuccessStatusCode)
+                
+                if (response.IsSuccessStatusCode)
+                    result.IsSuccess = true;
+                else
                 {
                     result.StatusCode = (int)response.StatusCode;
 
@@ -284,9 +300,9 @@ namespace Blazor_wasm.Services
             return result;
         }
 
-		public async Task<MainResponse> DeleteUsers(List<UsersEmail> userEmail)
+		public async Task<MainResponse<object>> DeleteUsers(List<UsersEmail> userEmail)
 		{
-            MainResponse result = new MainResponse();
+            var result = new MainResponse<object>();
 
             try
             {
@@ -298,11 +314,11 @@ namespace Blazor_wasm.Services
                     Content = new StringContent(JsonConvert.SerializeObject(userEmail), Encoding.UTF8, "application/json")
                 };
 
-                var response = await client.SendAsync(request);
-                var responseStr = await response.Content.ReadAsStringAsync();
-                result = JsonConvert.DeserializeObject<MainResponse>(responseStr);
+                var response = await client.SendAsync(request);              
 
-                if(!response.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
+                    result.IsSuccess = true;
+                else
                 {
                     result.StatusCode = (int)response.StatusCode;
 
@@ -324,10 +340,9 @@ namespace Blazor_wasm.Services
             return result;
         }
 
-		public async Task<MainResponse> RefreshToken()
+		public async Task<MainResponse<object>> RefreshToken()
         {
-            MainResponse result = new MainResponse();
-            bool isTokenRefreshed = false;
+            var result = new MainResponse<object>();          
 
             try
             {
@@ -340,23 +355,22 @@ namespace Blazor_wasm.Services
                 });
 
                 var response = await client.PostAsync(url, new StringContent(serializedStr, Encoding.UTF8, "application/json"));
-                var responseStr = await response.Content.ReadAsStringAsync();
-                result = JsonConvert.DeserializeObject<MainResponse>(responseStr);
-
+               
                 if (response.IsSuccessStatusCode)
                 {
-                    var tokenDetails = JsonConvert.DeserializeObject<AuthenticateRequestAndResponse>(result.Content.ToString());
+                    result.IsSuccess = true;
+                    var responseStr = await response.Content.ReadAsStringAsync();
+
+                    var tokenDetails = JsonConvert.DeserializeObject<AuthenticateRequestAndResponse>(responseStr);
                     Setting.UserBasicDetail.AccessToken = tokenDetails.AccessToken;
                     Setting.UserBasicDetail.RefreshToken = tokenDetails.RefreshToken;
 
-                    accessToken = tokenDetails.AccessToken;
                     var handler = new JwtSecurityTokenHandler();
                     jwtAccessToken = handler.ReadToken(tokenDetails.AccessToken) as JwtSecurityToken;
                     Setting.UserBasicDetail.AccessTokenExpire = jwtAccessToken.ValidTo;
 
                     string userDetailsStr = JsonConvert.SerializeObject(Setting.UserBasicDetail);
-                    await _localStorage.SetItemAsStringAsync(nameof(Setting.UserBasicDetail), userDetailsStr);
-                    isTokenRefreshed = true;                    
+                    await _localStorage.SetItemAsStringAsync(nameof(Setting.UserBasicDetail), userDetailsStr);                                    
                 }
 
                 else

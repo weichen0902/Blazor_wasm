@@ -129,7 +129,8 @@
     {
         fetchData = true;
         await Task.Delay(100);
-        realTimepHList = await dataService.GetpH(startUnixTimeStamp, endUnixTimeStamp);
+        var result = await dataService.GetpH(startUnixTimeStamp, endUnixTimeStamp);
+        realTimepHList = result.Content;
         fetchData = false;
       
         // pH1List = realTimepHList.Select(pH => pH.D1pH).ToList();

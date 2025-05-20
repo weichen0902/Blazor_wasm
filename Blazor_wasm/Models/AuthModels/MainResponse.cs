@@ -8,12 +8,11 @@ using System.Threading.Tasks;
 
 namespace Blazor_wasm.Models.AuthModels
 {
-    public class MainResponse
+    public class MainResponse<T>
     {
         public bool IsSuccess { get; set; }
         public int StatusCode { get; set; }
-        public object Content { get; set; }
+        public T? Content { get; set; }
         public string ExMessage { get; set; }
-
-	}
+    }
 }
