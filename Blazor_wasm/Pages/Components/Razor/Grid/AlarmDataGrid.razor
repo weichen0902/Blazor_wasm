@@ -104,7 +104,7 @@
     {
         var result = await dataService.GetAllAlarm();
         alarmData = result.Content;
-        inAlarmData = alarmData.Where(x => x.AlarmStatus == "警報中").ToList();
+        inAlarmData = alarmData?.Where(x => x.AlarmStatus == "警報中").ToList();
 
         await Task.Delay(500);
         if (alarmData != null)

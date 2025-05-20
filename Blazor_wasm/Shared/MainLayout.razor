@@ -728,11 +728,11 @@
 
         if (response.IsSuccess)
         {
-        //    await App.Current.MainPage.DisplayAlert("Success", "User accounts have been deleted", "OK");
+            //    await App.Current.MainPage.DisplayAlert("Success", "User accounts have been deleted", "OK");
         }
         else
         {
-        //    await App.Current.MainPage.DisplayAlert("Oops", response.ErrorMessage, "OK");
+            //    await App.Current.MainPage.DisplayAlert("Oops", response.ErrorMessage, "OK");
         }
         toDeleteUsers = null;
     }
@@ -742,9 +742,9 @@
         HideFlyout();
         var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
         await customAuthStateProvider.UpdateAuthenticationState(new UserBasicDetail());
-        
+
         await _localStorage.RemoveItemAsync("UserBasicDetail");
-        Setting.UserBasicDetail = null;
+        Setting.UserBasicDetail?.Reset();
         NavManager.NavigateTo("/login");
     }
 

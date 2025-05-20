@@ -19,5 +19,17 @@ namespace Blazor_wasm.Models.AuthModels
         public string Role { get; set; }
         public string UserAvatar { get; set; }
 
+        public void Reset()
+        {
+            Name = string.Empty;
+            UserID = string.Empty;
+            AccessToken = string.Empty;
+            AccessTokenExpire = DateTime.MinValue;
+            RefreshToken = string.Empty;
+            Email = string.Empty;
+            Role = string.Empty;
+            UserAvatar = string.Empty;
+        }
+
     }
 }

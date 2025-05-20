@@ -267,7 +267,6 @@ namespace Blazor_wasm.Services
             try
             {
                 var url = $"{Setting.BaseUrl}{APIs.GetFieldData}";
-                var rew = Setting.UserBasicDetail.AccessToken;
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
 
                 var response = await client.GetAsync(url);

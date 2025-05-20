@@ -79,8 +79,8 @@ namespace Blazor_wasm.Services
 					var handler = new JwtSecurityTokenHandler();
 					jwtAccessToken = handler.ReadToken(tokenResponse.AccessToken) as JwtSecurityToken;
 
-                    //if (Setting.UserBasicDetail == null)
-                    //    Setting.UserBasicDetail = new UserBasicDetail();
+                    if (Setting.UserBasicDetail == null)
+                        Setting.UserBasicDetail = new UserBasicDetail();
                     Setting.UserBasicDetail.AccessTokenExpire = jwtAccessToken.ValidTo;
                     Setting.UserBasicDetail.AccessToken = tokenResponse.AccessToken;
                     Setting.UserBasicDetail.RefreshToken = tokenResponse.RefreshToken;
