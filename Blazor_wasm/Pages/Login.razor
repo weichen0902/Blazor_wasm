@@ -16,6 +16,8 @@
 @inject ILocalStorageService _localStorage
 @inject IJSRuntime JS
 @inject NavigationManager Nav
+@inject AlertMessages alertMsgs
+@inject PageTitleService pageTitleService
 @implements IDisposable
 
 <div class="container">
@@ -46,11 +48,11 @@
                 <span>@localizer[StringDescriptionModel.account_login]</span>
             </button>
         </div>
-        @* <div class="mt-4 text-center text-secondary">
-            <NavLink class="content-text" style="text-decoration:none" href="registration">
-                <span>@localizer[StringDescriptionModel.account_create_account]</span>
+        <div class="mt-4 text-center text-secondary">
+            <NavLink class="content-text" style="text-decoration:none;" href="registration">
+                <span style="color:transparent;">@localizer[StringDescriptionModel.account_create_account]</span>
             </NavLink>
-        </div> *@
+        </div>
         <br />
     </EditForm>
 </div>
@@ -69,7 +71,7 @@
 
     protected override void OnInitialized()
     {
-        Console.WriteLine("12312312312");
+        pageTitleService.Title = "login";
         //   MainLayout.OnLanguageChange += StateHasChanged;
     }
 
@@ -77,11 +79,11 @@
     {
 
         _spinnerClass = "spinner-border spinner-border-sm";
-        var response = await AppService.AuthenticateUser(loginModel);
+        var result = await AppService.AuthenticateUser(loginModel);
 
-        if (response.IsSuccess)
+        if (result.IsSuccess)
         {
-            var tokenResponse = JsonConvert.DeserializeObject<AuthenticateRequestAndResponse>(response.Content.ToString());
+            var tokenResponse = JsonConvert.DeserializeObject<AuthenticateRequestAndResponse>(result.Content.ToString());
             var handler = new JwtSecurityTokenHandler();
             var jsontoken = handler.ReadToken(tokenResponse.AccessToken) as JwtSecurityToken;
 
@@ -139,27 +141,8 @@
             NavManager.NavigateTo("/dashboard");
         }
         else
-        {
-            switch (response.StatusCode)
-            {
-                case 400:
-                    await JS.InvokeVoidAsync("alertMessage", $"{localizer[StringDescriptionModel.httpcode_400]}");
-                    break;
-                case 401:
-                    await JS.InvokeVoidAsync("alertMessage", $"{localizer[StringDescriptionModel.httpcode_401]}");
-                    break;
-                case 403:
-                    await JS.InvokeVoidAsync("alertMessage", $"{localizer[StringDescriptionModel.httpcode_403]}");
-                    break;
-                case 404:
-                    await JS.InvokeVoidAsync("alertMessage", $"{localizer[StringDescriptionModel.httpcode_404]}");
-                    break;     
-                default:
-                    await JS.InvokeVoidAsync("alertMessage", $"{localizer[StringDescriptionModel.httpcode_urlerr]}");
-                    break;
-            }           
-        }
-
+            await JS.InvokeVoidAsync("alertMessage", alertMsgs.ErrorAlert(pageTitleService.Title, result).Result);
+        
         _spinnerClass = "";
         this.StateHasChanged();
     }

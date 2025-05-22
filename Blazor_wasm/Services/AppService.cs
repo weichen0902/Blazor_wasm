@@ -46,7 +46,11 @@ namespace Blazor_wasm.Services
                 if (response.IsSuccessStatusCode)
                     result.IsSuccess = true;
                 else
-                    result.StatusCode = (int)response.StatusCode;        
+                {
+                    result.Content = response.Content;
+                    result.StatusCode = (int)response.StatusCode;
+                }
+                    
             }
 
             catch (Exception ex) 
@@ -124,7 +128,7 @@ namespace Blazor_wasm.Services
                 {
                     result.StatusCode = (int)response.StatusCode;
 
-                    if (Setting.UserBasicDetail != null)
+                    if (Setting.UserBasicDetail.AccessToken != null)
                     {
                         if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                         {
@@ -171,7 +175,7 @@ namespace Blazor_wasm.Services
                 {
                     result.StatusCode = (int)response.StatusCode;
 
-                    if (Setting.UserBasicDetail != null)
+                    if (Setting.UserBasicDetail.AccessToken != null)
                     {
                         if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                         {
@@ -206,14 +210,16 @@ namespace Blazor_wasm.Services
                     result.IsSuccess = true;
                     var responseStr = await response.Content.ReadAsStringAsync();
                     var data = JsonConvert.DeserializeObject<ForgotPasswordModel>(responseStr);
+                    forgotPasswordModel = data;
                     resetPasswordModel.Token = data?.Token ;
                 }
                 else
                 {
                     result.StatusCode = (int)response.StatusCode;
 
-                    if (Setting.UserBasicDetail != null)
+                    if (Setting.UserBasicDetail.AccessToken != null)
                     {
+                        Console.WriteLine(Setting.UserBasicDetail.AccessTokenExpire);
                         if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                         {
                             await RefreshToken();
@@ -247,7 +253,7 @@ namespace Blazor_wasm.Services
                 {
                     result.StatusCode = (int)response.StatusCode;
 
-                    if (Setting.UserBasicDetail != null)
+                    if (Setting.UserBasicDetail.AccessToken != null)
                     {
                         if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                         {
@@ -282,7 +288,7 @@ namespace Blazor_wasm.Services
                 {
                     result.StatusCode = (int)response.StatusCode;
 
-                    if (Setting.UserBasicDetail != null)
+                    if (Setting.UserBasicDetail.AccessToken != null)
                     {
                         if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                         {
@@ -322,7 +328,7 @@ namespace Blazor_wasm.Services
                 {
                     result.StatusCode = (int)response.StatusCode;
 
-                    if (Setting.UserBasicDetail != null)
+                    if (Setting.UserBasicDetail.AccessToken != null)
                     {
                         if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                         {
@@ -377,7 +383,7 @@ namespace Blazor_wasm.Services
                 {
                     result.StatusCode = (int)response.StatusCode;
 
-                    if (Setting.UserBasicDetail != null)
+                    if (Setting.UserBasicDetail.AccessToken != null)
                     {
                         if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                         {

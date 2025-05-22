@@ -7,6 +7,7 @@
 @using Microsoft.AspNetCore.Components.Authorization
 
 @inject IJSRuntime JS
+@inject AlertMessages alertMsgs
 @inject IAppService appService
 @inject IDataService dataService
 @inject Blazored.Toast.Services.IToastService toastService
@@ -23,9 +24,9 @@
 @implements IDisposable
 
 <div class="top-row " @onmousedown="HideFlyout">
-    <p class="top-row-font">
+    @* <p class="top-row-font">
         @pageTitleService.Title
-    </p>
+    </p> *@
 
     <button class="navbar-toggler" @onclick="ShowFlyout">
         <span class="navbar-toggler-icon "></span>
@@ -499,7 +500,7 @@
 
     public static  FieldDataModel fieldData;
 
-    private string ipUrl = "192.168.212.108";
+    private string ipUrl = "localhost";
 
     public static string[] waterFieldRate = new string[]
         {         
@@ -670,7 +671,7 @@
         FieldDataModel fieldDataModel = new FieldDataModel();
         fieldDataModel.Field = args.ItemData.Text;
 
-        var response = fieldData.Field == null ? await dataService.PostFieldData(fieldDataModel) : await dataService.UpdateFieldData(fieldDataModel);
+        var response = fieldData == null ? await dataService.PostFieldData(fieldDataModel) : await dataService.UpdateFieldData(fieldDataModel);
         await RefreshFieldData();
         NotifyFieldChanged();
         fieldModal.Hide();
@@ -680,30 +681,34 @@
     {
         await Task.Delay(100);
         var result = await dataService.GetFieldData();
-        fieldData = result.Content;
 
-        dropDownFieldBindValue = fieldData.Field == null ? waterFieldRate[0] :
-         fieldData.Field.Contains(localizer[StringDescriptionModel.field_lsr]) ? waterFieldRate[1] :
-         fieldData.Field.Contains(localizer[StringDescriptionModel.field_aw]) ? waterFieldRate[2] :
-         fieldData.Field.Contains(localizer[StringDescriptionModel.field_bio]) ? waterFieldRate[3] :
-         fieldData.Field.Contains(localizer[StringDescriptionModel.field_cmp]) ? waterFieldRate[4] :
-         fieldData.Field.Contains(localizer[StringDescriptionModel.field_cucmp]) ? waterFieldRate[5] :
-         fieldData.Field.Contains(localizer[StringDescriptionModel.field_nh]) ? waterFieldRate[6] :
-         fieldData.Field.Contains(localizer[StringDescriptionModel.field_hf]) ? waterFieldRate[7] :
-         "1";     
-
-        for (int i = 0; i < waterFieldRate.Length; i++)
+        if (result.IsSuccess)
         {
-            if (dropDownFieldBindValue == waterFieldRate[i])
-            {
-                var rate = double.Parse(waterFieldRate[i]);
-                totalDays = (int)(913 - (778 * (1 - rate) / 0.2));
-                remainDays = totalDays - elapsedDays;
-                break;
-            }
-        }
+            fieldData = result.Content;
 
-        NotifyFieldChanged();
+            dropDownFieldBindValue = fieldData.Field == null ? waterFieldRate[0] :
+             fieldData.Field.Contains(localizer[StringDescriptionModel.field_lsr]) ? waterFieldRate[1] :
+             fieldData.Field.Contains(localizer[StringDescriptionModel.field_aw]) ? waterFieldRate[2] :
+             fieldData.Field.Contains(localizer[StringDescriptionModel.field_bio]) ? waterFieldRate[3] :
+             fieldData.Field.Contains(localizer[StringDescriptionModel.field_cmp]) ? waterFieldRate[4] :
+             fieldData.Field.Contains(localizer[StringDescriptionModel.field_cucmp]) ? waterFieldRate[5] :
+             fieldData.Field.Contains(localizer[StringDescriptionModel.field_nh]) ? waterFieldRate[6] :
+             fieldData.Field.Contains(localizer[StringDescriptionModel.field_hf]) ? waterFieldRate[7] :
+             "1";
+
+            for (int i = 0; i < waterFieldRate.Length; i++)
+            {
+                if (dropDownFieldBindValue == waterFieldRate[i])
+                {
+                    var rate = double.Parse(waterFieldRate[i]);
+                    totalDays = (int)(913 - (778 * (1 - rate) / 0.2));
+                    remainDays = totalDays - elapsedDays;
+                    break;
+                }
+            }
+
+            NotifyFieldChanged();
+        }       
     }
 
     private Task HideModal1()
@@ -727,13 +732,8 @@
         var response = await appService.DeleteUsers(toDeleteUsers);
 
         if (response.IsSuccess)
-        {
-            //    await App.Current.MainPage.DisplayAlert("Success", "User accounts have been deleted", "OK");
-        }
-        else
-        {
-            //    await App.Current.MainPage.DisplayAlert("Oops", response.ErrorMessage, "OK");
-        }
+            await JS.InvokeVoidAsync("alertMessage", $"{localizer[StringDescriptionModel.message_success]}, {localizer[StringDescriptionModel.message_account_already_delete]}");
+
         toDeleteUsers = null;
     }
 

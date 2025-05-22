@@ -5,6 +5,9 @@
 @using System.Drawing
 @inject IAppService AppService;
 @inject IStringLocalizer<MyStrings> localizer
+@inject IJSRuntime JS
+@inject AlertMessages alertMsgs
+@inject PageTitleService pageTitleService
 @implements IDisposable
 
 <div class="container">
@@ -61,7 +64,7 @@
 
         <div class="form-group">
             <label>@localizer[StringDescriptionModel.account_email_address]</label>
-            <input type="email" @bind-value="@updateModel.Email" class="form-control" placeholder=@localizer[StringDescriptionModel.account_ent_email_address]>
+            <input readonly="true" type="email" @bind-value="@updateModel.Email" class="form-control" placeholder=@localizer[StringDescriptionModel.account_ent_email_address]>
             <ValidationMessage For="@(()=> updateModel.Email)" />
         </div>
 
@@ -112,17 +115,17 @@
     </EditForm>
 </div>
 
-
-
-
-
+@if (fetchData == true)
+{
+    <Loading IsLoading="fetchData" LoadingText="@localizer[StringDescriptionModel.loading]" />
+}
 
 @code {
     UpdateModel updateModel = new();
     private string _spinnerClass = "";
     private string _imageBase64Data;
     private bool toggleRole;
-
+    private bool fetchData = false;
 
     private string _userAvatar { get; set; } = "images/user.png";
     // private string maleChecked { get; set; }
@@ -134,6 +137,8 @@
 
     protected override async Task OnInitializedAsync()
     {
+        pageTitleService.Title = "update";
+
         //    MainLayout.OnLanguageChange += StateHasChanged;
         await GetUser();
     }
@@ -151,24 +156,21 @@
 
     private async void Submit()
     {
+        fetchData = true;
         _spinnerClass = "spinner-border spinner-border-sm";
-
 
         if (!string.IsNullOrWhiteSpace(_imageBase64Data))
         {
             updateModel.UserAvatar = _imageBase64Data;
         }
 
-
-        var response = await AppService.UpdateUser(updateModel);
-        if (response.IsSuccess)
-        {
-       //     await App.Current.MainPage.DisplayAlert("Success", "User Update.", "OK");
-        }
+        var result = await AppService.UpdateUser(updateModel);
+        fetchData = false;
+        if (result.IsSuccess)
+            await JS.InvokeVoidAsync("alertMessage", $"{localizer[StringDescriptionModel.account_update_success]}");
         else
-        {
-        //    await App.Current.MainPage.DisplayAlert("Oops", response.ErrorMessage, "OK");
-        }
+            await JS.InvokeVoidAsync("alertMessage", alertMsgs.ErrorAlert(pageTitleService.Title, result).Result);
+
         _spinnerClass = "";
         this.StateHasChanged();
     }

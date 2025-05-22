@@ -2,6 +2,9 @@
 @inject IAppService AppService;
 @inject NavigationManager NavManager;
 @inject IStringLocalizer<MyStrings> localizer;
+@inject IJSRuntime JS
+@inject AlertMessages alertMsgs
+@inject PageTitleService pageTitleService
 @implements IDisposable
 
 <div class="container">
@@ -28,8 +31,10 @@
     </EditForm>
 </div>
 
-
-
+@if (fetchData == true)
+{
+    <Loading IsLoading="fetchData" LoadingText="@localizer[StringDescriptionModel.loading]" />
+}
 
 @code {
 
@@ -37,44 +42,44 @@
     string verificationCode { get; set; }
     bool hidden { get; set; } = true;
     private string _spinnerClass = "";
+    private bool fetchData = false;
 
     protected override async Task OnInitializedAsync()
     {
-   //     MainLayout.OnLanguageChange += StateHasChanged;
+        pageTitleService.Title = "forgotPassword";
+
+        //     MainLayout.OnLanguageChange += StateHasChanged;
     }
 
     private async Task Submit()
     {
+        fetchData = true;
         if (verificationCode == null)
         {
             if (email != null)
             {
-                var response = await AppService.ForgotPassword(email);
-                hidden = response.IsSuccess == true ? false : true;
-                if (response.IsSuccess)
+                var result = await AppService.ForgotPassword(email);
+                hidden = result.IsSuccess == true ? false : true;
+                fetchData = false;
+                if (result.IsSuccess)
                 {
-					hidden = false;
-               //     await App.Current.MainPage.DisplayAlert(@localizer[StringDescriptionModel.message_success], @localizer[StringDescriptionModel.message_check_email], "OK");
+                    hidden = false;
+                    await JS.InvokeVoidAsync("alertMessage", $"{localizer[StringDescriptionModel.message_success]}, {localizer[StringDescriptionModel.message_check_email]}");
                 }
-             //   else
-               //     await App.Current.MainPage.DisplayAlert(@localizer[StringDescriptionModel.message_error], $"{response.ErrorMessage}", "OK");
-            }
-            else
-            {
-            //    await App.Current.MainPage.DisplayAlert(@localizer[StringDescriptionModel.message_error], @localizer[StringDescriptionModel.message_enter_email], "OK");
-            }
+                else
+                    await JS.InvokeVoidAsync("alertMessage", alertMsgs.ErrorAlert(pageTitleService.Title, result).Result);
 
-		}
-		else
-		{
-            if (verificationCode == AppService.forgotPasswordModel.VerificationCode)
-            {
-                NavManager.NavigateTo("resetPassword");
+                //     await App.Current.MainPage.DisplayAlert(@localizer[StringDescriptionModel.message_error], $"{response.ErrorMessage}", "OK");
             }
             else
-            {
-          //      await App.Current.MainPage.DisplayAlert(@localizer[StringDescriptionModel.message_error], @localizer[StringDescriptionModel.message_verification_code_invalid], "OK");
-            }
+                await JS.InvokeVoidAsync("alertMessage", $"{localizer[StringDescriptionModel.message_error]}, {localizer[StringDescriptionModel.message_enter_email]}");
+        }
+        else
+        {
+            if (verificationCode == AppService.forgotPasswordModel.VerificationCode)
+                NavManager.NavigateTo("resetPassword");
+            else
+                await JS.InvokeVoidAsync("alertMessage", $"{localizer[StringDescriptionModel.message_error]}, {localizer[StringDescriptionModel.message_verification_code_invalid]}");
 		}
         
     }

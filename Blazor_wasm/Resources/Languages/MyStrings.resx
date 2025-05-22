@@ -411,8 +411,8 @@
   <data name="alarm_inactive" xml:space="preserve">
     <value>Normal</value>
   </data>
-  <data name="calgrid_export" xml:space="preserve">
-    <value>Export</value>
+  <data name="calgrid_download" xml:space="preserve">
+    <value>File download</value>
   </data>
   <data name="calgrid_clear" xml:space="preserve">
     <value>Clear</value>
@@ -844,6 +844,30 @@
     <value>The server could not find the requested resource.</value>
   </data>
   <data name="httpcode_urlerr" xml:space="preserve">
-    <value>Incorrect API endpoint accessed.</value>
+    <value>Access error. Please check if the server is running properly.</value>
+  </data>
+  <data name="account_alert_register_success" xml:space="preserve">
+    <value>Account registration successful</value>
+  </data>
+  <data name="account_alert_account_alreadyexist" xml:space="preserve">
+    <value>This email address has already been registered.</value>
+  </data>
+  <data name="account_update_success" xml:space="preserve">
+    <value>Data update successful</value>
+  </data>
+  <data name="calgrid_upload_success" xml:space="preserve">
+    <value>Data upload successful</value>
+  </data>
+  <data name="calgrid_format_incorrect" xml:space="preserve">
+    <value>The file content format is incorrect</value>
+  </data>
+  <data name="message_email_incorrect" xml:space="preserve">
+    <value>Email error</value>
+  </data>
+  <data name="message_oldpassword_incorrect" xml:space="preserve">
+    <value>Incorrect old password</value>
+  </data>
+  <data name="message_account_already_delete" xml:space="preserve">
+    <value>Account has been deleted</value>
   </data>
 </root>

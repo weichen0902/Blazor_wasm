@@ -2,6 +2,10 @@
 
 @inject IAppService AppService;
 @inject IStringLocalizer<MyStrings> localizer
+@inject IJSRuntime JS
+@inject AlertMessages alertMsgs
+@inject NavigationManager NavManager
+@inject PageTitleService pageTitleService
 @implements IDisposable
 
 <h3>@localizer[StringDescriptionModel.account_reset_password]</h3>
@@ -26,26 +30,33 @@
     </div>
 </EditForm>
 
+@if (fetchData == true)
+{
+    <Loading IsLoading="fetchData" LoadingText="@localizer[StringDescriptionModel.loading]" />
+}
+
 @code {
     private string _spinnerClass = "";
+    private bool fetchData = false;
 
     protected override void OnInitialized()
     {
-     //   MainLayout.OnLanguageChange += StateHasChanged;
+        pageTitleService.Title = "resetPassword";
+        //   MainLayout.OnLanguageChange += StateHasChanged;
     }
 
     private async void Submit()
     {
-        var response = await AppService.ResetPassword(AppService.resetPasswordModel);
-        if (response.IsSuccess)
+        fetchData = true;
+        var result = await AppService.ResetPassword(AppService.resetPasswordModel);
+        fetchData = false;
+        if (result.IsSuccess)
         {
-        //    await App.Current.MainPage.DisplayAlert(@localizer[StringDescriptionModel.message_success], @localizer[StringDescriptionModel.message_password_changed], "OK");
+            await JS.InvokeVoidAsync("alertMessage", $"{localizer[StringDescriptionModel.message_password_changed]}");
+            NavManager.NavigateTo("/login");
         }
-        else
-        {
-        //    await App.Current.MainPage.DisplayAlert(@localizer[StringDescriptionModel.message_error], @localizer[StringDescriptionModel.message_password_change_failed], "OK");
-        }
-        
+        else        
+            await JS.InvokeVoidAsync("alertMessage", alertMsgs.ErrorAlert(pageTitleService.Title, result).Result);
     }
 
     void IDisposable.Dispose()

@@ -411,8 +411,8 @@
   <data name="alarm_inactive" xml:space="preserve">
     <value>非アクティブ</value>
   </data>
-  <data name="calgrid_export" xml:space="preserve">
-    <value>エクスポート</value>
+  <data name="calgrid_download" xml:space="preserve">
+    <value>ファイルのダウンロード</value>
   </data>
   <data name="calgrid_clear" xml:space="preserve">
     <value>クリア</value>
@@ -844,6 +844,30 @@
     <value>サーバーは要求されたリソースを見つけることができませんでした。</value>
   </data>
   <data name="httpcode_urlerr" xml:space="preserve">
-    <value>API アドレスへのアクセスが間違っています。</value>
+    <value>アクセスエラーです。サーバーが正常に動作しているか確認してください。</value>
+  </data>
+  <data name="account_alert_register_success" xml:space="preserve">
+    <value>アカウントの登録が完了しました</value>
+  </data>
+  <data name="account_alert_account_alreadyexist" xml:space="preserve">
+    <value>エラー：このメールアドレスは既に使用されています。</value>
+  </data>
+  <data name="account_update_success" xml:space="preserve">
+    <value>データの更新に成功しました</value>
+  </data>
+  <data name="calgrid_upload_success" xml:space="preserve">
+    <value>データのアップロードに成功しました</value>
+  </data>
+  <data name="calgrid_format_incorrect" xml:space="preserve">
+    <value>ファイルの内容の形式が正しくありません</value>
+  </data>
+  <data name="message_email_incorrect" xml:space="preserve">
+    <value>メールアドレスエラー</value>
+  </data>
+  <data name="message_oldpassword_incorrect" xml:space="preserve">
+    <value>古いパスワードの入力が間違っています</value>
+  </data>
+  <data name="message_account_already_delete" xml:space="preserve">
+    <value>アカウントは削除されました</value>
   </data>
 </root>

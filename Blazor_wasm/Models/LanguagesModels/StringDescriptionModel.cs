@@ -56,6 +56,9 @@ namespace Blazor_wasm.Models.LanguagesModels
         public const string account_old_password = "account_old_password";
         public const string account_new_password = "account_new_password";
         public const string account_account_management = "account_account_management";
+        public const string account_alert_register_success = "account_alert_register_success";
+        public const string account_alert_account_alreadyexist = "account_alert_account_alreadyexist";
+        public const string account_update_success = "account_update_success";
 
         public const string dashboard_alarm_datalog = "dashboard_alarm_datalog";
         public const string dashboard_clear = "dashboard_clear";
@@ -71,6 +74,9 @@ namespace Blazor_wasm.Models.LanguagesModels
         public const string message_verification_code_invalid = "message_verification_code_invalid";
         public const string message_password_changed = "message_password_changed";
         public const string message_password_change_failed = "message_password_change_failed";
+        public const string message_email_incorrect = "message_email_incorrect";
+        public const string message_oldpassword_incorrect = "message_oldpassword_incorrect";
+        public const string message_account_already_delete = "message_account_already_delete";
 
         public const string btn_expand = "btn_expand";
         public const string btn_collapse = "btn_collapse";
@@ -102,8 +108,10 @@ namespace Blazor_wasm.Models.LanguagesModels
         public const string alarm_inactive = "alarm_inactive";
 
         public const string calgrid_clear = "calgrid_clear";
-        public const string calgrid_export = "calgrid_export";
+        public const string calgrid_download = "calgrid_download";
         public const string calgrid_upload = "calgrid_upload";
+        public const string calgrid_upload_success = "calgrid_upload_success";
+        public const string calgrid_format_incorrect = "calgrid_format_incorrect";
 
         public const string proccess_setting = "proccess_setting";
         public const string washing_step_setting = "washing_step_setting";
@@ -127,7 +135,9 @@ namespace Blazor_wasm.Models.LanguagesModels
         public const string charts = "charts";
         public const string live_chart = "live_chart";
         public const string history_chart = "history_chart";
+        
         public const string cal_datalog = "cal_datalog";
+
         public const string export_datalog = "export_datalog";
         public const string trendline_generation = "trendline_generation";
         public const string language_selection = "language_selection";       

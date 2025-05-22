@@ -5,6 +5,9 @@
 @inject IAppService AppService;
 @inject IStringLocalizer<MyStrings> localizer;
 @inject NavigationManager NavManager
+@inject IJSRuntime JS
+@inject AlertMessages alertMsgs
+@inject PageTitleService pageTitleService
 @implements IDisposable
 
 <div class="container">
@@ -92,7 +95,8 @@
 
     protected override void OnInitialized()
     {
-     //   MainLayout.OnLanguageChange += StateHasChanged;
+        pageTitleService.Title = "registration";
+        //   MainLayout.OnLanguageChange += StateHasChanged;
     }
 
     private async void Submit()
@@ -104,15 +108,15 @@
             registrationModel.UserAvatar = _imageBase64Data;
         }
 
-        var response = await AppService.RegisterUser(registrationModel);
-        if (response.IsSuccess)
+        var result = await AppService.RegisterUser(registrationModel);
+        if (result.IsSuccess)
         {
-       //     await App.Current.MainPage.DisplayAlert("Success", "User Registered.", "OK");
+            await JS.InvokeVoidAsync("alertMessage", $"{localizer[StringDescriptionModel.account_alert_register_success]}");
             NavManager.NavigateTo("/login");
         }
         else
         {
-        //    await App.Current.MainPage.DisplayAlert("Oops", response.ErrorMessage, "OK");
+            await JS.InvokeVoidAsync("alertMessage", alertMsgs.ErrorAlert(pageTitleService.Title, result).Result);
         }
         _spinnerClass = "";
         this.StateHasChanged();

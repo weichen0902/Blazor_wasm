@@ -48,7 +48,7 @@ namespace Blazor_wasm.Services
                 {
                     result.StatusCode = (int)response.StatusCode;
 
-                    if (Setting.UserBasicDetail != null)
+                    if (Setting.UserBasicDetail.AccessToken != null)
                     {
                         if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                         {
@@ -86,7 +86,7 @@ namespace Blazor_wasm.Services
                 {
                     result.StatusCode = (int)response.StatusCode;
 
-                    if (Setting.UserBasicDetail != null)
+                    if (Setting.UserBasicDetail.AccessToken != null)
                     {
                         if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                         {
@@ -125,7 +125,7 @@ namespace Blazor_wasm.Services
                 {
                     result.StatusCode = (int)response.StatusCode;
 
-                    if (Setting.UserBasicDetail != null)
+                    if (Setting.UserBasicDetail.AccessToken != null)
                     {
                         if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                         {
@@ -164,7 +164,7 @@ namespace Blazor_wasm.Services
                 {
                     result.StatusCode = (int)response.StatusCode;
 
-                    if (Setting.UserBasicDetail != null)
+                    if (Setting.UserBasicDetail.AccessToken != null)
                     {
                         if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                         {
@@ -203,7 +203,7 @@ namespace Blazor_wasm.Services
                 {
                     result.StatusCode = (int)response.StatusCode;
 
-                    if (Setting.UserBasicDetail != null)
+                    if (Setting.UserBasicDetail.AccessToken != null)
                     {
                         if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                         {
@@ -242,7 +242,7 @@ namespace Blazor_wasm.Services
                 {
                     result.StatusCode = (int)response.StatusCode;
 
-                    if (Setting.UserBasicDetail != null)
+                    if (Setting.UserBasicDetail.AccessToken != null)
                     {
                         if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                         {
@@ -281,7 +281,7 @@ namespace Blazor_wasm.Services
                 {
                     result.StatusCode = (int)response.StatusCode;
 
-                    if (Setting.UserBasicDetail != null)
+                    if (Setting.UserBasicDetail.AccessToken != null)
                     {
                         if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                         {
@@ -317,7 +317,7 @@ namespace Blazor_wasm.Services
                 {
                     result.StatusCode = (int)response.StatusCode;
 
-                    if (Setting.UserBasicDetail != null)
+                    if (Setting.UserBasicDetail.AccessToken != null)
                     {
                         if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                         {
@@ -352,7 +352,7 @@ namespace Blazor_wasm.Services
                 {
                     result.StatusCode = (int)response.StatusCode;
 
-                    if (Setting.UserBasicDetail != null)
+                    if (Setting.UserBasicDetail.AccessToken != null)
                     {
                         if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                         {
@@ -387,7 +387,7 @@ namespace Blazor_wasm.Services
                 {
                     result.StatusCode = (int)response.StatusCode;
 
-                    if (Setting.UserBasicDetail != null)
+                    if (Setting.UserBasicDetail.AccessToken != null)
                     {
                         if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                         {
@@ -422,7 +422,7 @@ namespace Blazor_wasm.Services
                 {
                     result.StatusCode = (int)response.StatusCode;
 
-                    if (Setting.UserBasicDetail != null)
+                    if (Setting.UserBasicDetail.AccessToken != null)
                     {
                         if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                         {
@@ -457,7 +457,7 @@ namespace Blazor_wasm.Services
                 {
                     result.StatusCode = (int)response.StatusCode;
 
-                    if (Setting.UserBasicDetail != null)
+                    if (Setting.UserBasicDetail.AccessToken != null)
                     {
                         if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                         {
@@ -492,7 +492,7 @@ namespace Blazor_wasm.Services
                 {
                     result.StatusCode = (int)response.StatusCode;
 
-                    if (Setting.UserBasicDetail != null)
+                    if (Setting.UserBasicDetail.AccessToken != null)
                     {
                         if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                         {
@@ -527,7 +527,7 @@ namespace Blazor_wasm.Services
                 {
                     result.StatusCode = (int)response.StatusCode;
 
-                    if (Setting.UserBasicDetail != null)
+                    if (Setting.UserBasicDetail.AccessToken != null)
                     {
                         if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                         {
@@ -562,7 +562,7 @@ namespace Blazor_wasm.Services
                 {
                     result.StatusCode = (int)response.StatusCode;
 
-                    if (Setting.UserBasicDetail != null)
+                    if (Setting.UserBasicDetail.AccessToken != null)
                     {
                         if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                         {
@@ -597,7 +597,7 @@ namespace Blazor_wasm.Services
                 {
                     result.StatusCode = (int)response.StatusCode;
 
-                    if (Setting.UserBasicDetail != null)
+                    if (Setting.UserBasicDetail.AccessToken != null)
                     {
                         if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                         {
@@ -633,7 +633,7 @@ namespace Blazor_wasm.Services
                 {
                     result.StatusCode = (int)response.StatusCode;
 
-                    if (Setting.UserBasicDetail != null)
+                    if (Setting.UserBasicDetail.AccessToken != null)
                     {
                         if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                         {
@@ -668,7 +668,7 @@ namespace Blazor_wasm.Services
                 {
                     result.StatusCode = (int)response.StatusCode;
 
-                    if (Setting.UserBasicDetail != null)
+                    if (Setting.UserBasicDetail.AccessToken != null)
                     {
                         if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                         {
@@ -703,7 +703,7 @@ namespace Blazor_wasm.Services
                 {
                     result.StatusCode = (int)response.StatusCode;
 
-                    if (Setting.UserBasicDetail != null)
+                    if (Setting.UserBasicDetail.AccessToken != null)
                     {
                         if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                         {
@@ -737,7 +737,7 @@ namespace Blazor_wasm.Services
                 {
                     result.StatusCode = (int)response.StatusCode;
 
-                    if (Setting.UserBasicDetail != null)
+                    if (Setting.UserBasicDetail.AccessToken != null)
                     {
                         if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                         {
@@ -771,7 +771,7 @@ namespace Blazor_wasm.Services
                 {
                     result.StatusCode = (int)response.StatusCode;
 
-                    if (Setting.UserBasicDetail != null)
+                    if (Setting.UserBasicDetail.AccessToken != null)
                     {
                         if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                         {
@@ -805,7 +805,7 @@ namespace Blazor_wasm.Services
                 {
                     result.StatusCode = (int)response.StatusCode;
 
-                    if (Setting.UserBasicDetail != null)
+                    if (Setting.UserBasicDetail.AccessToken != null)
                     {
                         if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                         {
@@ -839,7 +839,7 @@ namespace Blazor_wasm.Services
                 {
                     result.StatusCode = (int)response.StatusCode;
 
-                    if (Setting.UserBasicDetail != null)
+                    if (Setting.UserBasicDetail.AccessToken != null)
                     {
                         if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                         {
@@ -878,7 +878,7 @@ namespace Blazor_wasm.Services
                 {
                     result.StatusCode = (int)response.StatusCode;
 
-                    if (Setting.UserBasicDetail != null)
+                    if (Setting.UserBasicDetail.AccessToken != null)
                     {
                         if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                         {
@@ -917,7 +917,7 @@ namespace Blazor_wasm.Services
                     {
                         result.StatusCode = (int)response.StatusCode;
 
-                        if (Setting.UserBasicDetail != null)
+                        if (Setting.UserBasicDetail.AccessToken != null)
                         {
                             if(Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
                             {

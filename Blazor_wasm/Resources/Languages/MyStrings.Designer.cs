@@ -22,21 +22,21 @@ namespace Blazor_wasm.Resources.Languages {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class MyStrings {
+    public class MyStrings {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal MyStrings() {
+        public MyStrings() {
         }
         
         /// <summary>
         ///   傳回這個類別使用的快取的 ResourceManager 執行個體。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Blazor_wasm.Resources.Languages.MyStrings", typeof(MyStrings).Assembly);
@@ -51,7 +51,7 @@ namespace Blazor_wasm.Resources.Languages {
         ///   使用這個強類型資源類別的資源查閱。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Already have account 的當地語系化字串。
         /// </summary>
-        internal static string account_already_account {
+        public static string account_already_account {
             get {
                 return ResourceManager.GetString("account_already_account", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Back to login 的當地語系化字串。
         /// </summary>
-        internal static string account_back_login {
+        public static string account_back_login {
             get {
                 return ResourceManager.GetString("account_back_login", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Create a new account 的當地語系化字串。
         /// </summary>
-        internal static string account_create_account {
+        public static string account_create_account {
             get {
                 return ResourceManager.GetString("account_create_account", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Delete Account 的當地語系化字串。
         /// </summary>
-        internal static string account_delete_account {
+        public static string account_delete_account {
             get {
                 return ResourceManager.GetString("account_delete_account", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Email Address 的當地語系化字串。
         /// </summary>
-        internal static string account_email_address {
+        public static string account_email_address {
             get {
                 return ResourceManager.GetString("account_email_address", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Enter your email address 的當地語系化字串。
         /// </summary>
-        internal static string account_ent_email_address {
+        public static string account_ent_email_address {
             get {
                 return ResourceManager.GetString("account_ent_email_address", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Enter the first name 的當地語系化字串。
         /// </summary>
-        internal static string account_ent_first_name {
+        public static string account_ent_first_name {
             get {
                 return ResourceManager.GetString("account_ent_first_name", resourceCulture);
             }
@@ -126,7 +126,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Enter the last name 的當地語系化字串。
         /// </summary>
-        internal static string account_ent_last_name {
+        public static string account_ent_last_name {
             get {
                 return ResourceManager.GetString("account_ent_last_name", resourceCulture);
             }
@@ -135,7 +135,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Enter the new password 的當地語系化字串。
         /// </summary>
-        internal static string account_ent_new_password {
+        public static string account_ent_new_password {
             get {
                 return ResourceManager.GetString("account_ent_new_password", resourceCulture);
             }
@@ -144,7 +144,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Enter your old password 的當地語系化字串。
         /// </summary>
-        internal static string account_ent_old_password {
+        public static string account_ent_old_password {
             get {
                 return ResourceManager.GetString("account_ent_old_password", resourceCulture);
             }
@@ -153,7 +153,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Enter your password 的當地語系化字串。
         /// </summary>
-        internal static string account_ent_password {
+        public static string account_ent_password {
             get {
                 return ResourceManager.GetString("account_ent_password", resourceCulture);
             }
@@ -162,7 +162,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Enter the verification code 的當地語系化字串。
         /// </summary>
-        internal static string account_ent_verification_code {
+        public static string account_ent_verification_code {
             get {
                 return ResourceManager.GetString("account_ent_verification_code", resourceCulture);
             }
@@ -171,7 +171,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 First Name 的當地語系化字串。
         /// </summary>
-        internal static string account_first_name {
+        public static string account_first_name {
             get {
                 return ResourceManager.GetString("account_first_name", resourceCulture);
             }
@@ -180,7 +180,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Forgot the password 的當地語系化字串。
         /// </summary>
-        internal static string account_forgot_password {
+        public static string account_forgot_password {
             get {
                 return ResourceManager.GetString("account_forgot_password", resourceCulture);
             }
@@ -189,7 +189,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Last Name 的當地語系化字串。
         /// </summary>
-        internal static string account_last_name {
+        public static string account_last_name {
             get {
                 return ResourceManager.GetString("account_last_name", resourceCulture);
             }
@@ -198,7 +198,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Login 的當地語系化字串。
         /// </summary>
-        internal static string account_login {
+        public static string account_login {
             get {
                 return ResourceManager.GetString("account_login", resourceCulture);
             }
@@ -207,7 +207,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Logout 的當地語系化字串。
         /// </summary>
-        internal static string account_logout {
+        public static string account_logout {
             get {
                 return ResourceManager.GetString("account_logout", resourceCulture);
             }
@@ -216,7 +216,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Modify Account 的當地語系化字串。
         /// </summary>
-        internal static string account_modify_account {
+        public static string account_modify_account {
             get {
                 return ResourceManager.GetString("account_modify_account", resourceCulture);
             }
@@ -225,7 +225,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 New Password 的當地語系化字串。
         /// </summary>
-        internal static string account_new_password {
+        public static string account_new_password {
             get {
                 return ResourceManager.GetString("account_new_password", resourceCulture);
             }
@@ -234,7 +234,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Old Password 的當地語系化字串。
         /// </summary>
-        internal static string account_old_password {
+        public static string account_old_password {
             get {
                 return ResourceManager.GetString("account_old_password", resourceCulture);
             }
@@ -243,7 +243,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Password 的當地語系化字串。
         /// </summary>
-        internal static string account_password {
+        public static string account_password {
             get {
                 return ResourceManager.GetString("account_password", resourceCulture);
             }
@@ -252,7 +252,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Enter the password again 的當地語系化字串。
         /// </summary>
-        internal static string account_password_again {
+        public static string account_password_again {
             get {
                 return ResourceManager.GetString("account_password_again", resourceCulture);
             }
@@ -261,7 +261,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Registration 的當地語系化字串。
         /// </summary>
-        internal static string account_registration {
+        public static string account_registration {
             get {
                 return ResourceManager.GetString("account_registration", resourceCulture);
             }
@@ -270,7 +270,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Reset Password 的當地語系化字串。
         /// </summary>
-        internal static string account_reset_password {
+        public static string account_reset_password {
             get {
                 return ResourceManager.GetString("account_reset_password", resourceCulture);
             }
@@ -279,7 +279,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Select the account 的當地語系化字串。
         /// </summary>
-        internal static string account_select_account {
+        public static string account_select_account {
             get {
                 return ResourceManager.GetString("account_select_account", resourceCulture);
             }
@@ -288,7 +288,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Submit 的當地語系化字串。
         /// </summary>
-        internal static string account_submit {
+        public static string account_submit {
             get {
                 return ResourceManager.GetString("account_submit", resourceCulture);
             }
@@ -297,7 +297,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 In Alarm 的當地語系化字串。
         /// </summary>
-        internal static string alarm_active {
+        public static string alarm_active {
             get {
                 return ResourceManager.GetString("alarm_active", resourceCulture);
             }
@@ -306,7 +306,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Acid level too low 的當地語系化字串。
         /// </summary>
-        internal static string alarm_common0 {
+        public static string alarm_common0 {
             get {
                 return ResourceManager.GetString("alarm_common0", resourceCulture);
             }
@@ -315,7 +315,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Buf.A liquid level is too low 的當地語系化字串。
         /// </summary>
-        internal static string alarm_common1 {
+        public static string alarm_common1 {
             get {
                 return ResourceManager.GetString("alarm_common1", resourceCulture);
             }
@@ -324,7 +324,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Buf.B liquid level is too low 的當地語系化字串。
         /// </summary>
-        internal static string alarm_common2 {
+        public static string alarm_common2 {
             get {
                 return ResourceManager.GetString("alarm_common2", resourceCulture);
             }
@@ -333,7 +333,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Abnormal air pressure 的當地語系化字串。
         /// </summary>
-        internal static string alarm_common3 {
+        public static string alarm_common3 {
             get {
                 return ResourceManager.GetString("alarm_common3", resourceCulture);
             }
@@ -342,7 +342,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Overcurrent 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver1 {
+        public static string alarm_driver1 {
             get {
                 return ResourceManager.GetString("alarm_driver1", resourceCulture);
             }
@@ -351,7 +351,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Encoder Vibration Warning 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver100 {
+        public static string alarm_driver100 {
             get {
                 return ResourceManager.GetString("alarm_driver100", resourceCulture);
             }
@@ -360,7 +360,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Absolute Position Turns Overflow_Driver 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver102 {
+        public static string alarm_driver102 {
             get {
                 return ResourceManager.GetString("alarm_driver102", resourceCulture);
             }
@@ -369,7 +369,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Encoder Temperature Warning 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver103 {
+        public static string alarm_driver103 {
             get {
                 return ResourceManager.GetString("alarm_driver103", resourceCulture);
             }
@@ -378,7 +378,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Absolute data IO transmission error 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver104 {
+        public static string alarm_driver104 {
             get {
                 return ResourceManager.GetString("alarm_driver104", resourceCulture);
             }
@@ -387,7 +387,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Motor type error 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver105 {
+        public static string alarm_driver105 {
             get {
                 return ResourceManager.GetString("alarm_driver105", resourceCulture);
             }
@@ -396,16 +396,16 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Control power failure caused write failure 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver1058 {
+        public static string alarm_driver1058 {
             get {
                 return ResourceManager.GetString("alarm_driver1058", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查詢類似 Driver_The error between the internal coordinates of the driver and the encoder coordinates is too large 的當地語系化字串。
+        ///   查詢類似 Driver_The error between the public coordinates of the driver and the encoder coordinates is too large 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver107 {
+        public static string alarm_driver107 {
             get {
                 return ResourceManager.GetString("alarm_driver107", resourceCulture);
             }
@@ -414,7 +414,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Encoder type cannot be recognized 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver108 {
+        public static string alarm_driver108 {
             get {
                 return ResourceManager.GetString("alarm_driver108", resourceCulture);
             }
@@ -423,7 +423,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_absolute position establishment is not completed 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver109 {
+        public static string alarm_driver109 {
             get {
                 return ResourceManager.GetString("alarm_driver109", resourceCulture);
             }
@@ -432,7 +432,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Encoder read and write incomplete warning 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver112 {
+        public static string alarm_driver112 {
             get {
                 return ResourceManager.GetString("alarm_driver112", resourceCulture);
             }
@@ -441,7 +441,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Encoder turns error 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver113 {
+        public static string alarm_driver113 {
             get {
                 return ResourceManager.GetString("alarm_driver113", resourceCulture);
             }
@@ -450,7 +450,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Encoder Overspeed 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver114 {
+        public static string alarm_driver114 {
             get {
                 return ResourceManager.GetString("alarm_driver114", resourceCulture);
             }
@@ -459,7 +459,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Encoder memory error 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver115 {
+        public static string alarm_driver115 {
             get {
                 return ResourceManager.GetString("alarm_driver115", resourceCulture);
             }
@@ -468,7 +468,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Encoder single turn absolute position error 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver116 {
+        public static string alarm_driver116 {
             get {
                 return ResourceManager.GetString("alarm_driver116", resourceCulture);
             }
@@ -477,7 +477,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Encoder absolute number of revolutions error 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver117 {
+        public static string alarm_driver117 {
             get {
                 return ResourceManager.GetString("alarm_driver117", resourceCulture);
             }
@@ -486,7 +486,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Encoder parameter setting is not completed error 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver121 {
+        public static string alarm_driver121 {
             get {
                 return ResourceManager.GetString("alarm_driver121", resourceCulture);
             }
@@ -495,7 +495,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Encoder Z phase position lost 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver122 {
+        public static string alarm_driver122 {
             get {
                 return ResourceManager.GetString("alarm_driver122", resourceCulture);
             }
@@ -504,7 +504,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Encoder Memory Busy 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver123 {
+        public static string alarm_driver123 {
             get {
                 return ResourceManager.GetString("alarm_driver123", resourceCulture);
             }
@@ -513,7 +513,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_When the motor speed exceeds 200rpm, clear the absolute position 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver124 {
+        public static string alarm_driver124 {
             get {
                 return ResourceManager.GetString("alarm_driver124", resourceCulture);
             }
@@ -522,7 +522,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_The motor stops running when the power is turned on again without releasing AL07C 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver125 {
+        public static string alarm_driver125 {
             get {
                 return ResourceManager.GetString("alarm_driver125", resourceCulture);
             }
@@ -531,7 +531,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Encoder Clearer Error 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver126 {
+        public static string alarm_driver126 {
             get {
                 return ResourceManager.GetString("alarm_driver126", resourceCulture);
             }
@@ -540,7 +540,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Encoder version number is abnormal 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver127 {
+        public static string alarm_driver127 {
             get {
                 return ResourceManager.GetString("alarm_driver127", resourceCulture);
             }
@@ -549,7 +549,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Driver output current is too large 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver131 {
+        public static string alarm_driver131 {
             get {
                 return ResourceManager.GetString("alarm_driver131", resourceCulture);
             }
@@ -558,7 +558,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Flexibility compensation parameter abnormality 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver1313 {
+        public static string alarm_driver1313 {
             get {
                 return ResourceManager.GetString("alarm_driver1313", resourceCulture);
             }
@@ -567,7 +567,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Regeneration setting abnormality 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver133 {
+        public static string alarm_driver133 {
             get {
                 return ResourceManager.GetString("alarm_driver133", resourceCulture);
             }
@@ -576,7 +576,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Regenerative resistor overload 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver134 {
+        public static string alarm_driver134 {
             get {
                 return ResourceManager.GetString("alarm_driver134", resourceCulture);
             }
@@ -585,7 +585,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Driver function usage alarm 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver136 {
+        public static string alarm_driver136 {
             get {
                 return ResourceManager.GetString("alarm_driver136", resourceCulture);
             }
@@ -594,7 +594,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Current sensing is disturbed 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver137 {
+        public static string alarm_driver137 {
             get {
                 return ResourceManager.GetString("alarm_driver137", resourceCulture);
             }
@@ -603,7 +603,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Automatic gain adjustment command abnormality 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver138 {
+        public static string alarm_driver138 {
             get {
                 return ResourceManager.GetString("alarm_driver138", resourceCulture);
             }
@@ -612,7 +612,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Automatic gain adjustment stop time is too short 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver139 {
+        public static string alarm_driver139 {
             get {
                 return ResourceManager.GetString("alarm_driver139", resourceCulture);
             }
@@ -621,7 +621,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Automatic gain adjustment inertia estimation abnormality 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver140 {
+        public static string alarm_driver140 {
             get {
                 return ResourceManager.GetString("alarm_driver140", resourceCulture);
             }
@@ -630,7 +630,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_DSP firmware error 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver153 {
+        public static string alarm_driver153 {
             get {
                 return ResourceManager.GetString("alarm_driver153", resourceCulture);
             }
@@ -639,7 +639,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Parameter reset failed 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver156 {
+        public static string alarm_driver156 {
             get {
                 return ResourceManager.GetString("alarm_driver156", resourceCulture);
             }
@@ -648,7 +648,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Capacitor charging abnormality 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver157 {
+        public static string alarm_driver157 {
             get {
                 return ResourceManager.GetString("alarm_driver157", resourceCulture);
             }
@@ -657,7 +657,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Abnormal voltage in regeneration state 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver16 {
+        public static string alarm_driver16 {
             get {
                 return ResourceManager.GetString("alarm_driver16", resourceCulture);
             }
@@ -666,7 +666,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_The absolute position coordinates of the driver and the motor do not match 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver166 {
+        public static string alarm_driver166 {
             get {
                 return ResourceManager.GetString("alarm_driver166", resourceCulture);
             }
@@ -675,7 +675,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_CN2 communication failed 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver17 {
+        public static string alarm_driver17 {
             get {
                 return ResourceManager.GetString("alarm_driver17", resourceCulture);
             }
@@ -684,7 +684,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Emergency Stop 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver19 {
+        public static string alarm_driver19 {
             get {
                 return ResourceManager.GetString("alarm_driver19", resourceCulture);
             }
@@ -693,7 +693,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Overvoltage 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver2 {
+        public static string alarm_driver2 {
             get {
                 return ResourceManager.GetString("alarm_driver2", resourceCulture);
             }
@@ -702,7 +702,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Reverse limit abnormality 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver20 {
+        public static string alarm_driver20 {
             get {
                 return ResourceManager.GetString("alarm_driver20", resourceCulture);
             }
@@ -711,7 +711,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Forward limit abnormal 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver21 {
+        public static string alarm_driver21 {
             get {
                 return ResourceManager.GetString("alarm_driver21", resourceCulture);
             }
@@ -720,7 +720,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_IGBT temperature abnormality 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver22 {
+        public static string alarm_driver22 {
             get {
                 return ResourceManager.GetString("alarm_driver22", resourceCulture);
             }
@@ -729,7 +729,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Memory Abnormality 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver23 {
+        public static string alarm_driver23 {
             get {
                 return ResourceManager.GetString("alarm_driver23", resourceCulture);
             }
@@ -738,7 +738,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_OA and OB output abnormality 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver24 {
+        public static string alarm_driver24 {
             get {
                 return ResourceManager.GetString("alarm_driver24", resourceCulture);
             }
@@ -747,7 +747,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Low Voltage 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver3 {
+        public static string alarm_driver3 {
             get {
                 return ResourceManager.GetString("alarm_driver3", resourceCulture);
             }
@@ -756,7 +756,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_ Motor power line disconnection detection 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver3121 {
+        public static string alarm_driver3121 {
             get {
                 return ResourceManager.GetString("alarm_driver3121", resourceCulture);
             }
@@ -765,7 +765,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Serial communication timeout 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver32 {
+        public static string alarm_driver32 {
             get {
                 return ResourceManager.GetString("alarm_driver32", resourceCulture);
             }
@@ -774,7 +774,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Driver model code abnormal 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver3291 {
+        public static string alarm_driver3291 {
             get {
                 return ResourceManager.GetString("alarm_driver3291", resourceCulture);
             }
@@ -783,7 +783,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Main circuit power supply abnormality 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver34 {
+        public static string alarm_driver34 {
             get {
                 return ResourceManager.GetString("alarm_driver34", resourceCulture);
             }
@@ -792,7 +792,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Pre-overload warning 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver35 {
+        public static string alarm_driver35 {
             get {
                 return ResourceManager.GetString("alarm_driver35", resourceCulture);
             }
@@ -801,34 +801,34 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Encoder initial magnetic field error 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver36 {
+        public static string alarm_driver36 {
             get {
                 return ResourceManager.GetString("alarm_driver36", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查詢類似 Driver_Encoder internal error 的當地語系化字串。
+        ///   查詢類似 Driver_Encoder public error 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver37 {
+        public static string alarm_driver37 {
             get {
                 return ResourceManager.GetString("alarm_driver37", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查詢類似 Driver_Encoder internal data reliability error 的當地語系化字串。
+        ///   查詢類似 Driver_Encoder public data reliability error 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver38 {
+        public static string alarm_driver38 {
             get {
                 return ResourceManager.GetString("alarm_driver38", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查詢類似 Driver_Encoder internal reset error 的當地語系化字串。
+        ///   查詢類似 Driver_Encoder public reset error 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver39 {
+        public static string alarm_driver39 {
             get {
                 return ResourceManager.GetString("alarm_driver39", resourceCulture);
             }
@@ -837,16 +837,16 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Motor matching abnormality 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver4 {
+        public static string alarm_driver4 {
             get {
                 return ResourceManager.GetString("alarm_driver4", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查詢類似 Driver_Battery voltage abnormality or encoder internal error 的當地語系化字串。
+        ///   查詢類似 Driver_Battery voltage abnormality or encoder public error 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver40 {
+        public static string alarm_driver40 {
             get {
                 return ResourceManager.GetString("alarm_driver40", resourceCulture);
             }
@@ -855,7 +855,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Gray code error 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver41 {
+        public static string alarm_driver41 {
             get {
                 return ResourceManager.GetString("alarm_driver41", resourceCulture);
             }
@@ -864,7 +864,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Encoder circle counting error 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver42 {
+        public static string alarm_driver42 {
             get {
                 return ResourceManager.GetString("alarm_driver42", resourceCulture);
             }
@@ -873,7 +873,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Motor data abnormal 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver43 {
+        public static string alarm_driver43 {
             get {
                 return ResourceManager.GetString("alarm_driver43", resourceCulture);
             }
@@ -882,7 +882,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Driver overload 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver44 {
+        public static string alarm_driver44 {
             get {
                 return ResourceManager.GetString("alarm_driver44", resourceCulture);
             }
@@ -891,7 +891,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Anti-blocking protection 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver45 {
+        public static string alarm_driver45 {
             get {
                 return ResourceManager.GetString("alarm_driver45", resourceCulture);
             }
@@ -900,7 +900,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Motor Collision Error 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver48 {
+        public static string alarm_driver48 {
             get {
                 return ResourceManager.GetString("alarm_driver48", resourceCulture);
             }
@@ -909,7 +909,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Motor power line fault detection 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver49 {
+        public static string alarm_driver49 {
             get {
                 return ResourceManager.GetString("alarm_driver49", resourceCulture);
             }
@@ -918,7 +918,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Regeneration Error 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver5 {
+        public static string alarm_driver5 {
             get {
                 return ResourceManager.GetString("alarm_driver5", resourceCulture);
             }
@@ -927,7 +927,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Encoder vibration abnormality 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver50 {
+        public static string alarm_driver50 {
             get {
                 return ResourceManager.GetString("alarm_driver50", resourceCulture);
             }
@@ -936,16 +936,16 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Motor abnormality 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver51 {
+        public static string alarm_driver51 {
             get {
                 return ResourceManager.GetString("alarm_driver51", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查詢類似 Driver_Encoder internal communication abnormality 的當地語系化字串。
+        ///   查詢類似 Driver_Encoder public communication abnormality 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver52 {
+        public static string alarm_driver52 {
             get {
                 return ResourceManager.GetString("alarm_driver52", resourceCulture);
             }
@@ -954,7 +954,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Encoder temperature exceeds protection upper limit 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver53 {
+        public static string alarm_driver53 {
             get {
                 return ResourceManager.GetString("alarm_driver53", resourceCulture);
             }
@@ -963,7 +963,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Encoder abnormal alarm status error 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver54 {
+        public static string alarm_driver54 {
             get {
                 return ResourceManager.GetString("alarm_driver54", resourceCulture);
             }
@@ -972,7 +972,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Overload 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver6 {
+        public static string alarm_driver6 {
             get {
                 return ResourceManager.GetString("alarm_driver6", resourceCulture);
             }
@@ -981,7 +981,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_The voltage input of analog speed command is too high 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver66 {
+        public static string alarm_driver66 {
             get {
                 return ResourceManager.GetString("alarm_driver66", resourceCulture);
             }
@@ -990,7 +990,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Driver function usage warning 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver68 {
+        public static string alarm_driver68 {
             get {
                 return ResourceManager.GetString("alarm_driver68", resourceCulture);
             }
@@ -999,7 +999,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Electronic gear ratio setting error 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver69 {
+        public static string alarm_driver69 {
             get {
                 return ResourceManager.GetString("alarm_driver69", resourceCulture);
             }
@@ -1008,7 +1008,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Speed ​​control error is too large 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver7 {
+        public static string alarm_driver7 {
             get {
                 return ResourceManager.GetString("alarm_driver7", resourceCulture);
             }
@@ -1017,7 +1017,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Abnormal pulse control command 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver8 {
+        public static string alarm_driver8 {
             get {
                 return ResourceManager.GetString("alarm_driver8", resourceCulture);
             }
@@ -1026,7 +1026,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Motor parameter abnormality 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver83 {
+        public static string alarm_driver83 {
             get {
                 return ResourceManager.GetString("alarm_driver83", resourceCulture);
             }
@@ -1035,7 +1035,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Motor speed too high 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver86 {
+        public static string alarm_driver86 {
             get {
                 return ResourceManager.GetString("alarm_driver86", resourceCulture);
             }
@@ -1044,7 +1044,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Emergency Stop_Deceleration 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver863 {
+        public static string alarm_driver863 {
             get {
                 return ResourceManager.GetString("alarm_driver863", resourceCulture);
             }
@@ -1053,7 +1053,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Position control error is too large 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver9 {
+        public static string alarm_driver9 {
             get {
                 return ResourceManager.GetString("alarm_driver9", resourceCulture);
             }
@@ -1062,7 +1062,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Motor position feedback abnormality 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver92 {
+        public static string alarm_driver92 {
             get {
                 return ResourceManager.GetString("alarm_driver92", resourceCulture);
             }
@@ -1071,7 +1071,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_absolute position lost 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver96 {
+        public static string alarm_driver96 {
             get {
                 return ResourceManager.GetString("alarm_driver96", resourceCulture);
             }
@@ -1080,7 +1080,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Encoder voltage is too low 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver97 {
+        public static string alarm_driver97 {
             get {
                 return ResourceManager.GetString("alarm_driver97", resourceCulture);
             }
@@ -1089,7 +1089,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Driver_Absolute Position Turns Overflow_Encoder 的當地語系化字串。
         /// </summary>
-        internal static string alarm_driver98 {
+        public static string alarm_driver98 {
             get {
                 return ResourceManager.GetString("alarm_driver98", resourceCulture);
             }
@@ -1098,7 +1098,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Normal 的當地語系化字串。
         /// </summary>
-        internal static string alarm_inactive {
+        public static string alarm_inactive {
             get {
                 return ResourceManager.GetString("alarm_inactive", resourceCulture);
             }
@@ -1107,7 +1107,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 System_Servo communication abnormality 的當地語系化字串。
         /// </summary>
-        internal static string alarm_system0 {
+        public static string alarm_system0 {
             get {
                 return ResourceManager.GetString("alarm_system0", resourceCulture);
             }
@@ -1116,7 +1116,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 System_HBM communication abnormality 的當地語系化字串。
         /// </summary>
-        internal static string alarm_system1 {
+        public static string alarm_system1 {
             get {
                 return ResourceManager.GetString("alarm_system1", resourceCulture);
             }
@@ -1125,7 +1125,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 System_E_01 的當地語系化字串。
         /// </summary>
-        internal static string alarm_system10 {
+        public static string alarm_system10 {
             get {
                 return ResourceManager.GetString("alarm_system10", resourceCulture);
             }
@@ -1134,7 +1134,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 System_E_02 的當地語系化字串。
         /// </summary>
-        internal static string alarm_system11 {
+        public static string alarm_system11 {
             get {
                 return ResourceManager.GetString("alarm_system11", resourceCulture);
             }
@@ -1143,7 +1143,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 System_E_03 的當地語系化字串。
         /// </summary>
-        internal static string alarm_system12 {
+        public static string alarm_system12 {
             get {
                 return ResourceManager.GetString("alarm_system12", resourceCulture);
             }
@@ -1152,7 +1152,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 System_E_04 的當地語系化字串。
         /// </summary>
-        internal static string alarm_system13 {
+        public static string alarm_system13 {
             get {
                 return ResourceManager.GetString("alarm_system13", resourceCulture);
             }
@@ -1161,7 +1161,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 System_E_05 的當地語系化字串。
         /// </summary>
-        internal static string alarm_system14 {
+        public static string alarm_system14 {
             get {
                 return ResourceManager.GetString("alarm_system14", resourceCulture);
             }
@@ -1170,7 +1170,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 System_E_31 的當地語系化字串。
         /// </summary>
-        internal static string alarm_system15 {
+        public static string alarm_system15 {
             get {
                 return ResourceManager.GetString("alarm_system15", resourceCulture);
             }
@@ -1179,7 +1179,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 System_Abnormal clean water pressure 的當地語系化字串。
         /// </summary>
-        internal static string alarm_system2 {
+        public static string alarm_system2 {
             get {
                 return ResourceManager.GetString("alarm_system2", resourceCulture);
             }
@@ -1188,7 +1188,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 System_Acid pressure abnormal 的當地語系化字串。
         /// </summary>
-        internal static string alarm_system3 {
+        public static string alarm_system3 {
             get {
                 return ResourceManager.GetString("alarm_system3", resourceCulture);
             }
@@ -1197,7 +1197,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 System_Buf.A pressure is abnormal 的當地語系化字串。
         /// </summary>
-        internal static string alarm_system4 {
+        public static string alarm_system4 {
             get {
                 return ResourceManager.GetString("alarm_system4", resourceCulture);
             }
@@ -1206,7 +1206,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Abnormal pressure in System_Buf.B 的當地語系化字串。
         /// </summary>
-        internal static string alarm_system5 {
+        public static string alarm_system5 {
             get {
                 return ResourceManager.GetString("alarm_system5", resourceCulture);
             }
@@ -1215,7 +1215,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 System_Abnormal opening and closing of pneumatic cylinder 的當地語系化字串。
         /// </summary>
-        internal static string alarm_system6 {
+        public static string alarm_system6 {
             get {
                 return ResourceManager.GetString("alarm_system6", resourceCulture);
             }
@@ -1224,7 +1224,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 System_Windspan optical fiber signal abnormality 的當地語系化字串。
         /// </summary>
-        internal static string alarm_system7 {
+        public static string alarm_system7 {
             get {
                 return ResourceManager.GetString("alarm_system7", resourceCulture);
             }
@@ -1233,7 +1233,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 System_Electrode overwinding abnormality 的當地語系化字串。
         /// </summary>
-        internal static string alarm_system8 {
+        public static string alarm_system8 {
             get {
                 return ResourceManager.GetString("alarm_system8", resourceCulture);
             }
@@ -1242,7 +1242,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 System_E_00 的當地語系化字串。
         /// </summary>
-        internal static string alarm_system9 {
+        public static string alarm_system9 {
             get {
                 return ResourceManager.GetString("alarm_system9", resourceCulture);
             }
@@ -1251,7 +1251,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Collapse 的當地語系化字串。
         /// </summary>
-        internal static string btn_collapse {
+        public static string btn_collapse {
             get {
                 return ResourceManager.GetString("btn_collapse", resourceCulture);
             }
@@ -1260,7 +1260,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Expand 的當地語系化字串。
         /// </summary>
-        internal static string btn_expand {
+        public static string btn_expand {
             get {
                 return ResourceManager.GetString("btn_expand", resourceCulture);
             }
@@ -1269,7 +1269,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Go to modify 的當地語系化字串。
         /// </summary>
-        internal static string btn_goto_modify {
+        public static string btn_goto_modify {
             get {
                 return ResourceManager.GetString("btn_goto_modify", resourceCulture);
             }
@@ -1278,7 +1278,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 BUF.A 的當地語系化字串。
         /// </summary>
-        internal static string buf_a {
+        public static string buf_a {
             get {
                 return ResourceManager.GetString("buf_a", resourceCulture);
             }
@@ -1287,7 +1287,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 BUF.B 的當地語系化字串。
         /// </summary>
-        internal static string buf_b {
+        public static string buf_b {
             get {
                 return ResourceManager.GetString("buf_b", resourceCulture);
             }
@@ -1296,7 +1296,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Calibration Datalog 的當地語系化字串。
         /// </summary>
-        internal static string cal_datalog {
+        public static string cal_datalog {
             get {
                 return ResourceManager.GetString("cal_datalog", resourceCulture);
             }
@@ -1305,7 +1305,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Clear 的當地語系化字串。
         /// </summary>
-        internal static string calgrid_clear {
+        public static string calgrid_clear {
             get {
                 return ResourceManager.GetString("calgrid_clear", resourceCulture);
             }
@@ -1314,7 +1314,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Export 的當地語系化字串。
         /// </summary>
-        internal static string calgrid_export {
+        public static string calgrid_export {
             get {
                 return ResourceManager.GetString("calgrid_export", resourceCulture);
             }
@@ -1323,7 +1323,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 File Upload 的當地語系化字串。
         /// </summary>
-        internal static string calgrid_upload {
+        public static string calgrid_upload {
             get {
                 return ResourceManager.GetString("calgrid_upload", resourceCulture);
             }
@@ -1332,7 +1332,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Cal. Step Setting 的當地語系化字串。
         /// </summary>
-        internal static string calibration_step_setting {
+        public static string calibration_step_setting {
             get {
                 return ResourceManager.GetString("calibration_step_setting", resourceCulture);
             }
@@ -1341,7 +1341,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Charts 的當地語系化字串。
         /// </summary>
-        internal static string charts {
+        public static string charts {
             get {
                 return ResourceManager.GetString("charts", resourceCulture);
             }
@@ -1350,7 +1350,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Clear Datalog 的當地語系化字串。
         /// </summary>
-        internal static string clear_datalog {
+        public static string clear_datalog {
             get {
                 return ResourceManager.GetString("clear_datalog", resourceCulture);
             }
@@ -1359,7 +1359,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Current Posistion 的當地語系化字串。
         /// </summary>
-        internal static string current_position {
+        public static string current_position {
             get {
                 return ResourceManager.GetString("current_position", resourceCulture);
             }
@@ -1368,7 +1368,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 D1_Cal.Datalog 的當地語系化字串。
         /// </summary>
-        internal static string d1_cal_datalogger {
+        public static string d1_cal_datalogger {
             get {
                 return ResourceManager.GetString("d1_cal_datalogger", resourceCulture);
             }
@@ -1377,7 +1377,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 D2_Cal.Datalog 的當地語系化字串。
         /// </summary>
-        internal static string d2_cal_datalogger {
+        public static string d2_cal_datalogger {
             get {
                 return ResourceManager.GetString("d2_cal_datalogger", resourceCulture);
             }
@@ -1386,7 +1386,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Alarm Datalog 的當地語系化字串。
         /// </summary>
-        internal static string dashboard_alarm_datalog {
+        public static string dashboard_alarm_datalog {
             get {
                 return ResourceManager.GetString("dashboard_alarm_datalog", resourceCulture);
             }
@@ -1395,7 +1395,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Clear 的當地語系化字串。
         /// </summary>
-        internal static string dashboard_clear {
+        public static string dashboard_clear {
             get {
                 return ResourceManager.GetString("dashboard_clear", resourceCulture);
             }
@@ -1404,7 +1404,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Electrode endurance 的當地語系化字串。
         /// </summary>
-        internal static string dashboard_elec_life {
+        public static string dashboard_elec_life {
             get {
                 return ResourceManager.GetString("dashboard_elec_life", resourceCulture);
             }
@@ -1413,7 +1413,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Endurance 的當地語系化字串。
         /// </summary>
-        internal static string dashboard_endurance {
+        public static string dashboard_endurance {
             get {
                 return ResourceManager.GetString("dashboard_endurance", resourceCulture);
             }
@@ -1422,7 +1422,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Real Time Trend Chart of Measurement 的當地語系化字串。
         /// </summary>
-        internal static string dashboard_pH_live_chart {
+        public static string dashboard_pH_live_chart {
             get {
                 return ResourceManager.GetString("dashboard_pH_live_chart", resourceCulture);
             }
@@ -1431,7 +1431,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Remaining days 的當地語系化字串。
         /// </summary>
-        internal static string dashboard_remaindays {
+        public static string dashboard_remaindays {
             get {
                 return ResourceManager.GetString("dashboard_remaindays", resourceCulture);
             }
@@ -1440,7 +1440,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Electrode #1 的當地語系化字串。
         /// </summary>
-        internal static string dialog_electrode1 {
+        public static string dialog_electrode1 {
             get {
                 return ResourceManager.GetString("dialog_electrode1", resourceCulture);
             }
@@ -1449,7 +1449,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Electrode #2 的當地語系化字串。
         /// </summary>
-        internal static string dialog_electrode2 {
+        public static string dialog_electrode2 {
             get {
                 return ResourceManager.GetString("dialog_electrode2", resourceCulture);
             }
@@ -1458,7 +1458,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Please replace the electrode as soon as possible. 的當地語系化字串。
         /// </summary>
-        internal static string dialog_maintain30 {
+        public static string dialog_maintain30 {
             get {
                 return ResourceManager.GetString("dialog_maintain30", resourceCulture);
             }
@@ -1467,7 +1467,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Please contact the relevant engineer to check if the electrode KCL is sufficient. 的當地語系化字串。
         /// </summary>
-        internal static string dialog_maintain60 {
+        public static string dialog_maintain60 {
             get {
                 return ResourceManager.GetString("dialog_maintain60", resourceCulture);
             }
@@ -1476,7 +1476,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Condition is acceptable. Please check if the standard solution measurement is sufficient and correct. 的當地語系化字串。
         /// </summary>
-        internal static string dialog_maintain70 {
+        public static string dialog_maintain70 {
             get {
                 return ResourceManager.GetString("dialog_maintain70", resourceCulture);
             }
@@ -1485,7 +1485,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Condition is good. Please check if the electrode position in the calibration tank is misaligned. 的當地語系化字串。
         /// </summary>
-        internal static string dialog_maintain80 {
+        public static string dialog_maintain80 {
             get {
                 return ResourceManager.GetString("dialog_maintain80", resourceCulture);
             }
@@ -1494,7 +1494,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Export Datalog 的當地語系化字串。
         /// </summary>
-        internal static string export_datalog {
+        public static string export_datalog {
             get {
                 return ResourceManager.GetString("export_datalog", resourceCulture);
             }
@@ -1503,7 +1503,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 AW 的當地語系化字串。
         /// </summary>
-        internal static string field_aw {
+        public static string field_aw {
             get {
                 return ResourceManager.GetString("field_aw", resourceCulture);
             }
@@ -1512,7 +1512,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Biology 的當地語系化字串。
         /// </summary>
-        internal static string field_bio {
+        public static string field_bio {
             get {
                 return ResourceManager.GetString("field_bio", resourceCulture);
             }
@@ -1521,7 +1521,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Cu_CMP 的當地語系化字串。
         /// </summary>
-        internal static string field_cmp {
+        public static string field_cmp {
             get {
                 return ResourceManager.GetString("field_cmp", resourceCulture);
             }
@@ -1530,7 +1530,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 CMP 的當地語系化字串。
         /// </summary>
-        internal static string field_cucmp {
+        public static string field_cucmp {
             get {
                 return ResourceManager.GetString("field_cucmp", resourceCulture);
             }
@@ -1539,7 +1539,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 HF 的當地語系化字串。
         /// </summary>
-        internal static string field_hf {
+        public static string field_hf {
             get {
                 return ResourceManager.GetString("field_hf", resourceCulture);
             }
@@ -1548,7 +1548,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 LSR 的當地語系化字串。
         /// </summary>
-        internal static string field_lsr {
+        public static string field_lsr {
             get {
                 return ResourceManager.GetString("field_lsr", resourceCulture);
             }
@@ -1557,7 +1557,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 NH 的當地語系化字串。
         /// </summary>
-        internal static string field_nh {
+        public static string field_nh {
             get {
                 return ResourceManager.GetString("field_nh", resourceCulture);
             }
@@ -1566,7 +1566,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Pure Water 的當地語系化字串。
         /// </summary>
-        internal static string field_pure {
+        public static string field_pure {
             get {
                 return ResourceManager.GetString("field_pure", resourceCulture);
             }
@@ -1575,7 +1575,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Field Selection 的當地語系化字串。
         /// </summary>
-        internal static string field_selection {
+        public static string field_selection {
             get {
                 return ResourceManager.GetString("field_selection", resourceCulture);
             }
@@ -1584,7 +1584,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 History Chart 的當地語系化字串。
         /// </summary>
-        internal static string history_chart {
+        public static string history_chart {
             get {
                 return ResourceManager.GetString("history_chart", resourceCulture);
             }
@@ -1593,7 +1593,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 End Date 的當地語系化字串。
         /// </summary>
-        internal static string history_end_date {
+        public static string history_end_date {
             get {
                 return ResourceManager.GetString("history_end_date", resourceCulture);
             }
@@ -1602,7 +1602,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Start Date 的當地語系化字串。
         /// </summary>
-        internal static string history_start_date {
+        public static string history_start_date {
             get {
                 return ResourceManager.GetString("history_start_date", resourceCulture);
             }
@@ -1611,7 +1611,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Home 的當地語系化字串。
         /// </summary>
-        internal static string home {
+        public static string home {
             get {
                 return ResourceManager.GetString("home", resourceCulture);
             }
@@ -1620,7 +1620,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Click the expand button to change the password 的當地語系化字串。
         /// </summary>
-        internal static string lab_change_password {
+        public static string lab_change_password {
             get {
                 return ResourceManager.GetString("lab_change_password", resourceCulture);
             }
@@ -1629,7 +1629,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Language Selection 的當地語系化字串。
         /// </summary>
-        internal static string language_selection {
+        public static string language_selection {
             get {
                 return ResourceManager.GetString("language_selection", resourceCulture);
             }
@@ -1638,7 +1638,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Live Chart 的當地語系化字串。
         /// </summary>
-        internal static string live_chart {
+        public static string live_chart {
             get {
                 return ResourceManager.GetString("live_chart", resourceCulture);
             }
@@ -1647,7 +1647,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Please check your email for the verification code and enter it to verify. 的當地語系化字串。
         /// </summary>
-        internal static string message_check_email {
+        public static string message_check_email {
             get {
                 return ResourceManager.GetString("message_check_email", resourceCulture);
             }
@@ -1656,7 +1656,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Please enter the email. 的當地語系化字串。
         /// </summary>
-        internal static string message_enter_email {
+        public static string message_enter_email {
             get {
                 return ResourceManager.GetString("message_enter_email", resourceCulture);
             }
@@ -1665,7 +1665,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Error 的當地語系化字串。
         /// </summary>
-        internal static string message_error {
+        public static string message_error {
             get {
                 return ResourceManager.GetString("message_error", resourceCulture);
             }
@@ -1674,7 +1674,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Password change failed 的當地語系化字串。
         /// </summary>
-        internal static string message_password_change_failed {
+        public static string message_password_change_failed {
             get {
                 return ResourceManager.GetString("message_password_change_failed", resourceCulture);
             }
@@ -1683,7 +1683,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 The password has been changed 的當地語系化字串。
         /// </summary>
-        internal static string message_password_changed {
+        public static string message_password_changed {
             get {
                 return ResourceManager.GetString("message_password_changed", resourceCulture);
             }
@@ -1692,7 +1692,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Success 的當地語系化字串。
         /// </summary>
-        internal static string message_success {
+        public static string message_success {
             get {
                 return ResourceManager.GetString("message_success", resourceCulture);
             }
@@ -1701,7 +1701,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 The verification code is invalid. 的當地語系化字串。
         /// </summary>
-        internal static string message_verification_code_invalid {
+        public static string message_verification_code_invalid {
             get {
                 return ResourceManager.GetString("message_verification_code_invalid", resourceCulture);
             }
@@ -1710,7 +1710,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 A.Cal 的當地語系化字串。
         /// </summary>
-        internal static string modal_a_cal {
+        public static string modal_a_cal {
             get {
                 return ResourceManager.GetString("modal_a_cal", resourceCulture);
             }
@@ -1719,7 +1719,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 A.Wash 的當地語系化字串。
         /// </summary>
-        internal static string modal_a_wash {
+        public static string modal_a_wash {
             get {
                 return ResourceManager.GetString("modal_a_wash", resourceCulture);
             }
@@ -1728,7 +1728,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Back to original 的當地語系化字串。
         /// </summary>
-        internal static string modal_back_to_original {
+        public static string modal_back_to_original {
             get {
                 return ResourceManager.GetString("modal_back_to_original", resourceCulture);
             }
@@ -1737,7 +1737,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Cancel 的當地語系化字串。
         /// </summary>
-        internal static string modal_cancel {
+        public static string modal_cancel {
             get {
                 return ResourceManager.GetString("modal_cancel", resourceCulture);
             }
@@ -1746,7 +1746,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Close 的當地語系化字串。
         /// </summary>
-        internal static string modal_close {
+        public static string modal_close {
             get {
                 return ResourceManager.GetString("modal_close", resourceCulture);
             }
@@ -1755,7 +1755,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Confirm 的當地語系化字串。
         /// </summary>
-        internal static string modal_confirm {
+        public static string modal_confirm {
             get {
                 return ResourceManager.GetString("modal_confirm", resourceCulture);
             }
@@ -1764,7 +1764,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Cylinder 的當地語系化字串。
         /// </summary>
-        internal static string modal_cylinder {
+        public static string modal_cylinder {
             get {
                 return ResourceManager.GetString("modal_cylinder", resourceCulture);
             }
@@ -1773,7 +1773,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Delete 的當地語系化字串。
         /// </summary>
-        internal static string modal_delete {
+        public static string modal_delete {
             get {
                 return ResourceManager.GetString("modal_delete", resourceCulture);
             }
@@ -1782,7 +1782,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Select a language 的當地語系化字串。
         /// </summary>
-        internal static string modal_ent_select_language {
+        public static string modal_ent_select_language {
             get {
                 return ResourceManager.GetString("modal_ent_select_language", resourceCulture);
             }
@@ -1791,7 +1791,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Language 的當地語系化字串。
         /// </summary>
-        internal static string modal_language {
+        public static string modal_language {
             get {
                 return ResourceManager.GetString("modal_language", resourceCulture);
             }
@@ -1800,7 +1800,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 M.BufA 的當地語系化字串。
         /// </summary>
-        internal static string modal_m_bufa {
+        public static string modal_m_bufa {
             get {
                 return ResourceManager.GetString("modal_m_bufa", resourceCulture);
             }
@@ -1809,7 +1809,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 M.BufB 的當地語系化字串。
         /// </summary>
-        internal static string modal_m_bufb {
+        public static string modal_m_bufb {
             get {
                 return ResourceManager.GetString("modal_m_bufb", resourceCulture);
             }
@@ -1818,7 +1818,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 M.REAG 的當地語系化字串。
         /// </summary>
-        internal static string modal_m_reag {
+        public static string modal_m_reag {
             get {
                 return ResourceManager.GetString("modal_m_reag", resourceCulture);
             }
@@ -1827,7 +1827,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 M.Wash 的當地語系化字串。
         /// </summary>
-        internal static string modal_m_wash {
+        public static string modal_m_wash {
             get {
                 return ResourceManager.GetString("modal_m_wash", resourceCulture);
             }
@@ -1836,7 +1836,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Stop 的當地語系化字串。
         /// </summary>
-        internal static string modal_stop {
+        public static string modal_stop {
             get {
                 return ResourceManager.GetString("modal_stop", resourceCulture);
             }
@@ -1845,7 +1845,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Hoister Unlock 的當地語系化字串。
         /// </summary>
-        internal static string modal_unlock {
+        public static string modal_unlock {
             get {
                 return ResourceManager.GetString("modal_unlock", resourceCulture);
             }
@@ -1854,7 +1854,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 IP address configuration 的當地語系化字串。
         /// </summary>
-        internal static string nav_ip_url {
+        public static string nav_ip_url {
             get {
                 return ResourceManager.GetString("nav_ip_url", resourceCulture);
             }
@@ -1863,7 +1863,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Proccess Setting 的當地語系化字串。
         /// </summary>
-        internal static string proccess_setting {
+        public static string proccess_setting {
             get {
                 return ResourceManager.GetString("proccess_setting", resourceCulture);
             }
@@ -1872,7 +1872,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 REAG. 的當地語系化字串。
         /// </summary>
-        internal static string reag {
+        public static string reag {
             get {
                 return ResourceManager.GetString("reag", resourceCulture);
             }
@@ -1881,7 +1881,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Schedule 的當地語系化字串。
         /// </summary>
-        internal static string schedule {
+        public static string schedule {
             get {
                 return ResourceManager.GetString("schedule", resourceCulture);
             }
@@ -1890,7 +1890,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Calibration 的當地語系化字串。
         /// </summary>
-        internal static string schedule_calibration {
+        public static string schedule_calibration {
             get {
                 return ResourceManager.GetString("schedule_calibration", resourceCulture);
             }
@@ -1899,7 +1899,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Daily 的當地語系化字串。
         /// </summary>
-        internal static string schedule_daily {
+        public static string schedule_daily {
             get {
                 return ResourceManager.GetString("schedule_daily", resourceCulture);
             }
@@ -1908,7 +1908,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Description 的當地語系化字串。
         /// </summary>
-        internal static string schedule_description {
+        public static string schedule_description {
             get {
                 return ResourceManager.GetString("schedule_description", resourceCulture);
             }
@@ -1917,7 +1917,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 End Time 的當地語系化字串。
         /// </summary>
-        internal static string schedule_end_time {
+        public static string schedule_end_time {
             get {
                 return ResourceManager.GetString("schedule_end_time", resourceCulture);
             }
@@ -1926,7 +1926,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Select a subject 的當地語系化字串。
         /// </summary>
-        internal static string schedule_ent_select_subject {
+        public static string schedule_ent_select_subject {
             get {
                 return ResourceManager.GetString("schedule_ent_select_subject", resourceCulture);
             }
@@ -1935,7 +1935,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Select a system 的當地語系化字串。
         /// </summary>
-        internal static string schedule_ent_select_system {
+        public static string schedule_ent_select_system {
             get {
                 return ResourceManager.GetString("schedule_ent_select_system", resourceCulture);
             }
@@ -1944,7 +1944,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Export 的當地語系化字串。
         /// </summary>
-        internal static string schedule_export {
+        public static string schedule_export {
             get {
                 return ResourceManager.GetString("schedule_export", resourceCulture);
             }
@@ -1953,7 +1953,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Frequency 的當地語系化字串。
         /// </summary>
-        internal static string schedule_frequency {
+        public static string schedule_frequency {
             get {
                 return ResourceManager.GetString("schedule_frequency", resourceCulture);
             }
@@ -1962,7 +1962,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Event Setting 的當地語系化字串。
         /// </summary>
-        internal static string schedule_modal_title {
+        public static string schedule_modal_title {
             get {
                 return ResourceManager.GetString("schedule_modal_title", resourceCulture);
             }
@@ -1971,7 +1971,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Monthly 的當地語系化字串。
         /// </summary>
-        internal static string schedule_monthly {
+        public static string schedule_monthly {
             get {
                 return ResourceManager.GetString("schedule_monthly", resourceCulture);
             }
@@ -1980,7 +1980,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Start Time 的當地語系化字串。
         /// </summary>
-        internal static string schedule_start_time {
+        public static string schedule_start_time {
             get {
                 return ResourceManager.GetString("schedule_start_time", resourceCulture);
             }
@@ -1989,7 +1989,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Subject 的當地語系化字串。
         /// </summary>
-        internal static string schedule_subject {
+        public static string schedule_subject {
             get {
                 return ResourceManager.GetString("schedule_subject", resourceCulture);
             }
@@ -1998,7 +1998,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 System 的當地語系化字串。
         /// </summary>
-        internal static string schedule_system {
+        public static string schedule_system {
             get {
                 return ResourceManager.GetString("schedule_system", resourceCulture);
             }
@@ -2007,7 +2007,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Wash 的當地語系化字串。
         /// </summary>
-        internal static string schedule_wash {
+        public static string schedule_wash {
             get {
                 return ResourceManager.GetString("schedule_wash", resourceCulture);
             }
@@ -2016,7 +2016,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Weekly 的當地語系化字串。
         /// </summary>
-        internal static string schedule_weekly {
+        public static string schedule_weekly {
             get {
                 return ResourceManager.GetString("schedule_weekly", resourceCulture);
             }
@@ -2025,7 +2025,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Select Step and Set Time 的當地語系化字串。
         /// </summary>
-        internal static string select_step_and_set_time {
+        public static string select_step_and_set_time {
             get {
                 return ResourceManager.GetString("select_step_and_set_time", resourceCulture);
             }
@@ -2034,7 +2034,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Select Total Steps 的當地語系化字串。
         /// </summary>
-        internal static string select_total_steps {
+        public static string select_total_steps {
             get {
                 return ResourceManager.GetString("select_total_steps", resourceCulture);
             }
@@ -2043,7 +2043,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Set Cleaning Content 的當地語系化字串。
         /// </summary>
-        internal static string set_cleaning_content {
+        public static string set_cleaning_content {
             get {
                 return ResourceManager.GetString("set_cleaning_content", resourceCulture);
             }
@@ -2052,7 +2052,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Position Setting 的當地語系化字串。
         /// </summary>
-        internal static string set_position {
+        public static string set_position {
             get {
                 return ResourceManager.GetString("set_position", resourceCulture);
             }
@@ -2061,7 +2061,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Show history alarm 的當地語系化字串。
         /// </summary>
-        internal static string show_history_alarm {
+        public static string show_history_alarm {
             get {
                 return ResourceManager.GetString("show_history_alarm", resourceCulture);
             }
@@ -2070,7 +2070,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Show InAlarm 的當地語系化字串。
         /// </summary>
-        internal static string show_inalarm {
+        public static string show_inalarm {
             get {
                 return ResourceManager.GetString("show_inalarm", resourceCulture);
             }
@@ -2079,7 +2079,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Step 的當地語系化字串。
         /// </summary>
-        internal static string step {
+        public static string step {
             get {
                 return ResourceManager.GetString("step", resourceCulture);
             }
@@ -2088,7 +2088,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Step 的當地語系化字串。
         /// </summary>
-        internal static string step_number {
+        public static string step_number {
             get {
                 return ResourceManager.GetString("step_number", resourceCulture);
             }
@@ -2097,7 +2097,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Step Setting 的當地語系化字串。
         /// </summary>
-        internal static string step_number_setting {
+        public static string step_number_setting {
             get {
                 return ResourceManager.GetString("step_number_setting", resourceCulture);
             }
@@ -2106,7 +2106,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Auto 的當地語系化字串。
         /// </summary>
-        internal static string system_auto {
+        public static string system_auto {
             get {
                 return ResourceManager.GetString("system_auto", resourceCulture);
             }
@@ -2115,7 +2115,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Manual 的當地語系化字串。
         /// </summary>
-        internal static string system_manual {
+        public static string system_manual {
             get {
                 return ResourceManager.GetString("system_manual", resourceCulture);
             }
@@ -2124,7 +2124,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Total Steps 的當地語系化字串。
         /// </summary>
-        internal static string total_steps {
+        public static string total_steps {
             get {
                 return ResourceManager.GetString("total_steps", resourceCulture);
             }
@@ -2133,7 +2133,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Trendline Generation 的當地語系化字串。
         /// </summary>
-        internal static string trendline_generation {
+        public static string trendline_generation {
             get {
                 return ResourceManager.GetString("trendline_generation", resourceCulture);
             }
@@ -2142,7 +2142,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Wash 的當地語系化字串。
         /// </summary>
-        internal static string wash {
+        public static string wash {
             get {
                 return ResourceManager.GetString("wash", resourceCulture);
             }
@@ -2151,7 +2151,7 @@ namespace Blazor_wasm.Resources.Languages {
         /// <summary>
         ///   查詢類似 Washing Step Setting 的當地語系化字串。
         /// </summary>
-        internal static string washing_step_setting {
+        public static string washing_step_setting {
             get {
                 return ResourceManager.GetString("washing_step_setting", resourceCulture);
             }

@@ -411,8 +411,8 @@
   <data name="alarm_inactive" xml:space="preserve">
     <value>已解除</value>
   </data>
-  <data name="calgrid_export" xml:space="preserve">
-    <value>報表輸出</value>
+  <data name="calgrid_download" xml:space="preserve">
+    <value>檔案下載</value>
   </data>
   <data name="calgrid_clear" xml:space="preserve">
     <value>資料清除</value>
@@ -844,6 +844,30 @@
     <value>伺服器找不到請求的資源</value>
   </data>
   <data name="httpcode_urlerr" xml:space="preserve">
-    <value>訪問API位址錯誤</value>
+    <value>訪問錯誤，請確認伺服器是否正常運行</value>
+  </data>
+  <data name="account_alert_register_success" xml:space="preserve">
+    <value>帳號註冊成功</value>
+  </data>
+  <data name="account_alert_account_alreadyexist" xml:space="preserve">
+    <value>電子郵件已註冊過</value>
+  </data>
+  <data name="account_update_success" xml:space="preserve">
+    <value>資料更新成功</value>
+  </data>
+  <data name="calgrid_upload_success" xml:space="preserve">
+    <value>資料上傳成功</value>
+  </data>
+  <data name="calgrid_format_incorrect" xml:space="preserve">
+    <value>檔案內容格式錯誤</value>
+  </data>
+  <data name="message_email_incorrect" xml:space="preserve">
+    <value>電子信箱錯誤</value>
+  </data>
+  <data name="message_oldpassword_incorrect" xml:space="preserve">
+    <value>舊密碼輸入錯誤</value>
+  </data>
+  <data name="message_account_already_delete" xml:space="preserve">
+    <value>帳戶已刪除</value>
   </data>
 </root>
