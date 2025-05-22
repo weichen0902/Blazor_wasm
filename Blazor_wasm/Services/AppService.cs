@@ -366,8 +366,8 @@ namespace Blazor_wasm.Services
                 {
                     result.IsSuccess = true;
                     var responseStr = await response.Content.ReadAsStringAsync();
-
-                    var tokenDetails = JsonConvert.DeserializeObject<AuthenticateRequestAndResponse>(responseStr);
+                    var mainResponse = JsonConvert.DeserializeObject<MainResponse<object>>(responseStr);
+                    var tokenDetails = JsonConvert.DeserializeObject<AuthenticateRequestAndResponse>(mainResponse.Content.ToString());
                     Setting.UserBasicDetail.AccessToken = tokenDetails.AccessToken;
                     Setting.UserBasicDetail.RefreshToken = tokenDetails.RefreshToken;
 

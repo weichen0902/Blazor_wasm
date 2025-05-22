@@ -73,7 +73,7 @@ namespace Blazor_wasm.Services
             {
                 var url = $"{Setting.BaseUrl}{APIs.GetD1AllCAL}";
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Setting.UserBasicDetail.AccessToken);
-
+                Console.WriteLine($"111111111111{Setting.UserBasicDetail.AccessToken}");
                 var response = await client.GetAsync(url);
                 if (response.IsSuccessStatusCode)
                 {
@@ -85,7 +85,8 @@ namespace Blazor_wasm.Services
                 else
                 {
                     result.StatusCode = (int)response.StatusCode;
-
+                    Console.WriteLine($"111111111111{Setting.UserBasicDetail.AccessToken}");
+                    Console.WriteLine($"111111111111{Setting.UserBasicDetail.AccessTokenExpire}");
                     if (Setting.UserBasicDetail.AccessToken != null)
                     {
                         if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
@@ -263,7 +264,7 @@ namespace Blazor_wasm.Services
         public async Task<MainResponse<FieldDataModel>> GetFieldData()
         {
             var result = new MainResponse<FieldDataModel>();
-
+            Console.WriteLine($"111111111111{Setting.UserBasicDetail.AccessTokenExpire}");
             try
             {
                 var url = $"{Setting.BaseUrl}{APIs.GetFieldData}";
@@ -280,7 +281,8 @@ namespace Blazor_wasm.Services
                 else
                 {
                     result.StatusCode = (int)response.StatusCode;
-
+                    Console.WriteLine($"111111111111{Setting.UserBasicDetail.AccessToken}");
+                    Console.WriteLine($"111111111111{Setting.UserBasicDetail.AccessTokenExpire}");
                     if (Setting.UserBasicDetail.AccessToken != null)
                     {
                         if (Setting.UserBasicDetail.AccessTokenExpire < DateTime.UtcNow)
