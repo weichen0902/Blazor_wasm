@@ -52,12 +52,12 @@
     }
 
     private async Task Submit()
-    {
-        fetchData = true;
+    {      
         if (verificationCode == null)
         {
             if (email != null)
             {
+                fetchData = true;
                 var result = await AppService.ForgotPassword(email);
                 hidden = result.IsSuccess == true ? false : true;
                 fetchData = false;
@@ -68,8 +68,6 @@
                 }
                 else
                     await JS.InvokeVoidAsync("alertMessage", alertMsgs.ErrorAlert(pageTitleService.Title, result).Result);
-
-                //     await App.Current.MainPage.DisplayAlert(@localizer[StringDescriptionModel.message_error], $"{response.ErrorMessage}", "OK");
             }
             else
                 await JS.InvokeVoidAsync("alertMessage", $"{localizer[StringDescriptionModel.message_error]}, {localizer[StringDescriptionModel.message_enter_email]}");
@@ -80,8 +78,7 @@
                 NavManager.NavigateTo("resetPassword");
             else
                 await JS.InvokeVoidAsync("alertMessage", $"{localizer[StringDescriptionModel.message_error]}, {localizer[StringDescriptionModel.message_verification_code_invalid]}");
-		}
-        
+		}        
     }
 
     void IDisposable.Dispose()

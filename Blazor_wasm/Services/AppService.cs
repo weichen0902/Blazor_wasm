@@ -88,9 +88,7 @@ namespace Blazor_wasm.Services
                     Setting.UserBasicDetail.AccessTokenExpire = jwtAccessToken.ValidTo;
                     Setting.UserBasicDetail.AccessToken = tokenResponse.AccessToken;
                     Setting.UserBasicDetail.RefreshToken = tokenResponse.RefreshToken;
-                    Console.WriteLine(Setting.UserBasicDetail.AccessTokenExpire);
-                    Console.WriteLine(Setting.UserBasicDetail.AccessToken);
-                    Console.WriteLine(Setting.UserBasicDetail.RefreshToken);
+
                     result.Content = mainResponse.Content.ToString();
                 }
 				else
