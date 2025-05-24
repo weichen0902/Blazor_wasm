@@ -100,6 +100,13 @@ namespace Blazor_wasm.Models.LanguagesModels
         public const string schedule_calibration = "schedule_calibration";
         public const string schedule_export = "schedule_export";
         public const string schedule_modal_title = "schedule_modal_title";
+        public const string schedule_specified_day = "schedule_specified_day";
+        public const string schedule_interval = "schedule_interval";
+        public const string schedule_month = "schedule_month";
+        public const string schedule_week = "schedule_week";
+        public const string schedule_day = "schedule_day";
+        public const string schedule_hour = "schedule_hour";
+
 
         public const string history_start_date = "history_start_date";
         public const string history_end_date = "history_end_date";

@@ -870,4 +870,10 @@
   <data name="message_account_already_delete" xml:space="preserve">
     <value>アカウントは削除されました</value>
   </data>
+  <data name="schedule_specified_day" xml:space="preserve">
+    <value>していび</value>
+  </data>
+  <data name="schedule_interval" xml:space="preserve">
+    <value>かんかく</value>
+  </data>
 </root>

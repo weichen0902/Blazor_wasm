@@ -20,6 +20,7 @@ namespace Blazor_wasm.Models.DatabaseModels
         public string RecurrenceRule { get; set; } = "";
         public string StartTimezone { get; set; } = "";
         public string EndTimezone { get; set; } = "";
-
+        public bool SpecifiedDay { get; set; }
+        public int IntervalNumber { get; set; } = 1;
     }
 }

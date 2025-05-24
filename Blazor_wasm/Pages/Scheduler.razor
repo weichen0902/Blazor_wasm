@@ -85,11 +85,18 @@
                                 </tr>
                                 <tr style="position: relative; top: 20px;">
                                     <td class="e-textlabel">@localizer[StringDescriptionModel.schedule_frequency]:</td>
-                                    <td colspan="4" style="display: flex; gap: 20px;">
-                                        <input style="transform: scale(1.5);" type="checkbox" checked="@monthlyIsChecked" onclick="@(()=> ChangeFrequentStatus(schedulers, 0))" /><label class="form-check-label">@localizer[StringDescriptionModel.schedule_monthly]</label>
-                                        <input style="transform: scale(1.5);" type="checkbox" checked="@weeklyIsChecked" onclick="@(()=> ChangeFrequentStatus(schedulers, 1))" /><label class="form-check-label">@localizer[StringDescriptionModel.schedule_weekly]</label>
-                                        <input style="transform: scale(1.5);" type="checkbox" checked="@dailyIsChecked" onclick="@(()=> ChangeFrequentStatus(schedulers, 2))" /><label class="form-check-label">@localizer[StringDescriptionModel.schedule_daily]</label>
-                                    </td>
+                                    <td colspan="4">
+                                        <div style="display: flex; gap: 20px;">
+                                            <input style="transform: scale(1.5);" type="radio" checked="@monthlyIsChecked" @onchange="@((e)=> ChangeFrequentStatus(e, schedulers, 0))" /><label class="form-check-label">@localizer[StringDescriptionModel.schedule_monthly]</label>
+                                            <input style="transform: scale(1.5);" type="radio" checked="@weeklyIsChecked" @onchange="@((e)=> ChangeFrequentStatus(e, schedulers, 1))" /><label class="form-check-label">@localizer[StringDescriptionModel.schedule_weekly]</label>
+                                            <input style="transform: scale(1.5);" type="radio" checked="@dailyIsChecked" @onchange="@((e)=> ChangeFrequentStatus(e, schedulers, 2))" /><label class="form-check-label">@localizer[StringDescriptionModel.schedule_daily]</label>
+                                        </div>
+                                        <div style="display: flex; gap: 20px; margin-top:10px;">
+                                            <input style="transform: scale(1.5);" type="radio" checked="@specifiedDayIsChecked" @onchange="@((e)=> ChangeFrequentStatus(e, schedulers, 3))" /><label class="form-check-label">@localizer[StringDescriptionModel.schedule_specified_day]</label>
+                                            <input style="transform: scale(1.5);" type="checkbox" checked="@intervaIsChecked" @onchange="@((e)=> ChangeFrequentStatus(e, schedulers, 4))" /><label class="form-check-label">@localizer[StringDescriptionModel.schedule_interval]</label>
+                                            <input style="transform: scale(1.5); @(intervaIsChecked ? "" : "display:none;"); width:40px; height:25px; margin-top:5px; font-size:15px;" type="number" @onchange="@((e)=> ChangeFrequentStatus(e, schedulers, 5))" value="@schedulers.IntervalNumber" /><span style="margin-top:5px;">@suffix</span>
+                                        </div>
+                                    </td>                    
                                 </tr>
                                 <tr style="position: relative; top: 30px">
                                     <td class="e-textlabel">@localizer[StringDescriptionModel.schedule_description]:</td>
@@ -149,13 +156,13 @@
 <style>
 
     .e-dialog.e-popup {
-        width: 550px !important;
+    width: 550px !important;
     }
 
     .custom-dropdown .e-dropdownbase .e-list-item {
-        font-size: 20px;
-        padding-top: 10px;
-        padding-bottom: 10px;
+    font-size: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     }
 
 </style>
@@ -168,8 +175,9 @@
     private string subject = string.Empty;
     private string time = string.Empty;
     private Timer? timer;
+    private string suffix = string.Empty;
 
-    private bool washIsChecked, calIsChecked, monthlyIsChecked, weeklyIsChecked, dailyIsChecked, exportIsChecked, isSaveClick, isDeleteClick = false;
+    private bool washIsChecked, calIsChecked, monthlyIsChecked, weeklyIsChecked, dailyIsChecked, specifiedDayIsChecked, intervaIsChecked, exportIsChecked, isSaveClick, isDeleteClick = false;
 
     private string? dropDownDeviceBindValue{ get; set; }
     private string? dropDownSubjectBindValue { get; set; }
@@ -257,6 +265,11 @@
         monthlyIsChecked = args.Data != null && args.Data.RecurrenceRule.Contains("MONTHLY") ? true : false;
         weeklyIsChecked = args.Data != null && args.Data.RecurrenceRule.Contains("WEEKLY") ? true : false;
         dailyIsChecked = args.Data != null && args.Data.RecurrenceRule.Contains("DAILY") ? true : false;
+        if (!monthlyIsChecked && !weeklyIsChecked && !dailyIsChecked)
+            specifiedDayIsChecked = true;
+        else
+            specifiedDayIsChecked = false;
+
     }
 
     public async Task OnPopupClose(PopupCloseEventArgs<SchedulerModel> args)
@@ -280,45 +293,93 @@
         }
     }
 
-    private void ChangeFrequentStatus(SchedulerModel s, int i)
+    private void ChangeFrequentStatus(Microsoft.AspNetCore.Components.ChangeEventArgs e, SchedulerModel s, int i)
     {
         var byDay = s.StartTime.Date.Day;
-        var byDayOfWeek = s.StartTime.DayOfWeek.ToString().ToUpper().Substring(0,2);
+        var byDayOfWeek = s.StartTime.DayOfWeek.ToString().ToUpper().Substring(0, 2);
 
         if (i == 0)
-        {           
-            schedulers.RecurrenceRule = $"FREQ=MONTHLY;INTERVAL=1;BYMONTHDAY={byDay};";
+        {
+            suffix = $"{localizer[StringDescriptionModel.schedule_month]}";
+            schedulers.RecurrenceRule = $"FREQ=MONTHLY;INTERVAL={schedulers.IntervalNumber};BYMONTHDAY={byDay};";
 
             if (!monthlyIsChecked)
             {
                 weeklyIsChecked = monthlyIsChecked;
                 dailyIsChecked = monthlyIsChecked;
-            }           
-            monthlyIsChecked = !monthlyIsChecked;           
+                specifiedDayIsChecked = monthlyIsChecked;
+            }
+            monthlyIsChecked = !monthlyIsChecked;
         }
         else if (i == 1)
         {
-            schedulers.RecurrenceRule = $"FREQ=WEEKLY;BYDAY={byDayOfWeek};INTERVAL=1;";
+            suffix = $"{localizer[StringDescriptionModel.schedule_week]}";
+            schedulers.RecurrenceRule = $"FREQ=WEEKLY;BYDAY={byDayOfWeek};INTERVAL={schedulers.IntervalNumber};";
 
             if (!weeklyIsChecked)
             {
                 monthlyIsChecked = weeklyIsChecked;
                 dailyIsChecked = weeklyIsChecked;
-            }           
+                specifiedDayIsChecked = weeklyIsChecked;
+            }
             weeklyIsChecked = !weeklyIsChecked;
         }
-        else
+        else if (i == 2)
         {
-            schedulers.RecurrenceRule = $"FREQ=DAILY;INTERVAL=1;";
-
+            suffix = $"{localizer[StringDescriptionModel.schedule_day]}";
+            schedulers.RecurrenceRule = $"FREQ=DAILY;INTERVAL={schedulers.IntervalNumber};";
+            
             if (!dailyIsChecked)
             {
                 monthlyIsChecked = dailyIsChecked;
                 weeklyIsChecked = dailyIsChecked;
-            }          
+                specifiedDayIsChecked = dailyIsChecked;
+            }
             dailyIsChecked = !dailyIsChecked;
         }
+        else if (i == 3)
+        {
+            suffix = $"{localizer[StringDescriptionModel.schedule_hour]}";
+            schedulers.SpecifiedDay = true;
+            schedulers.RecurrenceRule = string.Empty;
+
+            if (!specifiedDayIsChecked)
+            {
+                monthlyIsChecked = specifiedDayIsChecked;
+                weeklyIsChecked = specifiedDayIsChecked;
+                dailyIsChecked = specifiedDayIsChecked;
+            }
+            specifiedDayIsChecked = !specifiedDayIsChecked;
+        }
+
+        else if (i == 4)
+        {
+            intervaIsChecked = !intervaIsChecked;
+            if (monthlyIsChecked)
+                suffix = $"{localizer[StringDescriptionModel.schedule_month]}";
+			else if (weeklyIsChecked)
+				suffix = $"{localizer[StringDescriptionModel.schedule_week]}";
+			else if (dailyIsChecked)
+				suffix = $"{localizer[StringDescriptionModel.schedule_day]}";
+			else
+                suffix = $"{localizer[StringDescriptionModel.schedule_hour]}";
+        }
+            
+        else
+        {
+            schedulers.IntervalNumber = Convert.ToInt16(e?.Value);
+
+            if (monthlyIsChecked)
+                schedulers.RecurrenceRule = $"FREQ=MONTHLY;INTERVAL={schedulers.IntervalNumber};BYMONTHDAY={byDay};";
+            else if (weeklyIsChecked)
+                schedulers.RecurrenceRule = $"FREQ=WEEKLY;BYDAY={byDayOfWeek};INTERVAL={schedulers.IntervalNumber};";
+            else if (dailyIsChecked)
+                schedulers.RecurrenceRule = $"FREQ=DAILY;INTERVAL={schedulers.IntervalNumber};";
+            else if (specifiedDayIsChecked)
+                schedulers.RecurrenceRule = string.Empty;
+        }
     }
+            
 
     private void FooterButtonClick(bool isSave, bool isDelete)
     {

@@ -870,4 +870,22 @@
   <data name="message_account_already_delete" xml:space="preserve">
     <value>Account has been deleted</value>
   </data>
+  <data name="schedule_specified_day" xml:space="preserve">
+    <value>Specified date</value>
+  </data>
+  <data name="schedule_interval" xml:space="preserve">
+    <value>Interval</value>
+  </data>
+  <data name="schedule_month" xml:space="preserve">
+    <value>months</value>
+  </data>
+  <data name="schedule_week" xml:space="preserve">
+    <value>weeks</value>
+  </data>
+  <data name="schedule_day" xml:space="preserve">
+    <value>days</value>
+  </data>
+  <data name="schedule_hour" xml:space="preserve">
+    <value>hours</value>
+  </data>
 </root>
