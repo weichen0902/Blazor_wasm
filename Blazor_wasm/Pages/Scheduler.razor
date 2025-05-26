@@ -265,11 +265,9 @@
         monthlyIsChecked = args.Data != null && args.Data.RecurrenceRule.Contains("MONTHLY") ? true : false;
         weeklyIsChecked = args.Data != null && args.Data.RecurrenceRule.Contains("WEEKLY") ? true : false;
         dailyIsChecked = args.Data != null && args.Data.RecurrenceRule.Contains("DAILY") ? true : false;
-        if (!monthlyIsChecked && !weeklyIsChecked && !dailyIsChecked)
-            specifiedDayIsChecked = true;
-        else
-            specifiedDayIsChecked = false;
-
+        specifiedDayIsChecked = args.Data != null && args.Data.SpecifiedDay ? true : false;
+        intervaIsChecked = args.Data != null && args.Data.IntervalNumber > 1 ? true : false;
+        schedulers.IntervalNumber = args.Data != null ? args.Data.IntervalNumber : 1;
     }
 
     public async Task OnPopupClose(PopupCloseEventArgs<SchedulerModel> args)
@@ -302,13 +300,13 @@
         {
             suffix = $"{localizer[StringDescriptionModel.schedule_month]}";
             schedulers.RecurrenceRule = $"FREQ=MONTHLY;INTERVAL={schedulers.IntervalNumber};BYMONTHDAY={byDay};";
-
+            
             if (!monthlyIsChecked)
             {
                 weeklyIsChecked = monthlyIsChecked;
                 dailyIsChecked = monthlyIsChecked;
                 specifiedDayIsChecked = monthlyIsChecked;
-            }
+            }         
             monthlyIsChecked = !monthlyIsChecked;
         }
         else if (i == 1)
@@ -321,39 +319,39 @@
                 monthlyIsChecked = weeklyIsChecked;
                 dailyIsChecked = weeklyIsChecked;
                 specifiedDayIsChecked = weeklyIsChecked;
-            }
+            }      
             weeklyIsChecked = !weeklyIsChecked;
         }
         else if (i == 2)
         {
             suffix = $"{localizer[StringDescriptionModel.schedule_day]}";
-            schedulers.RecurrenceRule = $"FREQ=DAILY;INTERVAL={schedulers.IntervalNumber};";
-            
+            schedulers.RecurrenceRule = $"FREQ=DAILY;INTERVAL={schedulers.IntervalNumber};";          
+
             if (!dailyIsChecked)
             {
                 monthlyIsChecked = dailyIsChecked;
                 weeklyIsChecked = dailyIsChecked;
                 specifiedDayIsChecked = dailyIsChecked;
-            }
+            }      
             dailyIsChecked = !dailyIsChecked;
         }
         else if (i == 3)
         {
             suffix = $"{localizer[StringDescriptionModel.schedule_hour]}";
             schedulers.SpecifiedDay = true;
-            schedulers.RecurrenceRule = string.Empty;
+            schedulers.RecurrenceRule = string.Empty;            
 
             if (!specifiedDayIsChecked)
             {
                 monthlyIsChecked = specifiedDayIsChecked;
                 weeklyIsChecked = specifiedDayIsChecked;
                 dailyIsChecked = specifiedDayIsChecked;
-            }
+            }    
             specifiedDayIsChecked = !specifiedDayIsChecked;
         }
 
         else if (i == 4)
-        {
+        {         
             intervaIsChecked = !intervaIsChecked;
             if (monthlyIsChecked)
                 suffix = $"{localizer[StringDescriptionModel.schedule_month]}";
@@ -362,7 +360,7 @@
 			else if (dailyIsChecked)
 				suffix = $"{localizer[StringDescriptionModel.schedule_day]}";
 			else
-                suffix = $"{localizer[StringDescriptionModel.schedule_hour]}";
+                suffix = $"{localizer[StringDescriptionModel.schedule_hour]}";           
         }
             
         else
