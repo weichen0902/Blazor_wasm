@@ -124,7 +124,7 @@
                 </div>
             </EditorFooterTemplate>
         </ScheduleTemplates>
-        <ScheduleEventSettings TValue="SchedulerModel" DataSource="@getSchedule.dataSource"></ScheduleEventSettings>
+        <ScheduleEventSettings TValue="SchedulerModel" DataSource="@dataSource"></ScheduleEventSettings>
         <ScheduleEvents TValue="SchedulerModel" Navigating="OnNavigating" ActionCompleted="OnActionCompleted" OnPopupClose="OnPopupClose" OnCellClick="OnCellClick" OnEventClick="OnEventClick" OnPopupOpen="OnPopupOpen"></ScheduleEvents>
         <ScheduleViews>
             @*             <ScheduleView Option="View.Day"></ScheduleView>
@@ -185,6 +185,8 @@
     private List<DropDownModel> DeviceData;
     private List<DropDownModel> SubjectData;
 
+    private List<SchedulerModel> dataSource = new List<SchedulerModel>();
+
     public class DropDownModel
     {
         public string ID { get; set; }
@@ -193,12 +195,14 @@
 
     protected override async void OnInitialized()
     {
-        base.OnInitialized();     
+        base.OnInitialized();
+        
         MainLayout.OnLanguageChange += StateHasChanged;        
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
+        dataSource = getSchedule.dataSource;
         DeviceData = new List<DropDownModel>
         {
             new DropDownModel() { ID= "d1", Text= @localizer[StringDescriptionModel.schedule_system] + "#1" },
@@ -215,17 +219,11 @@
 
     public void OnNavigating(NavigatingEventArgs args)
     {
-        if (schedulers.RecurrenceRule.Contains("FREQ=MONTHLY") || schedulers.RecurrenceRule == "")
-    {
-            schedulers.RecurrenceRule = "";
-            var monthDifference = (int)(args.CurrentDate - schedulers.StartTime).TotalDays / 30;
-
-            if (monthDifference % schedulers.IntervalNumber == 0)
-            {
-                schedulers.StartTime = schedulers.StartTime.AddMonths(monthDifference);
-                schedulers.EndTime = schedulers.EndTime.AddMonths(monthDifference);
-            }
-        }   
+		foreach (var item in dataSource)
+		{
+            item.StartTime = item.StartTime.AddMonths(2);
+			item.EndTime = item.EndTime.AddMonths(2);
+		}
     }
 
     private async void OnActionCompleted(ActionEventArgs<SchedulerModel> args)
