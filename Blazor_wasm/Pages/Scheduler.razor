@@ -125,7 +125,7 @@
             </EditorFooterTemplate>
         </ScheduleTemplates>
         <ScheduleEventSettings TValue="SchedulerModel" DataSource="@getSchedule.dataSource"></ScheduleEventSettings>
-        <ScheduleEvents TValue="SchedulerModel" OnActionBegin="OnActionBegin" ActionCompleted="OnActionCompleted" OnPopupClose="OnPopupClose" OnCellClick="OnCellClick" OnEventClick="OnEventClick" OnPopupOpen="OnPopupOpen"></ScheduleEvents>
+        <ScheduleEvents TValue="SchedulerModel" ActionCompleted="OnActionCompleted" OnPopupClose="OnPopupClose" OnCellClick="OnCellClick" OnEventClick="OnEventClick" OnPopupOpen="OnPopupOpen"></ScheduleEvents>
         <ScheduleViews>
             @*             <ScheduleView Option="View.Day"></ScheduleView>
             <ScheduleView Option="View.Week"></ScheduleView>
@@ -211,11 +211,6 @@
             new DropDownModel() { ID= "calibration", Text= @localizer[StringDescriptionModel.schedule_calibration] },
             new DropDownModel() { ID= "export", Text= @localizer[StringDescriptionModel.schedule_export] },
         };
-    }
-
-    public void OnActionBegin(ActionEventArgs<SchedulerModel> args)
-    {
-        var wer = ActionType.ResourceCollapse;
     }
 
     private async void OnActionCompleted(ActionEventArgs<SchedulerModel> args)
