@@ -124,8 +124,8 @@
                 </div>
             </EditorFooterTemplate>
         </ScheduleTemplates>
-        <ScheduleEventSettings DataSource="@getSchedule.dataSource"></ScheduleEventSettings>
-        <ScheduleEvents TValue="SchedulerModel" ActionCompleted="OnActionCompleted" OnPopupClose="OnPopupClose" OnCellClick="OnCellClick" OnEventClick="OnEventClick" OnPopupOpen="OnPopupOpen"></ScheduleEvents>
+        <ScheduleEventSettings TValue="SchedulerModel" DataSource="@getSchedule.dataSource"></ScheduleEventSettings>
+        <ScheduleEvents TValue="SchedulerModel" OnActionBegin="OnActionBegin" ActionCompleted="OnActionCompleted" OnPopupClose="OnPopupClose" OnCellClick="OnCellClick" OnEventClick="OnEventClick" OnPopupOpen="OnPopupOpen"></ScheduleEvents>
         <ScheduleViews>
             @*             <ScheduleView Option="View.Day"></ScheduleView>
             <ScheduleView Option="View.Week"></ScheduleView>
@@ -213,6 +213,11 @@
         };
     }
 
+    public void OnActionBegin(ActionEventArgs<SchedulerModel> args)
+    {
+        var wer = ActionType.ResourceCollapse;
+    }
+
     private async void OnActionCompleted(ActionEventArgs<SchedulerModel> args)
     {
         if (args.ActionType == ActionType.EventCreate || args.ActionType == ActionType.EventChange || args.ActionType == ActionType.EventRemove)
@@ -238,7 +243,6 @@
 
     public void OnPopupOpen(PopupOpenEventArgs<SchedulerModel> args)
     {
-
         if (args.Type == PopupType.Editor && args.Data != null)
         {                         
             if (args.Data.Subject.Contains("d1"))
@@ -266,7 +270,7 @@
         weeklyIsChecked = args.Data != null && args.Data.RecurrenceRule.Contains("WEEKLY") ? true : false;
         dailyIsChecked = args.Data != null && args.Data.RecurrenceRule.Contains("DAILY") ? true : false;
         specifiedDayIsChecked = args.Data != null && args.Data.SpecifiedDay ? true : false;
-        intervaIsChecked = args.Data != null && args.Data.IntervalNumber > 1 ? true : false;
+        intervaIsChecked = args.Data != null && args.Data.Interval ? true : false;
         schedulers.IntervalNumber = args.Data != null ? args.Data.IntervalNumber : 1;
     }
 
@@ -299,20 +303,20 @@
         if (i == 0)
         {
             suffix = $"{localizer[StringDescriptionModel.schedule_month]}";
-            schedulers.RecurrenceRule = $"FREQ=MONTHLY;INTERVAL={schedulers.IntervalNumber};BYMONTHDAY={byDay};";
-            
+            schedulers.RecurrenceRule = $"FREQ=MONTHLY;BYMONTHDAY={byDay};INTERVAL={schedulers.IntervalNumber}";
+
             if (!monthlyIsChecked)
             {
                 weeklyIsChecked = monthlyIsChecked;
                 dailyIsChecked = monthlyIsChecked;
                 specifiedDayIsChecked = monthlyIsChecked;
             }         
-            monthlyIsChecked = !monthlyIsChecked;
+            monthlyIsChecked = true;
         }
         else if (i == 1)
         {
             suffix = $"{localizer[StringDescriptionModel.schedule_week]}";
-            schedulers.RecurrenceRule = $"FREQ=WEEKLY;BYDAY={byDayOfWeek};INTERVAL={schedulers.IntervalNumber};";
+            schedulers.RecurrenceRule = $"FREQ=WEEKLY;BYDAY={byDayOfWeek};INTERVAL={schedulers.IntervalNumber}";
 
             if (!weeklyIsChecked)
             {
@@ -320,25 +324,25 @@
                 dailyIsChecked = weeklyIsChecked;
                 specifiedDayIsChecked = weeklyIsChecked;
             }      
-            weeklyIsChecked = !weeklyIsChecked;
+            weeklyIsChecked = true;
         }
         else if (i == 2)
         {
             suffix = $"{localizer[StringDescriptionModel.schedule_day]}";
-            schedulers.RecurrenceRule = $"FREQ=DAILY;INTERVAL={schedulers.IntervalNumber};";          
+            schedulers.RecurrenceRule = $"FREQ=DAILY;INTERVAL={schedulers.IntervalNumber}";          
 
             if (!dailyIsChecked)
             {
                 monthlyIsChecked = dailyIsChecked;
                 weeklyIsChecked = dailyIsChecked;
                 specifiedDayIsChecked = dailyIsChecked;
+                schedulers.SpecifiedDay = specifiedDayIsChecked;
             }      
-            dailyIsChecked = !dailyIsChecked;
+            dailyIsChecked = true;
         }
         else if (i == 3)
         {
-            suffix = $"{localizer[StringDescriptionModel.schedule_hour]}";
-            schedulers.SpecifiedDay = true;
+            suffix = $"{localizer[StringDescriptionModel.schedule_hour]}";        
             schedulers.RecurrenceRule = string.Empty;            
 
             if (!specifiedDayIsChecked)
@@ -347,12 +351,15 @@
                 weeklyIsChecked = specifiedDayIsChecked;
                 dailyIsChecked = specifiedDayIsChecked;
             }    
-            specifiedDayIsChecked = !specifiedDayIsChecked;
+            specifiedDayIsChecked = true;
+            schedulers.SpecifiedDay = true;
         }
 
         else if (i == 4)
         {         
             intervaIsChecked = !intervaIsChecked;
+            schedulers.Interval = !schedulers.Interval;
+
             if (monthlyIsChecked)
                 suffix = $"{localizer[StringDescriptionModel.schedule_month]}";
 			else if (weeklyIsChecked)
@@ -368,11 +375,11 @@
             schedulers.IntervalNumber = Convert.ToInt16(e?.Value);
 
             if (monthlyIsChecked)
-                schedulers.RecurrenceRule = $"FREQ=MONTHLY;INTERVAL={schedulers.IntervalNumber};BYMONTHDAY={byDay};";
+                schedulers.RecurrenceRule = $"FREQ=MONTHLY;BYMONTHDAY={byDay};INTERVAL={schedulers.IntervalNumber}";
             else if (weeklyIsChecked)
-                schedulers.RecurrenceRule = $"FREQ=WEEKLY;BYDAY={byDayOfWeek};INTERVAL={schedulers.IntervalNumber};";
+                schedulers.RecurrenceRule = $"FREQ=WEEKLY;BYDAY={byDayOfWeek};INTERVAL={schedulers.IntervalNumber}";
             else if (dailyIsChecked)
-                schedulers.RecurrenceRule = $"FREQ=DAILY;INTERVAL={schedulers.IntervalNumber};";
+                schedulers.RecurrenceRule = $"FREQ=DAILY;INTERVAL={schedulers.IntervalNumber}";
             else if (specifiedDayIsChecked)
                 schedulers.RecurrenceRule = string.Empty;
         }

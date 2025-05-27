@@ -19,19 +19,23 @@
 @implements IDisposable
 
 <h1 class="text-center">@localizer[StringDescriptionModel.d2_cal_datalogger]</h1>
-<div class="card mb-2">
-    <div class="card-body d-flex flex-row">
-        <button type="button" class="btn btn-sm btn-primary" @onclick="DownloadFile">
-            @localizer[StringDescriptionModel.calgrid_download]
-        </button>
 
-        <button type="button" class="btn btn-sm btn-danger" style="margin-left: 1rem" @onclick="DeleteData">
-            @localizer[StringDescriptionModel.calgrid_clear]
-        </button>
-        <span class="flex-fill fw-bolder text-end p-1">@localizer[StringDescriptionModel.calgrid_upload]:&nbsp; </span>
-        <InputFile class="form-control form-control-sm w-25" OnChange="UploadFile" />
+@if (Setting.UserBasicDetail.Role == "Admin")
+{
+    <div class="card mb-2">
+        <div class="card-body d-flex flex-row">
+            <button type="button" class="btn btn-sm btn-primary" @onclick="DownloadFile">
+                @localizer[StringDescriptionModel.calgrid_download]
+            </button>
+
+            <button type="button" class="btn btn-sm btn-danger" style="margin-left: 1rem" @onclick="DeleteData">
+                @localizer[StringDescriptionModel.calgrid_clear]
+            </button>
+            <span class="flex-fill fw-bolder text-end p-1">@localizer[StringDescriptionModel.calgrid_upload]:&nbsp; </span>
+            <InputFile class="form-control form-control-sm w-25" OnChange="UploadFile" />
+        </div>
     </div>
-</div>
+}
 
 @if (fetchData == true)
 {
@@ -202,6 +206,10 @@
                 Slope = (double)devicesDataModel[1, "hbmSlope"],
                 Health = (ushort)devicesDataModel[1, "hbmHealth"],
             };
+
+        if (_d2CalData.Zero == 0 || _d2CalData.Slope == 0)
+            return;
+
         await dataService.PostD2CalData(_d2CalData);
         getAllCalData.UpdateData();
     }

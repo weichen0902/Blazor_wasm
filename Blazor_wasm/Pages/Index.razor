@@ -387,11 +387,14 @@
                         }
                     </CardContent>
                     <CardContent EnableSeparator="true"></CardContent>
-                    <Syncfusion.Blazor.Cards.CardFooter>
+                    @if(Setting.UserBasicDetail.Role == "Admin")
+                    {
+                        <Syncfusion.Blazor.Cards.CardFooter>
                         <CardFooterContent>
                             <SfButton CssClass="e-outline" @onclick="@ExpandHandler">@(Expand ? "Collapse" : "Expand")</SfButton>
                         </CardFooterContent>
                     </Syncfusion.Blazor.Cards.CardFooter>
+                    }                  
                 </SfCard>
             </Field>
         </ModalBody>
@@ -553,11 +556,14 @@
                         }
                     </CardContent>
                     <CardContent EnableSeparator="true"></CardContent>
-                    <Syncfusion.Blazor.Cards.CardFooter>
-                        <CardFooterContent>
-                            <SfButton CssClass="e-outline" @onclick="@ExpandHandler">@(Expand ? "Collapse" : "Expand")</SfButton>
-                        </CardFooterContent>
-                    </Syncfusion.Blazor.Cards.CardFooter>
+                    @if(Setting.UserBasicDetail.Role == "Admin")
+                    {
+                        <Syncfusion.Blazor.Cards.CardFooter>
+                            <CardFooterContent>
+                                <SfButton CssClass="e-outline" @onclick="@ExpandHandler">@(Expand ? "Collapse" : "Expand")</SfButton>
+                            </CardFooterContent>
+                        </Syncfusion.Blazor.Cards.CardFooter>
+                    }                   
                 </SfCard>
             </Field>
         </ModalBody>

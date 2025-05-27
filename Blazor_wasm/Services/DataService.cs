@@ -224,7 +224,7 @@ namespace Blazor_wasm.Services
         public async Task<MainResponse<DevicesDataModelDTO>> GetModbusDevicesData()
         {
             var result = new MainResponse<DevicesDataModelDTO>();
-
+            Console.WriteLine(Setting.UserBasicDetail.AccessTokenExpire);
             try
             {
                 var url = $"{Setting.BaseUrl}{APIs.GetModbusDevicesData}";

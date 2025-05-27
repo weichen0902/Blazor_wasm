@@ -18,6 +18,7 @@ namespace Blazor_wasm.Models.DatabaseModels
         public DateTime EndTime { get; set; }
         public bool? IsAllDay { get; set; }
         public bool SpecifiedDay { get; set; }
+        public bool Interval { get; set; }
         public int IntervalNumber { get; set; } = 1;
         public string RecurrenceRule { get; set; } = "";
         public string StartTimezone { get; set; } = "";
