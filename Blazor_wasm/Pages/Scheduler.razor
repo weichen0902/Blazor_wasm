@@ -125,7 +125,7 @@
             </EditorFooterTemplate>
         </ScheduleTemplates>
         <ScheduleEventSettings TValue="SchedulerModel" DataSource="@getSchedule.dataSource"></ScheduleEventSettings>
-        <ScheduleEvents TValue="SchedulerModel" ActionCompleted="OnActionCompleted" OnPopupClose="OnPopupClose" OnCellClick="OnCellClick" OnEventClick="OnEventClick" OnPopupOpen="OnPopupOpen"></ScheduleEvents>
+        <ScheduleEvents TValue="SchedulerModel" Navigating="OnNavigating" ActionCompleted="OnActionCompleted" OnPopupClose="OnPopupClose" OnCellClick="OnCellClick" OnEventClick="OnEventClick" OnPopupOpen="OnPopupOpen"></ScheduleEvents>
         <ScheduleViews>
             @*             <ScheduleView Option="View.Day"></ScheduleView>
             <ScheduleView Option="View.Week"></ScheduleView>
@@ -211,6 +211,21 @@
             new DropDownModel() { ID= "calibration", Text= @localizer[StringDescriptionModel.schedule_calibration] },
             new DropDownModel() { ID= "export", Text= @localizer[StringDescriptionModel.schedule_export] },
         };
+    }
+
+    public void OnNavigating(NavigatingEventArgs args)
+    {
+        if (schedulers.RecurrenceRule.Contains("FREQ=MONTHLY") || schedulers.RecurrenceRule == "")
+    {
+            schedulers.RecurrenceRule = "";
+            var monthDifference = (int)(args.CurrentDate - schedulers.StartTime).TotalDays / 30;
+
+            if (monthDifference % schedulers.IntervalNumber == 0)
+            {
+                schedulers.StartTime = schedulers.StartTime.AddMonths(monthDifference);
+                schedulers.EndTime = schedulers.EndTime.AddMonths(monthDifference);
+            }
+        }   
     }
 
     private async void OnActionCompleted(ActionEventArgs<SchedulerModel> args)
