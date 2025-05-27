@@ -264,9 +264,21 @@
         monthlyIsChecked = args.Data != null && args.Data.RecurrenceRule.Contains("MONTHLY") ? true : false;
         weeklyIsChecked = args.Data != null && args.Data.RecurrenceRule.Contains("WEEKLY") ? true : false;
         dailyIsChecked = args.Data != null && args.Data.RecurrenceRule.Contains("DAILY") ? true : false;
-        specifiedDayIsChecked = args.Data != null && args.Data.SpecifiedDay ? true : false;
+
         intervaIsChecked = args.Data != null && args.Data.Interval ? true : false;
         schedulers.IntervalNumber = args.Data != null ? args.Data.IntervalNumber : 1;
+
+        if (monthlyIsChecked || weeklyIsChecked || dailyIsChecked)
+        {
+            specifiedDayIsChecked = false;
+            schedulers.SpecifiedDay = false;
+        }
+            
+		else if (!monthlyIsChecked && !weeklyIsChecked && !dailyIsChecked)
+		{
+            specifiedDayIsChecked = true;
+            schedulers.SpecifiedDay = true;
+		}           
     }
 
     public async Task OnPopupClose(PopupCloseEventArgs<SchedulerModel> args)
