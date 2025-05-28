@@ -26,7 +26,7 @@
                 </div>            
             </EditorHeaderTemplate>
             <EditorTemplate>
-                <div style="font-size: 20px; height:400px;">
+                <div style="font-size: 20px; height:450px;">
                     <table class="custom-event-editor" cellpadding="5">
                         <tbody>
                             @{
@@ -93,8 +93,8 @@
                                         </div>
                                         <div style="display: flex; gap: 20px; margin-top:10px;">
                                             <input style="transform: scale(1.5);" type="radio" checked="@specifiedDayIsChecked" @onchange="@((e)=> ChangeFrequentStatus(e, schedulers, 3))" /><label class="form-check-label">@localizer[StringDescriptionModel.schedule_specified_day]</label>
-                                            <input style="transform: scale(1.5);" type="checkbox" checked="@intervaIsChecked" @onchange="@((e)=> ChangeFrequentStatus(e, schedulers, 4))" /><label class="form-check-label">@localizer[StringDescriptionModel.schedule_interval]</label>
-                                            <input style="transform: scale(1.5); @(intervaIsChecked ? "" : "display:none;"); width:40px; height:25px; margin-top:5px; font-size:15px;" type="number" @onchange="@((e)=> ChangeFrequentStatus(e, schedulers, 5))" value="@schedulers.IntervalNumber" /><span style="margin-top:5px;">@suffix</span>
+                                            <input style="transform: scale(1.5); " type="checkbox" checked="@intervaIsChecked" @onchange="@((e)=> ChangeFrequentStatus(e, schedulers, 4))" /><label class="form-check-label" style="margin-top:12px;">@localizer[StringDescriptionModel.schedule_interval]</label>
+                                            <input style="transform: scale(1.5); @(intervaIsChecked ? "" : "display:none;"); width:35px; height:25px; margin-top:10px; font-size:15px;" type="number" @onchange="@((e)=> ChangeFrequentStatus(e, schedulers, 5))" value="@schedulers.IntervalNumber" /><span style="margin-top:5px;">@suffix</span>
                                         </div>
                                     </td>                    
                                 </tr>
@@ -273,12 +273,12 @@
             specifiedDayIsChecked = false;
             schedulers.SpecifiedDay = false;
         }
-            
-		else if (!monthlyIsChecked && !weeklyIsChecked && !dailyIsChecked)
-		{
+
+        else if (!monthlyIsChecked && !weeklyIsChecked && !dailyIsChecked)
+        {
             specifiedDayIsChecked = true;
             schedulers.SpecifiedDay = true;
-		}           
+        }           
     }
 
     public async Task OnPopupClose(PopupCloseEventArgs<SchedulerModel> args)
@@ -367,6 +367,18 @@
             intervaIsChecked = !intervaIsChecked;
             schedulers.Interval = !schedulers.Interval;
 
+            if (!schedulers.Interval)
+            {
+                schedulers.IntervalNumber = 1;
+
+                if (monthlyIsChecked)
+                    schedulers.RecurrenceRule = $"FREQ=MONTHLY;BYMONTHDAY={byDay};INTERVAL={schedulers.IntervalNumber}";
+                else if (weeklyIsChecked)
+                    schedulers.RecurrenceRule = $"FREQ=WEEKLY;BYDAY={byDayOfWeek};INTERVAL={schedulers.IntervalNumber}";
+                else if (dailyIsChecked)
+                    schedulers.RecurrenceRule = $"FREQ=DAILY;INTERVAL={schedulers.IntervalNumber}";                
+            }
+                    
             if (monthlyIsChecked)
                 suffix = $"{localizer[StringDescriptionModel.schedule_month]}";
 			else if (weeklyIsChecked)
