@@ -196,7 +196,7 @@
     protected override async void OnInitialized()
     {
         base.OnInitialized();
-
+        dataSource = getSchedule.dataSource;
         MainLayout.OnLanguageChange += StateHasChanged;        
     }
 
@@ -220,8 +220,21 @@
     {
         foreach (var item in dataSource)
         {
-            item.StartTime = item.StartTime.AddMonths(2);
-            item.EndTime = item.EndTime.AddMonths(2);
+            if (item.RecurrenceRule.Contains("FREQ=MONTHLY"))
+            {
+                item.RecurrenceRule = string.Empty;
+                item.IsMonthly = true;
+            }
+                
+            if (item.IsMonthly)
+            {                           
+                var monthDifference = (int)(args.CurrentDate - item.StartTime).TotalDays/ 30;
+				if (monthDifference % item.IntervalNumber == 0)
+				{
+					item.StartTime = item.StartTime.AddMonths(monthDifference);
+					item.EndTime = item.EndTime.AddMonths(monthDifference);
+				}
+            }         
         }
     }
 
