@@ -20,7 +20,7 @@ namespace Blazor_wasm.Controller
             UpdateData();
         }    
         
-        public async void UpdateData()
+        public async Task UpdateData()
         {
             var result = await _dataService.GetScheduler();
             dataSource = result.Content;

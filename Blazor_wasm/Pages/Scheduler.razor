@@ -186,6 +186,9 @@
     private List<DropDownModel> SubjectData;
 
     private List<SchedulerModel> dataSource = new List<SchedulerModel>();
+    private List<SchedulerModel> testdataSource = new List<SchedulerModel>();
+
+    int monthDifference, tempDifference;
 
     public class DropDownModel
     {
@@ -223,20 +226,93 @@
             if (item.RecurrenceRule.Contains("FREQ=MONTHLY"))
             {
                 item.RecurrenceRule = string.Empty;
-                item.IsMonthly = true;
+                item.IsMonthly = true; 
             }
-                
+
             if (item.IsMonthly)
-            {                           
-                var monthDifference = (int)(args.CurrentDate - item.StartTime).TotalDays/ 30;
-				if (monthDifference % item.IntervalNumber == 0)
-				{
-					item.StartTime = item.StartTime.AddMonths(monthDifference);
-					item.EndTime = item.EndTime.AddMonths(monthDifference);
-				}
-            }         
-        }
+            {
+                var totalDaysValue = (int)Math.Abs((args.CurrentDate - item.StartTime).TotalDays);
+                monthDifference = (int)Math.Round(totalDaysValue / 30.5);
+                if (totalDaysValue < 30 && args.CurrentDate.Month != item.StartTime.Month)
+                    tempDifference = 1;
+
+                if (args.CurrentDate > args.PreviousDate)
+					if (args.CurrentDate > item.StartTime)
+                        monthDifference = monthDifference + tempDifference;
+                    else
+                        monthDifference = -(monthDifference + tempDifference);
+                else
+                    if (args.CurrentDate < item.StartTime)
+                        monthDifference = -(monthDifference + tempDifference);
+                    else
+					    monthDifference = monthDifference + tempDifference;
+
+                Console.WriteLine($"out:{monthDifference}");
+                if (monthDifference % item.IntervalNumber == 0)
+                {
+                    Console.WriteLine($"in:{monthDifference}");
+                    item.StartTime = item.StartTime.AddMonths(monthDifference);
+                    item.EndTime = item.EndTime.AddMonths(monthDifference);
+                }              
+            }
+        }       	
     }
+
+  //   public void OnNavigating(NavigatingEventArgs args)
+  //   {
+  //       bool recompute = false;
+  //       foreach (var item in dataSource)
+  //       {
+  //           if (args.CurrentDate < item.StartTime && item.IsMonthly)
+  //           {
+  //               recompute = true;
+  //               continue;
+  //           }
+                
+  //           else
+  //           {
+  //               if (item.RecurrenceRule.Contains("FREQ=MONTHLY"))
+  //               {
+  //                   item.RecurrenceRule = string.Empty;
+  //                   item.IsMonthly = true;
+  //               }
+
+  //               if (item.IsMonthly)
+  //               {
+  //                   var monthDifference = (int)(args.CurrentDate - item.StartTime).TotalDays / 30;
+  //                   if (monthDifference % item.IntervalNumber == 0)
+  //                   {
+  //                       item.StartTime = item.StartTime.AddMonths(monthDifference);
+  //                       item.EndTime = item.EndTime.AddMonths(monthDifference);
+  //                   }
+  //               }
+  //           }           
+  //       }  
+        
+		// if (recompute)
+		// {
+		// 	dataSource = getSchedule.dataSource;
+
+  //           foreach (var item in dataSource)
+  //           {
+  //               if (item.RecurrenceRule.Contains("FREQ=MONTHLY"))
+  //               {
+  //                   item.RecurrenceRule = string.Empty;
+  //                   item.IsMonthly = true;
+  //               }
+
+  //               if (item.IsMonthly)
+  //               {
+  //                   var monthDifference = (int)(args.CurrentDate - item.StartTime).TotalDays / 30;
+  //                   if (monthDifference % item.IntervalNumber == 0)
+  //                   {
+  //                       item.StartTime = item.StartTime.AddMonths(monthDifference);
+  //                       item.EndTime = item.EndTime.AddMonths(monthDifference);
+  //                   }
+  //               }
+  //           }
+		// }
+  //   }
 
     private async void OnActionCompleted(ActionEventArgs<SchedulerModel> args)
     {
@@ -258,7 +334,8 @@
                     await dataService.DeleteScheduler(deleted);
                     break;
             }
-            getSchedule.UpdateData();
+            await getSchedule.UpdateData();
+            dataSource = getSchedule.dataSource;
         }
     }
 
