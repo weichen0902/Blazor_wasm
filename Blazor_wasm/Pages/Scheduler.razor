@@ -188,7 +188,7 @@
     private List<SchedulerModel> dataSource = new List<SchedulerModel>();
     private List<SchedulerModel> testdataSource = new List<SchedulerModel>();
 
-    int monthDifference, tempDifference;
+    int monthDifference;
 
     public class DropDownModel
     {
@@ -221,41 +221,56 @@
 
     public void OnNavigating(NavigatingEventArgs args)
     {
-        foreach (var item in dataSource)
+        if (dataSource != null)
         {
-            if (item.RecurrenceRule.Contains("FREQ=MONTHLY"))
+            foreach (var item in dataSource)
             {
-                item.RecurrenceRule = string.Empty;
-                item.IsMonthly = true; 
-            }
-
-            if (item.IsMonthly)
-            {
-                var totalDaysValue = (int)Math.Abs((args.CurrentDate - item.StartTime).TotalDays);
-                monthDifference = (int)Math.Round(totalDaysValue / 30.5);
-                if (totalDaysValue < 30 && args.CurrentDate.Month != item.StartTime.Month)
-                    tempDifference = 1;
-
-                if (args.CurrentDate > args.PreviousDate)
-					if (args.CurrentDate > item.StartTime)
-                        monthDifference = monthDifference + tempDifference;
-                    else
-                        monthDifference = -(monthDifference + tempDifference);
-                else
-                    if (args.CurrentDate < item.StartTime)
-                        monthDifference = -(monthDifference + tempDifference);
-                    else
-					    monthDifference = monthDifference + tempDifference;
-
-                Console.WriteLine($"out:{monthDifference}");
-                if (monthDifference % item.IntervalNumber == 0)
+                if (item.RecurrenceRule.Contains("FREQ=MONTHLY"))
                 {
-                    Console.WriteLine($"in:{monthDifference}");
-                    item.StartTime = item.StartTime.AddMonths(monthDifference);
-                    item.EndTime = item.EndTime.AddMonths(monthDifference);
-                }              
+                    item.RecurrenceRule = string.Empty;
+                    item.IsMonthly = true;
+                }
+
+                if (item.IsMonthly)
+                {
+                    var totalDaysValue = (int)Math.Abs((args.CurrentDate - item.StartTime).TotalDays);
+                    var totalMonthValue = totalDaysValue / 30;
+                    var remainNumber = totalDaysValue % 30;
+
+                    if (totalMonthValue >= 1 && !item.CheckedBtn)
+                        monthDifference = totalMonthValue;
+                    else if (totalMonthValue >= 1 && item.CheckedBtn)
+                        monthDifference = totalMonthValue + 1;
+
+                    if (totalMonthValue < 1 && !item.CheckedBtn)
+                    {
+						item.CheckedBtn = true;
+                        if (item.CheckedBtn)
+                        {
+                            monthDifference = totalMonthValue + 1;
+                        }
+                    }
+                    else if (totalMonthValue < 1 && item.CheckedBtn)
+                        monthDifference = totalMonthValue;
+
+
+                    if (args.CurrentDate < item.StartTime)
+                        monthDifference = -(monthDifference);
+
+                    Console.WriteLine($"totalDaysValue:{totalDaysValue}");
+                    Console.WriteLine($"totalMonthValue:{totalMonthValue}");
+                    Console.WriteLine($"remainNumber:{remainNumber}");
+                    Console.WriteLine($"monthDifference:{monthDifference}");
+                    Console.WriteLine($"------------------------------------");
+                    if (monthDifference % item.IntervalNumber == 0)
+                    {
+                        item.StartTime = item.StartTime.AddMonths(monthDifference);
+                        item.EndTime = item.EndTime.AddMonths(monthDifference);
+                        item.CheckedBtn = false;
+                    }
+                }
             }
-        }       	
+        }      	
     }
 
   //   public void OnNavigating(NavigatingEventArgs args)

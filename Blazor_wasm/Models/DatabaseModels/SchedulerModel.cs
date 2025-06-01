@@ -23,7 +23,7 @@ namespace Blazor_wasm.Models.DatabaseModels
         public string RecurrenceRule { get; set; } = "";
         public string StartTimezone { get; set; } = "";
         public string EndTimezone { get; set; } = "";      
-
         public bool IsMonthly { get; set; }
+        public bool CheckedBtn { get; set; }
     }
 }
