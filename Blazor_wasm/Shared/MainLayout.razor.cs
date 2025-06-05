@@ -109,7 +109,6 @@ namespace Blazor_wasm.Shared
                             devicesDataModel[i, "countdown"] = response.countdown[i];
                             devicesDataModel[i, "countdownAdd"] = response.countdownAdd[i];
 
-                            devicesDataModel[i, "motionControl"] = response.motionControl[i];
                             devicesDataModel[i, "hbmRunState"] = response.hbmRunState[i];
                             devicesDataModel[i, "hbmFailRetryCount"] = response.hbmFailRetryCount[i];
                             devicesDataModel[i, "hbmStbyLiftTimeSetting"] = response.hbmStbyLiftTimeSetting[i];
@@ -117,9 +116,7 @@ namespace Blazor_wasm.Shared
                             devicesDataModel[i, "hoisterDownCycleCount"] = response.hoisterDownCycleCount[i];
                             devicesDataModel[i, "hoisterDownSpecifiedCountToSlowDown"] = response.hoisterDownSpecifiedCountToSlowDown[i];
                             devicesDataModel[i, "hoisterLimitTriggerCount"] = response.hoisterLimitTriggerCount[i];
-                            devicesDataModel[i, "hoisterResetButtonPressCount"] = response.hoisterResetButtonPressCount[i];
 
-                            devicesDataModel[i, "electrodeCommand"] = response.electrodeCommand[i];
                             devicesDataModel[i, "valveState"] = response.valveState[i];
 
                             devicesDataModel[i, "deviceStatus"] = response.deviceStatus[i];
@@ -135,7 +132,6 @@ namespace Blazor_wasm.Shared
                             if (i == 0)
                             {
                                 devicesDataModel[i, "preMotionCountdown"] = response.preMotionCountdown[i];
-                                devicesDataModel[i, "motorState"] = response.motorState[i];
                                 devicesDataModel[i, "systemStatus"] = response.systemStatus[i];
                                 devicesDataModel[i, "commonAlarm"] = response.commonAlarm[i];
                                 serverCommonAlarmErrorCode[i] = response.commonAlarm[i];

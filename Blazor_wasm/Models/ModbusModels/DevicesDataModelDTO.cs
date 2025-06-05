@@ -24,11 +24,11 @@ namespace Blazor_wasm.Models.ModbusModels
         public ushort[] totalCycleOfSteps { get; set; } = new ushort[2];
         public ushort[] totalCurrentCycleOfSteps { get; set; } = new ushort[2];
         public ushort[] currentStep { get; set; } = new ushort[2];
+
         public ushort[] countdown { get; set; } = new ushort[2];
         public ushort[] countdownAdd { get; set; } = new ushort[2];
         public ushort[] preMotionCountdown { get; set; } = new ushort[1];
 
-        public ushort[] motionControl { get; set; } = new ushort[2];
         public ushort[] hbmRunState { get; set; } = new ushort[2];
         public ushort[] hbmFailRetryCount { get; set; } = new ushort[2];
         public ushort[] hbmStbyLiftTimeSetting { get; set; } = new ushort[2];
@@ -36,17 +36,14 @@ namespace Blazor_wasm.Models.ModbusModels
         public ushort[] hoisterDownCycleCount { get; set; } = new ushort[2];
         public ushort[] hoisterDownSpecifiedCountToSlowDown { get; set; } = new ushort[2];
         public ushort[] hoisterLimitTriggerCount { get; set; } = new ushort[2];
-        public ushort[] hoisterResetButtonPressCount { get; set; } = new ushort[2];
 
         public ushort[] manualControl { get; set; } = new ushort[2];
-        public ushort[] electrodeCommand { get; set; } = new ushort[2];
         public ushort[] valveState { get; set; } = new ushort[2];
-        public ushort[] motorState { get; set; } = new ushort[1];
 
         public ushort[] driverAlarm { get; set; } = new ushort[2];
         public ushort[] systemAlarm1 { get; set; } = new ushort[2];
         public ushort[] commonAlarm { get; set; } = new ushort[1];
-        public ushort[] manualAuto { get; set; } = new ushort[1];
+       
         public ushort[] systemStatus { get; set; } = new ushort[1];
         public ushort[] deviceStatus { get; set; } = new ushort[2];
     }

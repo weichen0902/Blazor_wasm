@@ -35,11 +35,11 @@ namespace Blazor_wasm.Models.ModbusModels
         private ushort[] totalCycleOfSteps = new ushort[2];
         private ushort[] totalCurrentCycleOfSteps = new ushort[2];
         private ushort[] currentStep = new ushort[2];
+
         private ushort[] countdown = new ushort[2];
         private ushort[] countdownAdd = new ushort[2];
         private ushort[] preMotionCountdown = new ushort[1];
 
-        private ushort[] motionControl = new ushort[2];
         private ushort[] hbmRunState = new ushort[2];
         private ushort[] hbmFailRetryCount = new ushort[2];
         private ushort[] hbmStbyLiftTimeSetting = new ushort[2];
@@ -47,20 +47,16 @@ namespace Blazor_wasm.Models.ModbusModels
         private ushort[] hoisterDownCycleCount = new ushort[2];
         private ushort[] hoisterDownSpecifiedCountToSlowDown = new ushort[2];
         private ushort[] hoisterLimitTriggerCount = new ushort[2];
-        private ushort[] hoisterResetButtonPressCount = new ushort[2];
 
         private ushort[] manualControl = new ushort[2];
-        private ushort[] electrodeCommand = new ushort[2];
         private ushort[] valveState = new ushort[2];
-        private ushort[] motorState = new ushort[1];
 
         private ushort[] driverAlarm = new ushort[2];
         private ushort[] systemAlarm1 = new ushort[2];
         private ushort[] commonAlarm = new ushort[1];
 
-        public ushort[]? manualAuto = new ushort[1];
-        public ushort[]? systemStatus = new ushort[1];
-        public ushort[]? deviceStatus = new ushort[2];
+        private ushort[] systemStatus = new ushort[1];
+        private ushort[] deviceStatus = new ushort[2];
 
         public void TriggerNotifyChanged()
         {
@@ -121,8 +117,6 @@ namespace Blazor_wasm.Models.ModbusModels
                         return countdownAdd[index];
                     case "preMotionCountdown":
                         return preMotionCountdown[index];
-                    case "motionControl":
-                        return motionControl[index];
                     case "hbmRunState":
                         return hbmRunState[index];
                     case "hbmFailRetryCount":
@@ -137,24 +131,16 @@ namespace Blazor_wasm.Models.ModbusModels
                         return hoisterDownSpecifiedCountToSlowDown[index];
                     case "hoisterLimitTriggerCount":
                         return hoisterLimitTriggerCount[index];
-                    case "hoisterResetButtonPressCount":
-                        return hoisterResetButtonPressCount[index];
                     case "manualControl":
                         return manualControl[index];
-                    case "electrodeCommand":
-                        return electrodeCommand[index];
                     case "valveState":
                         return valveState[index];
-                    case "motorState":
-                        return motorState[index];
                     case "driverAlarm":
                         return driverAlarm[index];
                     case "systemAlarm1":
                         return systemAlarm1[index];
                     case "commonAlarm":
                         return commonAlarm[index];
-                    case "manualAuto":
-                        return manualAuto[index];
                     case "systemStatus":
                         return systemStatus[index];
                     case "deviceStatus":
@@ -277,12 +263,6 @@ namespace Blazor_wasm.Models.ModbusModels
                                 preMotionCountdown[index] = (ushort)value;
                             }
                             break;
-                        case "motionControl":
-                            if (motionControl[index] != (ushort)value)
-                            {
-                                motionControl[index] = (ushort)value;
-                            }
-                            break;
                         case "hbmRunState":
                             if (hbmRunState[index] != (ushort)value)
                             {
@@ -326,22 +306,10 @@ namespace Blazor_wasm.Models.ModbusModels
                                 hoisterLimitTriggerCount[index] = (ushort)value;
                             }
                             break;
-                        case "hoisterResetButtonPressCount":
-                            if (hoisterResetButtonPressCount[index] != (ushort)value)
-                            {
-                                hoisterResetButtonPressCount[index] = (ushort)value;
-                            }
-                            break;
                         case "manualControl":
                             if (manualControl[index] != (ushort)value)
                             {
                                 manualControl[index] = (ushort)value;
-                            }
-                            break;
-                        case "electrodeCommand":
-                            if (electrodeCommand[index] != (ushort)value)
-                            {
-                                electrodeCommand[index] = (ushort)value;
                             }
                             break;
                         case "valveState":
@@ -349,12 +317,6 @@ namespace Blazor_wasm.Models.ModbusModels
                             {
                                 valveState[index] = (ushort)value;                              
                             }                          
-                            break;
-                        case "motorState":
-                            if (motorState[index] != (ushort)value)
-                            {
-                                motorState[index] = (ushort)value;
-                            }
                             break;
                         case "driverAlarm":
                             if (driverAlarm[index] != (ushort)value)
@@ -375,12 +337,6 @@ namespace Blazor_wasm.Models.ModbusModels
                             {
                                 commonAlarm[index] = (ushort)value;
                                 boolAlarmStateChanged = true;
-                            }
-                            break;
-                        case "manualAuto":
-                            if (manualAuto[index] != (ushort)value)
-                            {
-                                manualAuto[index] = (ushort)value;                    
                             }
                             break;
                         case "systemStatus":
