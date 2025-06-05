@@ -78,19 +78,19 @@ namespace Blazor_wasm.Pages
                 {
                     case 1:
                         d1ToggleInput[0] = !d1ToggleInput[0];
-                        MainLayout.washingValve[0] = d1ToggleInput[0] ? "yellow" : null;
+                        MainLayout.bufAValve[0] = d1ToggleInput[0] ? "yellow" : null;
                         break;
                     case 2:
                         d1ToggleInput[1] = !d1ToggleInput[1];
-                        MainLayout.reagValve[0] = d1ToggleInput[1] ? "yellow" : null;
+                        MainLayout.bufBValve[0] = d1ToggleInput[1] ? "yellow" : null;
                         break;
                     case 4:
                         d1ToggleInput[2] = !d1ToggleInput[2];
-                        MainLayout.bufAValve[0] = d1ToggleInput[2] ? "yellow" : null;
+                        MainLayout.reagValve[0] = d1ToggleInput[2] ? "yellow" : null;
                         break;
                     case 8:
                         d1ToggleInput[3] = !d1ToggleInput[3];
-                        MainLayout.bufBValve[0] = d1ToggleInput[3] ? "yellow" : null;
+                        MainLayout.washingValve[0] = d1ToggleInput[3] ? "yellow" : null;
                         break;
                     case 16:
                         d1ToggleInput[4] = !d1ToggleInput[4];
@@ -121,19 +121,19 @@ namespace Blazor_wasm.Pages
                 {
                     case 1:
                         d2ToggleInput[0] = !d2ToggleInput[0];
-                        MainLayout.washingValve[1] = d2ToggleInput[0] ? "yellow" : null;
+                        MainLayout.bufAValve[1] = d2ToggleInput[0] ? "yellow" : null;
                         break;
                     case 2:
                         d2ToggleInput[1] = !d2ToggleInput[1];
-                        MainLayout.reagValve[1] = d2ToggleInput[1] ? "yellow" : null;
+                        MainLayout.bufBValve[1] = d2ToggleInput[1] ? "yellow" : null;
                         break;
                     case 4:
                         d2ToggleInput[2] = !d2ToggleInput[2];
-                        MainLayout.bufAValve[1] = d2ToggleInput[2] ? "yellow" : null;
+                        MainLayout.reagValve[1] = d2ToggleInput[2] ? "yellow" : null;
                         break;
                     case 8:
                         d2ToggleInput[3] = !d2ToggleInput[3];
-                        MainLayout.bufBValve[1] = d2ToggleInput[3] ? "yellow" : null;
+                        MainLayout.washingValve[1] = d2ToggleInput[3] ? "yellow" : null;
                         break;
                     case 16:
                         d2ToggleInput[4] = !d2ToggleInput[4];

@@ -363,11 +363,12 @@
                                     <div class="row row-cols-2 g-3">
                                         @{
                                             var buttons2 = new[]
-                                            {
-                                                new { Name = localizer[StringDescriptionModel.modal_m_wash], Background = MainLayout.washingValve[0], RegisterValue = 1 },
-                                                new { Name = localizer[StringDescriptionModel.modal_m_reag], Background = MainLayout.reagValve[0], RegisterValue = 2 },
-                                                new { Name = localizer[StringDescriptionModel.modal_m_bufa], Background = MainLayout.bufAValve[0], RegisterValue = 4 },
-                                                new { Name = localizer[StringDescriptionModel.modal_m_bufb], Background = MainLayout.bufBValve[0], RegisterValue = 8 }
+                                                {
+                                                new { Name = localizer[StringDescriptionModel.modal_m_bufa], Background = MainLayout.bufAValve[0], RegisterValue = 1 },
+                                                new { Name = localizer[StringDescriptionModel.modal_m_bufb], Background = MainLayout.bufBValve[0], RegisterValue = 2 },
+                                                new { Name = localizer[StringDescriptionModel.modal_m_reag], Background = MainLayout.reagValve[0], RegisterValue = 4 },
+                                                new { Name = localizer[StringDescriptionModel.modal_m_wash], Background = MainLayout.washingValve[0], RegisterValue = 8 },
+                                                
                                             };
                                         }
                                         @foreach (var button in buttons2)
@@ -533,10 +534,11 @@
                                         @{
                                             var buttons4 = new[]
                                             {
-                                                new { Name = localizer[StringDescriptionModel.modal_m_wash], Background = MainLayout.washingValve[1], RegisterValue = 1 },
-                                                new { Name = localizer[StringDescriptionModel.modal_m_reag], Background = MainLayout.reagValve[1], RegisterValue = 2 },
-                                                new { Name = localizer[StringDescriptionModel.modal_m_bufa], Background = MainLayout.bufAValve[1], RegisterValue = 4 },
-                                                new { Name = localizer[StringDescriptionModel.modal_m_bufb], Background = MainLayout.bufBValve[1], RegisterValue = 8 }
+                                                new { Name = localizer[StringDescriptionModel.modal_m_bufa], Background = MainLayout.bufAValve[1], RegisterValue = 2 },
+                                                new { Name = localizer[StringDescriptionModel.modal_m_bufb], Background = MainLayout.bufBValve[1], RegisterValue = 1 },
+                                                new { Name = localizer[StringDescriptionModel.modal_m_reag], Background = MainLayout.reagValve[1], RegisterValue = 4 },
+                                                new { Name = localizer[StringDescriptionModel.modal_m_wash], Background = MainLayout.washingValve[1], RegisterValue = 8 },
+                                                
                                             };
                                         }
                                         @foreach (var button in buttons4)

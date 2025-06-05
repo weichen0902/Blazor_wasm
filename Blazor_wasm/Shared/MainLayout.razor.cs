@@ -56,10 +56,6 @@ namespace Blazor_wasm.Shared
 
         public static char[] d2DeviceStatusIntBinaryCharArray = new char[16];
 
-        public static char[] d1ElectrodeCommandBinaryCharArray = new char[16];
-
-        public static char[] d2ElectrodeCommandBinaryCharArray = new char[16];
-
         public static char[] d1valveStateBinaryCharArray = new char[16];
 
         public static char[] d2valveStateBinaryCharArray = new char[16];
@@ -144,10 +140,6 @@ namespace Blazor_wasm.Shared
                                 var _d1DeviceStatusIntBinaryCharArray = d1DeviceStatusInt.ToCharArray();
                                 Array.Reverse(_d1DeviceStatusIntBinaryCharArray);
 
-                                var d1ElectrodeCommandBinary = Convert.ToString((ushort)devicesDataModel[i, "electrodeCommand"], 2);
-                                var _d1ElectrodeCommandBinaryCharArray = d1ElectrodeCommandBinary.ToCharArray();
-                                Array.Reverse(_d1ElectrodeCommandBinaryCharArray);
-
                                 var d1valveStateBinary = Convert.ToString((ushort)devicesDataModel[i, "valveState"], 2);
                                 var _d1valveStateBinaryCharArray = d1valveStateBinary.ToCharArray();
                                 Array.Reverse(_d1valveStateBinaryCharArray);
@@ -179,17 +171,7 @@ namespace Blazor_wasm.Shared
 
                                     d1DeviceStatusIntBinaryCharArray[j] = _d1DeviceStatusIntBinaryCharArray[j];
                                 }
-
-                                for (int j = 0; j < _d1ElectrodeCommandBinaryCharArray.Length; j++)
-                                {
-                                    for (int k = _d1ElectrodeCommandBinaryCharArray.Length; k < 16; k++)
-                                    {
-                                        d1ElectrodeCommandBinaryCharArray[k] = '0';
-                                    }
-
-                                    d1ElectrodeCommandBinaryCharArray[j] = _d1ElectrodeCommandBinaryCharArray[j];
-                                }
-
+                              
                                 for (int j = 0; j < _d1valveStateBinaryCharArray.Length; j++)
                                 {
                                     for (int k = _d1valveStateBinaryCharArray.Length; k < 16; k++)
@@ -206,11 +188,7 @@ namespace Blazor_wasm.Shared
 
                                     hbmWashingMotionControl[i] = d1DeviceStatusIntBinaryCharArray[3] == '1' ? "yellow" : null;
                                     hbmCalMotionControl[i] = d1DeviceStatusIntBinaryCharArray[4] == '1' ? "yellow" : null;
-
-                                    electrodeReturnUp[i] = d1ElectrodeCommandBinaryCharArray[0] == '1' ? "yellow" : null;
-                                    electrodeReturnSpecifyLocation[i] = d1ElectrodeCommandBinaryCharArray[1] == '1' ? "yellow" : null;
-                                    electrodeStandbyPointSetting[i] = d1ElectrodeCommandBinaryCharArray[5] == '1' ? "yellow" : null;
-
+                                
                                     if (d1valveStateBinaryCharArray[0] == '1')
                                     {
                                         washingValve[i] = "yellow";
@@ -289,10 +267,6 @@ namespace Blazor_wasm.Shared
                                 var _d2DeviceStatusIntBinaryCharArray = d2DeviceStatusInt.ToCharArray();
                                 Array.Reverse(_d2DeviceStatusIntBinaryCharArray);
 
-                                var d2ElectrodeCommandBinary = Convert.ToString((ushort)devicesDataModel[1, "electrodeCommand"], 2);
-                                var _d2ElectrodeCommandBinaryCharArray = d2ElectrodeCommandBinary.ToCharArray();
-                                Array.Reverse(_d2ElectrodeCommandBinaryCharArray);
-
                                 var d2valveStateBinary = Convert.ToString((ushort)devicesDataModel[1, "valveState"], 2);
                                 var _d2valveStateBinaryCharArray = d2valveStateBinary.ToCharArray();
                                 Array.Reverse(_d2valveStateBinaryCharArray);
@@ -306,17 +280,7 @@ namespace Blazor_wasm.Shared
 
                                     d2DeviceStatusIntBinaryCharArray[j] = _d2DeviceStatusIntBinaryCharArray[j];
                                 }
-
-                                for (int j = 0; j < _d2ElectrodeCommandBinaryCharArray.Length; j++)
-                                {
-                                    for (int k = _d2ElectrodeCommandBinaryCharArray.Length; k < 16; k++)
-                                    {
-                                        d2ElectrodeCommandBinaryCharArray[k] = '0';
-                                    }
-
-                                    d2ElectrodeCommandBinaryCharArray[j] = _d2ElectrodeCommandBinaryCharArray[j];
-                                }
-
+                               
                                 for (int j = 0; j < _d2valveStateBinaryCharArray.Length; j++)
                                 {
                                     for (int k = _d2valveStateBinaryCharArray.Length; k < 16; k++)
@@ -332,11 +296,7 @@ namespace Blazor_wasm.Shared
 
                                     hbmWashingMotionControl[i] = d2DeviceStatusIntBinaryCharArray[3] == '1' ? "yellow" : null;
                                     hbmCalMotionControl[i] = d2DeviceStatusIntBinaryCharArray[4] == '1' ? "yellow" : null;
-
-                                    electrodeReturnUp[i] = d2ElectrodeCommandBinaryCharArray[0] == '1' ? "yellow" : null;
-                                    electrodeReturnSpecifyLocation[i] = d2ElectrodeCommandBinaryCharArray[1] == '1' ? "yellow" : null;
-                                    electrodeStandbyPointSetting[i] = d2ElectrodeCommandBinaryCharArray[5] == '1' ? "yellow" : null;
-
+                                 
                                     if (d2valveStateBinaryCharArray[0] == '1')
                                     {
                                         washingValve[i] = "yellow";
