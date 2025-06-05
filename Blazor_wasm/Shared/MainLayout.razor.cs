@@ -191,45 +191,45 @@ namespace Blazor_wasm.Shared
                                 
                                     if (d1valveStateBinaryCharArray[0] == '1')
                                     {
-                                        washingValve[i] = "yellow";
+                                        bufAValve[i] = "yellow";
                                         Pages.Index.d1ToggleInput[0] = true;
                                     }
                                     else if (d1valveStateBinaryCharArray[0] == '0')
                                     {
-                                        washingValve[i] = null;
+                                        bufAValve[i] = null;
                                         Pages.Index.d1ToggleInput[0] = false;
                                     }
 
                                     if (d1valveStateBinaryCharArray[1] == '1')
                                     {
-                                        reagValve[i] = "yellow";
+                                        bufBValve[i] = "yellow";
                                         Pages.Index.d1ToggleInput[1] = true;
                                     }
                                     else if (d1valveStateBinaryCharArray[1] == '0')
                                     {
-                                        reagValve[i] = null;
+                                        bufBValve[i] = null;
                                         Pages.Index.d1ToggleInput[1] = false;
                                     }
 
                                     if (d1valveStateBinaryCharArray[2] == '1')
                                     {
-                                        bufAValve[i] = "yellow";
+                                        reagValve[i] = "yellow";
                                         Pages.Index.d1ToggleInput[2] = true;
                                     }
                                     else if (d1valveStateBinaryCharArray[2] == '0')
                                     {
-                                        bufAValve[i] = null;
+                                        reagValve[i] = null;
                                         Pages.Index.d1ToggleInput[2] = false;
                                     }
 
                                     if (d1valveStateBinaryCharArray[3] == '1')
                                     {
-                                        bufBValve[i] = "yellow";
+                                        washingValve[i] = "yellow";
                                         Pages.Index.d1ToggleInput[3] = true;
                                     }
                                     else if (d1valveStateBinaryCharArray[3] == '0')
                                     {
-                                        bufBValve[i] = null;
+                                        washingValve[i] = null;
                                         Pages.Index.d1ToggleInput[3] = false;
                                     }
 
@@ -299,45 +299,45 @@ namespace Blazor_wasm.Shared
                                  
                                     if (d2valveStateBinaryCharArray[0] == '1')
                                     {
-                                        washingValve[i] = "yellow";
+                                        bufAValve[i] = "yellow";
                                         Pages.Index.d2ToggleInput[0] = true;
                                     }
                                     else if (d2valveStateBinaryCharArray[0] == '0')
                                     {
-                                        washingValve[i] = null;
+                                        bufAValve[i] = null;
                                         Pages.Index.d2ToggleInput[0] = false;
                                     }
 
                                     if (d2valveStateBinaryCharArray[1] == '1')
                                     {
-                                        reagValve[i] = "yellow";
+                                        bufBValve[i] = "yellow";
                                         Pages.Index.d2ToggleInput[1] = true;
                                     }
                                     else if (d2valveStateBinaryCharArray[1] == '0')
                                     {
-                                        reagValve[i] = null;
+                                        bufBValve[i] = null;
                                         Pages.Index.d2ToggleInput[1] = false;
                                     }
 
                                     if (d2valveStateBinaryCharArray[2] == '1')
                                     {
-                                        bufAValve[i] = "yellow";
+                                        reagValve[i] = "yellow";
                                         Pages.Index.d2ToggleInput[2] = true;
                                     }
                                     else if (d2valveStateBinaryCharArray[2] == '0')
                                     {
-                                        bufAValve[i] = null;
+                                        reagValve[i] = null;
                                         Pages.Index.d2ToggleInput[2] = false;
                                     }
 
                                     if (d2valveStateBinaryCharArray[3] == '1')
                                     {
-                                        bufBValve[i] = "yellow";
+                                        washingValve[i] = "yellow";
                                         Pages.Index.d2ToggleInput[3] = true;
                                     }
                                     else if (d2valveStateBinaryCharArray[3] == '0')
                                     {
-                                        bufBValve[i] = null;
+                                        washingValve[i] = null;
                                         Pages.Index.d2ToggleInput[3] = false;
                                     }
 
