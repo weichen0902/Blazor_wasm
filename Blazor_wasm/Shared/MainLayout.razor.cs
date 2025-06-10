@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 using Blazor_wasm.Models.LanguagesModels;
 using Blazor_wasm.Models.ModbusModels;
 using Blazor_wasm.Pages;
 using Blazor_wasm.Pages.Components.Csharp;
+using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.JSInterop;
+using Microsoft.AspNetCore.SignalR.Client;
 
 namespace Blazor_wasm.Shared
 {
@@ -63,8 +66,26 @@ namespace Blazor_wasm.Shared
 
         public static DevicesDataModelDTO response;
 
-        private void UpdateState()
+        private HubConnection? hubConnection;
+        private List<string> messages = [];
+        private string? userInput;
+        private string? messageInput;
+
+        private async void UpdateState()
         {
+            hubConnection = new HubConnectionBuilder()
+            .WithUrl("http://localhost:5256/chathub")
+            .Build();
+
+            hubConnection.On<string, string>("ReceiveMessage", (user, message) =>
+            {
+                var encodedMsg = $"{user}: {message}";
+                messages.Add(encodedMsg);
+                InvokeAsync(StateHasChanged);
+            });
+
+            await hubConnection.StartAsync();
+
             dataTimer = new Timer(new TimerCallback(async (s) =>
             {
                 var result = await dataService.GetModbusDevicesData();
