@@ -75,7 +75,7 @@ namespace Blazor_wasm.Shared
         private async void UpdateState()
         {
             hubConnection = new HubConnectionBuilder()
-            .WithUrl("http://localhost:5256/chathub")
+            .WithUrl("http://localhost:89/chathub")
             .Build();
 
             hubConnection.On<string, string>("ReceiveMessage", (user, message) =>
