@@ -48,7 +48,6 @@ namespace Blazor_wasm.Models.ModbusModels
         private ushort[] hoisterDownSpecifiedCountToSlowDown = new ushort[2];
         private ushort[] hoisterLimitTriggerCount = new ushort[2];
 
-        private ushort[] manualControl = new ushort[2];
         private ushort[] valveState = new ushort[2];
 
         private ushort[] driverAlarm = new ushort[2];
@@ -131,8 +130,6 @@ namespace Blazor_wasm.Models.ModbusModels
                         return hoisterDownSpecifiedCountToSlowDown[index];
                     case "hoisterLimitTriggerCount":
                         return hoisterLimitTriggerCount[index];
-                    case "manualControl":
-                        return manualControl[index];
                     case "valveState":
                         return valveState[index];
                     case "driverAlarm":
@@ -158,14 +155,14 @@ namespace Blazor_wasm.Models.ModbusModels
                         case "hbmpH":
                             if (hbmpH[index] != (double)value)
                             {
-                                hbmpH[index] = (double)value;                               
+                                hbmpH[index] = (double)value;
+                                boolStateChanged = true;
                             }
                             break;
                         case "hbmElec":
                             if (hbmElec[index] != (double)value)
                             {
-                                hbmElec[index] = (double)value;
-                                boolStateChanged = true;
+                                hbmElec[index] = (double)value;                               
                             }
                             break;
                         case "hbmTemp":
@@ -267,6 +264,7 @@ namespace Blazor_wasm.Models.ModbusModels
                             if (hbmRunState[index] != (ushort)value)
                             {
                                 hbmRunState[index] = (ushort)value;
+                                boolStateChanged = true;
                             }
                             break;
                         case "hbmFailRetryCount":
@@ -285,6 +283,7 @@ namespace Blazor_wasm.Models.ModbusModels
                             if (hoisterDownCycleSettingCount[index] != (ushort)value)
                             {
                                 hoisterDownCycleSettingCount[index] = (ushort)value;
+                                boolStateChanged = true;
                             }
                             break;
                         case "hoisterDownCycleCount":
@@ -306,16 +305,11 @@ namespace Blazor_wasm.Models.ModbusModels
                                 hoisterLimitTriggerCount[index] = (ushort)value;
                             }
                             break;
-                        case "manualControl":
-                            if (manualControl[index] != (ushort)value)
-                            {
-                                manualControl[index] = (ushort)value;
-                            }
-                            break;
                         case "valveState":
                             if (valveState[index] != (ushort)value)
                             {
-                                valveState[index] = (ushort)value;                              
+                                valveState[index] = (ushort)value;
+                                boolStateChanged = true;
                             }                          
                             break;
                         case "driverAlarm":
@@ -343,12 +337,14 @@ namespace Blazor_wasm.Models.ModbusModels
                             if (systemStatus[index] != (ushort)value)
                             {
                                 systemStatus[index] = (ushort)value;
+                                boolStateChanged = true;
                             }
                             break;
                         case "deviceStatus":
                             if (deviceStatus[index] != (ushort)value)
                             {
                                 deviceStatus[index] = (ushort)value;
+                                boolStateChanged = true;
                             }
                             break;
                         default:

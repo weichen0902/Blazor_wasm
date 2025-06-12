@@ -37,7 +37,6 @@ namespace Blazor_wasm.Models.ModbusModels
         public ushort[] hoisterDownSpecifiedCountToSlowDown { get; set; } = new ushort[2];
         public ushort[] hoisterLimitTriggerCount { get; set; } = new ushort[2];
 
-        public ushort[] manualControl { get; set; } = new ushort[2];
         public ushort[] valveState { get; set; } = new ushort[2];
 
         public ushort[] driverAlarm { get; set; } = new ushort[2];
