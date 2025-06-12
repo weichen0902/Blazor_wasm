@@ -28,8 +28,8 @@ namespace Blazor_wasm.Models.ModbusModels
 
         private ushort[] washingStepSetting = new ushort[12];
         private ushort[] washingStepTimeSetting = new ushort[12];
-        private ushort[] calStepSetting = new ushort[24];
-        private ushort[] calStepTimeSetting = new ushort[24];
+        private ushort[] calStepSetting = new ushort[12];
+        private ushort[] calStepTimeSetting = new ushort[12];
 
         private ushort[] totalNumberOfSteps = new ushort[2];
         private ushort[] totalCycleOfSteps = new ushort[2];
