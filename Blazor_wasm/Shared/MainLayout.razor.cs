@@ -83,14 +83,6 @@ namespace Blazor_wasm.Shared
                 var response = JsonConvert.DeserializeObject<DevicesDataModelDTO>(message);
                 for (int i = 0; i < 2; i++)
                 {
-                    //if ((double)devicesDataModel[i, "hbmSlope"] != response.hbmSlope[i])
-                    //{
-                    //    getAllCalData.UpdateData();
-                    //    StateHasChanged();
-                    //}
-
-                    //await Task.Delay(2000);
-
                     devicesDataModel[i, "hbmpH"] = response.hbmpH[i];
                     if (i == 0)
                         d1pH = (double)devicesDataModel[i, "hbmpH"];
@@ -406,7 +398,7 @@ namespace Blazor_wasm.Shared
                 //InvokeAsync(StateHasChanged);
             });
 
-            await hubConnection.StartAsync();           
+            await hubConnection.StartAsync();
         }
 
         public bool IsConnected =>
