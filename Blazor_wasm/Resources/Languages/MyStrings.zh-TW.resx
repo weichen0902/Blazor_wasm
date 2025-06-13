@@ -454,16 +454,16 @@
     <value>System_HBM通訊異常</value>
   </data>
   <data name="alarm_system2" xml:space="preserve">
-    <value>System_清水壓力異常</value>
-  </data>
-  <data name="alarm_system3" xml:space="preserve">
-    <value>System_酸液壓力異常</value>
-  </data>
-  <data name="alarm_system4" xml:space="preserve">
     <value>System_Buf.A壓力異常</value>
   </data>
-  <data name="alarm_system5" xml:space="preserve">
+  <data name="alarm_system3" xml:space="preserve">
     <value>System_Buf.B壓力異常</value>
+  </data>
+  <data name="alarm_system4" xml:space="preserve">
+    <value>System_酸液壓力異常</value>
+  </data>
+  <data name="alarm_system5" xml:space="preserve">
+    <value>System_清水壓力異常</value>
   </data>
   <data name="alarm_system6" xml:space="preserve">
     <value>System_氣壓缸開合異常</value>
@@ -748,13 +748,13 @@
     <value>Driver_驅動器機種碼異常</value>
   </data>
   <data name="alarm_common0" xml:space="preserve">
-    <value>酸液液位過低</value>
-  </data>
-  <data name="alarm_common1" xml:space="preserve">
     <value>Buf.A液位過低</value>
   </data>
-  <data name="alarm_common2" xml:space="preserve">
+  <data name="alarm_common1" xml:space="preserve">
     <value>Buf.B液位過低</value>
+  </data>
+  <data name="alarm_common2" xml:space="preserve">
+    <value>酸液液位過低</value>
   </data>
   <data name="alarm_common3" xml:space="preserve">
     <value>氣壓壓力異常</value>

@@ -454,16 +454,16 @@
     <value>System_HBM通信異常</value>
   </data>
   <data name="alarm_system2" xml:space="preserve">
-    <value>System_異常な浄水圧</value>
-  </data>
-  <data name="alarm_system3" xml:space="preserve">
-    <value>System_異常な酸圧</value>
-  </data>
-  <data name="alarm_system4" xml:space="preserve">
     <value>System_Buf.A 圧力異常</value>
   </data>
-  <data name="alarm_system5" xml:space="preserve">
+  <data name="alarm_system3" xml:space="preserve">
     <value>System_Buf.B圧異常</value>
+  </data>
+  <data name="alarm_system4" xml:space="preserve">
+    <value>System_異常な酸圧</value>
+  </data>
+  <data name="alarm_system5" xml:space="preserve">
+    <value>System_異常な浄水圧</value>
   </data>
   <data name="alarm_system6" xml:space="preserve">
     <value>System_空気圧シリンダーの異常開閉</value>
@@ -875,5 +875,14 @@
   </data>
   <data name="schedule_interval" xml:space="preserve">
     <value>かんかく</value>
+  </data>
+  <data name="schedule_month" xml:space="preserve">
+    <value>月</value>
+  </data>
+  <data name="schedule_week" xml:space="preserve">
+    <value>週</value>
+  </data>
+  <data name="schedule_hour" xml:space="preserve">
+    <value>小時</value>
   </data>
 </root>

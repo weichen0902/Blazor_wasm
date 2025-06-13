@@ -454,16 +454,16 @@
     <value>System_HBM communication abnormality</value>
   </data>
   <data name="alarm_system2" xml:space="preserve">
-    <value>System_Abnormal clean water pressure</value>
-  </data>
-  <data name="alarm_system3" xml:space="preserve">
-    <value>System_Acid pressure abnormal</value>
-  </data>
-  <data name="alarm_system4" xml:space="preserve">
     <value>System_Buf.A pressure is abnormal</value>
   </data>
+  <data name="alarm_system3" xml:space="preserve">
+    <value>System_Buf.B pressure is abnormal</value>
+  </data>
+  <data name="alarm_system4" xml:space="preserve">
+    <value>System_Acid pressure abnormal</value>
+  </data>
   <data name="alarm_system5" xml:space="preserve">
-    <value>Abnormal pressure in System_Buf.B</value>
+    <value>System_Abnormal clean water pressure</value>
   </data>
   <data name="alarm_system6" xml:space="preserve">
     <value>System_Abnormal opening and closing of pneumatic cylinder</value>

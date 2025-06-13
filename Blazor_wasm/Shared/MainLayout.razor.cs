@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.JSInterop;
 using Blazor_wasm.Models.DatabaseModels;
 using Newtonsoft.Json;
+using Blazor_wasm.Models.APIModels;
 
 namespace Blazor_wasm.Shared
 {
@@ -75,7 +76,7 @@ namespace Blazor_wasm.Shared
         private async void UpdateState()
         {
             hubConnection = new HubConnectionBuilder()
-            .WithUrl("http://localhost:89/chathub")
+            .WithUrl($"{Setting.BaseUrl}/chathub")
             .Build();
 
             hubConnection.On<string, string>("ReceiveMessage", (user, message) =>

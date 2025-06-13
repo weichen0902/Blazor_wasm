@@ -663,8 +663,8 @@
             Culture = culture;
         }
 
-        NotifyLanguageChanged();
         switchLanguageModal.Hide();
+        NotifyLanguageChanged();  
     }
 
     public async void OnDropDownFieldValueChange(SelectEventArgs<DropDownModel> args)
@@ -673,9 +673,8 @@
         fieldDataModel.Field = args.ItemData.Text;
 
         var response = fieldData == null ? await dataService.PostFieldData(fieldDataModel) : await dataService.UpdateFieldData(fieldDataModel);
-        await RefreshFieldData();
-        NotifyFieldChanged();
         fieldModal.Hide();
+        await RefreshFieldData();          
     }
 
     private async Task RefreshFieldData()

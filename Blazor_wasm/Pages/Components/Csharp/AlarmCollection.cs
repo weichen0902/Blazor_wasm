@@ -10,8 +10,8 @@ namespace Blazor_wasm.Pages.Components.Csharp
     {
         public static Dictionary<int, string> CollectionOfSystemAlarm1 = new Dictionary<int, string>()
         {
-            { 0, "System_伺服通訊異常" },{ 1, "System_HBM通訊異常" },{ 2, "System_清水壓力異常"},{ 3, "System_酸液壓力異常"},{ 4, "System_Buf.A壓力異常"},
-            { 5, "System_Buf.B壓力異常"},{ 6, "System_氣壓缸開合異常"},{ 7, "System_絞盤光纖訊號異常"},{ 8, "System_電極過捲異常"},{ 9, "System_E_00"},{ 10, "System_E_01"},
+            { 0, "System_伺服通訊異常" },{ 1, "System_HBM通訊異常" },{ 2, "System_Buf.A壓力異常"},{ 3, "System_Buf.B壓力異常"},{ 4, "System_供酸壓力異常"},
+            { 5, "System_供水壓力異常"},{ 6, "System_氣壓缸開合異常"},{ 7, "System_絞盤光纖訊號異常"},{ 8, "System_電極過捲異常"},{ 9, "System_E_00"},{ 10, "System_E_01"},
             { 11, "System_E_02"},{ 12, "System_E_03"},{ 13, "System_E_04"},{ 14, "System_E_04"},{ 15, "System_E_31"}
         };
 
@@ -42,7 +42,7 @@ namespace Blazor_wasm.Pages.Components.Csharp
 
         public static Dictionary<int, string> CollectionOfCommonAlarm = new Dictionary<int, string>()
         {
-            { 0, "酸液液位過低" },{ 1, "Buf.A液位過低" },{ 2, "Buf.B液位過低"},{ 3, "氣壓壓力異常"},
+            { 0, "Buf.A液位過低" },{ 1, "Buf.B液位過低" },{ 2, "酸液位過低"},{ 3, "氣壓壓力異常"},
         };
     }
 }
