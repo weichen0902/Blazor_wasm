@@ -13,13 +13,13 @@ namespace Blazor_wasm.Pages
         private Timer dataTimer;
         private async Task WriteToRegister(ushort address, int value)
         {
-            waitFeedback = true;
-            dataTimer?.Dispose();
-            dataTimer = new Timer(new TimerCallback((s) =>
-            {
-                waitFeedback = false;
-                dataTimer?.Dispose();
-            }), null, 8000, Timeout.Infinite);
+            //waitFeedback = true;
+            //dataTimer?.Dispose();
+            //dataTimer = new Timer(new TimerCallback((s) =>
+            //{
+            //    waitFeedback = false;
+            //    dataTimer?.Dispose();
+            //}), null, 8000, Timeout.Infinite);
 
             if (address == 0)
             {
