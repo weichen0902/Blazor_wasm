@@ -1,0 +1,10 @@
+services:
+  blazor_wasm_sqm:
+    build:
+      context: .
+      dockerfile: Blazor_wasm/Dockerfile
+    ports:
+      - "88:80"
+    volumes:
+      - ./publish/wwwroot:/usr/share/nginx/html:ro
+    restart: always

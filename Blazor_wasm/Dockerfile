@@ -20,7 +20,7 @@ COPY . .
 
 # 發佈專案（Release 模式），產出靜態檔案
 WORKDIR "/src/Blazor_wasm"
-RUN dotnet publish -c Release -o /app/publish \
+RUN dotnet publish -c Debug -o /app/publish \
     -p:BlazorWebAssemblyEnableLinking=false \
     -p:PublishTrimmed=false \
     -p:UseAppHost=false
