@@ -490,8 +490,11 @@
 
     private string? dropDownLanguageBindValue { get; set; }
 
-    public void NotifyFieldChanged() => OnFieldChange?.Invoke();
-    public static event Action? OnFieldChange;
+    public void NotifyFieldInputChanged() => OnFieldInputChange?.Invoke();
+    public static event Action? OnFieldInputChange;
+
+    public void NotifyFieldValueChanged() => OnFieldValueChange?.Invoke();
+    public static event Action? OnFieldValueChange;
 
     public void NotifyLanguageChanged() => OnLanguageChange?.Invoke();
     public static event Action? OnLanguageChange;
@@ -508,7 +511,8 @@
            "1", "0.903", "0.859", "0.839", "0.823", "0.819", "0.813", "0.800"
         };
 
-    public static int elapsedDays, remainDays, totalDays;
+    private double[] totalDays = new double[2];
+    public static int[] remainDays = new int[2];
 
     public class DropDownModel
     {
@@ -546,11 +550,57 @@
 
         UpdateState();
         FieldLanguageChange();
-        await RefreshFieldData();
+        // await RefreshFieldData();
     }
 
-    private void PublishMaintainMsg(string str, double value)
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
+        if (Setting.UserBasicDetail != null)
+        {
+            var result = await dataService.GetFieldData();
+
+            if (result.IsSuccess)
+            {
+                fieldData = result.Content;
+
+                dropDownFieldBindValue = fieldData.Field == null ? waterFieldRate[0] :
+                 fieldData.Field.Contains(localizer[StringDescriptionModel.field_lsr]) ? waterFieldRate[1] :
+                 fieldData.Field.Contains(localizer[StringDescriptionModel.field_bio]) ? waterFieldRate[2] :
+                 fieldData.Field.Contains(localizer[StringDescriptionModel.field_aw]) ? waterFieldRate[3] :
+                 fieldData.Field.Contains(localizer[StringDescriptionModel.field_cmp]) ? waterFieldRate[4] :
+                 fieldData.Field.Contains(localizer[StringDescriptionModel.field_cucmp]) ? waterFieldRate[5] :
+                 fieldData.Field.Contains(localizer[StringDescriptionModel.field_nh]) ? waterFieldRate[6] :
+                 fieldData.Field.Contains(localizer[StringDescriptionModel.field_hf]) ? waterFieldRate[7] :
+                 "1";
+            }
+        }       
+    }
+
+    private async void PublishMaintainMsg(string str, double value)
+    {
+        // await Task.Delay(1000);
+
+        for (int i = 0; i < waterFieldRate.Length; i++)
+        {
+            if (dropDownFieldBindValue == waterFieldRate[i])
+            {
+                var rate = double.Parse(waterFieldRate[i]);
+                for (int j = 0; j < 2; j++)
+                {
+                    if (j == 0)
+                    {
+                        totalDays[0] = (int)(913 - (778 * (1 - rate) / 0.2));
+                        remainDays[0] = (int)( totalDays[0] * CircularGaugeLife1.PointerValues* 0.01);                     
+                    }
+                    else
+                    {
+                        totalDays[1] = (int)(913 - (778 * (1 - rate) / 0.2));
+                        remainDays[1] = (int)(totalDays[1] * CircularGaugeLife2.PointerValues * 0.01);
+                    }                        
+                }                                        
+            }
+        }  
+
         if (value <= 100 && value > 80)
             toastService.ShowInfo(str);
         else if (value <= 80 && value > 60)
@@ -559,6 +609,8 @@
             toastService.ShowError(str);
         else
             toastService.ShowError(str);
+
+        NotifyFieldValueChanged();
     }
 
     private void FieldLanguageChange()
@@ -566,9 +618,9 @@
         FieldData = new List<DropDownModel>
         {
             new DropDownModel() { ID= waterFieldRate[0], Text= localizer[StringDescriptionModel.field_pure] },
-            new DropDownModel() { ID= waterFieldRate[1] , Text= localizer[StringDescriptionModel.field_lsr] },
-            new DropDownModel() { ID= waterFieldRate[2], Text= localizer[StringDescriptionModel.field_aw] },
-            new DropDownModel() { ID= waterFieldRate[3], Text= localizer[StringDescriptionModel.field_bio] },
+            new DropDownModel() { ID= waterFieldRate[1], Text= localizer[StringDescriptionModel.field_lsr] },
+            new DropDownModel() { ID= waterFieldRate[2], Text= localizer[StringDescriptionModel.field_bio] },
+            new DropDownModel() { ID= waterFieldRate[3], Text= localizer[StringDescriptionModel.field_aw] },
             new DropDownModel() { ID= waterFieldRate[4], Text= localizer[StringDescriptionModel.field_cmp] },
             new DropDownModel() { ID= waterFieldRate[5], Text= localizer[StringDescriptionModel.field_cucmp] },
             new DropDownModel() { ID= waterFieldRate[6], Text= localizer[StringDescriptionModel.field_nh] },
@@ -674,41 +726,12 @@
 
         var response = fieldData == null ? await dataService.PostFieldData(fieldDataModel) : await dataService.UpdateFieldData(fieldDataModel);
         fieldModal.Hide();
-        await RefreshFieldData();          
+        NotifyFieldInputChanged();
     }
 
     private async Task RefreshFieldData()
     {
-        await Task.Delay(100);
-        var result = await dataService.GetFieldData();
-
-        if (result.IsSuccess)
-        {
-            fieldData = result.Content;
-
-            dropDownFieldBindValue = fieldData.Field == null ? waterFieldRate[0] :
-             fieldData.Field.Contains(localizer[StringDescriptionModel.field_lsr]) ? waterFieldRate[1] :
-             fieldData.Field.Contains(localizer[StringDescriptionModel.field_aw]) ? waterFieldRate[2] :
-             fieldData.Field.Contains(localizer[StringDescriptionModel.field_bio]) ? waterFieldRate[3] :
-             fieldData.Field.Contains(localizer[StringDescriptionModel.field_cmp]) ? waterFieldRate[4] :
-             fieldData.Field.Contains(localizer[StringDescriptionModel.field_cucmp]) ? waterFieldRate[5] :
-             fieldData.Field.Contains(localizer[StringDescriptionModel.field_nh]) ? waterFieldRate[6] :
-             fieldData.Field.Contains(localizer[StringDescriptionModel.field_hf]) ? waterFieldRate[7] :
-             "1";
-
-            for (int i = 0; i < waterFieldRate.Length; i++)
-            {
-                if (dropDownFieldBindValue == waterFieldRate[i])
-                {
-                    var rate = double.Parse(waterFieldRate[i]);
-                    totalDays = (int)(913 - (778 * (1 - rate) / 0.2));
-                    remainDays = totalDays - elapsedDays;
-                    break;
-                }
-            }
-
-            NotifyFieldChanged();
-        }       
+              
     }
 
     private Task HideModal1()

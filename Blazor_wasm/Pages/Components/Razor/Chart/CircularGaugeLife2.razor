@@ -67,7 +67,7 @@
 @code {
     public double GaugeSixAngle = 76;
     public string GaugeSixRadius = "10%";
-    private double PointerValues;
+    public static double PointerValues;
 
     private static DateTime startDate = new DateTime(2025, 2, 1);
 
@@ -85,7 +85,7 @@
 
     protected override async void OnInitialized()
     {          
-        MainLayout.OnFieldChange += UpdateRelay;
+        MainLayout.OnFieldInputChange += UpdateRelay;
         devicesDataModel.OnCalStateChange += UpdateRelay;
         Blazor_wasm.Pages.Index.onMaintain2Msg += PublishMaintainMsg;
       
@@ -133,7 +133,7 @@
 
     void IDisposable.Dispose()
     {
-        MainLayout.OnFieldChange -= UpdateRelay;
+        MainLayout.OnFieldInputChange -= UpdateRelay;
         devicesDataModel.OnCalStateChange -= UpdateRelay;
         Blazor_wasm.Pages.Index.onMaintain2Msg -= PublishMaintainMsg;
     }

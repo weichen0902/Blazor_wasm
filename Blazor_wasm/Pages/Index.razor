@@ -149,26 +149,20 @@
                         z-index: 1000;">
                         @if (Setting.UserBasicDetail.Role == "Admin")
                         {
-                            MainLayout.elapsedDays = (int)(DateTime.Now - startDate).TotalDays;
-                            MainLayout.remainDays = MainLayout.totalDays - MainLayout.elapsedDays;
-                            @*<div>
+                           @*  <div>
                                 <label>啟用日期：</label>
                                 <input type="date" @bind="startDate" />
-
-                                <label>已過天數：</label>
-                                <span>@elapsedDays</span>
-                            </div> *@
+                            </div>  *@
                             <div>
                                 <label>@localizer[StringDescriptionModel.dashboard_remaindays]:</label>
-                                <span>@MainLayout.remainDays</span>
+                                <span>@MainLayout.remainDays[0]</span>
                             </div>
                         }
                         else
-                        {
-                            MainLayout.elapsedDays = (int)(DateTime.Now - startDate).TotalDays;
+                        {                        
                             <div>
                                 <label>@localizer[StringDescriptionModel.dashboard_remaindays]:</label>
-                                <span>@MainLayout.remainDays</span>
+                                <span>@MainLayout.remainDays[0]</span>
                             </div>
                         }
                     </div>
@@ -206,26 +200,20 @@
                         z-index: 1000;">
                         @if (Setting.UserBasicDetail.Role == "Admin")
                         {
-                            MainLayout.elapsedDays = (int)(DateTime.Now - startDate).TotalDays;
-                            MainLayout.remainDays = MainLayout.totalDays - MainLayout.elapsedDays;
-                            @*<div>
+                   @*          <div>
                                 <label>啟用日期：</label>
                                 <input type="date" @bind="startDate" />
-
-                                <label>已過天數：</label>
-                                <span>@elapsedDays</span>
-                            </div> *@
+                            </div>  *@
                             <div>
                                 <label>@localizer[StringDescriptionModel.dashboard_remaindays]:</label>
-                                <span>@MainLayout.remainDays</span>
+                                <span>@MainLayout.remainDays[1]</span>
                             </div>
                         }
                         else
                         {
-                            MainLayout.elapsedDays = (int)(DateTime.Now - startDate).TotalDays;
                             <div>
                                 <label>@localizer[StringDescriptionModel.dashboard_remaindays]:</label>
-                                <span>@MainLayout.remainDays</span>
+                                <span>@MainLayout.remainDays[1]</span>
                             </div>
                         }
                     </div>
@@ -639,7 +627,8 @@
     {
         pageTitleService.Title = "";
   //      MainLayout.OnLanguageChange += StateHasChanged;
-        MainLayout.OnFieldChange += StateHasChanged;
+        MainLayout.OnFieldInputChange += StateHasChanged;
+        MainLayout.OnFieldValueChange += StateHasChanged;
         devicesDataModel.OnStateChange += Update;
         AlarmDataGrid.toChangeAlarmBtnState += StateHasChanged;
 
@@ -778,7 +767,8 @@
     void IDisposable.Dispose()
     {
         MainLayout.OnLanguageChange -= StateHasChanged;
-        MainLayout.OnFieldChange -= StateHasChanged;
+        MainLayout.OnFieldInputChange -= StateHasChanged;
+        MainLayout.OnFieldValueChange -= StateHasChanged;
         devicesDataModel.OnStateChange -= Update;
         AlarmDataGrid.toChangeAlarmBtnState -= StateHasChanged;
     }

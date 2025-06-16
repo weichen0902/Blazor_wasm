@@ -70,7 +70,7 @@
 @code {
     public double GaugeSixAngle = 76;
     public string GaugeSixRadius = "10%";
-    private double PointerValues;
+    public static double PointerValues;
 
     private double hbmZero { get; set; }
     private double hbmSlope { get; set; }
@@ -82,7 +82,7 @@
 
     protected override async void OnInitialized()
     {
-        MainLayout.OnFieldChange += UpdateRelay;
+        MainLayout.OnFieldInputChange += UpdateRelay;
         devicesDataModel.OnCalStateChange += UpdateRelay;
         Blazor_wasm.Pages.Index.onMaintain1Msg += PublishMaintainMsg;
 
@@ -142,7 +142,7 @@
 
     void IDisposable.Dispose()
     {
-        MainLayout.OnFieldChange -= UpdateRelay;
+        MainLayout.OnFieldInputChange -= UpdateRelay;
         devicesDataModel.OnCalStateChange -= UpdateRelay;
         Blazor_wasm.Pages.Index.onMaintain1Msg -= PublishMaintainMsg;
     }
