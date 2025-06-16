@@ -384,11 +384,11 @@ namespace Blazor_wasm.Shared
                     devicesDataModel[i, "washingStepTimeSetting"] = (response.washingStepTimeSetting[i]);
                 }
 
-                for (int i = 0; i < 12; i++)
-                {
-                    devicesDataModel[i, "calStepSetting"] = response.calStepSetting[i];
-                    devicesDataModel[i, "calStepTimeSetting"] = (response.calStepTimeSetting[i]);
-                }
+                        for (int i = 0; i < 12; i++)
+                        {
+                            devicesDataModel[i, "calStepSetting"] = response.calStepSetting[i];
+                            devicesDataModel[i, "calStepTimeSetting"] = (response.calStepTimeSetting[i]);
+                        }
 
                 if (devicesDataModel.boolStateChanged || devicesDataModel.boolCalStateChanged || devicesDataModel.boolAlarmStateChanged)
                 {
