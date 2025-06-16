@@ -548,15 +548,20 @@
         if (Setting.UserBasicDetail == null)
             NavManager.NavigateTo("/");      
 
+        else
+        {
+            
+        }
+
         UpdateState();
         FieldLanguageChange();
         // await RefreshFieldData();
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (Setting.UserBasicDetail != null)
-        {
+    {     
+        if (firstRender)
+		{
             var result = await dataService.GetFieldData();
 
             if (result.IsSuccess)
@@ -573,7 +578,7 @@
                  fieldData.Field.Contains(localizer[StringDescriptionModel.field_hf]) ? waterFieldRate[7] :
                  "1";
             }
-        }       
+		}
     }
 
     private async void PublishMaintainMsg(string str, double value)
@@ -720,18 +725,14 @@
     }
 
     public async void OnDropDownFieldValueChange(SelectEventArgs<DropDownModel> args)
-    {     
+    {     		
         FieldDataModel fieldDataModel = new FieldDataModel();
         fieldDataModel.Field = args.ItemData.Text;
+        fieldData.Field = args.ItemData.Text;
 
-        var response = fieldData == null ? await dataService.PostFieldData(fieldDataModel) : await dataService.UpdateFieldData(fieldDataModel);
+        var response = fieldData == null ? await dataService.PostFieldData(fieldDataModel) : await dataService.UpdateFieldData(fieldDataModel);     
         fieldModal.Hide();
-        NotifyFieldInputChanged();
-    }
-
-    private async Task RefreshFieldData()
-    {
-              
+        NotifyFieldInputChanged();     
     }
 
     private Task HideModal1()
