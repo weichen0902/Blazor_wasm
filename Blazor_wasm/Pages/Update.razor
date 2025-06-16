@@ -33,10 +33,10 @@
             <label>@localizer[StringDescriptionModel.account_last_name]</label>
             <input class="form-control" @bind-value="@updateModel.LastName" placeholder=@localizer[StringDescriptionModel.account_ent_last_name]>
             <ValidationMessage For="@(()=> updateModel.LastName)" />
-            @* <input type="checkbox" checked="@adminChecked" @bind-value="@updateModel.Role" @onclick="@(()=> {toggleRole = !toggleRole;if(toggleRole)updateModel.Role = "Admin";else updateModel.Role = "User";})" />
-        <label class="form-check-label" >
-            Admin
-        </label> *@
+            <input type="checkbox" checked="@adminChecked" @bind-value="@updateModel.Role" @onclick="@(()=> {toggleRole = !toggleRole;if(toggleRole)updateModel.Role = "Admin";else updateModel.Role = "User";})" />
+            <label class="form-check-label" >
+                Admin
+            </label>
         </div>
 
 
@@ -130,7 +130,7 @@
     private string _userAvatar { get; set; } = "images/user.png";
     // private string maleChecked { get; set; }
     // private string femaleChecked { get; set; }
-    // private string adminChecked{ get; set; }
+    private string adminChecked{ get; set; }
 
 
     private bool displayPasswordInputField = false;
@@ -149,8 +149,8 @@
         updateModel = result.Content;
         // maleChecked = updateModel.Gender == "male" ? "checked" : "";
         // femaleChecked = updateModel.Gender == "female" ? "checked" : "";
-        // adminChecked = updateModel.Role == "Admin" ? "checked" : null;
-        // toggleRole = updateModel.Role == "Admin" ? true : false;
+        adminChecked = updateModel.Role == "Admin" ? "checked" : null;
+        toggleRole = updateModel.Role == "Admin" ? true : false;
     }
 
 
