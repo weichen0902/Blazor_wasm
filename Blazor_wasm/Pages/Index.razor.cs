@@ -13,13 +13,13 @@ namespace Blazor_wasm.Pages
         private Timer dataTimer;
         private async Task WriteToRegister(ushort address, int value)
         {
-            //waitFeedback = true;
-            //dataTimer?.Dispose();
-            //dataTimer = new Timer(new TimerCallback((s) =>
-            //{
-            //    waitFeedback = false;
-            //    dataTimer?.Dispose();
-            //}), null, 8000, Timeout.Infinite);
+            waitFeedback = true;
+            dataTimer?.Dispose();
+            dataTimer = new Timer(new TimerCallback((s) =>
+            {
+                waitFeedback = false;
+                dataTimer?.Dispose();
+            }), null, 2000, Timeout.Infinite);
 
             if (address == 0)
             {
@@ -37,7 +37,7 @@ namespace Blazor_wasm.Pages
 
             if (address == 10)
             {
-                switch (value) 
+                switch (value)
                 {
                     case 1:
                         MainLayout.hbmWashingMotionControl[0] = "yellow";
@@ -96,7 +96,7 @@ namespace Blazor_wasm.Pages
                         d1ToggleInput[4] = !d1ToggleInput[4];
                         MainLayout.airPressureValve[0] = d1ToggleInput[4] ? "yellow" : null;
                         break;
-                    case 64:                        
+                    case 64:
                         MainLayout.electrodeReturnUp[0] = "yellow";
                         MainLayout.electrodeReturnSpecifyLocation[0] = null;
                         break;
@@ -116,7 +116,7 @@ namespace Blazor_wasm.Pages
                 }
             }
             else if (address == 2100)
-            {            
+            {
                 switch (value)
                 {
                     case 1:
