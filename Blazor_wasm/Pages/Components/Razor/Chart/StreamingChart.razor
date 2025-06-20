@@ -3,6 +3,8 @@
 
 @using Microsoft.JSInterop
 @inject IJSRuntime JS
+@inject PageTitleService pageTitleService
+@inject AlertMessages alertMsgs
 @inject IDataService dataService
 @inject DevicesDataModel devicesDataModel
 
@@ -15,6 +17,11 @@
     private long dateTimeStartUnixTimeStamp, dateTimeEndUnixTimeStamp;
     private static List<RealTimepH>? realTimepHList = new List<RealTimepH>();
 
+    protected override void OnInitialized()
+    {
+        //    MainLayout.OnLanguageChange += StateHasChanged;
+        pageTitleService.Title = "streamingChart";
+    }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -22,7 +29,9 @@
         dateTimeStartUnixTimeStamp = dateTimeEndUnixTimeStamp - 1800;
 
         var result = await dataService.GetpH(dateTimeStartUnixTimeStamp, dateTimeEndUnixTimeStamp);
-        realTimepHList = result.Content;
+        realTimepHList = result.Content as List<RealTimepH>;
+        if (result.IsSuccess == false)
+            await JS.InvokeVoidAsync("alertMessage", alertMsgs.ErrorAlert(pageTitleService.Title, result).Result);
 
         if (firstRender)
         {

@@ -46,7 +46,7 @@ namespace Blazor_wasm
                     stringMsg = $"{_localizer[StringDescriptionModel.httpcode_urlerr]}";
                     break;
             }
-            return stringMsg;
+            return $"{pageTitle}: {stringMsg}";
         }
     }
 }

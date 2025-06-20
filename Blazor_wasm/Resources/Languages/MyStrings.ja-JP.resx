@@ -882,6 +882,9 @@
   <data name="schedule_week" xml:space="preserve">
     <value>週</value>
   </data>
+  <data name="schedule_day" xml:space="preserve">
+    <value>天</value>
+  </data>
   <data name="schedule_hour" xml:space="preserve">
     <value>小時</value>
   </data>

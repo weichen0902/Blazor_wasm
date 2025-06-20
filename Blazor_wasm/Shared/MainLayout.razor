@@ -1,3 +1,4 @@
+@page "/mainLayout"
 @using Blazored.LocalStorage
 @using Blazored.Toast.Configuration
 @using CsvHelper
@@ -8,6 +9,7 @@
 
 @inject IJSRuntime JS
 @inject AlertMessages alertMsgs
+@inject PageTitleService pageTitleService
 @inject IAppService appService
 @inject IDataService dataService
 @inject Blazored.Toast.Services.IToastService toastService
@@ -15,7 +17,8 @@
 @inject GetAllCalData getAllCalData
 @inject GetSchedule getSchedule
 @inject AuthenticationStateProvider authStateProvider
-@inject PageTitleService pageTitleService
+
+
 @inject NavigationManager NavManager
 @inject ExportFile exportFile
 @inject IStringLocalizer<MyStrings> localizer
@@ -502,7 +505,7 @@
     public static string dropDownFieldBindValue { get; set; }
     public static List<DropDownModel> FieldData;
 
-    public static  FieldDataModel fieldData;
+    public static  FieldDataModel? fieldData;
 
     private string ipUrl = "192.168.212.107";
 
@@ -537,6 +540,7 @@
     protected override async Task OnInitializedAsync()
     {
         base.OnInitializedAsync();
+        pageTitleService.Title = "/";
         Login.flagFunc += LogoutAsync;
         pageTitleService.OnChange += StateHasChanged;
         OnLanguageChange += FieldLanguageChange;
@@ -548,11 +552,6 @@
         if (Setting.UserBasicDetail == null)
             NavManager.NavigateTo("/");      
 
-        else
-        {
-            
-        }
-
         UpdateState();
         FieldLanguageChange();
         // await RefreshFieldData();
@@ -561,12 +560,12 @@
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {     
         if (firstRender)
-		{
+        {
             var result = await dataService.GetFieldData();
 
             if (result.IsSuccess)
             {
-                fieldData = result.Content;
+                fieldData = result?.Content as FieldDataModel;
 
                 dropDownFieldBindValue = fieldData.Field == null ? waterFieldRate[0] :
                  fieldData.Field.Contains(localizer[StringDescriptionModel.field_lsr]) ? waterFieldRate[1] :
@@ -578,7 +577,9 @@
                  fieldData.Field.Contains(localizer[StringDescriptionModel.field_hf]) ? waterFieldRate[7] :
                  "1";
             }
-		}
+            else
+               await JS.InvokeVoidAsync("alertMessage", alertMsgs.ErrorAlert("Field query:", result).Result);
+        }
     }
 
     private async void PublishMaintainMsg(string str, double value)

@@ -1,7 +1,9 @@
 @page "/historyChart"
 
 @using System.Text.Json
-@inject IJSRuntime JSRuntime
+@inject IJSRuntime JS
+@inject PageTitleService pageTitleService
+@inject AlertMessages alertMsgs
 @inject IDataService dataService
 @inject NavigationManager navigationManager
 @inject IStringLocalizer<MyStrings> localizer
@@ -76,14 +78,11 @@
     List<string> backgroundColors = new List<string> { ChartColor.FromRgba(255, 99, 132, 0.2f), ChartColor.FromRgba(54, 162, 235, 0.2f)};
     List<string> borderColors = new List<string> { ChartColor.FromRgba(255, 99, 132, 1f), ChartColor.FromRgba(54, 162, 235, 1f)};
 
-
-    [Inject]
-    public IJSRuntime JS { get; set; }
-
     private bool fetchData = false;
 
     protected override async Task OnInitializedAsync()
     {        
+        pageTitleService.Title = "historyChart";
         //      MainLayout.OnLanguageChange += StateHasChanged;
 
         // Try to load saved dates from localStorage
@@ -129,8 +128,14 @@
     {
         fetchData = true;
         await Task.Delay(100);
+
         var result = await dataService.GetpH(startUnixTimeStamp, endUnixTimeStamp);
-        realTimepHList = result.Content;
+        realTimepHList = result?.Content as List<RealTimepH>;
+        if (result.IsSuccess == false)
+        {
+            await JS.InvokeVoidAsync("alertMessage", alertMsgs.ErrorAlert(pageTitleService.Title, result).Result);
+        }
+
         fetchData = false;
       
         // pH1List = realTimepHList.Select(pH => pH.D1pH).ToList();

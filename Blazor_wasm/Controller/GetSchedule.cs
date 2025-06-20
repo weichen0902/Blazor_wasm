@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Blazor_wasm.Models.AuthModels;
 using Blazor_wasm.Models.DatabaseModels;
 using Blazor_wasm.Services;
 
@@ -20,10 +21,11 @@ namespace Blazor_wasm.Controller
             UpdateData();
         }    
         
-        public async Task UpdateData()
+        public async Task<MainResponse<object>> UpdateData()
         {
             var result = await _dataService.GetScheduler();
-            dataSource = result.Content;
+            dataSource = result?.Content as List<SchedulerModel>;
+            return result!;
         }
     }
 }

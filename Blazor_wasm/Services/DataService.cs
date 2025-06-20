@@ -27,9 +27,9 @@ namespace Blazor_wasm.Services
             _devicesDataModel = devicesDataModel;
         }
        
-        public async Task<MainResponse<List<RealTimepH>>> GetpH(long startTimestamp, long endTimestamp)
+        public async Task<MainResponse<object>> GetpH(long startTimestamp, long endTimestamp)
         {
-            var result = new MainResponse<List<RealTimepH>>();
+            var result = new MainResponse<object>();
             
             try
             {
@@ -65,9 +65,9 @@ namespace Blazor_wasm.Services
 
             return result;                             
         }
-        public async Task<MainResponse<List<D1CalData>>> GetD1AllCAL()
+        public async Task<MainResponse<object>> GetD1AllCAL()
         {
-            var result = new MainResponse<List<D1CalData>>();
+            var result = new MainResponse<object>();
 
             try
             {
@@ -104,9 +104,9 @@ namespace Blazor_wasm.Services
             return result;
         }
 
-        public async Task<MainResponse<List<D2CalData>>> GetD2AllCAL()
+        public async Task<MainResponse<object>> GetD2AllCAL()
         {
-            var result = new MainResponse<List<D2CalData>>();
+            var result = new MainResponse<object>();
 
             try
             {
@@ -143,9 +143,9 @@ namespace Blazor_wasm.Services
             return result;
         }
 
-        public async Task<MainResponse<List<AlarmData>>> GetAllAlarm()
+        public async Task<MainResponse<object>> GetAllAlarm()
         {
-            var result = new MainResponse<List<AlarmData>>();
+            var result = new MainResponse<object>();
 
             try
             {
@@ -182,9 +182,9 @@ namespace Blazor_wasm.Services
             return result;
         }
 
-        public async Task<MainResponse<List<SchedulerModel>>> GetScheduler()
+        public async Task<MainResponse<object>> GetScheduler()
         {
-            var result = new MainResponse<List<SchedulerModel>>();
+            var result = new MainResponse<object>();
 
             try
             {
@@ -221,9 +221,9 @@ namespace Blazor_wasm.Services
             return result;
         }
 
-        public async Task<MainResponse<DevicesDataModelDTO>> GetModbusDevicesData()
+        public async Task<MainResponse<object>> GetModbusDevicesData()
         {
-            var result = new MainResponse<DevicesDataModelDTO>();
+            var result = new MainResponse<object>();
 
             try
             {
@@ -260,9 +260,9 @@ namespace Blazor_wasm.Services
             return result;
         }
 
-        public async Task<MainResponse<FieldDataModel>> GetFieldData()
+        public async Task<MainResponse<object>> GetFieldData()
         {
-            var result = new MainResponse<FieldDataModel>();
+            var result = new MainResponse<object>();
 
             try
             {

@@ -123,7 +123,7 @@
         dateTimeStartUnixTimeStamp = dateTimeEndUnixTimeStamp - 1800;
 
         var result = await dataService.GetpH(dateTimeStartUnixTimeStamp, dateTimeEndUnixTimeStamp);
-        realTimepHList = result.Content;
+        realTimepHList = result.Content as List<RealTimepH>;
 
         var historicalData = new List<LiveDataPoint>();
 

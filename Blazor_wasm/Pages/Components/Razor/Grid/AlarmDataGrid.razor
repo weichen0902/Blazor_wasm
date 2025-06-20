@@ -5,6 +5,9 @@
 
 @using Syncfusion.Blazor.Grids
 
+@inject IJSRuntime JS
+@inject AlertMessages alertMsgs
+@inject PageTitleService pageTitleService
 @inject IDataService dataService
 @inject DevicesDataModel devicesDataModel
 @inject GetAllCalData getAllCalData
@@ -103,7 +106,11 @@
     private async void Update(bool historyAlarmActive)
     {
         var result = await dataService.GetAllAlarm();
-        alarmData = result.Content;
+        alarmData = result.Content as List<AlarmData>;
+        if (!result.IsSuccess)
+            await JS.InvokeVoidAsync("alertMessage", alertMsgs.ErrorAlert(pageTitleService.Title, result).Result);
+
+
         inAlarmData = alarmData?.Where(x => x.AlarmStatus == "警報中").ToList();
 
         await Task.Delay(500);

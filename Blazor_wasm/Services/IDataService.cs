@@ -11,13 +11,13 @@ namespace Blazor_wasm.Services
 {
     public interface IDataService
     {
-        Task<MainResponse<List<RealTimepH>>> GetpH(long startTimestamp, long endTimestamp);
-        Task<MainResponse<List<D1CalData>>> GetD1AllCAL();
-        Task<MainResponse<List<D2CalData>>> GetD2AllCAL();
-        Task<MainResponse<List<AlarmData>>> GetAllAlarm();
-        Task<MainResponse<List<SchedulerModel>>> GetScheduler();
-        Task<MainResponse<DevicesDataModelDTO>> GetModbusDevicesData();
-        Task<MainResponse<FieldDataModel>> GetFieldData();
+        Task<MainResponse<object>> GetpH(long startTimestamp, long endTimestamp);
+        Task<MainResponse<object>> GetD1AllCAL();
+        Task<MainResponse<object>> GetD2AllCAL();
+        Task<MainResponse<object>> GetAllAlarm();
+        Task<MainResponse<object>> GetScheduler();
+        Task<MainResponse<object>> GetModbusDevicesData();
+        Task<MainResponse<object>> GetFieldData();
 
 
         Task<MainResponse<object>> PostpH(RealTimepH realTimepH);
