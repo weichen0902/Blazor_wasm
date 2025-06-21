@@ -8,12 +8,10 @@ namespace Blazor_wasm
     {
         public (int, double) LifeSpanCauculate(T secondLargesItem, double currentZero, double currentSlope, int a, int b, int c, double fieldDecline, int constantFieldTotalDays)
         {
-
             var secondLargesItemTemp = secondLargesItem as CalDataModel;
 
-
             var absCurrentZero = Math.Abs(currentZero);
-            var absSecondZero = Math.Abs(secondLargesItemTemp.Zero);
+            var absSecondZero = Math.Abs(secondLargesItemTemp!.Zero);
 
             var absSlopeDifferenceBetweenCurrentAndStandard = Math.Abs(currentSlope + 59.16);
             var absSlopeDifferenceBetweenSecondLargestAndStandard = Math.Abs(secondLargesItemTemp.Slope + 59.16);
@@ -30,11 +28,11 @@ namespace Blazor_wasm
 
             var feedbackDays_f = (int)((b + addOrSubtractDaysAfterCal_e) * fieldDecline);    
 
-            var actualRemainingDays = c + feedbackDays_f;
+            var actualRemainingDays_g = c + feedbackDays_f;
 
-            var endurancePercentage = (actualRemainingDays/ constantFieldTotalDays) * 100.0;
+            var endurancePercentage = (actualRemainingDays_g / constantFieldTotalDays) * 100.0;
 
-            return (actualRemainingDays, endurancePercentage);
+            return (actualRemainingDays_g, endurancePercentage);
 
         }
     }

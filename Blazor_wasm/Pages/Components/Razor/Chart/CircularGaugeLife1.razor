@@ -7,7 +7,7 @@
 @inject IStringLocalizer<MyStrings> localizer
 @implements IDisposable
 
-@* <input type="text" @bind-value="PointerValues1"/> *@
+@* <input type="text" @bind-value="EndurancePercentage1"/> *@
 <CircularGaugeAxes>
     <CircularGaugeAxis StartAngle="220" EndAngle="140" Radius="90%" Minimum="0" Maximum="100">
         <CircularGaugeAxisLineStyle Width="0" />
@@ -17,9 +17,9 @@
         <CircularGaugeAxisMajorTicks Height="0" />
         <CircularGaugeAxisMinorTicks Height="0" />
         <CircularGaugePointers>
-            @for (int i = 0; i < PointerValues; i++)
+            @for (int i = 0; i < EndurancePercentage; i++)
             {
-                if (PointerValues >= 0 && PointerValues < 50)
+                if (EndurancePercentage >= 0 && EndurancePercentage < 50)
                 {
                     <CircularGaugePointer Value="@i" Color="@redToOrange[i]" Radius="80%"
                     MarkerWidth="38" MarkerHeight="3"
@@ -27,7 +27,7 @@
                         <CircularGaugePointerAnimation Enable="false"></CircularGaugePointerAnimation>
                     </CircularGaugePointer>
                 }
-                else if (PointerValues >= 50 && PointerValues < 60)
+                else if (EndurancePercentage >= 50 && EndurancePercentage < 60)
                 {
                     <CircularGaugePointer Value="@i" Color="@orangeToGreen[i]" Radius="80%"
                     MarkerWidth="38" MarkerHeight="3"
@@ -35,7 +35,7 @@
                         <CircularGaugePointerAnimation Enable="false"></CircularGaugePointerAnimation>
                     </CircularGaugePointer>
                 }
-                else if (PointerValues >= 60 && PointerValues < 80)
+                else if (EndurancePercentage >= 60 && EndurancePercentage < 80)
                 {
                     <CircularGaugePointer Value="@i" Color="@greenToBlue[i]" Radius="80%"
                     MarkerWidth="38" MarkerHeight="3"
@@ -60,7 +60,7 @@
         <CircularGaugeAnnotations>           
             <CircularGaugeAnnotation Angle="@GaugeSixAngle" ZIndex="1" Radius="@GaugeSixRadius">
                 <ContentTemplate>
-                    <div class="gaugeSixFirstText" style="font-size:20px;">@PointerValues % <br /> <div style="font-family:inherit"> @localizer[StringDescriptionModel.dashboard_endurance] </div> </div>
+                    <div class="gaugeSixFirstText" style="font-size:20px;">@EndurancePercentage % <br /> <div style="font-family:inherit"> @localizer[StringDescriptionModel.dashboard_endurance] </div> </div>
                 </ContentTemplate>
             </CircularGaugeAnnotation>           
         </CircularGaugeAnnotations>
@@ -70,7 +70,8 @@
 @code {
     public double GaugeSixAngle = 76;
     public string GaugeSixRadius = "10%";
-    public static double PointerValues;
+    public static double EndurancePercentage;
+    public static int ActualRemainingDays;
     private List<CalDataModel>? d1CalData;
     private bool lifeIncrease, lifeDecrease;
 
@@ -120,11 +121,14 @@
           .Skip(1)
           .FirstOrDefault();
 
+        if(d1CalData!.Count > 1)
+        {
+            var result = new Calculate<CalDataModel>().LifeSpanCauculate(secondLargestItem!, hbmZero, hbmSlope, previousCalRemainDays_a, differenceDaysBetweenPreviousAndCurrent_b, remainDays_c, fieldDecline, constantFieldTotalDays);
 
-        var result = new Calculate<CalDataModel>().LifeSpanCauculate(secondLargestItem!, hbmZero, hbmSlope, previousCalRemainDays_a, differenceDaysBetweenPreviousAndCurrent_b, remainDays_c, fieldDecline, constantFieldTotalDays);
-
-        PointerValues = result.Item2;
-
+            ActualRemainingDays = result.Item1;
+            EndurancePercentage = result.Item2;
+        }
+            
         PublishMaintainMsg();
 
         StateHasChanged();
@@ -133,22 +137,22 @@
 
 	public void PublishMaintainMsg()
 	{
-        if (PointerValues <= 100 && PointerValues > 80)
+        if (EndurancePercentage <= 100 && EndurancePercentage > 80)
         {
-            NotifyMaintainMsg($"{localizer[StringDescriptionModel.dialog_electrode1]}_{localizer[StringDescriptionModel.dashboard_endurance]} {PointerValues}%, {localizer[StringDescriptionModel.dialog_maintain80]}", PointerValues);
+            NotifyMaintainMsg($"{localizer[StringDescriptionModel.dialog_electrode1]}_{localizer[StringDescriptionModel.dashboard_endurance]} {EndurancePercentage}%, {localizer[StringDescriptionModel.dialog_maintain80]}", EndurancePercentage);
         }
-        else if (PointerValues <= 80 && PointerValues > 60)
+        else if (EndurancePercentage <= 80 && EndurancePercentage > 60)
         {
-            NotifyMaintainMsg($"{localizer[StringDescriptionModel.dialog_electrode1]}_{localizer[StringDescriptionModel.dashboard_endurance]} {PointerValues}%, {localizer[StringDescriptionModel.dialog_maintain70]}", PointerValues);             
+            NotifyMaintainMsg($"{localizer[StringDescriptionModel.dialog_electrode1]}_{localizer[StringDescriptionModel.dashboard_endurance]} {EndurancePercentage}%, {localizer[StringDescriptionModel.dialog_maintain70]}", EndurancePercentage);             
             
         }
-        else if (PointerValues <= 60 && PointerValues > 50)
+        else if (EndurancePercentage <= 60 && EndurancePercentage > 50)
         {
-            NotifyMaintainMsg($"{localizer[StringDescriptionModel.dialog_electrode1]}_{localizer[StringDescriptionModel.dashboard_endurance]} {PointerValues}%, {localizer[StringDescriptionModel.dialog_maintain60]}", PointerValues);
+            NotifyMaintainMsg($"{localizer[StringDescriptionModel.dialog_electrode1]}_{localizer[StringDescriptionModel.dashboard_endurance]} {EndurancePercentage}%, {localizer[StringDescriptionModel.dialog_maintain60]}", EndurancePercentage);
         }
         else
         {
-            NotifyMaintainMsg($"{localizer[StringDescriptionModel.dialog_electrode1]}_{localizer[StringDescriptionModel.dashboard_endurance]} {PointerValues}%, {localizer[StringDescriptionModel.dialog_maintain30]}", PointerValues);
+            NotifyMaintainMsg($"{localizer[StringDescriptionModel.dialog_electrode1]}_{localizer[StringDescriptionModel.dashboard_endurance]} {EndurancePercentage}%, {localizer[StringDescriptionModel.dialog_maintain30]}", EndurancePercentage);
         }
 	}
 
