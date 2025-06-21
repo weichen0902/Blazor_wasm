@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CsvHelper.Configuration.Attributes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -8,13 +9,15 @@ using System.Threading.Tasks;
 
 namespace Blazor_wasm.Models.DatabaseModels
 {
-    public class RealTimepH
+    public class CalDataModel
     {
         [Key]
         public int Id { get; set; }
         public DateTime DateTime { get; set; }
-        public double? D1pH { get; set; }
-        public double? D2pH { get; set; }
+        public ushort Health { get; set; }
+        public double Zero { get; set; }
+        public double Slope { get; set; }
+        public double LifeSpan { get; set; }
+
     }
 }
-

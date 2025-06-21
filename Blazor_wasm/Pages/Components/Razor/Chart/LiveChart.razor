@@ -45,7 +45,7 @@
 
 
     private long dateTimeStartUnixTimeStamp, dateTimeEndUnixTimeStamp;
-    private List<RealTimepH>? realTimepHList = new List<RealTimepH>();
+    private List<RealTimepHModel>? realTimepHList = new List<RealTimepHModel>();
 
     protected override void OnInitialized()
     {
@@ -123,7 +123,7 @@
         dateTimeStartUnixTimeStamp = dateTimeEndUnixTimeStamp - 1800;
 
         var result = await dataService.GetpH(dateTimeStartUnixTimeStamp, dateTimeEndUnixTimeStamp);
-        realTimepHList = result.Content as List<RealTimepH>;
+        realTimepHList = result.Content as List<RealTimepHModel>;
 
         var historicalData = new List<LiveDataPoint>();
 

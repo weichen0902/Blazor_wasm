@@ -51,7 +51,7 @@
 
     private int inputNumber;
     private const int V = 20;
-    private List<RealTimepH> realTimepHList = new List<RealTimepH>();
+    private List<RealTimepHModel> realTimepHList = new List<RealTimepHModel>();
     private List<double?>? pH1List;
     private List<double?>? pH2List;
 
@@ -130,7 +130,7 @@
         await Task.Delay(100);
 
         var result = await dataService.GetpH(startUnixTimeStamp, endUnixTimeStamp);
-        realTimepHList = result?.Content as List<RealTimepH>;
+        realTimepHList = result?.Content as List<RealTimepHModel>;
         if (result.IsSuccess == false)
         {
             await JS.InvokeVoidAsync("alertMessage", alertMsgs.ErrorAlert(pageTitleService.Title, result).Result);

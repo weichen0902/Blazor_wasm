@@ -15,7 +15,7 @@
 @code {
     private bool isPaused = false;
     private long dateTimeStartUnixTimeStamp, dateTimeEndUnixTimeStamp;
-    private static List<RealTimepH>? realTimepHList = new List<RealTimepH>();
+    private static List<RealTimepHModel>? realTimepHList = new List<RealTimepHModel>();
 
     protected override void OnInitialized()
     {
@@ -29,7 +29,7 @@
         dateTimeStartUnixTimeStamp = dateTimeEndUnixTimeStamp - 1800;
 
         var result = await dataService.GetpH(dateTimeStartUnixTimeStamp, dateTimeEndUnixTimeStamp);
-        realTimepHList = result.Content as List<RealTimepH>;
+        realTimepHList = result.Content as List<RealTimepHModel>;
         if (result.IsSuccess == false)
             await JS.InvokeVoidAsync("alertMessage", alertMsgs.ErrorAlert(pageTitleService.Title, result).Result);
 
@@ -41,7 +41,7 @@
 
 
     [JSInvokable]
-    public static async Task<List<RealTimepH>> GetHistoricalDataAsync()
+    public static async Task<List<RealTimepHModel>> GetHistoricalDataAsync()
     {
         return await Task.FromResult(realTimepHList);
     }

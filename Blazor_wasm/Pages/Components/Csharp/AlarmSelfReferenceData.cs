@@ -23,7 +23,7 @@ namespace Blazor_wasm.Pages.Components.Csharp
 
         public AlarmSelfReferenceData() { }
 
-        public static List<AlarmSelfReferenceData> GetTree(List<AlarmData> alarmData)
+        public static List<AlarmSelfReferenceData> GetTree(List<AlarmDataModel> alarmData)
         {
             tree.Clear();
 

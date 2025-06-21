@@ -41,7 +41,7 @@ namespace Blazor_wasm.Services
                 {
                     result.IsSuccess = true;
                     var responseStr = await response.Content.ReadAsStringAsync();
-                    var data = JsonConvert.DeserializeObject<List<RealTimepH>>(responseStr);
+                    var data = JsonConvert.DeserializeObject<List<RealTimepHModel>>(responseStr);
                     result.Content = data;
                 }
                 else
@@ -79,7 +79,7 @@ namespace Blazor_wasm.Services
                 {
                     result.IsSuccess = true;
                     var responseStr = await response.Content.ReadAsStringAsync();
-                    var data = JsonConvert.DeserializeObject<List<D1CalData>>(responseStr);
+                    var data = JsonConvert.DeserializeObject<List<CalDataModel>>(responseStr);
                     result.Content = data;
                 }
                 else
@@ -157,7 +157,7 @@ namespace Blazor_wasm.Services
                 {
                     result.IsSuccess = true;
                     var responseStr = await response.Content.ReadAsStringAsync();
-                    var data = JsonConvert.DeserializeObject<List<AlarmData>>(responseStr);
+                    var data = JsonConvert.DeserializeObject<List<AlarmDataModel>>(responseStr);
                     result.Content = data;
                 }
                 else
@@ -300,7 +300,7 @@ namespace Blazor_wasm.Services
             return result;
         }
 
-        public async Task<MainResponse<object>> PostpH(RealTimepH realTimepH)
+        public async Task<MainResponse<object>> PostpH(RealTimepHModel realTimepH)
         {
             var result = new MainResponse<object>();
 
@@ -335,7 +335,7 @@ namespace Blazor_wasm.Services
             return result;
         }
 
-        public async Task<MainResponse<object>> PostD1CALList(List<D1CalData> data)
+        public async Task<MainResponse<object>> PostD1CALList(List<CalDataModel> data)
         {
             var result = new MainResponse<object>();
 
@@ -405,7 +405,7 @@ namespace Blazor_wasm.Services
             return result;
         }
 
-        public async Task<MainResponse<object>> PostD1CalData(D1CalData data)
+        public async Task<MainResponse<object>> PostD1CalData(CalDataModel data)
         {
             var result = new MainResponse<object>();
 
@@ -475,7 +475,7 @@ namespace Blazor_wasm.Services
             return result;
         }
 
-        public async Task<MainResponse<object>> PostAlarmData(AlarmData alarmData)
+        public async Task<MainResponse<object>> PostAlarmData(AlarmDataModel alarmData)
         {
             var result = new MainResponse<object>();
 
@@ -616,7 +616,7 @@ namespace Blazor_wasm.Services
         }
 
 
-        public async Task<MainResponse<object>> UpdateAlarmStatus(AlarmData alarmData)
+        public async Task<MainResponse<object>> UpdateAlarmStatus(AlarmDataModel alarmData)
         {
             var result = new MainResponse<object>();
 

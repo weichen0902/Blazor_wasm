@@ -14,7 +14,7 @@ namespace Blazor_wasm.Controller
     {
         protected IDataService _dataService;
 
-        public List<D1CalData>? d1CalData = new List<D1CalData>();
+        public List<CalDataModel>? d1CalData = new List<CalDataModel>();
         public List<D2CalData>? d2CalData = new List<D2CalData>();
 
         public DateTime minimumDateTime{ get; set; }
@@ -31,7 +31,7 @@ namespace Blazor_wasm.Controller
             var result1 = await _dataService.GetD1AllCAL();
             if (result1.IsSuccess && result1.Content != null)
             {
-                d1CalData = result1?.Content as List<D1CalData>;
+                d1CalData = result1?.Content as List<CalDataModel>;
                 d1CalData?.Sort((a, b) => b.DateTime.CompareTo(a.DateTime));           
             }
 

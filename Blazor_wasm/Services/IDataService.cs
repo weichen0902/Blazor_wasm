@@ -20,17 +20,17 @@ namespace Blazor_wasm.Services
         Task<MainResponse<object>> GetFieldData();
 
 
-        Task<MainResponse<object>> PostpH(RealTimepH realTimepH);
-        Task<MainResponse<object>> PostD1CALList(List<D1CalData> data);
+        Task<MainResponse<object>> PostpH(RealTimepHModel realTimepH);
+        Task<MainResponse<object>> PostD1CALList(List<CalDataModel> data);
         Task<MainResponse<object>> PostD2CALList(List<D2CalData> data);
-        Task<MainResponse<object>> PostD1CalData(D1CalData data);
+        Task<MainResponse<object>> PostD1CalData(CalDataModel data);
         Task<MainResponse<object>> PostD2CalData(D2CalData data);
-        Task<MainResponse<object>> PostAlarmData(AlarmData alarmData);
+        Task<MainResponse<object>> PostAlarmData(AlarmDataModel alarmData);
         Task<MainResponse<object>> PostScheduler(SchedulerModel schedulerData);
         Task<MainResponse<object>> PostModbusDevicesData(PostModbusApiModel postModbusApiModel);
         Task<MainResponse<object>> PostFieldData(FieldDataModel postModbusApiModel);
 
-        Task<MainResponse<object>> UpdateAlarmStatus(AlarmData alarmData);
+        Task<MainResponse<object>> UpdateAlarmStatus(AlarmDataModel alarmData);
         Task<MainResponse<object>> UpdateScheduler(SchedulerModel schedulerData);
         Task<MainResponse<object>> UpdateFieldData(FieldDataModel data);
 

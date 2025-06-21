@@ -57,7 +57,7 @@
 
 @code {
     private List<D1SelfReferenceData>? TreeGridData { get; set; }
-    private List<D1CalData>? d1CalData;
+    private List<CalDataModel>? d1CalData;
 
     private bool fetchData = false;
 
@@ -98,8 +98,8 @@
                 {
                     using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                     {
-                        var postData = new List<D1CalData>();
-                        var products = await csv.GetRecordsAsync<D1CalData>().ToListAsync();
+                        var postData = new List<CalDataModel>();
+                        var products = await csv.GetRecordsAsync<CalDataModel>().ToListAsync();
                         d1CalData = products;
 
                         if (d1CalData != null)
@@ -109,7 +109,7 @@
 
                         foreach (var postProducts in products)
                         {
-                            postData.Add(new D1CalData
+                            postData.Add(new CalDataModel
                                 {
                                     DateTime = postProducts.DateTime,
                                     Health = postProducts.Health,
@@ -190,7 +190,7 @@
         getAllCalData.d1CalData = null;
         TreeGridData = new List<D1SelfReferenceData>();
 
-        D1CalData _d1CalData = new D1CalData
+        CalDataModel _d1CalData = new CalDataModel
             {
                 DateTime = DateTime.Now,
                 Zero = (double)devicesDataModel[0, "hbmZero"],

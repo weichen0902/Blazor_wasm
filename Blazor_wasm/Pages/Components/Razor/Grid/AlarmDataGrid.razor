@@ -82,7 +82,7 @@
 
 @code {
     public List<AlarmSelfReferenceData>? TreeGridData { get; set; }
-    private List<AlarmData>? alarmData, inAlarmData;
+    private List<AlarmDataModel>? alarmData, inAlarmData;
 
     public void ToChangeAlarmBtnState() => toChangeAlarmBtnState?.Invoke();
     public static event System.Action? toChangeAlarmBtnState;
@@ -106,7 +106,7 @@
     private async void Update(bool historyAlarmActive)
     {
         var result = await dataService.GetAllAlarm();
-        alarmData = result.Content as List<AlarmData>;
+        alarmData = result.Content as List<AlarmDataModel>;
         if (!result.IsSuccess)
             await JS.InvokeVoidAsync("alertMessage", alertMsgs.ErrorAlert(pageTitleService.Title, result).Result);
 
