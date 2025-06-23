@@ -13,6 +13,7 @@ using Microsoft.JSInterop;
 using Blazor_wasm.Models.DatabaseModels;
 using Newtonsoft.Json;
 using Blazor_wasm.Models.APIModels;
+using Blazor_wasm.Pages.Components.Razor.Chart;
 
 namespace Blazor_wasm.Shared
 {

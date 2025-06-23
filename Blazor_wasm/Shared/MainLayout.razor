@@ -507,11 +507,11 @@
 
     public static  FieldDataModel? fieldData;
 
-    private string ipUrl = "192.168.212.107";
+    private string ipUrl = "localhost";
 
     public static string[] waterFieldRate = new string[]
         {         
-           "1", "0.903", "0.859", "0.839", "0.823", "0.819", "0.813", "0.800"
+           "0.8", "0.6", "0.55", "0.4", "0.35", "0.3", "0.25", "0.15"
         };
 
     private double[] totalDays = new double[2];
@@ -520,6 +520,7 @@
     public class DropDownModel
     {
         public string ID { get; set; }
+        public int ConstantTotalDays { get; set; }
         public string Text { get; set; }
     }
 
@@ -578,7 +579,7 @@
                  "1";
             }
             else
-               await JS.InvokeVoidAsync("alertMessage", alertMsgs.ErrorAlert("Field query:", result).Result);
+                await JS.InvokeVoidAsync("alertMessage", alertMsgs.ErrorAlert("Field query:", result).Result);
         }
     }
 
@@ -586,26 +587,26 @@
     {
         // await Task.Delay(1000);
 
-        for (int i = 0; i < waterFieldRate.Length; i++)
-        {
-            if (dropDownFieldBindValue == waterFieldRate[i])
-            {
-                var rate = double.Parse(waterFieldRate[i]);
-                for (int j = 0; j < 2; j++)
-                {
-                    if (j == 0)
-                    {
-                        totalDays[0] = (int)(913 - (778 * (1 - rate) / 0.2));
-                        remainDays[0] = (int)( totalDays[0] * CircularGaugeLife1.PointerValues* 0.01);                     
-                    }
-                    else
-                    {
-                        totalDays[1] = (int)(913 - (778 * (1 - rate) / 0.2));
-                        remainDays[1] = (int)(totalDays[1] * CircularGaugeLife2.PointerValues * 0.01);
-                    }                        
-                }                                        
-            }
-        }  
+        // for (int i = 0; i < waterFieldRate.Length; i++)
+        // {
+        //     if (dropDownFieldBindValue == waterFieldRate[i])
+        //     {
+        //         var rate = double.Parse(waterFieldRate[i]);
+        //         for (int j = 0; j < 2; j++)
+        //         {
+        //             if (j == 0)
+        //             {
+        //                 totalDays[0] = (int)(913 - (778 * (1 - rate) / 0.2));
+        //                 remainDays[0] = (int)( totalDays[0] * CircularGaugeLife1.PointerValues* 0.01);                     
+        //             }
+        //             else
+        //             {
+        //                 totalDays[1] = (int)(913 - (778 * (1 - rate) / 0.2));
+        //                 remainDays[1] = (int)(totalDays[1] * CircularGaugeLife2.PointerValues * 0.01);
+        //             }                        
+        //         }                                        
+        //     }
+        // }  
 
         if (value <= 100 && value > 80)
             toastService.ShowInfo(str);
@@ -623,14 +624,14 @@
     {
         FieldData = new List<DropDownModel>
         {
-            new DropDownModel() { ID= waterFieldRate[0], Text= localizer[StringDescriptionModel.field_pure] },
-            new DropDownModel() { ID= waterFieldRate[1], Text= localizer[StringDescriptionModel.field_lsr] },
-            new DropDownModel() { ID= waterFieldRate[2], Text= localizer[StringDescriptionModel.field_bio] },
-            new DropDownModel() { ID= waterFieldRate[3], Text= localizer[StringDescriptionModel.field_aw] },
-            new DropDownModel() { ID= waterFieldRate[4], Text= localizer[StringDescriptionModel.field_cmp] },
-            new DropDownModel() { ID= waterFieldRate[5], Text= localizer[StringDescriptionModel.field_cucmp] },
-            new DropDownModel() { ID= waterFieldRate[6], Text= localizer[StringDescriptionModel.field_nh] },
-            new DropDownModel() { ID= waterFieldRate[7], Text= localizer[StringDescriptionModel.field_hf] },
+            new DropDownModel() { ID= waterFieldRate[0], ConstantTotalDays=913, Text= localizer[StringDescriptionModel.field_pure] },
+            new DropDownModel() { ID= waterFieldRate[1], ConstantTotalDays=537, Text= localizer[StringDescriptionModel.field_lsr] },
+            new DropDownModel() { ID= waterFieldRate[2], ConstantTotalDays=364, Text= localizer[StringDescriptionModel.field_bio] },
+            new DropDownModel() { ID= waterFieldRate[3], ConstantTotalDays=286, Text= localizer[StringDescriptionModel.field_aw] },
+            new DropDownModel() { ID= waterFieldRate[4], ConstantTotalDays=224, Text= localizer[StringDescriptionModel.field_cmp] },
+            new DropDownModel() { ID= waterFieldRate[5], ConstantTotalDays=208, Text= localizer[StringDescriptionModel.field_cucmp] },
+            new DropDownModel() { ID= waterFieldRate[6], ConstantTotalDays=184, Text= localizer[StringDescriptionModel.field_nh] },
+            new DropDownModel() { ID= waterFieldRate[7], ConstantTotalDays=135, Text= localizer[StringDescriptionModel.field_hf] },
         };
     }
 
@@ -726,12 +727,14 @@
     }
 
     public async void OnDropDownFieldValueChange(SelectEventArgs<DropDownModel> args)
-    {     		
-        FieldDataModel fieldDataModel = new FieldDataModel();
-        fieldDataModel.Field = args.ItemData.Text;
-        fieldData.Field = args.ItemData.Text;
-
-        var response = fieldData == null ? await dataService.PostFieldData(fieldDataModel) : await dataService.UpdateFieldData(fieldDataModel);     
+    {
+        fieldData!.Field = args.ItemData.Text;
+        FieldDataModel _fieldData = new FieldDataModel();
+        _fieldData.Field = args.ItemData.Text;
+        _fieldData.ConstantTotalDays = args.ItemData.ConstantTotalDays;
+        _fieldData.DegradationFactor = Convert.ToDouble(args.ItemData.ID);
+ 
+        var response = fieldData == null ? await dataService.PostFieldData(_fieldData!) : await dataService.UpdateFieldData(_fieldData);
         fieldModal.Hide();
         NotifyFieldInputChanged();     
     }

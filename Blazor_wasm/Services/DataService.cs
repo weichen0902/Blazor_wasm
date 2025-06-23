@@ -118,7 +118,7 @@ namespace Blazor_wasm.Services
                 {
                     result.IsSuccess = true;
                     var responseStr = await response.Content.ReadAsStringAsync();
-                    var data = JsonConvert.DeserializeObject<List<D2CalData>>(responseStr);
+                    var data = JsonConvert.DeserializeObject<List<CalDataModel>>(responseStr);
                     result.Content = data;
                 }
                 else
@@ -370,7 +370,7 @@ namespace Blazor_wasm.Services
             return result;
         }
 
-        public async Task<MainResponse<object>> PostD2CALList(List<D2CalData> data)
+        public async Task<MainResponse<object>> PostD2CALList(List<CalDataModel> data)
         {
             var result = new MainResponse<object>();
 
@@ -440,7 +440,7 @@ namespace Blazor_wasm.Services
             return result;
         }
 
-        public async Task<MainResponse<object>> PostD2CalData(D2CalData data)
+        public async Task<MainResponse<object>> PostD2CalData(CalDataModel data)
         {
             var result = new MainResponse<object>();
 

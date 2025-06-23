@@ -73,17 +73,9 @@
     public static double EndurancePercentage;
     public static int ActualRemainingDays;
     private List<CalDataModel>? d1CalData;
-    private bool lifeIncrease, lifeDecrease;
-
-    private double hbmZero { get; set; }
-    private double hbmSlope { get; set; }
 
     public void NotifyMaintainMsg(string str, double value) => onMaintainMsg?.Invoke(str, value);
     public static event Action<string, double>? onMaintainMsg;
-
-
-    int previousCalRemainDays_a, differenceDaysBetweenPreviousAndCurrent_b, remainDays_c, constantFieldTotalDays;
-    double fieldDecline;
 
     // private int elapsedDays, remainDays, totalDays;
 
@@ -100,39 +92,9 @@
 
     private async void Update(string factor)
     {
-        // for (int i = 0; i < MainLayout.waterFieldRate.Length; i++)
-        // {
-        //     if (MainLayout.dropDownFieldBindValue == MainLayout.waterFieldRate[i])
-        //     {
-        //         var rate = double.Parse(MainLayout.waterFieldRate[i]);
-        //         totalDays = (int)(420 - (285 * (1 - rate) / 0.2));
-        //         remainDays = totalDays - elapsedDays;
-        //         break;
-        //     }            
-        // }
-
-
-        hbmZero = (double)devicesDataModel[0, "hbmZero"];
-        hbmSlope = (double)devicesDataModel[0, "hbmSlope"];
-
-        var d1CalData = getAllCalData?.d1CalData;
-        var secondLargestItem = d1CalData!
-          .OrderByDescending(x => x.Id)
-          .Skip(1)
-          .FirstOrDefault();
-
-        if(d1CalData!.Count > 1)
-        {
-            var result = new Calculate<CalDataModel>().LifeSpanCauculate(secondLargestItem!, hbmZero, hbmSlope, previousCalRemainDays_a, differenceDaysBetweenPreviousAndCurrent_b, remainDays_c, fieldDecline, constantFieldTotalDays);
-
-            ActualRemainingDays = result.Item1;
-            EndurancePercentage = result.Item2;
-        }
-            
         PublishMaintainMsg();
 
-        StateHasChanged();
-              
+        StateHasChanged();              
     }
 
 	public void PublishMaintainMsg()

@@ -23,7 +23,7 @@ namespace Blazor_wasm.Pages.Components.Csharp
 
         public D2SelfReferenceData() { }
 
-        public static List<D2SelfReferenceData> GetTree(List<D2CalData> D2CalData)
+        public static List<D2SelfReferenceData> GetTree(List<CalDataModel> D2CalData)
         {
             tree.Clear();
 

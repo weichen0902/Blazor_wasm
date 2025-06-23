@@ -22,9 +22,9 @@ namespace Blazor_wasm.Services
 
         Task<MainResponse<object>> PostpH(RealTimepHModel realTimepH);
         Task<MainResponse<object>> PostD1CALList(List<CalDataModel> data);
-        Task<MainResponse<object>> PostD2CALList(List<D2CalData> data);
+        Task<MainResponse<object>> PostD2CALList(List<CalDataModel> data);
         Task<MainResponse<object>> PostD1CalData(CalDataModel data);
-        Task<MainResponse<object>> PostD2CalData(D2CalData data);
+        Task<MainResponse<object>> PostD2CalData(CalDataModel data);
         Task<MainResponse<object>> PostAlarmData(AlarmDataModel alarmData);
         Task<MainResponse<object>> PostScheduler(SchedulerModel schedulerData);
         Task<MainResponse<object>> PostModbusDevicesData(PostModbusApiModel postModbusApiModel);
