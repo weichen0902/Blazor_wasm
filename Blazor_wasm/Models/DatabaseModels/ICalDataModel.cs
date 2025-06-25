@@ -1,15 +1,8 @@
-﻿using CsvHelper.Configuration.Attributes;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Blazor_wasm.Models.DatabaseModels
 {
-    public class CalDataModel:ICalDataModel
+    public interface ICalDataModel
     {
         [Key]
         public int Id { get; set; }
@@ -23,6 +16,5 @@ namespace Blazor_wasm.Models.DatabaseModels
         public double Slope { get; set; }
         public ushort ActualRemainingDays { get; set; }
         public double EndurancePercentage { get; set; }
-
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Blazor_wasm.Controller;
+using Blazor_wasm.Models.DatabaseModels;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
@@ -56,6 +57,8 @@ namespace Blazor_wasm.Models.ModbusModels
 
         private ushort[] systemStatus = new ushort[1];
         private ushort[] deviceStatus = new ushort[2];
+
+        private CalDataModel[] calData = new CalDataModel[2];
 
         public void TriggerNotifyChanged()
         {
@@ -142,13 +145,15 @@ namespace Blazor_wasm.Models.ModbusModels
                         return systemStatus[index];
                     case "deviceStatus":
                         return deviceStatus[index];
+                    case "calData":
+                        return calData[index];
                     default:
                         throw new ArgumentException("Invalid array type.");
                 }
             }
             set
             {
-                if (value is double || value is ushort)
+                if (value is double || value is ushort || value is CalDataModel)
                 {
                     switch (arrayType)
                     {
@@ -344,6 +349,13 @@ namespace Blazor_wasm.Models.ModbusModels
                             if (deviceStatus[index] != (ushort)value)
                             {
                                 deviceStatus[index] = (ushort)value;
+                                boolStateChanged = true;
+                            }
+                            break;
+                        case "calData":
+                            if (calData[index] != (CalDataModel)value)
+                            {
+                                calData[index] = (CalDataModel)value;
                                 boolStateChanged = true;
                             }
                             break;

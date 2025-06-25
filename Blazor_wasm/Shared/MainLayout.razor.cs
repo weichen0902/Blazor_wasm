@@ -41,6 +41,9 @@ namespace Blazor_wasm.Shared
         public static string[] systemStatus = new string[1];
         public static string[] deviceStatus = new string[2];
 
+        public static ushort[] actualRemainingDays = new ushort[2];
+        public static double[] endurancePercentage = new double[2];
+
         ushort[] serverSystemAlarm1ErrorCode = new ushort[2];
         char[] serverSystemAlarm1ErrorCodeBinaryCharArray = new char[16];
 
@@ -82,7 +85,8 @@ namespace Blazor_wasm.Shared
 
             hubConnection.On<string, string>("ReceiveMessage", (user, message) =>
             {
-                var response = JsonConvert.DeserializeObject<DevicesDataModelDTO>(message);
+                var response = JsonConvert.DeserializeObject<DevicesDataModelDTO>(message); 
+               
                 for (int i = 0; i < 2; i++)
                 {
                     devicesDataModel[i, "hbmpH"] = response.hbmpH[i];
@@ -118,6 +122,11 @@ namespace Blazor_wasm.Shared
                     devicesDataModel[i, "valveState"] = response.valveState[i];
 
                     devicesDataModel[i, "deviceStatus"] = response.deviceStatus[i];
+
+                    devicesDataModel[i, "calData"] = response.calData[i];
+
+                    actualRemainingDays[i] = response.calData[i].ActualRemainingDays;
+                    endurancePercentage[i] = response.calData[i].EndurancePercentage;
 
                     var serverSystemAlarm1ErrorCodeBinary = Convert.ToString(serverSystemAlarm1ErrorCode[i], 2);
                     var _serverSystemAlarm1ErrorCodeBinaryCharArray = serverSystemAlarm1ErrorCodeBinary.ToCharArray();

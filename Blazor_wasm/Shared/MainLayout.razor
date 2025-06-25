@@ -505,7 +505,7 @@
     public static string dropDownFieldBindValue { get; set; }
     public static List<DropDownModel> FieldData;
 
-    public static  FieldDataModel? fieldData;
+    public static  FieldDataModel? fieldData = new FieldDataModel();
 
     private string ipUrl = "localhost";
 
@@ -728,7 +728,8 @@
 
     public async void OnDropDownFieldValueChange(SelectEventArgs<DropDownModel> args)
     {
-        fieldData!.Field = args.ItemData.Text;
+        if(fieldData != null)
+            fieldData.Field = args.ItemData.Text;
         FieldDataModel _fieldData = new FieldDataModel();
         _fieldData.Field = args.ItemData.Text;
         _fieldData.ConstantTotalDays = args.ItemData.ConstantTotalDays;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Blazor_wasm.Models.DatabaseModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -45,5 +46,7 @@ namespace Blazor_wasm.Models.ModbusModels
        
         public ushort[] systemStatus { get; set; } = new ushort[1];
         public ushort[] deviceStatus { get; set; } = new ushort[2];
+        public CalDataModel[] calData { get; set; } = new CalDataModel[2];
+       
     }
 }

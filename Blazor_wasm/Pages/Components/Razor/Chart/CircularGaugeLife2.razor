@@ -15,9 +15,9 @@
         <CircularGaugeAxisMajorTicks Height="0" />
         <CircularGaugeAxisMinorTicks Height="0" />
         <CircularGaugePointers>
-            @for (int i = 0; i < PointerValues; i++)
+            @for (int i = 0; i < MainLayout.endurancePercentage[1]; i++)
             {
-                if (PointerValues > 0 && PointerValues <= 49)
+                if (MainLayout.endurancePercentage[1] > 0 && MainLayout.endurancePercentage[1] <= 49)
                 {
                     <CircularGaugePointer Value="@i" Color="@redToOrange[i]" Radius="80%"
                     MarkerWidth="38" MarkerHeight="3"
@@ -25,7 +25,7 @@
                         <CircularGaugePointerAnimation Enable="false"></CircularGaugePointerAnimation>
                     </CircularGaugePointer>
                 }
-                else if (PointerValues >= 50 && PointerValues < 60)
+                else if (MainLayout.endurancePercentage[1] >= 50 && MainLayout.endurancePercentage[1] < 60)
                 {
                     <CircularGaugePointer Value="@i" Color="@orangeToGreen[i]" Radius="80%"
                     MarkerWidth="38" MarkerHeight="3"
@@ -33,7 +33,7 @@
                         <CircularGaugePointerAnimation Enable="false"></CircularGaugePointerAnimation>
                     </CircularGaugePointer>
                 }
-                else if (PointerValues >= 60 && PointerValues < 80)
+                else if (MainLayout.endurancePercentage[1] >= 60 && MainLayout.endurancePercentage[1] < 80)
                 {
                     <CircularGaugePointer Value="@i" Color="@greenToBlue[i]" Radius="80%"
                     MarkerWidth="38" MarkerHeight="3"
@@ -57,7 +57,7 @@
         <CircularGaugeAnnotations>     
             <CircularGaugeAnnotation Angle="@GaugeSixAngle" ZIndex="1" Radius="@GaugeSixRadius">
                 <ContentTemplate>
-                    <div class="gaugeSixFirstText" style="font-size:20px;">@PointerValues % <br /> <div style="font-family:inherit"> @localizer[StringDescriptionModel.dashboard_endurance] </div> </div>
+                    <div class="gaugeSixFirstText" style="font-size:20px;">@MainLayout.endurancePercentage[1] % <br /> <div style="font-family:inherit"> @localizer[StringDescriptionModel.dashboard_endurance] </div> </div>
                 </ContentTemplate>
             </CircularGaugeAnnotation>          
         </CircularGaugeAnnotations>
@@ -67,12 +67,6 @@
 @code {
     public double GaugeSixAngle = 76;
     public string GaugeSixRadius = "10%";
-    public static double PointerValues;
-
-    private static DateTime startDate = new DateTime(2025, 2, 1);
-
-    private double hbmZero { get; set; }
-    private double hbmSlope { get; set; }
 
     public void NotifyMaintainMsg(string str, double value) => onMaintainMsg?.Invoke(str, value);
     public static event Action<string, double>? onMaintainMsg;
@@ -85,56 +79,38 @@
 
     protected override async void OnInitialized()
     {          
-        MainLayout.OnFieldInputChange += UpdateRelay;
-        devicesDataModel.OnCalStateChange += UpdateRelay;
+        MainLayout.OnFieldInputChange += PublishMaintainMsg;
+        devicesDataModel.OnCalStateChange += PublishMaintainMsg;
         Blazor_wasm.Pages.Index.onMaintain2Msg += PublishMaintainMsg;
-      
-        Update(MainLayout.dropDownFieldBindValue);
-    }
-
-    private void UpdateRelay() => Update(MainLayout.dropDownFieldBindValue);
-
-
-    private async void Update(string factor)
-    {     
-        hbmZero = (double)devicesDataModel[1, "hbmZero"];
-        hbmSlope = (double)devicesDataModel[1, "hbmSlope"];
-
-        var slopePercentage = Math.Round((Math.Abs(hbmSlope - (-59.16)) / 59.16) * 100 * 0.5);
-        var zeroPercentage = Math.Round(Math.Abs(hbmZero) * 0.05);
-
-        PointerValues = Math.Round((100 - (zeroPercentage + slopePercentage)) * Convert.ToDouble(factor), 1);
-
-        PublishMaintainMsg();
-
-        StateHasChanged();   
     }
 
     private void PublishMaintainMsg()
     {
-        if (PointerValues <= 100 && PointerValues > 80)
+        StateHasChanged();
+
+        if (MainLayout.endurancePercentage[1] <= 100 && MainLayout.endurancePercentage[1] > 80)
         {
-            NotifyMaintainMsg($"{localizer[StringDescriptionModel.dialog_electrode2]}_{localizer[StringDescriptionModel.dashboard_endurance]} {PointerValues}%, {localizer[StringDescriptionModel.dialog_maintain80]}", PointerValues);
+            NotifyMaintainMsg($"{localizer[StringDescriptionModel.dialog_electrode2]}_{localizer[StringDescriptionModel.dashboard_endurance]} {MainLayout.endurancePercentage[1]}%, {localizer[StringDescriptionModel.dialog_maintain80]}", MainLayout.endurancePercentage[1]);
         }
-        else if (PointerValues <= 80 && PointerValues > 60)
+        else if (MainLayout.endurancePercentage[1] <= 80 && MainLayout.endurancePercentage[1] > 60)
         {
-            NotifyMaintainMsg($"{localizer[StringDescriptionModel.dialog_electrode2]}_{localizer[StringDescriptionModel.dashboard_endurance]} {PointerValues}%, {localizer[StringDescriptionModel.dialog_maintain70]}", PointerValues);
+            NotifyMaintainMsg($"{localizer[StringDescriptionModel.dialog_electrode2]}_{localizer[StringDescriptionModel.dashboard_endurance]} {MainLayout.endurancePercentage[1]}%, {localizer[StringDescriptionModel.dialog_maintain70]}", MainLayout.endurancePercentage[1]);
 
         }
-        else if (PointerValues <= 60 && PointerValues > 50)
+        else if (MainLayout.endurancePercentage[1] <= 60 && MainLayout.endurancePercentage[1] > 50)
         {
-            NotifyMaintainMsg($"{localizer[StringDescriptionModel.dialog_electrode2]}_{localizer[StringDescriptionModel.dashboard_endurance]} {PointerValues}%, {localizer[StringDescriptionModel.dialog_maintain60]}", PointerValues);
+            NotifyMaintainMsg($"{localizer[StringDescriptionModel.dialog_electrode2]}_{localizer[StringDescriptionModel.dashboard_endurance]} {MainLayout.endurancePercentage[1]}%, {localizer[StringDescriptionModel.dialog_maintain60]}", MainLayout.endurancePercentage[1]);
         }
         else
         {
-            NotifyMaintainMsg($"{localizer[StringDescriptionModel.dialog_electrode2]}_{localizer[StringDescriptionModel.dashboard_endurance]} {PointerValues}%, {localizer[StringDescriptionModel.dialog_maintain30]}", PointerValues);
+            NotifyMaintainMsg($"{localizer[StringDescriptionModel.dialog_electrode2]}_{localizer[StringDescriptionModel.dashboard_endurance]} {MainLayout.endurancePercentage[1]}%, {localizer[StringDescriptionModel.dialog_maintain30]}", MainLayout.endurancePercentage[1]);
         }
     }
 
     void IDisposable.Dispose()
     {
-        MainLayout.OnFieldInputChange -= UpdateRelay;
-        devicesDataModel.OnCalStateChange -= UpdateRelay;
+        MainLayout.OnFieldInputChange -= PublishMaintainMsg;
+        devicesDataModel.OnCalStateChange -= PublishMaintainMsg;
         Blazor_wasm.Pages.Index.onMaintain2Msg -= PublishMaintainMsg;
     }
 }
