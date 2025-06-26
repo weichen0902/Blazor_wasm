@@ -13,7 +13,7 @@ namespace Blazor_wasm.Models.DatabaseModels
         public int Id { get; set; }
 
         public string Field { get; set; }
-        public int ConstantTotalDays { get; set; }
+        public ushort ConstantTotalDays { get; set; }
 
         public double DegradationFactor { get; set; }
     }

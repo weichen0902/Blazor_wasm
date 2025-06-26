@@ -505,7 +505,7 @@
     public static string dropDownFieldBindValue { get; set; }
     public static List<DropDownModel> FieldData;
 
-    public static  FieldDataModel? fieldData = new FieldDataModel();
+    public static FieldDataModel? fieldData;
 
     private string ipUrl = "localhost";
 
@@ -585,28 +585,7 @@
 
     private async void PublishMaintainMsg(string str, double value)
     {
-        // await Task.Delay(1000);
-
-        // for (int i = 0; i < waterFieldRate.Length; i++)
-        // {
-        //     if (dropDownFieldBindValue == waterFieldRate[i])
-        //     {
-        //         var rate = double.Parse(waterFieldRate[i]);
-        //         for (int j = 0; j < 2; j++)
-        //         {
-        //             if (j == 0)
-        //             {
-        //                 totalDays[0] = (int)(913 - (778 * (1 - rate) / 0.2));
-        //                 remainDays[0] = (int)( totalDays[0] * CircularGaugeLife1.PointerValues* 0.01);                     
-        //             }
-        //             else
-        //             {
-        //                 totalDays[1] = (int)(913 - (778 * (1 - rate) / 0.2));
-        //                 remainDays[1] = (int)(totalDays[1] * CircularGaugeLife2.PointerValues * 0.01);
-        //             }                        
-        //         }                                        
-        //     }
-        // }  
+        await Task.Delay(1000);
 
         if (value <= 100 && value > 80)
             toastService.ShowInfo(str);
@@ -728,14 +707,25 @@
 
     public async void OnDropDownFieldValueChange(SelectEventArgs<DropDownModel> args)
     {
-        if(fieldData != null)
-            fieldData.Field = args.ItemData.Text;
-        FieldDataModel _fieldData = new FieldDataModel();
+        var _fieldData = new FieldDataModel();
         _fieldData.Field = args.ItemData.Text;
-        _fieldData.ConstantTotalDays = args.ItemData.ConstantTotalDays;
+        _fieldData.ConstantTotalDays = (ushort)(args.ItemData.ConstantTotalDays);
         _fieldData.DegradationFactor = Convert.ToDouble(args.ItemData.ID);
- 
+
         var response = fieldData == null ? await dataService.PostFieldData(_fieldData!) : await dataService.UpdateFieldData(_fieldData);
+
+        if(fieldData == null)
+        {
+            fieldData = new FieldDataModel()
+                {
+                    Field = _fieldData.Field,
+                    ConstantTotalDays = _fieldData.ConstantTotalDays,
+                    DegradationFactor = _fieldData.DegradationFactor
+                };
+        }
+
+        fieldData.Field = _fieldData.Field;
+
         fieldModal.Hide();
         NotifyFieldInputChanged();     
     }
