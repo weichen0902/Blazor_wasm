@@ -31,10 +31,12 @@
     @* <p class="top-row-font">
         @pageTitleService.Title
     </p> *@
-
-    <button class="navbar-toggler" @onclick="ShowFlyout">
-        <span class="navbar-toggler-icon "></span>
-    </button>
+    <span>
+        <button class="navbar-toggler" @onclick="ShowFlyout">
+            <span class="navbar-toggler-icon "></span>
+        </button>
+        <label style="position:relative; left:1150px; top:20px; font-size: 25px;">@currentTime</label>
+    </span>    
 </div>
 
 <div class="page" @onmousedown="HideFlyout">
@@ -468,6 +470,10 @@
 @code {
 
     public static Action disposeTimer;
+
+    private string currentTime;
+    private Timer? timer;
+
     private Modal fieldModal,delAccountModal, switchLanguageModal, ipUrlSetting;
 
     public static double d1pH, d2pH;
@@ -540,6 +546,8 @@
 
     protected override async Task OnInitializedAsync()
     {
+        timer = new Timer(UpdateTime, null, 0, 1000); // 每秒更新时间
+
         base.OnInitializedAsync();
         pageTitleService.Title = "/";
         Login.flagFunc += LogoutAsync;
@@ -581,6 +589,12 @@
             else
                 await JS.InvokeVoidAsync("alertMessage", alertMsgs.ErrorAlert("Field query:", result).Result);
         }
+    }
+
+    private async void UpdateTime(object? state)
+    {
+        currentTime = await JS.InvokeAsync<string>("getCurrentTime");
+        InvokeAsync(StateHasChanged);
     }
 
     private async void PublishMaintainMsg(string str, double value)
@@ -773,5 +787,6 @@
         Login.flagFunc -= LogoutAsync;
         CircularGaugeLife1.onMaintainMsg -= PublishMaintainMsg;
         CircularGaugeLife2.onMaintainMsg -= PublishMaintainMsg;
+        timer?.Dispose();
     }
 }
