@@ -6,7 +6,7 @@
     color: white;
     position: absolute;
     top: 1rem;
-    left: 1rem;
+    left: 2rem;
     border: 1px solid rgba(255, 255, 255, 0.1);
     z-index:998;
     background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") no-repeat center/1.5rem #66B2FF;
@@ -37,10 +37,10 @@ main {
 
 .top-row-font {
     font-size: 1.6rem;
-    color: forestgreen;
+    color: black;
     margin: 0;
     position: absolute;
-    left: 3.0rem;
+    right: 3.0rem;
 }
 
 .top-row a {

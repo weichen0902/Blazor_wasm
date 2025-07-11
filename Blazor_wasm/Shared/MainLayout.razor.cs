@@ -85,10 +85,10 @@ namespace Blazor_wasm.Shared
 
             hubConnection.On<string, string>("ReceiveMessage", (user, message) =>
             {
-                var response = JsonConvert.DeserializeObject<DevicesDataModelDTO>(message); 
-               
+                var response = JsonConvert.DeserializeObject<DevicesDataModelDTO>(message);
+                
                 for (int i = 0; i < 2; i++)
-                {
+                {                  
                     devicesDataModel[i, "hbmpH"] = response.hbmpH[i];
                     if (i == 0)
                         d1pH = (double)devicesDataModel[i, "hbmpH"];

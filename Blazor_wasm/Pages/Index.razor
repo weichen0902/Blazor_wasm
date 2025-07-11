@@ -632,18 +632,13 @@
         MainLayout.OnFieldValueChange += StateHasChanged;
         devicesDataModel.OnStateChange += Update;
         AlarmDataGrid.toChangeAlarmBtnState += StateHasChanged;
-        
+
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            for (int i = 0; i < 2; i++)
-            {
-                hoisterDownCycleSettingCount[i] = (ushort)devicesDataModel[i, "hoisterDownCycleSettingCount"];
-            }
-
             if (Setting.UserBasicDetail.Role == "Admin" || Setting.UserBasicDetail.Role == "User")
             {
                 var result1 = await getAllCalData.UpdateData();
@@ -665,14 +660,12 @@
 
     private async void Update()
     {
-        if (MainLayout.response != null)
+        for (int i = 0; i < 2; i++)
         {
-            for (int i = 0; i < 2; i++)
-            {
-                hoisterDownCycleCount[i] = MainLayout.response.hoisterDownCycleCount[i];
-            }
+            hoisterDownCycleCount[i] = (ushort)devicesDataModel[i, "hoisterDownCycleCount"];
+            hoisterDownCycleSettingCount[i] = (ushort)devicesDataModel[i, "hoisterDownCycleSettingCount"];
         }
-        
+              
         StateHasChanged();
     }
 

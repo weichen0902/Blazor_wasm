@@ -34,9 +34,11 @@
     <span>
         <button class="navbar-toggler" @onclick="ShowFlyout">
             <span class="navbar-toggler-icon "></span>
-        </button>
-        <label style="position:relative; left:1150px; top:20px; font-size: 25px;">@currentTime</label>
-    </span>    
+        </button>      
+    </span>   
+    <span class="top-row-font">
+        <label style="position:relative; top:20px; font-size: 25px;">@currentTime</label>
+    </span>
 </div>
 
 <div class="page" @onmousedown="HideFlyout">
