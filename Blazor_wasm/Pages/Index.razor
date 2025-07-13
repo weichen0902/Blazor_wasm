@@ -642,14 +642,14 @@
             if (Setting.UserBasicDetail.Role == "Admin" || Setting.UserBasicDetail.Role == "User")
             {
                 var result1 = await getAllCalData.UpdateData();
-                if (result1.Item1.IsSuccess == false)
-                    await JS.InvokeVoidAsync("alertMessage", alertMsgs.ErrorAlert(pageTitleService.Title, result1.Item1).Result);
+                // if (result1.Item1.IsSuccess == false)
+                //     await JS.InvokeVoidAsync("alertMessage", alertMsgs.ErrorAlert(pageTitleService.Title, result1.Item1).Result);
 
                 await Task.Delay(500);
 
                 var result2 = await getSchedule.UpdateData();
-                if (!result2.IsSuccess == false)
-                    await JS.InvokeVoidAsync("alertMessage", alertMsgs.ErrorAlert(pageTitleService.Title, result2).Result);
+                // if (!result2.IsSuccess == false)
+                //     await JS.InvokeVoidAsync("alertMessage", alertMsgs.ErrorAlert(pageTitleService.Title, result2).Result);
 
                 await Task.Delay(500);
             }

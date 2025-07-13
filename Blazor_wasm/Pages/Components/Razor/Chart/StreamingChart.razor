@@ -30,8 +30,8 @@
 
         var result = await dataService.GetpH(dateTimeStartUnixTimeStamp, dateTimeEndUnixTimeStamp);
         realTimepHList = result.Content as List<RealTimepHModel>;
-        if (result.IsSuccess == false)
-            await JS.InvokeVoidAsync("alertMessage", alertMsgs.ErrorAlert(pageTitleService.Title, result).Result);
+        // if (result.IsSuccess == false)
+        //     await JS.InvokeVoidAsync("alertMessage", alertMsgs.ErrorAlert(pageTitleService.Title, result).Result);
 
         if (firstRender)
         {

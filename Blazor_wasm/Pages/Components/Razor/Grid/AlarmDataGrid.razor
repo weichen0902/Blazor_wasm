@@ -89,6 +89,7 @@
 
     protected override async Task OnInitializedAsync()
     {
+		pageTitleService.Title = "AlarmDataGrid";
         //   MainLayout.OnLanguageChange += StateHasChanged;
         devicesDataModel.OnAlarmStateChange += UpdateRelay;
         Blazor_wasm.Pages.Index.showHistoryAlarmData += UpdateRelay;
@@ -107,8 +108,8 @@
     {
         var result = await dataService.GetAllAlarm();
         alarmData = result.Content as List<AlarmDataModel>;
-        if (!result.IsSuccess)
-            await JS.InvokeVoidAsync("alertMessage", alertMsgs.ErrorAlert(pageTitleService.Title, result).Result);
+        // if (!result.IsSuccess)
+        //     await JS.InvokeVoidAsync("alertMessage", alertMsgs.ErrorAlert(pageTitleService.Title, result).Result);
 
 
         inAlarmData = alarmData?.Where(x => x.AlarmStatus == "警報中").ToList();
