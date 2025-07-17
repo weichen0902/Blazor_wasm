@@ -19,7 +19,8 @@ namespace Blazor_wasm.Models.ModbusModels
         public void NotifyAlarmStateChanged(bool f, bool g) => OnAlarmStateChange?.Invoke(f, g);
         public event Action<bool, bool>? OnAlarmStateChange;
 
-        public bool boolStateChanged, boolCalStateChanged, boolAlarmStateChanged;
+        public bool boolStateChanged, boolCalStateChanged;
+        public int[] boolAlarmStateChanged = new int[2];
 
         private double[] hbmpH = new double[2];
         private double[] hbmElec = new double[2];
@@ -73,11 +74,12 @@ namespace Blazor_wasm.Models.ModbusModels
                 NotifyCalStateChanged();
             }
             boolCalStateChanged = false;
-            if (boolAlarmStateChanged)
+            if (boolAlarmStateChanged[1] == 1)
             {
+                Blazor_wasm.Pages.Index.filterDevicesNumber = boolAlarmStateChanged[0] == 0 ? false : true;
                 NotifyAlarmStateChanged(false, Blazor_wasm.Pages.Index.filterDevicesNumber);
             }
-            boolAlarmStateChanged = false;
+            boolAlarmStateChanged[1] = 0;
         }
 
         public object this[int index, string arrayType]
@@ -322,21 +324,24 @@ namespace Blazor_wasm.Models.ModbusModels
                             if (driverAlarm[index] != (ushort)value)
                             {
                                 driverAlarm[index] = (ushort)value;
-                                boolAlarmStateChanged = true;
+                                boolAlarmStateChanged[0] = index;
+                                boolAlarmStateChanged[1] = 1;
                             }
                             break;
                         case "systemAlarm1":
                             if (systemAlarm1[index] != (ushort)value)
                             {
                                 systemAlarm1[index] = (ushort)value;
-                                boolAlarmStateChanged = true;
+                                boolAlarmStateChanged[0] = index;
+                                boolAlarmStateChanged[1] = 1;
                             }
                             break;
                         case "commonAlarm":
                             if (commonAlarm[index] != (ushort)value)
                             {
                                 commonAlarm[index] = (ushort)value;
-                                boolAlarmStateChanged = true;
+                                boolAlarmStateChanged[0] = index;
+                                boolAlarmStateChanged[1] = 1;
                             }
                             break;
                         case "systemStatus":

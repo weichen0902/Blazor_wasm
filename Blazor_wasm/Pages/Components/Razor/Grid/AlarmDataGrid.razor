@@ -123,7 +123,7 @@
             TreeGridData = historyAlarmActive ? AlarmSelfReferenceData.GetTree(alarmData).ToList() : AlarmSelfReferenceData.GetTree(inAlarmData).ToList();
             TreeGridData.Sort((a, b) => b.DateTime.CompareTo(a.DateTime));
 
-            TreeGridData = filterDevicesNumber ? TreeGridData.Where(item => item.AlarmContent.Contains("#1") || !item.AlarmContent.Contains("#")).ToList() : 
+            TreeGridData = !filterDevicesNumber ? TreeGridData.Where(item => item.AlarmContent.Contains("#1") || !item.AlarmContent.Contains("#")).ToList() : 
             TreeGridData.Where(item => item.AlarmContent.Contains("#2") || !item.AlarmContent.Contains("#")).ToList();
         }
         StateHasChanged();

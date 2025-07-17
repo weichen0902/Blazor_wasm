@@ -403,7 +403,7 @@ namespace Blazor_wasm.Shared
                         devicesDataModel[i, "calStepTimeSetting"] = (response.calStepTimeSetting[i]);
                     }
 
-                    if (devicesDataModel.boolStateChanged || devicesDataModel.boolCalStateChanged || devicesDataModel.boolAlarmStateChanged)
+                    if (devicesDataModel.boolStateChanged || devicesDataModel.boolCalStateChanged || devicesDataModel.boolAlarmStateChanged[1] == 1)
                     {
                         devicesDataModel.TriggerNotifyChanged();
                     }
