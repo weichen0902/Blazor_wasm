@@ -888,4 +888,7 @@
   <data name="schedule_hour" xml:space="preserve">
     <value>小時</value>
   </data>
+  <data name="dashboard_filter_number" xml:space="preserve">
+    <value>系統編號篩選</value>
+  </data>
 </root>

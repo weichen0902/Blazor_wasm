@@ -1,5 +1,6 @@
 ﻿using Blazor_wasm.Controller;
 using Blazor_wasm.Models.DatabaseModels;
+using Blazor_wasm.Pages;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
@@ -15,8 +16,8 @@ namespace Blazor_wasm.Models.ModbusModels
         public event Action? OnStateChange;
         public void NotifyCalStateChanged() => OnCalStateChange?.Invoke();
         public event Action? OnCalStateChange;
-        public void NotifyAlarmStateChanged(bool f) => OnAlarmStateChange?.Invoke(f);
-        public event Action<bool>? OnAlarmStateChange;
+        public void NotifyAlarmStateChanged(bool f, bool g) => OnAlarmStateChange?.Invoke(f, g);
+        public event Action<bool, bool>? OnAlarmStateChange;
 
         public bool boolStateChanged, boolCalStateChanged, boolAlarmStateChanged;
 
@@ -74,7 +75,7 @@ namespace Blazor_wasm.Models.ModbusModels
             boolCalStateChanged = false;
             if (boolAlarmStateChanged)
             {
-                NotifyAlarmStateChanged(false);
+                NotifyAlarmStateChanged(false, Blazor_wasm.Pages.Index.filterDevicesNumber);
             }
             boolAlarmStateChanged = false;
         }

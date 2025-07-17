@@ -35,14 +35,16 @@
                                     var alarmData = (context as AlarmSelfReferenceData);
                                     if (alarmData.AlarmContent.Contains("System"))
                                     {
+                                        var prefix = alarmData.AlarmContent.Contains("#") ? alarmData.AlarmContent.Substring(0, 2) : null;
                                         <div style="color:black; font:bold">
-                                            <span class="statustxt">@localizer[AlarmDescriptionModel.CollectionOfSystemAlarm1[alarmData.AlarmNumber]]</span>
+                                            <span class="statustxt">@prefix@localizer[AlarmDescriptionModel.CollectionOfSystemAlarm1[alarmData.AlarmNumber]]</span>
                                         </div>
                                     }
                                     else if (alarmData.AlarmContent.Contains("Driver"))
                                     {
+                                        var prefix = alarmData.AlarmContent.Contains("#") ? alarmData.AlarmContent.Substring(0, 2) : null;
                                         <div style="color:black; font:bold">
-                                            <span class="statustxt">@localizer[AlarmDescriptionModel.CollectionOfDriverAlarm[alarmData.AlarmNumber]]</span>
+                                            <span class="statustxt">@prefix@localizer[AlarmDescriptionModel.CollectionOfDriverAlarm[alarmData.AlarmNumber]]</span>
                                         </div>
                                     }
                                     else
@@ -95,16 +97,16 @@
         Blazor_wasm.Pages.Index.showHistoryAlarmData += UpdateRelay;
         Blazor_wasm.Pages.Index.toDeleteAlarmData += DeleteAlarmData;
 
-        Update(true);
+        Update(true, Blazor_wasm.Pages.Index.filterDevicesNumber);
         Blazor_wasm.Pages.Index.historyAlarmActive = true; 
     }
 
-    private void UpdateRelay(bool historyAlarmActive)
+    private void UpdateRelay(bool historyAlarmActive, bool filterDevicesNubmer)
     {
-        Update(historyAlarmActive);
+        Update(historyAlarmActive, filterDevicesNubmer);
     }
 
-    private async void Update(bool historyAlarmActive)
+    private async void Update(bool historyAlarmActive, bool filterDevicesNumber)
     {
         var result = await dataService.GetAllAlarm();
         alarmData = result.Content as List<AlarmDataModel>;
@@ -120,6 +122,9 @@
             Blazor_wasm.Pages.Index.historyAlarmActive = historyAlarmActive ? true : false;
             TreeGridData = historyAlarmActive ? AlarmSelfReferenceData.GetTree(alarmData).ToList() : AlarmSelfReferenceData.GetTree(inAlarmData).ToList();
             TreeGridData.Sort((a, b) => b.DateTime.CompareTo(a.DateTime));
+
+            TreeGridData = filterDevicesNumber ? TreeGridData.Where(item => item.AlarmContent.Contains("#1") || !item.AlarmContent.Contains("#")).ToList() : 
+            TreeGridData.Where(item => item.AlarmContent.Contains("#2") || !item.AlarmContent.Contains("#")).ToList();
         }
         StateHasChanged();
         ToChangeAlarmBtnState();

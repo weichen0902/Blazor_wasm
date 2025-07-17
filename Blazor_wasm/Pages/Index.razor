@@ -93,21 +93,25 @@
                     @* <div style="display:flex; text-align:center; align-items:center; position:absolute; top:5px; right:5px;">
                         <button class="btn btn-primary" style="padding:0 5px 0 5px; " @onclick="ToDeleteAlarmData">@localizer[StringDescriptionModel.dashboard_clear]</button>
                     </div>   *@    
-                    @{
-                        if (historyAlarmActive)
-                        {
-                            <div style="display:flex; text-align:center; align-items:center; position:absolute; top:5px; right:5px; height:30px;">
-                                <button class="btn btn-primary" style="padding:0 5px 0 5px; " onclick="@(()=> { ShowHistoryAlarmData(false); historyAlarmActive = false;})">@localizer[StringDescriptionModel.show_inalarm]</button>
-                            </div>
-                        }
-                        else
-                        {
-                            <div style="display:flex; text-align:center; align-items:center; position:absolute; top:5px; right:5px; height:30px;">
-                                <button class="btn btn-primary" style="padding:0 5px 0 5px; " onclick="@(()=> { ShowHistoryAlarmData(true); historyAlarmActive = true;})">@localizer[StringDescriptionModel.show_history_alarm]</button>
-                            </div>
-                        }
-                    }
 
+                    <div style="display:flex; text-align:center; align-items:center; position:absolute; top:5px; right:10px; height:30px; gap: 10px;">
+                        <button class="btn btn-primary" style="padding:0 5px 0 5px; " onclick="@(()=> {filterDevicesNumber = !filterDevicesNumber; ShowHistoryAlarmData(historyAlarmActive, filterDevicesNumber);})">@localizer[StringDescriptionModel.dashboard_filter_number]</button>
+                        
+                        @{
+                            if (historyAlarmActive)
+                            {
+                                <div style="display:flex; text-align:center; align-items:center; top:5px;  height:30px;">
+                                    <button class="btn btn-primary"  onclick="@(()=> { ShowHistoryAlarmData(false, filterDevicesNumber); historyAlarmActive = false;})">@localizer[StringDescriptionModel.show_inalarm]</button>
+                                </div>
+                            }
+                            else
+                            {
+                                <div style="display:flex; text-align:center; align-items:center; top:5px;  height:30px;">
+                                    <button class="btn btn-primary"  onclick="@(()=> { ShowHistoryAlarmData(true, filterDevicesNumber); historyAlarmActive = true;})">@localizer[StringDescriptionModel.show_history_alarm]</button>
+                                </div>
+                            }
+                        }
+                    </div>                 
                 </div>
             </HeaderTemplate>
             <ContentTemplate>
@@ -577,12 +581,13 @@
     public static List<SchedulerModel>? dataSource { get; set; }
 
     public static bool historyAlarmActive = false;
+    public static bool filterDevicesNumber = false;
 
     public void ToDeleteAlarmData() => toDeleteAlarmData?.Invoke();
     public static event Action? toDeleteAlarmData;
 
-    public void ShowHistoryAlarmData(bool a) => showHistoryAlarmData?.Invoke(a);
-    public static event Action<bool>? showHistoryAlarmData;
+    public void ShowHistoryAlarmData(bool a, bool b) => showHistoryAlarmData?.Invoke(a, b);
+    public static event Action<bool, bool>? showHistoryAlarmData;
 
     public void NotifyMaintain1Msg() => onMaintain1Msg?.Invoke();
     public static event Action? onMaintain1Msg;

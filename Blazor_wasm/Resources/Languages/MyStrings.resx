@@ -888,4 +888,7 @@
   <data name="schedule_hour" xml:space="preserve">
     <value>hours</value>
   </data>
+  <data name="dashboard_filter_number" xml:space="preserve">
+    <value>System Number Filter</value>
+  </data>
 </root>
