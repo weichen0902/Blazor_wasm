@@ -19,7 +19,7 @@ namespace Blazor_wasm.Pages
             {
                 waitFeedback = false;
                 dataTimer?.Dispose();
-            }), null, 2000, Timeout.Infinite);
+            }), null, 1000, Timeout.Infinite);
 
             if (address == 0)
             {

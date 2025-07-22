@@ -150,7 +150,7 @@ namespace Blazor_wasm.Shared
                             var _systemStatusIntBinaryCharArray = systemStatusInt.ToCharArray();
                             Array.Reverse(_systemStatusIntBinaryCharArray);
 
-                            var d1DeviceStatusInt = Convert.ToString((ushort)devicesDataModel[i, "deviceStatus"], 2);
+                            var d1DeviceStatusInt = Convert.ToString((ushort)devicesDataModel[i, "deviceStatus"], 2);                            
                             var _d1DeviceStatusIntBinaryCharArray = d1DeviceStatusInt.ToCharArray();
                             Array.Reverse(_d1DeviceStatusIntBinaryCharArray);
 
@@ -166,16 +166,19 @@ namespace Blazor_wasm.Shared
                             var _clientCommonAlarmErrorCodeBinaryCharArray = clientCommonAlarmErrorCodeBinary.ToCharArray();
                             Array.Reverse(_clientCommonAlarmErrorCodeBinaryCharArray);
 
-                            for (int j = 0; j < _systemStatusIntBinaryCharArray.Length; j++)
+                            if (Pages.Index.waitFeedback == false)
                             {
-                                for (int k = _systemStatusIntBinaryCharArray.Length; k < 16; k++)
+                                for (int j = 0; j < _systemStatusIntBinaryCharArray.Length; j++)
                                 {
-                                    systemStatusIntBinaryCharArray[k] = '0';
+                                    for (int k = _systemStatusIntBinaryCharArray.Length; k < 16; k++)
+                                    {
+                                        systemStatusIntBinaryCharArray[k] = '0';
+                                    }
+
+                                    systemStatusIntBinaryCharArray[j] = _systemStatusIntBinaryCharArray[j];
                                 }
-
-                                systemStatusIntBinaryCharArray[j] = _systemStatusIntBinaryCharArray[j];
                             }
-
+                                
                             for (int j = 0; j < _d1DeviceStatusIntBinaryCharArray.Length; j++)
                             {
                                 for (int k = _d1DeviceStatusIntBinaryCharArray.Length; k < 16; k++)
@@ -198,8 +201,7 @@ namespace Blazor_wasm.Shared
 
                             if (Pages.Index.waitFeedback == false)
                             {
-                                systemStatus[i] = d1DeviceStatusIntBinaryCharArray[0] == '1' ? "red" : "blue";
-
+                                systemStatus[i] = systemStatusIntBinaryCharArray[0] == '1' ? "red" : "blue";                                
                                 hbmWashingMotionControl[i] = d1DeviceStatusIntBinaryCharArray[3] == '1' ? "yellow" : null;
                                 hbmCalMotionControl[i] = d1DeviceStatusIntBinaryCharArray[4] == '1' ? "yellow" : null;
 

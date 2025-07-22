@@ -354,6 +354,7 @@ namespace Blazor_wasm.Models.ModbusModels
                         case "deviceStatus":
                             if (deviceStatus[index] != (ushort)value)
                             {
+                                Console.WriteLine("status change");
                                 deviceStatus[index] = (ushort)value;
                                 boolStateChanged = true;
                             }
