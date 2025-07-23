@@ -515,9 +515,7 @@
                                         <div class="col text-center">
                                             <button class="btn btn-outline-secondary rounded-pill"
                                             style="width:120px; height:50px; white-space: nowrap; font-size: 14px;"
-                                            @onclick="@(async() => WriteToRegister(2100, 1024))"
-                                            onmousedown="this.classList.remove('btn-danger'); this.classList.add('btn-outline-danger');"
-                                            onmouseup="this.classList.remove('btn-outline-danger'); this.classList.add('btn-danger');">
+                                            @onclick="@(async() => WriteToRegister(2100, 1024))">                                           
                                                 @localizer[StringDescriptionModel.modal_back_to_original]
                                             </button>
                                         </div>
