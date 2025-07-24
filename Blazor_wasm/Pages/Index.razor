@@ -391,9 +391,6 @@
     </ModalContent>
 </Modal>
 
-
-
-
 <Modal @ref="modalRef2">
     <ModalContent Centered>
         <ModalHeader>
@@ -417,148 +414,145 @@
                         @if (Expand)
                         {
                             <hr />
-
-                            <div style="display: flex; flex-direction: row; justify-content: space-evenly;">
-                                <div class="control-wrapper flex-column d-flex align-items-center justify-content-between" style="height: 150px; width: 120px;">
-                                    <div class="text-center" style="font-size: 16px;">@localizer[StringDescriptionModel.set_position]</div>
-                                    <input type="number" min="0" max="10" class="form-control text-center" 
-                                        style="border-radius:8px; width:60px; height:40px;"
-                                        value="@hoisterDownCycleSettingCount[1]"
-                                        @onkeydown="@(e => HandleKeyDown(e))"
-                                        @onchange="@(async(e)=> await UpdateNumber(25, e))" />
-                                    <button class="btn btn-outline-primary" style="width: 60px; height:50px; font-size: 14px; padding: 0;" 
-                                    onclick="@(()=> WriteToRegister(2100, 64))">
-                                        Up
-                                    </button>
-                                    <button class="btn btn-outline-primary" style="width: 60px; height:50px; font-size: 14px; padding: 0;" 
-                                    onclick="@(()=> WriteToRegister(2100, 128))">
-                                        Down
-                                    </button>
-                                    <div class="text-nowrap" style="font-size: 16px;">
+                            <div style="display: flex; flex-direction: row; justify-content: space-evenly; gap: 2rem;">
+                                <!-- 最左邊 -->
+                                <div class="d-flex flex-column align-items-center" style="min-width:120px; gap:10px;">
+                                    <div style="font-size: 16px" class="text-nowrap">
                                         @localizer[StringDescriptionModel.current_position]: <span>@hoisterDownCycleCount[1]</span>
                                     </div>
-                                    @if (MainLayout.d2DeviceStatusIntBinaryCharArray[3] == '1' || MainLayout.d2DeviceStatusIntBinaryCharArray[4] == '1')
-                                    {
-                                        @if (MainLayout.d2DeviceStatusIntBinaryCharArray[3] == '1')
-                                        {
-                                            <div style="font-size: 16px" class="text-nowrap">
-                                                <label style="background-color:yellow">@localizer[StringDescriptionModel.modal_prewash] </label>
-                                            </div>
-                                        }
-                                        else if (MainLayout.d2DeviceStatusIntBinaryCharArray[4] == '1')
-                                        {
-                                            <div style="font-size: 16px" class="text-nowrap">
-                                                <label style="background-color:yellow">@localizer[StringDescriptionModel.modal_precal] </label>
-                                            </div>
-                                        }                                                                   
-                                    }
-                                    @if (MainLayout.systemStatusIntBinaryCharArray[10] == '1')
-                                    {
-                                        <div style="font-size: 16px" class="text-nowrap">
-                                            <label style="background-color:yellow">@localizer[StringDescriptionModel.modal_stabling] </label>
-                                        </div>
-                                    }
-
+                                    <div style="font-size: 16px" class="text-nowrap">@localizer[StringDescriptionModel.set_position]:</div>
+                                    <input min="0" max="10" type="number"
+                                           class="form-control text-center"
+                                           style="border-radius:8px; width:80px; height:40px; font-size:1.5rem;"
+                                           value="@hoisterDownCycleSettingCount[1]"
+                                           @onkeydown="@(e => HandleKeyDown(e))"
+                                           @onchange="@(async(e)=> await UpdateNumber(25, e))" />
+                                    <button class="btn btn-outline-primary" style="width: 80px; height:50px; font-size: 14px;"
+                                            onclick="@(()=> WriteToRegister(2100, 64))">
+                                        Up
+                                    </button>
+                                    <button class="btn btn-outline-primary" style="width: 80px; height:50px; font-size: 14px;"
+                                            onclick="@(()=> WriteToRegister(2100, 128))">
+                                        Down
+                                    </button>
+                                    <!-- cylinder 按鈕 -->
+                                    <button class="btn btn-outline-primary"
+                                            style="width: 80px; height:50px; font-size: 14px;"
+                                            @onclick="@(async () => WriteToRegister(2100, 16))">
+                                        @localizer[StringDescriptionModel.modal_gateway]
+                                    </button>
+                                    <!-- go to original 按鈕 -->
+                                    <button class="btn btn-outline-primary"
+                                            style="width: 85px; height:50px; font-size: 14px;"
+                                            @onclick="@(async() => WriteToRegister(2100, 1024))">
+                                        @localizer[StringDescriptionModel.modal_cable_organizer]
+                                    </button>
                                 </div>
-                                <div class="control-wrapper" style="display: flex; flex-direction: column; gap:15px; position:relative; left: 20px;">
-                                    <div class="row row-cols-2 g-3">
-                                        @{
-                                            var buttons1 = new List<ButtonModel>();
 
-                                            @if (MainLayout.systemStatusIntBinaryCharArray[0] == '0')
-                                            {
-                                                buttons1 = new List<ButtonModel>
-                                                {
-                                                    new ButtonModel { Name = localizer[StringDescriptionModel.modal_a_wash], ButtonStyle = "btn-primary", Background = MainLayout.hbmWashingMotionControl[1], Address = 20, Value = 1 },
-                                                    new ButtonModel { Name = localizer[StringDescriptionModel.system_manual], ButtonStyle = "btn-primary", Background = MainLayout.systemStatus[0], Address = 0, Value = 1 },
-                                                    new ButtonModel { Name = localizer[StringDescriptionModel.modal_a_cal], ButtonStyle = "btn-success", Background = MainLayout.hbmCalMotionControl[1], Address = 20, Value = 2 },
-                                                    new ButtonModel { Name = localizer[StringDescriptionModel.modal_gateway], ButtonStyle = "btn-outline-success", Background = MainLayout.airPressureValve[1], Address = 2100, Value = 16 },
-                                                };
-                                            }
-                                            else
-                                            {
-                                                buttons1 = new List<ButtonModel>
-                                                {
-                                                    new ButtonModel { Name = localizer[StringDescriptionModel.modal_a_wash], ButtonStyle = "btn-primary", Background = MainLayout.hbmWashingMotionControl[1], Address = 20, Value = 1 },
-                                                    new ButtonModel { Name = localizer[StringDescriptionModel.system_auto], ButtonStyle = "btn-primary", Background = MainLayout.systemStatus[0], Address = 0, Value = 1 },
-                                                    new ButtonModel { Name = localizer[StringDescriptionModel.modal_a_cal], ButtonStyle = "btn-success", Background = MainLayout.hbmCalMotionControl[1], Address = 20, Value = 2 },
-                                                    new ButtonModel { Name = localizer[StringDescriptionModel.modal_gateway], ButtonStyle = "btn-outline-success", Background = MainLayout.airPressureValve[1], Address = 2100, Value = 16 },
-                                                };
-                                            }
-                                        }
-
-                                        @foreach (var button in buttons1)
+                                <!-- 中間 -->
+                                <table style="width:100%; border-collapse: collapse; border: none;">
+                                    <tr>
+                                        @if (MainLayout.systemStatusIntBinaryCharArray[0] == '0')
                                         {
-                                            <div class="col text-center">
-                                                <button class="btn @button.ButtonStyle rounded-pill"
-                                                style="width:120px; height:50px; white-space: nowrap; font-size: 14px; background-color: @(button.Background)"
-                                                @onclick="@(async () => WriteToRegister(button.Address, button.Value))">
-                                                    @button.Name
-                                                </button>
-                                            </div>
+                                            isManual = false;
                                         }
-
-                                        <div class="col text-center">
+                                        else
+                                        {
+                                            isManual = true;
+                                        }
+                                        <td style="text-align: center;" colspan="2">
+                                            <SfSwitch @bind-Checked="isManual" style="border-radius:20px" CssClass="handle-text" TChecked="bool"
+                                                      ValueChange="OnManualSwitchChanged" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <!-- 第二行，第一個和第二個按鈕 -->
+                                        <td style="text-align: center;">
+                                            <button class="btn btn-outline-success rounded-pill"
+                                                    style="width:120px; height:50px; font-size: 14px; background-color:@MainLayout.bufAValve[1]"
+                                                    disabled="@isManual"
+                                                    @onclick="@(async () => WriteToRegister(2100, 1))">
+                                                @localizer[StringDescriptionModel.modal_m_bufa]
+                                            </button>
+                                        </td>
+                                        <td style="text-align: center;">
+                                            <button class="btn btn-primary rounded-pill"
+                                                    style="width:120px; height:50px; font-size: 14px; background-color:@MainLayout.hbmWashingMotionControl[1]"
+                                                    disabled="@(!isManual)"
+                                                    @onclick="@(async () => WriteToRegister(20, 1))">
+                                                @localizer[StringDescriptionModel.modal_a_wash]
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <!-- 第三行，第三個和第四個按鈕 -->
+                                        <td style="text-align: center;">
+                                            <button class="btn btn-outline-success rounded-pill"
+                                                    style="width:120px; height:50px; font-size: 14px; background-color:@MainLayout.bufBValve[1]"
+                                                    disabled="@isManual"
+                                                    @onclick="@(async () => WriteToRegister(2100, 2))">
+                                                @localizer[StringDescriptionModel.modal_m_bufb]
+                                            </button>
+                                        </td>
+                                        <td style="text-align: center;">
+                                            <button class="btn btn-success rounded-pill"
+                                                    style="width:120px; height:50px; font-size: 14px; background-color:@MainLayout.hbmCalMotionControl[1]"
+                                                    disabled="@(!isManual)"
+                                                    @onclick="@(async () => WriteToRegister(20, 2))">
+                                                @localizer[StringDescriptionModel.modal_a_cal]
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <!-- 第四行，第五個和第六個按鈕 -->
+                                        <td style="text-align: center;">
+                                            <button class="btn btn-outline-success rounded-pill"
+                                                    style="width:120px; height:50px; font-size: 14px; background-color:@MainLayout.reagValve[1]"
+                                                    disabled="@isManual"
+                                                    @onclick="@(async () => WriteToRegister(2100, 4))">
+                                                @localizer[StringDescriptionModel.modal_m_reag]
+                                            </button>
+                                        </td>
+                                        <td style="text-align: center;">
                                             <button class="btn btn-danger rounded-pill"
-                                            style="width:120px; height:50px; white-space: nowrap; font-size: 14px;"
-                                            @onclick="@(async() => WriteToRegister(20, 4))"
-                                            onmousedown="this.classList.remove('btn-danger'); this.classList.add('btn-outline-danger');"
-                                            onmouseup="this.classList.remove('btn-outline-danger'); this.classList.add('btn-danger');">
+                                                    style="width:120px; height:50px; font-size: 14px;"
+                                                    disabled="@(!isManual)"
+                                                    @onclick="@(async () => WriteToRegister(20, 4))"
+                                                    onmousedown="this.classList.remove('btn-danger'); this.classList.add('btn-outline-danger');"
+                                                    onmouseup="this.classList.remove('btn-outline-danger'); this.classList.add('btn-danger');">
                                                 @localizer[StringDescriptionModel.modal_stop]
                                             </button>
-                                        </div>
-
-                                        <div class="col text-center">
-                                            <button class="btn btn-outline-secondary rounded-pill"
-                                            style="width:120px; height:50px; white-space: nowrap; font-size: 14px;"
-                                            @onclick="@(async() => WriteToRegister(2100, 1024))">                                           
-                                                @localizer[StringDescriptionModel.modal_cable_organizer]
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <!-- 第五行，m.wash 按鈕 -->
+                                        <td colspan="2" style="text-align: center;">
+                                            <button class="btn btn-outline-success rounded-pill"
+                                                    style="width:120px; height:50px; font-size: 14px; background-color:@MainLayout.washingValve[1]"
+                                                    disabled="@isManual"
+                                                    @onclick="@(async () => WriteToRegister(2100, 8))">
+                                                @localizer[StringDescriptionModel.modal_m_wash]
                                             </button>
-                                        </div>
-                                    </div>
-                                    <hr style="margin: 0; padding: 0;" />
-                                    <div class="row row-cols-2 g-3">
-                                        @{
-                                            var buttons4 = new[]
-                                            {
-                                                new { Name = localizer[StringDescriptionModel.modal_m_bufa], Background = MainLayout.bufAValve[1], RegisterValue = 1 },
-                                                new { Name = localizer[StringDescriptionModel.modal_m_bufb], Background = MainLayout.bufBValve[1], RegisterValue = 2 },
-                                                new { Name = localizer[StringDescriptionModel.modal_m_reag], Background = MainLayout.reagValve[1], RegisterValue = 4 },
-                                                new { Name = localizer[StringDescriptionModel.modal_m_wash], Background = MainLayout.washingValve[1], RegisterValue = 8 },
-
-                                            };
-                                        }
-                                        @foreach (var button in buttons4)
-                                        {
-                                            <div class="col text-center">
-                                                <button class="btn btn-outline-success rounded-pill"
-                                                style="width:120px; height:50px; background-color:@(button.Background);
-                                                            white-space: nowrap; font-size: 14px; padding: 0;"
-                                                @onclick="@(async () => WriteToRegister(2100, button.RegisterValue))">
-                                                    @button.Name
-                                                </button>
-                                            </div>
-                                        }
-                                    </div>
-                                </div>
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
                         }
                     </CardContent>
                     <CardContent EnableSeparator="true"></CardContent>
-                    @if(Setting.UserBasicDetail.Role == "Admin")
+                    @if (Setting.UserBasicDetail.Role == "Admin")
                     {
                         <Syncfusion.Blazor.Cards.CardFooter>
                             <CardFooterContent>
                                 <SfButton CssClass="e-outline" @onclick="@ExpandHandler">@(Expand ? "Collapse" : "Expand")</SfButton>
                             </CardFooterContent>
                         </Syncfusion.Blazor.Cards.CardFooter>
-                    }                   
+                    }
                 </SfCard>
             </Field>
         </ModalBody>
     </ModalContent>
 </Modal>
-
 
 <style>
     .e-switch-wrapper.handle-text {
