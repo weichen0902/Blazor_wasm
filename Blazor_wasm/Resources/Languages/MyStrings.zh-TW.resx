@@ -165,8 +165,8 @@
   <data name="modal_stop" xml:space="preserve">
     <value>停止</value>
   </data>
-  <data name="modal_cylinder" xml:space="preserve">
-    <value>氣壓缸</value>
+  <data name="modal_gateway" xml:space="preserve">
+    <value>Gateway</value>
   </data>
   <data name="modal_unlock" xml:space="preserve">
     <value>捲揚機解鎖</value>
@@ -258,8 +258,8 @@
   <data name="modal_a_cal" xml:space="preserve">
     <value>一鍵校正</value>
   </data>
-  <data name="modal_back_to_original" xml:space="preserve">
-    <value>原點復歸</value>
+  <data name="modal_cable_organizer" xml:space="preserve">
+    <value>理線器重置</value>
   </data>
   <data name="modal_m_wash" xml:space="preserve">
     <value>手動水洗</value>

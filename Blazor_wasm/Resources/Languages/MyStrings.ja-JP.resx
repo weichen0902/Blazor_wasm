@@ -165,8 +165,8 @@
   <data name="modal_stop" xml:space="preserve">
     <value>停止</value>
   </data>
-  <data name="modal_cylinder" xml:space="preserve">
-    <value>シリンダー</value>
+  <data name="modal_gateway" xml:space="preserve">
+    <value>Gateway</value>
   </data>
   <data name="modal_unlock" xml:space="preserve">
     <value>ホイスターロック解除</value>
@@ -244,7 +244,7 @@
     <value>認証コードが無効です</value>
   </data>
   <data name="modal_m_reag" xml:space="preserve">
-    <value>再生</value>
+    <value>酸洗い</value>
   </data>
   <data name="modal_m_bufa" xml:space="preserve">
     <value>バッファ</value>
@@ -253,16 +253,16 @@
     <value>バッファ</value>
   </data>
   <data name="modal_a_wash" xml:space="preserve">
-    <value>洗浄</value>
+    <value>自動洗浄</value>
   </data>
   <data name="modal_a_cal" xml:space="preserve">
-    <value>キャリブレーション</value>
+    <value>自動補正</value>
   </data>
-  <data name="modal_back_to_original" xml:space="preserve">
-    <value>元に戻す</value>
+  <data name="modal_cable_organizer" xml:space="preserve">
+    <value>整理器リセット</value>
   </data>
   <data name="modal_m_wash" xml:space="preserve">
-    <value>洗浄</value>
+    <value>水洗い</value>
   </data>
   <data name="account_select_account" xml:space="preserve">
     <value>アカウントを選択</value>
@@ -811,10 +811,10 @@
     <value>残り日数</value>
   </data>
   <data name="system_manual" xml:space="preserve">
-    <value>手動モード</value>
+    <value>手動</value>
   </data>
   <data name="system_auto" xml:space="preserve">
-    <value>自動モード</value>
+    <value>自動</value>
   </data>
   <data name="modal_stabling" xml:space="preserve">
     <value>安定判定中...</value>

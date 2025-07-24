@@ -165,8 +165,8 @@
   <data name="modal_stop" xml:space="preserve">
     <value>Stop</value>
   </data>
-  <data name="modal_cylinder" xml:space="preserve">
-    <value>Cylinder</value>
+  <data name="modal_gateway" xml:space="preserve">
+    <value>Gateway</value>
   </data>
   <data name="modal_unlock" xml:space="preserve">
     <value>Hoister Unlock</value>
@@ -258,8 +258,8 @@
   <data name="modal_a_cal" xml:space="preserve">
     <value>A.Cal</value>
   </data>
-  <data name="modal_back_to_original" xml:space="preserve">
-    <value>Back to original</value>
+  <data name="modal_cable_organizer" xml:space="preserve">
+    <value>Cable Organizer Reset</value>
   </data>
   <data name="modal_m_wash" xml:space="preserve">
     <value>M.Wash</value>

@@ -11,8 +11,8 @@ namespace Blazor_wasm.Models.LanguagesModels
     {
         public const string modal_a_cal = "modal_a_cal";
         public const string modal_a_wash = "modal_a_wash";
-        public const string modal_back_to_original = "modal_back_to_original";
-        public const string modal_cylinder = "modal_cylinder";
+        public const string modal_cable_organizer = "modal_cable_organizer";
+        public const string modal_gateway = "modal_gateway";
         public const string modal_stop = "modal_stop";
         public const string modal_unlock = "modal_unlock";
         public const string modal_m_bufa = "modal_m_bufa";
