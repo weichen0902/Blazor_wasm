@@ -561,8 +561,9 @@
         Setting.Url = ipUrl;
 
         if (Setting.UserBasicDetail == null)
-            NavManager.NavigateTo("/");      
+            NavManager.NavigateTo("/");
 
+        dropDownLanguageBindValue = Culture.Name;
         UpdateState();
         FieldLanguageChange();
         // await RefreshFieldData();
