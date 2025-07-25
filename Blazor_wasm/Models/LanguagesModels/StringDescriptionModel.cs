@@ -30,6 +30,8 @@ namespace Blazor_wasm.Models.LanguagesModels
         public const string modal_precal = "modal_precal";
         public const string modal_tip_text = "modal_tip_text";
         public const string modal_rotation = "modal_rotation";
+        public const string modal_set_position = "modal_set_position";
+        public const string modal_current_position = "modal_current_position";
 
         public const string account_create_account = "account_create_account";
         public const string account_forgot_password = "account_forgot_password";
@@ -150,10 +152,7 @@ namespace Blazor_wasm.Models.LanguagesModels
 
         public const string export_datalog = "export_datalog";
         public const string trendline_generation = "trendline_generation";
-        public const string language_selection = "language_selection";       
-
-        public const string set_position = "set_position";
-        public const string current_position = "current_position";
+        public const string language_selection = "language_selection";               
 
         public const string show_history_alarm = "show_history_alarm";
         public const string show_inalarm = "show_inalarm";

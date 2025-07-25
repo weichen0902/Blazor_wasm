@@ -219,11 +219,11 @@
   <data name="language_selection" xml:space="preserve">
     <value>言語選択</value>
   </data>
-  <data name="set_position" xml:space="preserve">
-    <value>いちせってい</value>
+  <data name="modal_set_position" xml:space="preserve">
+    <value>回転数設定</value>
   </data>
-  <data name="current_position" xml:space="preserve">
-    <value>げんざいいち</value>
+  <data name="modal_current_position" xml:space="preserve">
+    <value>下降回転数</value>
   </data>
   <data name="account_ent_old_password" xml:space="preserve">
     <value>古いパスワード</value>
@@ -259,7 +259,7 @@
     <value>自動補正</value>
   </data>
   <data name="modal_cable_organizer" xml:space="preserve">
-    <value>整理器リセット</value>
+    <value>整リセ</value>
   </data>
   <data name="modal_m_wash" xml:space="preserve">
     <value>水洗い</value>

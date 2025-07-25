@@ -219,11 +219,11 @@
   <data name="language_selection" xml:space="preserve">
     <value>Language Selection</value>
   </data>
-  <data name="set_position" xml:space="preserve">
-    <value>Position Setting</value>
+  <data name="modal_set_position" xml:space="preserve">
+    <value>Rot. Set</value>
   </data>
-  <data name="current_position" xml:space="preserve">
-    <value>Posistion</value>
+  <data name="modal_current_position" xml:space="preserve">
+    <value>Rotations</value>
   </data>
   <data name="account_ent_old_password" xml:space="preserve">
     <value>Enter your old password</value>
@@ -259,7 +259,7 @@
     <value>A.Cal</value>
   </data>
   <data name="modal_cable_organizer" xml:space="preserve">
-    <value>Cable Organizer Reset</value>
+    <value>Cable Org. Rst</value>
   </data>
   <data name="modal_m_wash" xml:space="preserve">
     <value>M.Wash</value>
@@ -895,6 +895,6 @@
     <value> Each rotation is approximately 30 cm</value>
   </data>
   <data name="modal_rotation" xml:space="preserve">
-    <value>rotation</value>
+    <value>rot.</value>
   </data>
 </root>

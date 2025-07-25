@@ -219,11 +219,11 @@
   <data name="language_selection" xml:space="preserve">
     <value>選擇語系</value>
   </data>
-  <data name="set_position" xml:space="preserve">
-    <value>設定位置</value>
+  <data name="modal_set_position" xml:space="preserve">
+    <value>圈數設定</value>
   </data>
-  <data name="current_position" xml:space="preserve">
-    <value>當前位置</value>
+  <data name="modal_current_position" xml:space="preserve">
+    <value>下降圈數</value>
   </data>
   <data name="account_ent_old_password" xml:space="preserve">
     <value>輸入舊密碼</value>
