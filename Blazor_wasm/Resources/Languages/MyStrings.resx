@@ -223,7 +223,7 @@
     <value>Position Setting</value>
   </data>
   <data name="current_position" xml:space="preserve">
-    <value>Current Posistion</value>
+    <value>Posistion</value>
   </data>
   <data name="account_ent_old_password" xml:space="preserve">
     <value>Enter your old password</value>
@@ -890,5 +890,11 @@
   </data>
   <data name="dashboard_filter_number" xml:space="preserve">
     <value>System Number Filter</value>
+  </data>
+  <data name="modal_tip_text" xml:space="preserve">
+    <value> Each rotation is approximately 30 cm</value>
+  </data>
+  <data name="modal_rotation" xml:space="preserve">
+    <value>rotation</value>
   </data>
 </root>

@@ -202,5 +202,15 @@ table {
     border-color: #007bff; /* 藍色邊框 */
 }
 
+.btn-fixed {
+    width: 120px;
+    height: 50px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    font-size: 14px;
+}
+
 
 

@@ -891,4 +891,10 @@
   <data name="dashboard_filter_number" xml:space="preserve">
     <value>系統編號篩選</value>
   </data>
+  <data name="modal_tip_text" xml:space="preserve">
+    <value>每一圈約30公分</value>
+  </data>
+  <data name="modal_rotation" xml:space="preserve">
+    <value>圈</value>
+  </data>
 </root>

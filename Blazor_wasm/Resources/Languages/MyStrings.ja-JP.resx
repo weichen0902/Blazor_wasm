@@ -891,4 +891,10 @@
   <data name="dashboard_filter_number" xml:space="preserve">
     <value>システム番号のフィルタリング</value>
   </data>
+  <data name="modal_tip_text" xml:space="preserve">
+    <value> 1回転は約30cmです</value>
+  </data>
+  <data name="modal_rotation" xml:space="preserve">
+    <value>回転</value>
+  </data>
 </root>
