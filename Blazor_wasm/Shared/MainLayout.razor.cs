@@ -69,7 +69,7 @@ namespace Blazor_wasm.Shared
 
         public static char[] d2valveStateBinaryCharArray = new char[16];
 
-
+        public static bool[] elecError = new bool[2];
         public static DevicesDataModelDTO response;
 
         private HubConnection? hubConnection;
@@ -131,6 +131,8 @@ namespace Blazor_wasm.Shared
                         actualRemainingDays[i] = response.calData[i].ActualRemainingDays;
                         endurancePercentage[i] = response.calData[i].EndurancePercentage;
 
+                        serverSystemAlarm1ErrorCode[i] = response.systemAlarm1[i];
+
                         var serverSystemAlarm1ErrorCodeBinary = Convert.ToString(serverSystemAlarm1ErrorCode[i], 2);
                         var _serverSystemAlarm1ErrorCodeBinaryCharArray = serverSystemAlarm1ErrorCodeBinary.ToCharArray();
                         Array.Reverse(_serverSystemAlarm1ErrorCodeBinaryCharArray);
@@ -157,7 +159,7 @@ namespace Blazor_wasm.Shared
                             var d1valveStateBinary = Convert.ToString((ushort)devicesDataModel[i, "valveState"], 2);
                             var _d1valveStateBinaryCharArray = d1valveStateBinary.ToCharArray();
                             Array.Reverse(_d1valveStateBinaryCharArray);
-
+                         
                             var serverCommonAlarmErrorCodeBinary = Convert.ToString(serverCommonAlarmErrorCode[i], 2);
                             var _serverCommonAlarmErrorCodeBinaryCharArray = serverCommonAlarmErrorCodeBinary.ToCharArray();
                             Array.Reverse(_serverCommonAlarmErrorCodeBinaryCharArray);
@@ -370,7 +372,7 @@ namespace Blazor_wasm.Shared
                             }
                         }
 
-                        serverSystemAlarm1ErrorCode[i] = response.systemAlarm1[i];
+                        
 
                         if (clientSystemAlarm1ErrorCode[i] != serverSystemAlarm1ErrorCode[i])
                         {
@@ -383,6 +385,12 @@ namespace Blazor_wasm.Shared
                                 //    toastService.ShowWarning($"#{i + 1}_" + AlarmCollection.CollectionOfSystemAlarm1[j]);
 
                                 clientSystemAlarm1ErrorCodeBinaryCharArray[j] = serverSystemAlarm1ErrorCodeBinaryCharArray[j];
+
+                                if (j == 15 && clientSystemAlarm1ErrorCodeBinaryCharArray[15] == '1')
+                                   elecError[i] = true;
+                                else if (j == 15 && clientSystemAlarm1ErrorCodeBinaryCharArray[15] == '0')
+                                   elecError[i] = false;
+       
                             }
                             clientSystemAlarm1ErrorCode[i] = serverSystemAlarm1ErrorCode[i];
                         }

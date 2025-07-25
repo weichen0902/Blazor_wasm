@@ -44,7 +44,12 @@
                             <CircularGauge1></CircularGauge1>
                         </SfCircularGauge>
                     </div>
-
+                    @if (MainLayout.elecError[0])
+                    {
+                        <div class="centered-blinking-label blinking-label">
+                            <label>@localizer[StringDescriptionModel.dashboard_elec_err]</label>
+                        </div>
+                    }                    
                 }
             </ContentTemplate>
         </DashboardLayoutPanel>
@@ -65,7 +70,13 @@
                         <SfCircularGauge ID="GaugeTwo" @ref="GaugeTwo" Width="100%" Height="100%" MoveToCenter="true">
                             <CircularGauge2></CircularGauge2>
                         </SfCircularGauge>
-                    </div>                    
+                    </div>
+                    @if (MainLayout.elecError[1])
+                    {
+                        <div class="centered-blinking-label blinking-label">
+                            <label>@localizer[StringDescriptionModel.dashboard_elec_err]</label>
+                        </div>
+                    }
                 }
             </ContentTemplate>
         </DashboardLayoutPanel>

@@ -66,7 +66,7 @@
                                             <span class="statustxt lowgdp">@localizer[StringDescriptionModel.alarm_active]</span>
                                         </div>
                                     }
-                                    else
+                                    if (alarmData.AlarmStatus == "已解除")
                                     {
                                         <div style="color:green" font:bold>
                                             <span class="statustxt ">@localizer[StringDescriptionModel.alarm_inactive]</span>

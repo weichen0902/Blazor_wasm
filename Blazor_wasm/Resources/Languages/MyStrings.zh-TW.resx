@@ -897,4 +897,7 @@
   <data name="modal_rotation" xml:space="preserve">
     <value>圈</value>
   </data>
+  <data name="dashboard_elec_err" xml:space="preserve">
+    <value>電極訊號異常</value>
+  </data>
 </root>

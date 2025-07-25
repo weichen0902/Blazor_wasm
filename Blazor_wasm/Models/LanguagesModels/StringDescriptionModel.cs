@@ -71,6 +71,7 @@ namespace Blazor_wasm.Models.LanguagesModels
         public const string dashboard_endurance = "dashboard_endurance";
         public const string dashboard_remaindays = "dashboard_remaindays";
         public const string dashboard_filter_number = "dashboard_filter_number";
+        public const string dashboard_elec_err = "dashboard_elec_err";
 
         public const string message_success = "message_success";
         public const string message_error = "message_error";

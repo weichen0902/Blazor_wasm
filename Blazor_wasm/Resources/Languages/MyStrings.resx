@@ -897,4 +897,7 @@
   <data name="modal_rotation" xml:space="preserve">
     <value>rot.</value>
   </data>
+  <data name="dashboard_elec_err" xml:space="preserve">
+    <value>Electrode signal abnormal</value>
+  </data>
 </root>

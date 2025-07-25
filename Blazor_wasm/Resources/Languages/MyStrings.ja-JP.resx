@@ -897,4 +897,7 @@
   <data name="modal_rotation" xml:space="preserve">
     <value>回転</value>
   </data>
+  <data name="dashboard_elec_err" xml:space="preserve">
+    <value>でんきょくしんごういじょう</value>
+  </data>
 </root>
