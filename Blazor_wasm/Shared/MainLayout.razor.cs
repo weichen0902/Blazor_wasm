@@ -168,7 +168,7 @@ namespace Blazor_wasm.Shared
                             var _clientCommonAlarmErrorCodeBinaryCharArray = clientCommonAlarmErrorCodeBinary.ToCharArray();
                             Array.Reverse(_clientCommonAlarmErrorCodeBinaryCharArray);
 
-                            if (Pages.Index.waitFeedback == false)
+                            if (modbusToWrite.waitFeedback == false)
                             {
                                 for (int j = 0; j < _systemStatusIntBinaryCharArray.Length; j++)
                                 {
@@ -201,7 +201,7 @@ namespace Blazor_wasm.Shared
                                 d1valveStateBinaryCharArray[j] = _d1valveStateBinaryCharArray[j];
                             }
 
-                            if (Pages.Index.waitFeedback == false)
+                            if (modbusToWrite.waitFeedback == false)
                             {
                                 systemStatus[i] = systemStatusIntBinaryCharArray[0] == '1' ? "red" : "blue";                                
                                 hbmWashingMotionControl[i] = d1DeviceStatusIntBinaryCharArray[3] == '1' ? "yellow" : null;
@@ -210,56 +210,56 @@ namespace Blazor_wasm.Shared
                                 if (d1valveStateBinaryCharArray[0] == '1')
                                 {
                                     bufAValve[i] = "yellow";
-                                    Pages.Index.d1ToggleInput[0] = true;
+                                    modbusToWrite.d1ToggleInput[0] = true;
                                 }
                                 else if (d1valveStateBinaryCharArray[0] == '0')
                                 {
                                     bufAValve[i] = null;
-                                    Pages.Index.d1ToggleInput[0] = false;
+                                    modbusToWrite.d1ToggleInput[0] = false;
                                 }
 
                                 if (d1valveStateBinaryCharArray[1] == '1')
                                 {
                                     bufBValve[i] = "yellow";
-                                    Pages.Index.d1ToggleInput[1] = true;
+                                    modbusToWrite.d1ToggleInput[1] = true;
                                 }
                                 else if (d1valveStateBinaryCharArray[1] == '0')
                                 {
                                     bufBValve[i] = null;
-                                    Pages.Index.d1ToggleInput[1] = false;
+                                    modbusToWrite.d1ToggleInput[1] = false;
                                 }
 
                                 if (d1valveStateBinaryCharArray[2] == '1')
                                 {
                                     reagValve[i] = "yellow";
-                                    Pages.Index.d1ToggleInput[2] = true;
+                                    modbusToWrite.d1ToggleInput[2] = true;
                                 }
                                 else if (d1valveStateBinaryCharArray[2] == '0')
                                 {
                                     reagValve[i] = null;
-                                    Pages.Index.d1ToggleInput[2] = false;
+                                    modbusToWrite.d1ToggleInput[2] = false;
                                 }
 
                                 if (d1valveStateBinaryCharArray[3] == '1')
                                 {
                                     washingValve[i] = "yellow";
-                                    Pages.Index.d1ToggleInput[3] = true;
+                                    modbusToWrite.d1ToggleInput[3] = true;
                                 }
                                 else if (d1valveStateBinaryCharArray[3] == '0')
                                 {
                                     washingValve[i] = null;
-                                    Pages.Index.d1ToggleInput[3] = false;
+                                    modbusToWrite.d1ToggleInput[3] = false;
                                 }
 
                                 if (d1valveStateBinaryCharArray[4] == '1')
                                 {
                                     airPressureValve[i] = "yellow";
-                                    Pages.Index.d1ToggleInput[4] = true;
+                                    modbusToWrite.d1ToggleInput[4] = true;
                                 }
                                 else if (d1valveStateBinaryCharArray[4] == '0')
                                 {
                                     airPressureValve[i] = null;
-                                    Pages.Index.d1ToggleInput[4] = false;
+                                    modbusToWrite.d1ToggleInput[4] = false;
                                 }
                             }
 
@@ -309,7 +309,7 @@ namespace Blazor_wasm.Shared
                                 d2valveStateBinaryCharArray[j] = _d2valveStateBinaryCharArray[j];
                             }
 
-                            if (Pages.Index.waitFeedback == false)
+                            if (modbusToWrite.waitFeedback == false)
                             {
 
                                 hbmWashingMotionControl[i] = d2DeviceStatusIntBinaryCharArray[3] == '1' ? "yellow" : null;
@@ -318,56 +318,56 @@ namespace Blazor_wasm.Shared
                                 if (d2valveStateBinaryCharArray[0] == '1')
                                 {
                                     bufAValve[i] = "yellow";
-                                    Pages.Index.d2ToggleInput[0] = true;
+                                    modbusToWrite.d2ToggleInput[0] = true;
                                 }
                                 else if (d2valveStateBinaryCharArray[0] == '0')
                                 {
                                     bufAValve[i] = null;
-                                    Pages.Index.d2ToggleInput[0] = false;
+                                    modbusToWrite.d2ToggleInput[0] = false;
                                 }
 
                                 if (d2valveStateBinaryCharArray[1] == '1')
                                 {
                                     bufBValve[i] = "yellow";
-                                    Pages.Index.d2ToggleInput[1] = true;
+                                    modbusToWrite.d2ToggleInput[1] = true;
                                 }
                                 else if (d2valveStateBinaryCharArray[1] == '0')
                                 {
                                     bufBValve[i] = null;
-                                    Pages.Index.d2ToggleInput[1] = false;
+                                    modbusToWrite.d2ToggleInput[1] = false;
                                 }
 
                                 if (d2valveStateBinaryCharArray[2] == '1')
                                 {
                                     reagValve[i] = "yellow";
-                                    Pages.Index.d2ToggleInput[2] = true;
+                                    modbusToWrite.d2ToggleInput[2] = true;
                                 }
                                 else if (d2valveStateBinaryCharArray[2] == '0')
                                 {
                                     reagValve[i] = null;
-                                    Pages.Index.d2ToggleInput[2] = false;
+                                    modbusToWrite.d2ToggleInput[2] = false;
                                 }
 
                                 if (d2valveStateBinaryCharArray[3] == '1')
                                 {
                                     washingValve[i] = "yellow";
-                                    Pages.Index.d2ToggleInput[3] = true;
+                                    modbusToWrite.d2ToggleInput[3] = true;
                                 }
                                 else if (d2valveStateBinaryCharArray[3] == '0')
                                 {
                                     washingValve[i] = null;
-                                    Pages.Index.d2ToggleInput[3] = false;
+                                    modbusToWrite.d2ToggleInput[3] = false;
                                 }
 
                                 if (d2valveStateBinaryCharArray[4] == '1')
                                 {
                                     airPressureValve[i] = "yellow";
-                                    Pages.Index.d2ToggleInput[4] = true;
+                                    modbusToWrite.d2ToggleInput[4] = true;
                                 }
                                 else if (d2valveStateBinaryCharArray[4] == '0')
                                 {
                                     airPressureValve[i] = null;
-                                    Pages.Index.d2ToggleInput[4] = false;
+                                    modbusToWrite.d2ToggleInput[4] = false;
                                 }
                             }
                         }

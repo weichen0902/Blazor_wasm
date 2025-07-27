@@ -1,5 +1,323 @@
-﻿<h3>ControlPanelModal</h3>
+﻿@using Syncfusion.Blazor.Buttons
+@using Syncfusion.Blazor.Cards
+
+@inject IDataService dataService
+@inject DevicesDataModel devicesDataModel
+@inject ModbusToWrite modbusToWrite
+@inject IStringLocalizer<MyStrings> localizer
+@inject IJSRuntime JS
+
+<Modal @ref="modalRef">
+    <ModalContent Centered>
+        <ModalHeader>
+            <ModalTitle>HBM-100D #(@inputNumber0+1)</ModalTitle>
+            <CloseButton />
+        </ModalHeader>
+        <ModalBody>
+            <Field>
+                <SfCard>
+                    <CardContent>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;">
+                            @foreach (var (label, key) in HbmReadings)
+                            {
+                                <div class="d-flex flex-column gap-2 text-center" style="font-size: 30px; ">
+                                    <label class="text-primary">@label:</label>
+                                    <span class="">@devicesDataModel[inputNumber0, key]</span>
+                                </div>
+                            }
+                        </div>
+
+                        @if (Expand)
+                        {
+                            <hr />
+                            <div style="display: flex; flex-direction: row; gap: 50px;">
+                                <!-- 左邊功能區 -->
+                                <div style="display: flex; flex-direction: column; gap: 10px; position:relative; left:15px; width: 100px;">
+                                    <div>@localizer[StringDescriptionModel.modal_current_position]: <span>@hoisterDownCycleCount</span></div>
+                                    <div>@localizer[StringDescriptionModel.modal_set_position]:</div>
+                                    <input type="number" min="0" max="10"
+                                    class="form-control text-center"
+                                    style="width: 80px; height: 40px; font-size: 1.5rem; border-radius: 8px;"
+                                    value="@hoisterDownCycleSettingCount"
+                                    @onkeydown="@(e => HandleKeyDown(e))"
+                                    @onchange="@(async(e)=> await UpdateNumber(inputNumber15, e))" />
+                                    <button class="btn btn-outline-primary" style="width: 80px; height: 50px;"
+                                    onclick="@(() => modbusToWrite.WriteToRegister(inputNumber1100, 64))">
+                                        Up
+                                    </button>
+                                    <button class="btn btn-outline-primary" style="width: 80px; height: 50px;"
+                                    onclick="@(() => modbusToWrite.WriteToRegister(inputNumber1100, 128))">
+                                        Spec.
+                                    </button>
+                                    <button class="btn btn-outline-primary" style="width: 80px; height: 50px;"
+                                    @onclick="@(async () => modbusToWrite.WriteToRegister(inputNumber1100, 16))">
+                                        @localizer[StringDescriptionModel.modal_gateway]
+                                    </button>
+                                    <button class="btn btn-outline-primary" style="width: 80px; height: 50px;"
+                                    @onclick="@(async () => modbusToWrite.WriteToRegister(inputNumber1100, 1024))">
+                                        @localizer[StringDescriptionModel.modal_cable_organizer]
+                                    </button>
+                                </div>
+
+                                <!-- 中間區：包含 Switch + Manual + Auto -->
+                                <div style="display: flex; flex-direction: column; gap: 19px;">
+                                    <!-- 模式開關 -->
+                                    <div style="font-weight: bold; font-size: 16px; height: 45px; ">
+                                        @localizer[StringDescriptionModel.modal_tip_text]  <!-- 或者手動輸入："模式切換 (Manual / Auto)" -->
+                                    </div>
+
+                                    @if (MainLayout.systemStatusIntBinaryCharArray[0] == '1')
+                                    {
+                                        isManual = true;
+                                    }
+                                    else
+                                    {
+                                        isManual = false;
+                                    }
+                                    <SfSwitch @bind-Checked="isManual" CssClass="handle-text" TChecked="bool" ValueChange="OnManualSwitchChanged" />
+
+                                    <!-- Manual / Auto 按鈕水平排列 -->
+                                    <div style="display: flex; flex-direction: row; gap: 2rem;">
+                                        <!-- Manual 模式按鈕 -->
+                                        <div style="display: flex; flex-direction: column; gap: 10px;">
+                                            <button class="btn btn-outline-success" style="width: 120px; height: 50px; background-color:@MainLayout.bufAValve[0]"
+                                            disabled="@isManual"
+                                            @onclick="@(async () => modbusToWrite.WriteToRegister(inputNumber1100, 1))">
+                                                @localizer[StringDescriptionModel.modal_m_bufa]
+                                            </button>
+                                            <button class="btn btn-outline-success" style="width: 120px; height: 50px; background-color:@MainLayout.bufBValve[0]"
+                                            disabled="@isManual"
+                                            @onclick="@(async () => modbusToWrite.WriteToRegister(inputNumber1100, 2))">
+                                                @localizer[StringDescriptionModel.modal_m_bufb]
+                                            </button>
+                                            <button class="btn btn-outline-success" style="width: 120px; height: 50px; background-color:@MainLayout.reagValve[0]"
+                                            disabled="@isManual"
+                                            @onclick="@(async () => modbusToWrite.WriteToRegister(inputNumber1100, 4))">
+                                                @localizer[StringDescriptionModel.modal_m_reag]
+                                            </button>
+                                            <button class="btn btn-outline-success" style="width: 120px; height: 50px; background-color:@MainLayout.washingValve[0]"
+                                            disabled="@isManual"
+                                            @onclick="@(async () => modbusToWrite.WriteToRegister(inputNumber1100, 8))">
+                                                @localizer[StringDescriptionModel.modal_m_wash]
+                                            </button>
+                                        </div>
+
+                                        <!-- Auto 模式按鈕 -->
+                                        <div style="display: flex; flex-direction: column; gap: 10px;">
+                                            <button class="btn btn-primary" style="width: 120px; height: 50px; background-color:@MainLayout.hbmWashingMotionControl[0]"
+                                            disabled="@(!isManual)"
+                                            @onclick="@(async () => modbusToWrite.WriteToRegister(inputNumber10, 1))">
+                                                @localizer[StringDescriptionModel.modal_a_wash]
+                                            </button>
+                                            <button class="btn btn-success" style="width: 120px; height: 50px; background-color:@MainLayout.hbmCalMotionControl[0]"
+                                            disabled="@(!isManual)"
+                                            @onclick="@(async () => modbusToWrite.WriteToRegister(inputNumber10, 2))">
+                                                @localizer[StringDescriptionModel.modal_a_cal]
+                                            </button>
+                                            <button class="btn btn-danger" style="width: 120px; height: 50px;"
+                                            disabled="@(!isManual)"
+                                            @onclick="@(async () => modbusToWrite.WriteToRegister(inputNumber10, 4))"
+                                            onmousedown="this.classList.remove('btn-danger'); this.classList.add('btn-outline-danger');"
+                                            onmouseup="this.classList.remove('btn-outline-danger'); this.classList.add('btn-danger');">
+                                                @localizer[StringDescriptionModel.modal_stop]
+                                            </button>
+
+                                            <!-- 狀態顯示區 -->
+                                            <div>
+                                                @if (MainLayout.d1DeviceStatusIntBinaryCharArray[3] == '1')
+                                                {
+                                                    <div><label>@localizer[StringDescriptionModel.modal_prewash]</label></div>
+                                                }
+                                                else if (MainLayout.d1DeviceStatusIntBinaryCharArray[4] == '1')
+                                                {
+                                                    <div><label>@localizer[StringDescriptionModel.modal_precal]</label></div>
+                                                }
+
+                                                @if (MainLayout.systemStatusIntBinaryCharArray[10] == '1')
+                                                {
+                                                    <div><label>@localizer[StringDescriptionModel.modal_stabling]</label></div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </CardContent>
+                    <CardContent EnableSeparator="true"></CardContent>
+                    @if(Setting.UserBasicDetail.Role == "Admin")
+                    {
+                        <Syncfusion.Blazor.Cards.CardFooter>
+                            <CardFooterContent>
+                                <SfButton CssClass="e-outline" @onclick="@ExpandHandler">@(Expand ? "Collapse" : "Expand")</SfButton>
+                            </CardFooterContent>
+                        </Syncfusion.Blazor.Cards.CardFooter>
+                    }                  
+                </SfCard>
+            </Field>
+        </ModalBody>
+    </ModalContent>
+</Modal>
+
+<style>
+    .e-switch-wrapper.handle-text {
+    width: 271px;
+    height: 30px;
+    left: 0px;
+    }
+
+    .e-switch-wrapper.handle-text .e-switch-handle {
+    width: 114px;
+    height: 23px;
+    left: 4px;
+    bottom: 2px;
+    background-color: #fff;
+    }
+
+    .e-switch-wrapper.handle-text .e-switch-inner,
+    .e-switch-wrapper.handle-text .e-switch-handle {
+    border-radius: 0;
+    }
+
+    .e-switch-wrapper.handle-text .e-switch-handle.e-switch-active {
+    left: 172px;
+    }
+
+    .e-switch-wrapper.handle-text .e-switch-inner.e-switch-active,
+    .e-switch-wrapper.handle-text .e-switch-inner.e-switch-active .e-switch-on {
+    background-color: #CE0000;
+    border-color: #CE0000;
+    }
+
+    .e-switch-wrapper.handle-text .e-switch-inner,
+    .e-switch-wrapper.handle-text .e-switch-off {
+    background-color: #4d841d;
+    border-color: #4d841d;
+    }
+
+    .e-switch-wrapper.handle-text .e-switch-inner:after,
+    .e-switch-wrapper.handle-text .e-switch-inner:before {
+    font-size: 20px;
+    position: absolute;
+    line-height: 21px;
+    font-family: "Helvetica", sans-serif;
+    z-index: 1;
+    height: 100%;
+    transition: all 200ms cubic-bezier(0.445, 0.05, 0.55, 0.95);
+    top: 4px;
+    }
+
+    .e-switch-wrapper.handle-text .e-switch-inner:before {
+    content: "@localizer[StringDescriptionModel.system_manual]";
+    color: #4d841d;
+    left: 37px;
+    }
+
+    .e-switch-wrapper.handle-text .e-switch-inner:after {
+    content: "@localizer[StringDescriptionModel.system_auto]";
+    right: 38px;
+    color: #4d841d;
+    }
+
+    .e-switch-wrapper.handle-text .e-switch-inner.e-switch-active:before {
+    color: #CE0000;
+    }
+
+    .e-switch-wrapper.handle-text .e-switch-inner.e-switch-active:after {
+    color: #CE0000;
+    }
+
+    .e-switch-wrapper.handle-text:not(.e-switch-disabled):hover .e-switch-handle:not(.e-switch-active) {
+    background-color: #fff;
+    }
+</style>
 
 @code {
+
+    private Action<Modal> modalRef;
+    [Parameter]
+    public Action<Modal> ModalRef
+    {
+        set => modalRef = value;
+    }
+  
+    [Parameter]
+    public int inputNumber0 { get; set; }
+    [Parameter]
+    public ushort inputNumber15 { get; set; }
+    [Parameter]
+    public ushort inputNumber1100 { get; set; }
+    [Parameter]
+    public ushort inputNumber10 { get; set; }
+    [Parameter]
+	public int hoisterDownCycleSettingCount { get; set; }
+    [Parameter]
+    public int hoisterDownCycleCount { get; set; }
+
+    private bool isManual = false;
+    private bool Expand = false;
+    public ElementReference WeekdayElementRef;
+
+    private (string Label, string Key)[] HbmReadings = new[]
+    {
+        ("pH", "hbmpH"),
+        ("Elec", "hbmElec"),
+        ("Temp", "hbmTemp"),
+        ("Zero", "hbmZero"),
+        ("Slope", "hbmSlope"),
+        ("Health", "hbmHealth")
+    };
+
+
+    private Task ShowModal()
+    {
+        return modalRef.Show();
+    }
+
+    private Task HideModal()
+    {
+        return modalRef.Hide();
+    }
+
+    public async Task ExpandHandler()
+    {
+        Expand = !Expand;
+        await Task.Delay(2);
+
+        if (Expand)
+        {
+            if (WeekdayElementRef.Id != null)
+            {
+                await JS.InvokeVoidAsync("setFocusToElement", WeekdayElementRef);
+            }
+        }
+    }
+
+    private void HandleKeyDown(KeyboardEventArgs e)
+    {
+        bool isDigit = e.Key.Length == 1 && char.IsDigit(e.Key[0]);
+        bool isControl = e.Key == "Backspace" ||
+                        e.Key == "Delete" ||
+                        e.Key == "ArrowLeft" ||
+                        e.Key == "ArrowRight" ||
+                        e.Key == "Tab";
+
+        if (!isDigit && !isControl) return;
+    }
+    private async Task UpdateNumber(ushort address, Microsoft.AspNetCore.Components.ChangeEventArgs value)
+    {
+        PostModbusApiModel postModbusApiModel = new PostModbusApiModel();
+
+        postModbusApiModel.startAddress = address;
+        postModbusApiModel.value = Convert.ToInt32(value.Value);
+        await dataService.PostModbusDevicesData(postModbusApiModel);
+        return;
+    }
+
+    private async Task OnManualSwitchChanged(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args)
+    {
+        isManual = args.Checked;
+        await modbusToWrite.WriteToRegister(0, 1);
+    }
 
 }

@@ -39,6 +39,7 @@ namespace Blazor_wasm
             builder.Services.AddScoped<PageTitleService>();
             builder.Services.AddTransient<ExportFile>();
             builder.Services.AddSingleton<AlertMessages>();
+            builder.Services.AddScoped<ModbusToWrite>();
             builder.Services.AddBlazoredToast();
             builder.Services.AddBlazorise(options => { options.Immediate = true; options.ProductToken = "<CjxRBHF7NAs9UARyfzE1BlEAc3o1Dj1QAXB6Nww6bjoNJ2ZdYhBVCCo/CTRaB0xERldhE1EvN0xcNm46FD1gSkUHCkxESVFvBl4yK1FBfAYKFTxsWWBuOh4RQXlYIncTB0FnUy5xGRFaakM0Yx4RP3ZDPHwIA0xsX246HhFEbVgscw4DVXRJN3UeEUh5VDxvEwFSa1M8Cg8BWnRFLnkVHQgyUzxzCQ9XbF88bwwPXWdTMX8WHVpnNi1/HgJMdUU3Y0xEWmdAKmMVGEx9WzxvDA9dZ1MxfxYdWmc2LX8eAkx1RTdjTERaZ1gxdQQYTH1bPG8MD11nUzF/Fh1aZzYtfx4CTHVFN2NMRGB+TyBnbgt3bWsZf3EdVEtDEEIAFk0ORFtkEyhAUVUifBcUTQxtIXJweTddShRTeTxyfl5IRQYhQ3lbKFMHeVRVJy99GQs0dkUXAjA3NnR6KwcSOENCZAgDLgt2aVYIUhEWQ0F4EEoGOVxRSwplKSVVa2cVeQsoVnRZBX0oHjZ7bzZ6cwc3eTgLBXQ9aUt/NnkXCT0JODIIE2Fjf3o0WxMfQ39BIQgXekNJa14=>"; })
             .AddBootstrap5Providers()
