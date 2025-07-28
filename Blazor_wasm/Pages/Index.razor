@@ -32,7 +32,7 @@
                     HBM-100D
                     <a style="margin-right:auto">#1</a>
                     <div style="display:flex; text-align:center; align-items:center; position:absolute; top:5px; right:5px; height:30px;">
-                        <button class="btn btn-primary" style="padding:0 0 0 0; width:30px;" @onclick="ShowModal">...</button>
+                        <button class="btn btn-primary" style="padding:0 0 0 0; width:30px;" @onclick="ShowModal1">...</button>
                     </div>
                 </div>
             </HeaderTemplate>
@@ -59,7 +59,7 @@
                     HBM-100D
                     <a style="margin-right:auto">#2</a>
                     <div style="display:flex; text-align:center; align-items:center; position:absolute; top:5px; right:5px; height:30px;">
-                        <button class="btn btn-primary" style="padding:0 0 0 0; width:30px;" @onclick="ShowModal">...</button>
+                        <button class="btn btn-primary" style="padding:0 0 0 0; width:30px;" @onclick="ShowModal2">...</button>
                     </div>
                 </div>
             </HeaderTemplate>
@@ -232,12 +232,18 @@
     </DashboardLayoutPanels>
 </SfDashboardLayout>
 
-<ControlPanelModal inputNumber0="0" inputNumber10="10" inputNumber15="15" inputNumber1100="1100"
-hoisterDownCycleCount="@hoisterDownCycleCount[0]" hoisterDownCycleSettingCount="@hoisterDownCycleSettingCount[0]">
+<ControlPanelModal @ref=controlPanelModal1 inputNumber0="0" inputNumber10="10" inputNumber15="15" inputNumber1100="1100"
+    hoisterDownCycleCount="@hoisterDownCycleCount[0]" hoisterDownCycleSettingCount="@hoisterDownCycleSettingCount[0]"
+    mBufAValve="@MainLayout.bufAValve[0]" mBufBValve="@MainLayout.bufBValve[0]" mReagValve="@MainLayout.reagValve[0]" mWashingValve="@MainLayout.washingValve[0]"
+    aWashingMotion="@MainLayout.hbmWashingMotionControl[0]" aCalMotion="@MainLayout.hbmCalMotionControl[0]"
+    preWashingStatus="@MainLayout.d1DeviceStatusIntBinaryCharArray[3]" preCalStatus="@MainLayout.d1DeviceStatusIntBinaryCharArray[4]" stablingStatus="@MainLayout.systemStatusIntBinaryCharArray[10]">
 </ControlPanelModal>
 
-<ControlPanelModal inputNumber0="1" inputNumber10="20" inputNumber15="25" inputNumber1100="2100" 
-hoisterDownCycleCount="@hoisterDownCycleCount[1]" hoisterDownCycleSettingCount="@hoisterDownCycleSettingCount[1]">
+<ControlPanelModal @ref=controlPanelModal2 inputNumber0="1" inputNumber10="20" inputNumber15="25" inputNumber1100="2100"
+    hoisterDownCycleCount="@hoisterDownCycleCount[1]" hoisterDownCycleSettingCount="@hoisterDownCycleSettingCount[1]"
+    mBufAValve="@MainLayout.bufAValve[1]" mBufBValve="@MainLayout.bufBValve[1]" mReagValve="@MainLayout.reagValve[1]" mWashingValve="@MainLayout.washingValve[1]"
+    aWashingMotion="@MainLayout.hbmWashingMotionControl[1]" aCalMotion="@MainLayout.hbmCalMotionControl[1]"
+    preWashingStatus="@MainLayout.d2DeviceStatusIntBinaryCharArray[3]" preCalStatus="@MainLayout.d2DeviceStatusIntBinaryCharArray[4]" stablingStatus="@MainLayout.systemStatusIntBinaryCharArray[10]">
 </ControlPanelModal>
 @code {
     SfCircularGauge GaugeOne;
@@ -246,8 +252,9 @@ hoisterDownCycleCount="@hoisterDownCycleCount[1]" hoisterDownCycleSettingCount="
     SfCircularGauge GaugeFour;
     SfDashboardLayout DashboardLayout;
 
-    private ControlPanelModal controlPanelModal;
-  
+    private ControlPanelModal controlPanelModal1;
+    private ControlPanelModal controlPanelModal2;
+
     private int[] hoisterDownCycleSettingCount = new int[2];
     private int[] hoisterDownCycleCount = new int[2];
 
@@ -365,9 +372,14 @@ hoisterDownCycleCount="@hoisterDownCycleCount[1]" hoisterDownCycleSettingCount="
         }
     }
 
-    private void ShowModal()
+    private void ShowModal1()
     {
-        controlPanelModal.ShowModal();     
+        controlPanelModal1.ShowModal();     
+    }
+
+    private void ShowModal2()
+    {
+        controlPanelModal2.ShowModal();
     }
 
     void IDisposable.Dispose()

@@ -10,7 +10,7 @@
 <Modal @ref="modalRef">
     <ModalContent Centered>
         <ModalHeader>
-            <ModalTitle>HBM-100D #(@inputNumber0+1)</ModalTitle>
+            <ModalTitle>HBM-100D #@(inputNumber0+1)</ModalTitle>
             <CloseButton />
         </ModalHeader>
         <ModalBody>
@@ -80,22 +80,22 @@
                                     <div style="display: flex; flex-direction: row; gap: 2rem;">
                                         <!-- Manual 模式按鈕 -->
                                         <div style="display: flex; flex-direction: column; gap: 10px;">
-                                            <button class="btn btn-outline-success" style="width: 120px; height: 50px; background-color:@MainLayout.bufAValve[0]"
+                                            <button class="btn btn-outline-success" style="width: 120px; height: 50px; background-color:@mBufAValve"
                                             disabled="@isManual"
                                             @onclick="@(async () => modbusToWrite.WriteToRegister(inputNumber1100, 1))">
                                                 @localizer[StringDescriptionModel.modal_m_bufa]
                                             </button>
-                                            <button class="btn btn-outline-success" style="width: 120px; height: 50px; background-color:@MainLayout.bufBValve[0]"
+                                            <button class="btn btn-outline-success" style="width: 120px; height: 50px; background-color:@mBufBValve"
                                             disabled="@isManual"
                                             @onclick="@(async () => modbusToWrite.WriteToRegister(inputNumber1100, 2))">
                                                 @localizer[StringDescriptionModel.modal_m_bufb]
                                             </button>
-                                            <button class="btn btn-outline-success" style="width: 120px; height: 50px; background-color:@MainLayout.reagValve[0]"
+                                            <button class="btn btn-outline-success" style="width: 120px; height: 50px; background-color:@mReagValve"
                                             disabled="@isManual"
                                             @onclick="@(async () => modbusToWrite.WriteToRegister(inputNumber1100, 4))">
                                                 @localizer[StringDescriptionModel.modal_m_reag]
                                             </button>
-                                            <button class="btn btn-outline-success" style="width: 120px; height: 50px; background-color:@MainLayout.washingValve[0]"
+                                            <button class="btn btn-outline-success" style="width: 120px; height: 50px; background-color:@mWashingValve"
                                             disabled="@isManual"
                                             @onclick="@(async () => modbusToWrite.WriteToRegister(inputNumber1100, 8))">
                                                 @localizer[StringDescriptionModel.modal_m_wash]
@@ -104,12 +104,12 @@
 
                                         <!-- Auto 模式按鈕 -->
                                         <div style="display: flex; flex-direction: column; gap: 10px;">
-                                            <button class="btn btn-primary" style="width: 120px; height: 50px; background-color:@MainLayout.hbmWashingMotionControl[0]"
+                                            <button class="btn btn-primary" style="width: 120px; height: 50px; background-color:@aWashingMotion"
                                             disabled="@(!isManual)"
                                             @onclick="@(async () => modbusToWrite.WriteToRegister(inputNumber10, 1))">
                                                 @localizer[StringDescriptionModel.modal_a_wash]
                                             </button>
-                                            <button class="btn btn-success" style="width: 120px; height: 50px; background-color:@MainLayout.hbmCalMotionControl[0]"
+                                            <button class="btn btn-success" style="width: 120px; height: 50px; background-color:@aCalMotion"
                                             disabled="@(!isManual)"
                                             @onclick="@(async () => modbusToWrite.WriteToRegister(inputNumber10, 2))">
                                                 @localizer[StringDescriptionModel.modal_a_cal]
@@ -124,16 +124,16 @@
 
                                             <!-- 狀態顯示區 -->
                                             <div>
-                                                @if (MainLayout.d1DeviceStatusIntBinaryCharArray[3] == '1')
+                                                @if (preWashingStatus == '1')
                                                 {
                                                     <div><label>@localizer[StringDescriptionModel.modal_prewash]</label></div>
                                                 }
-                                                else if (MainLayout.d1DeviceStatusIntBinaryCharArray[4] == '1')
+                                                else if (preCalStatus == '1')
                                                 {
                                                     <div><label>@localizer[StringDescriptionModel.modal_precal]</label></div>
                                                 }
 
-                                                @if (MainLayout.systemStatusIntBinaryCharArray[10] == '1')
+                                                @if (stablingStatus == '1')
                                                 {
                                                     <div><label>@localizer[StringDescriptionModel.modal_stabling]</label></div>
                                                 }
@@ -248,6 +248,24 @@
     public int hoisterDownCycleSettingCount { get; set; }
     [Parameter]
     public int hoisterDownCycleCount { get; set; }
+    [Parameter]
+    public string mBufAValve { get; set; }
+    [Parameter]
+    public string mBufBValve { get; set; }
+    [Parameter]
+    public string mReagValve { get; set; }
+    [Parameter]
+    public string mWashingValve { get; set; }
+    [Parameter]
+    public string aWashingMotion { get; set; }
+    [Parameter]
+    public string aCalMotion { get; set; }
+    [Parameter]
+    public char preWashingStatus { get; set; }
+    [Parameter]
+    public char preCalStatus { get; set; }
+    [Parameter]
+    public char stablingStatus { get; set; }
 
     public void ShowModal()
     {
