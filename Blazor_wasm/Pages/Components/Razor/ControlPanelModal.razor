@@ -234,13 +234,8 @@
 
 @code {
 
-    private Action<Modal> modalRef;
-    [Parameter]
-    public Action<Modal> ModalRef
-    {
-        set => modalRef = value;
-    }
-  
+    private Modal modalRef;
+
     [Parameter]
     public int inputNumber0 { get; set; }
     [Parameter]
@@ -250,9 +245,14 @@
     [Parameter]
     public ushort inputNumber10 { get; set; }
     [Parameter]
-	public int hoisterDownCycleSettingCount { get; set; }
+    public int hoisterDownCycleSettingCount { get; set; }
     [Parameter]
     public int hoisterDownCycleCount { get; set; }
+
+    public void ShowModal()
+    {
+        modalRef.Show();
+    }
 
     private bool isManual = false;
     private bool Expand = false;
@@ -266,18 +266,7 @@
         ("Zero", "hbmZero"),
         ("Slope", "hbmSlope"),
         ("Health", "hbmHealth")
-    };
-
-
-    private Task ShowModal()
-    {
-        return modalRef.Show();
-    }
-
-    private Task HideModal()
-    {
-        return modalRef.Hide();
-    }
+    };    
 
     public async Task ExpandHandler()
     {
