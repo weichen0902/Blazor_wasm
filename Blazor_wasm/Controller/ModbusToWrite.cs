@@ -25,7 +25,7 @@ namespace Blazor_wasm.Controller
             {
                 waitFeedback = false;
                 dataTimer?.Dispose();
-            }), null, 1000, Timeout.Infinite);
+            }), null, 2000, Timeout.Infinite);
 
             if (address == 0)
             {
