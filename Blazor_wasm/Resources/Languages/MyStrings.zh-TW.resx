@@ -900,4 +900,7 @@
   <data name="dashboard_elec_err" xml:space="preserve">
     <value>電極訊號異常</value>
   </data>
+  <data name="history_startdate_greaterthan_enddate" xml:space="preserve">
+    <value>起始日大於結束日</value>
+  </data>
 </root>

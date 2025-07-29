@@ -900,4 +900,7 @@
   <data name="dashboard_elec_err" xml:space="preserve">
     <value>Electrode signal abnormal</value>
   </data>
+  <data name="history_startdate_greaterthan_enddate" xml:space="preserve">
+    <value>The start date is later than the end date</value>
+  </data>
 </root>

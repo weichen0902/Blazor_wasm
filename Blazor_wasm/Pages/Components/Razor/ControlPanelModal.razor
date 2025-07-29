@@ -79,23 +79,23 @@
                                     <!-- Manual / Auto 按鈕水平排列 -->
                                     <div style="display: flex; flex-direction: row; gap: 2rem;">
                                         <!-- Manual 模式按鈕 -->
-                                        <div style="display: flex; flex-direction: column; gap: 10px;">
-                                            <button class="btn btn-outline-success" style="width: 120px; height: 50px; background-color:@mBufAValve"
+                                        <div style="display: flex; flex-direction: column; gap: 10px; ">
+                                            <button class="btn btn-outline-success @(!isManual ? "btn-manual" : "btn-default")" style="background-color:@mBufAValve"
                                             disabled="@isManual"
                                             @onclick="@(async () => modbusToWrite.WriteToRegister(inputNumber1100, 1))">
                                                 @localizer[StringDescriptionModel.modal_m_bufa]
                                             </button>
-                                            <button class="btn btn-outline-success" style="width: 120px; height: 50px; background-color:@mBufBValve"
+                                            <button class="btn btn-outline-success @(!isManual ? "btn-manual" : "btn-default")" style="background-color:@mBufBValve"
                                             disabled="@isManual"
                                             @onclick="@(async () => modbusToWrite.WriteToRegister(inputNumber1100, 2))">
                                                 @localizer[StringDescriptionModel.modal_m_bufb]
                                             </button>
-                                            <button class="btn btn-outline-success" style="width: 120px; height: 50px; background-color:@mReagValve"
+                                            <button class="btn btn-outline-success @(!isManual ? "btn-manual" : "btn-default")" style="width: 120px; height: 50px; background-color:@mReagValve"
                                             disabled="@isManual"
                                             @onclick="@(async () => modbusToWrite.WriteToRegister(inputNumber1100, 4))">
                                                 @localizer[StringDescriptionModel.modal_m_reag]
                                             </button>
-                                            <button class="btn btn-outline-success" style="width: 120px; height: 50px; background-color:@mWashingValve"
+                                            <button class="btn btn-outline-success @(!isManual ? "btn-manual" : "btn-default")" style="width: 120px; height: 50px; background-color:@mWashingValve"
                                             disabled="@isManual"
                                             @onclick="@(async () => modbusToWrite.WriteToRegister(inputNumber1100, 8))">
                                                 @localizer[StringDescriptionModel.modal_m_wash]
@@ -266,6 +266,10 @@
     public char preCalStatus { get; set; }
     [Parameter]
     public char stablingStatus { get; set; }
+
+    private int borderValue = 10;
+    
+    
 
     public void ShowModal()
     {

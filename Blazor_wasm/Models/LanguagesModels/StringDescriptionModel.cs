@@ -113,9 +113,10 @@ namespace Blazor_wasm.Models.LanguagesModels
         public const string schedule_day = "schedule_day";
         public const string schedule_hour = "schedule_hour";
 
-
+        public const string history_chart = "history_chart";
         public const string history_start_date = "history_start_date";
         public const string history_end_date = "history_end_date";
+        public const string history_startdate_greaterthan_enddate = "history_startdate_greaterthan_enddate";
 
         public const string alarm_active = "alarm_active";
         public const string alarm_inactive = "alarm_inactive";
@@ -147,8 +148,7 @@ namespace Blazor_wasm.Models.LanguagesModels
         public const string home = "home";
         public const string charts = "charts";
         public const string live_chart = "live_chart";
-        public const string history_chart = "history_chart";
-        
+           
         public const string cal_datalog = "cal_datalog";
 
         public const string export_datalog = "export_datalog";

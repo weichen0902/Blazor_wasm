@@ -900,4 +900,7 @@
   <data name="dashboard_elec_err" xml:space="preserve">
     <value>でんきょくしんごういじょう</value>
   </data>
+  <data name="history_startdate_greaterthan_enddate" xml:space="preserve">
+    <value>開始日が終了日より後です</value>
+  </data>
 </root>

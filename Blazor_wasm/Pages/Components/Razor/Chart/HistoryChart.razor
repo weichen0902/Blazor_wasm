@@ -126,24 +126,25 @@
 
     async Task OnButtonClicked()
     {
+        if (startDateTime >= endDateTime)
+        {
+            await JS.InvokeVoidAsync("alertMessage", $"{localizer[StringDescriptionModel.history_startdate_greaterthan_enddate]}");
+            return;
+        }
         fetchData = true;
         await Task.Delay(100);
 
         var result = await dataService.GetpH(startUnixTimeStamp, endUnixTimeStamp);
         realTimepHList = result?.Content as List<RealTimepHModel>;
+
         if (result.IsSuccess == false)
         {
             await JS.InvokeVoidAsync("alertMessage", alertMsgs.ErrorAlert(pageTitleService.Title, result).Result);
         }
-
-        fetchData = false;
-      
-        // pH1List = realTimepHList.Select(pH => pH.D1pH).ToList();
-        // pH2List = realTimepHList.Select(pH => pH.D2pH).ToList();
-
-
-        var groupedData1 = realTimepHList
-            .GroupBy(pH => (pH.DateTime.Ticks / TimeSpan.TicksPerMinute) / 5 ) // 每分鐘一組
+        else
+        {
+            var groupedData1 = realTimepHList
+            .GroupBy(pH => (pH.DateTime.Ticks / TimeSpan.TicksPerMinute) / 5) // 每分鐘一組
             .Select(group => new
             {
                 DateTime = new DateTime(group.Key * 5 * TimeSpan.TicksPerMinute), // 該組的代表時間
@@ -151,26 +152,29 @@
             })
             .ToList();
 
-        var groupedData2 = realTimepHList
-            .GroupBy(pH => (pH.DateTime.Ticks / TimeSpan.TicksPerMinute) / 5 ) // 每分鐘一組
-        .Select(group => new
+            var groupedData2 = realTimepHList
+                .GroupBy(pH => (pH.DateTime.Ticks / TimeSpan.TicksPerMinute) / 5) // 每分鐘一組
+            .Select(group => new
             {
-            DateTime = new DateTime(group.Key * 5 * TimeSpan.TicksPerMinute), // 該組的代表時間
+                DateTime = new DateTime(group.Key * 5 * TimeSpan.TicksPerMinute), // 該組的代表時間
                 AverageValue = group.Average(pH => pH.D2pH) // 該組的平均值
             })
-            .ToList();
+                .ToList();
 
-        pH1List = groupedData1.Select(s => s.AverageValue).ToList();
-        pH2List = groupedData2.Select(s => s.AverageValue).ToList();
+            pH1List = groupedData1.Select(s => s.AverageValue).ToList();
+            pH2List = groupedData2.Select(s => s.AverageValue).ToList();
 
-        // Labels = realTimepHList.Select(s => s.DateTime.ToString("yyyy/MM/dd HH:mm:ss")).ToArray();
+            // Labels = realTimepHList.Select(s => s.DateTime.ToString("yyyy/MM/dd HH:mm:ss")).ToArray();
 
-        Labels = groupedData1.Select(g => g.DateTime.ToString("yyyy/MM/dd HH:mm:ss")).ToArray();
+            Labels = groupedData1.Select(g => g.DateTime.ToString("yyyy/MM/dd HH:mm:ss")).ToArray();
 
-        if (pH1List!=null & pH2List!=null)
-        {
-            await HandleRedraw(Labels);
+            if (pH1List != null & pH2List != null)
+            {
+                await HandleRedraw(Labels);
+            }
         }
+        
+        fetchData = false;
     }
 
     async Task HandleRedraw(string[] stringLabels)

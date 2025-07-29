@@ -86,11 +86,12 @@
         this.d2CalData = getAllCalData.d2CalData;
 
         await Task.Delay(500);
-        fetchData = false;
+
         if (d2CalData != null)
         {
             this.TreeGridData = D2SelfReferenceData.GetTree(d2CalData).ToList();
         }
+        fetchData = false;
         StateHasChanged();
     }
 

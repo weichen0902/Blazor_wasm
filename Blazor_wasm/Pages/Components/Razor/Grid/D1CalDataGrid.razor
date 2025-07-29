@@ -78,12 +78,13 @@
         this.d1CalData = getAllCalData.d1CalData;
 
         await Task.Delay(500);
-        fetchData = false;
+        
         if (d1CalData != null)
         {
             this.TreeGridData = D1SelfReferenceData.GetTree(d1CalData).ToList();
         }
-        StateHasChanged();
+        fetchData = false;
+        StateHasChanged();      
     }
 
     private async Task UploadFile(InputFileChangeEventArgs e)
