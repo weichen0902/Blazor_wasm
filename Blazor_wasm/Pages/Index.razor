@@ -233,17 +233,17 @@
 </SfDashboardLayout>
 
 <ControlPanelModal @ref=controlPanelModal1 inputNumber0="0" inputNumber10="10" inputNumber15="15" inputNumber1100="1100"
-    hoisterDownCycleCount="@hoisterDownCycleCount[0]" hoisterDownCycleSettingCount="@hoisterDownCycleSettingCount[0]"
-    mBufAValve="@MainLayout.bufAValve[0]" mBufBValve="@MainLayout.bufBValve[0]" mReagValve="@MainLayout.reagValve[0]" mWashingValve="@MainLayout.washingValve[0]"
-    aWashingMotion="@MainLayout.hbmWashingMotionControl[0]" aCalMotion="@MainLayout.hbmCalMotionControl[0]"
-    preWashingStatus="@MainLayout.d1DeviceStatusIntBinaryCharArray[3]" preCalStatus="@MainLayout.d1DeviceStatusIntBinaryCharArray[4]" stablingStatus="@MainLayout.systemStatusIntBinaryCharArray[10]">
+hoisterDownCycleCount="@hoisterDownCycleCount[0]" hoisterDownCycleSettingCount="@hoisterDownCycleSettingCount[0]"
+mBufAValve="@MainLayout.bufAValve[0]" mBufBValve="@MainLayout.bufBValve[0]" mReagValve="@MainLayout.reagValve[0]" mWashingValve="@MainLayout.washingValve[0]"
+aWashingMotion="@MainLayout.hbmWashingMotionControl[0]" aCalMotion="@MainLayout.hbmCalMotionControl[0]"
+preWashingStatus="@MainLayout.d1DeviceStatusIntBinaryCharArray[3]" preCalStatus="@MainLayout.d1DeviceStatusIntBinaryCharArray[4]" stablingStatus="@MainLayout.systemStatusIntBinaryCharArray[10]">
 </ControlPanelModal>
 
 <ControlPanelModal @ref=controlPanelModal2 inputNumber0="1" inputNumber10="20" inputNumber15="25" inputNumber1100="2100"
-    hoisterDownCycleCount="@hoisterDownCycleCount[1]" hoisterDownCycleSettingCount="@hoisterDownCycleSettingCount[1]"
-    mBufAValve="@MainLayout.bufAValve[1]" mBufBValve="@MainLayout.bufBValve[1]" mReagValve="@MainLayout.reagValve[1]" mWashingValve="@MainLayout.washingValve[1]"
-    aWashingMotion="@MainLayout.hbmWashingMotionControl[1]" aCalMotion="@MainLayout.hbmCalMotionControl[1]"
-    preWashingStatus="@MainLayout.d2DeviceStatusIntBinaryCharArray[3]" preCalStatus="@MainLayout.d2DeviceStatusIntBinaryCharArray[4]" stablingStatus="@MainLayout.systemStatusIntBinaryCharArray[10]">
+hoisterDownCycleCount="@hoisterDownCycleCount[1]" hoisterDownCycleSettingCount="@hoisterDownCycleSettingCount[1]"
+mBufAValve="@MainLayout.bufAValve[1]" mBufBValve="@MainLayout.bufBValve[1]" mReagValve="@MainLayout.reagValve[1]" mWashingValve="@MainLayout.washingValve[1]"
+aWashingMotion="@MainLayout.hbmWashingMotionControl[1]" aCalMotion="@MainLayout.hbmCalMotionControl[1]"
+preWashingStatus="@MainLayout.d2DeviceStatusIntBinaryCharArray[3]" preCalStatus="@MainLayout.d2DeviceStatusIntBinaryCharArray[4]" stablingStatus="@MainLayout.systemStatusIntBinaryCharArray[10]">
 </ControlPanelModal>
 @code {
     SfCircularGauge GaugeOne;
@@ -293,9 +293,8 @@
         //      MainLayout.OnLanguageChange += StateHasChanged;
         MainLayout.OnFieldInputChange += StateHasChanged;
         MainLayout.OnFieldValueChange += StateHasChanged;
-        AlarmDataGrid.toChangeAlarmBtnState += StateHasChanged;
-        ModbusToWrite.onStateChanged += StateHasChanged;
-        devicesDataModel.OnStateChange += Update;       
+        AlarmDataGrid.toChangeAlarmBtnState += StateHasChanged;    
+        devicesDataModel.OnStateChange += Update;
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -327,8 +326,7 @@
         {
             hoisterDownCycleCount[i] = (ushort)devicesDataModel[i, "hoisterDownCycleCount"];
             hoisterDownCycleSettingCount[i] = (ushort)devicesDataModel[i, "hoisterDownCycleSettingCount"];
-        }
-              
+        }      
         StateHasChanged();
     }
 
