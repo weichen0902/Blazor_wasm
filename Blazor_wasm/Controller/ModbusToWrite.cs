@@ -10,6 +10,8 @@ namespace Blazor_wasm.Controller
         public bool waitFeedback;
         public bool[] d1ToggleInput = new bool[5];
         public bool[] d2ToggleInput = new bool[5];
+        public void NotifyStateChanged() => onStateChanged?.Invoke();
+        public static event Action? onStateChanged;
 
         private Timer dataTimer;
 
@@ -25,7 +27,7 @@ namespace Blazor_wasm.Controller
             {
                 waitFeedback = false;
                 dataTimer?.Dispose();
-            }), null, 2000, Timeout.Infinite);
+            }), null, 1000, Timeout.Infinite);
 
             if (address == 0)
             {
@@ -167,6 +169,7 @@ namespace Blazor_wasm.Controller
 
             PostModbusApiModel postModbusApiModel = new PostModbusApiModel() { startAddress = address, value = value };
             await _dataService.PostModbusDevicesData(postModbusApiModel);
+            NotifyStateChanged();
         }
 
         public class ButtonModel

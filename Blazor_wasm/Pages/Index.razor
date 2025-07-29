@@ -293,9 +293,9 @@
         //      MainLayout.OnLanguageChange += StateHasChanged;
         MainLayout.OnFieldInputChange += StateHasChanged;
         MainLayout.OnFieldValueChange += StateHasChanged;
-        devicesDataModel.OnStateChange += Update;
         AlarmDataGrid.toChangeAlarmBtnState += StateHasChanged;
-
+        ModbusToWrite.onStateChanged += StateHasChanged;
+        devicesDataModel.OnStateChange += Update;       
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
