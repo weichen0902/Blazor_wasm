@@ -1,0 +1,12 @@
+﻿.btn-manual {
+    border-width: 3px;
+    width: 120px;
+    height: 50px;
+}
+
+/* 預設邊框 */
+.btn-default {
+    border-width: 1px;
+    width: 120px;
+    height: 50px;
+}
