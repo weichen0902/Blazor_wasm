@@ -43,13 +43,7 @@
                         <SfCircularGauge ID="GaugeOne" @ref="GaugeOne" Width="100%" Height="100%" MoveToCenter="true">
                             <CircularGauge1></CircularGauge1>
                         </SfCircularGauge>
-                    </div>
-                    @if (MainLayout.elecError[0])
-                    {
-                        <div class="centered-blinking-label blinking-label">
-                            <label>@localizer[StringDescriptionModel.dashboard_elec_err]</label>
-                        </div>
-                    }                    
+                    </div>                   
                 }
             </ContentTemplate>
         </DashboardLayoutPanel>
@@ -71,12 +65,6 @@
                             <CircularGauge2></CircularGauge2>
                         </SfCircularGauge>
                     </div>
-                    @if (MainLayout.elecError[1])
-                    {
-                        <div class="centered-blinking-label blinking-label">
-                            <label>@localizer[StringDescriptionModel.dashboard_elec_err]</label>
-                        </div>
-                    }
                 }
             </ContentTemplate>
         </DashboardLayoutPanel>
@@ -148,7 +136,7 @@
                         white-space: nowrap;
                         z-index: 1000;
                     ">            
-                        @MainLayout.fieldData.Field - 220                                      
+                        @MainLayout.fieldData.Field                                      
                     </div>
                     <div style="width:100%; height:100%;" onmousedown="@(()=>NotifyMaintain1Msg())">
                         <SfCircularGauge ID="GaugeThree" @ref="GaugeThree" Width="100%" Height="100%" MoveToCenter="true">
@@ -195,7 +183,7 @@
                         white-space: nowrap;
                         z-index: 1000;
                     ">
-                        @MainLayout.fieldData.Field - 220
+                        @MainLayout.fieldData.Field
                     </div>
                     <div style="width:100%; height:100%;" onmousedown="@(()=>NotifyMaintain2Msg())">
                         <SfCircularGauge ID="GaugeFour" @ref="GaugeFour" Width="100%" Height="100%" MoveToCenter="true">
@@ -236,14 +224,14 @@
 hoisterDownCycleCount="@hoisterDownCycleCount[0]" hoisterDownCycleSettingCount="@hoisterDownCycleSettingCount[0]"
 mBufAValve="@MainLayout.bufAValve[0]" mBufBValve="@MainLayout.bufBValve[0]" mReagValve="@MainLayout.reagValve[0]" mWashingValve="@MainLayout.washingValve[0]"
 aWashingMotion="@MainLayout.hbmWashingMotionControl[0]" aCalMotion="@MainLayout.hbmCalMotionControl[0]"
-preWashingStatus="@MainLayout.d1DeviceStatusIntBinaryCharArray[3]" preCalStatus="@MainLayout.d1DeviceStatusIntBinaryCharArray[4]" stablingStatus="@MainLayout.systemStatusIntBinaryCharArray[10]">
+preWashingStatus="@MainLayout.d1DeviceStatusIntBinaryCharArray[3]" preCalStatus="@MainLayout.d1DeviceStatusIntBinaryCharArray[4]" stablingStatus="@MainLayout.systemStatusIntBinaryCharArray[10]" elecError="@MainLayout.elecError[0]">
 </ControlPanelModal>
 
 <ControlPanelModal @ref=controlPanelModal2 inputNumber0="1" inputNumber10="20" inputNumber15="25" inputNumber1100="2100"
 hoisterDownCycleCount="@hoisterDownCycleCount[1]" hoisterDownCycleSettingCount="@hoisterDownCycleSettingCount[1]"
 mBufAValve="@MainLayout.bufAValve[1]" mBufBValve="@MainLayout.bufBValve[1]" mReagValve="@MainLayout.reagValve[1]" mWashingValve="@MainLayout.washingValve[1]"
 aWashingMotion="@MainLayout.hbmWashingMotionControl[1]" aCalMotion="@MainLayout.hbmCalMotionControl[1]"
-preWashingStatus="@MainLayout.d2DeviceStatusIntBinaryCharArray[3]" preCalStatus="@MainLayout.d2DeviceStatusIntBinaryCharArray[4]" stablingStatus="@MainLayout.systemStatusIntBinaryCharArray[10]">
+                   preWashingStatus="@MainLayout.d2DeviceStatusIntBinaryCharArray[3]" preCalStatus="@MainLayout.d2DeviceStatusIntBinaryCharArray[4]" stablingStatus="@MainLayout.systemStatusIntBinaryCharArray[10]" elecError="@MainLayout.elecError[1]">
 </ControlPanelModal>
 @code {
     SfCircularGauge GaugeOne;
@@ -295,6 +283,7 @@ preWashingStatus="@MainLayout.d2DeviceStatusIntBinaryCharArray[3]" preCalStatus=
         MainLayout.OnFieldValueChange += StateHasChanged;
         AlarmDataGrid.toChangeAlarmBtnState += StateHasChanged;    
         devicesDataModel.OnStateChange += Update;
+        ModbusToWrite.onStateChanged += StateHasChanged;
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

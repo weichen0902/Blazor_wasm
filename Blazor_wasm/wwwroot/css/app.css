@@ -100,6 +100,26 @@ a, .btn-link {
         content: var(--blazor-load-percentage-text, "Loading");
     }
 
+.centered-blinking-label {
+    position: relative;
+    left: 50%;
+    top: 20%;
+    transform: translate(-50%, -50%);
+    color: black;
+    background-color: transparent;
+    font-size: 20px;
+}
+
+.blinking-label {
+    animation: blink-animation 1s steps(2, start) infinite;
+}
+
+@keyframes blink-animation {
+    to {
+        visibility: hidden;
+    }
+}
+
 code {
     color: #c02d76;
 }

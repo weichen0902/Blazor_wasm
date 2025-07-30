@@ -202,26 +202,6 @@ table {
     border-color: #007bff; /* 藍色邊框 */
 }
 
-.centered-blinking-label {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 10;
-    color: red;
-    background-color: yellow;
-    font-size: 20px;
-}
-
-.blinking-label {
-    animation: blink-animation 1s steps(2, start) infinite;
-}
-
-@keyframes blink-animation {
-    to {
-        visibility: hidden;
-    }
-}
 
 
 

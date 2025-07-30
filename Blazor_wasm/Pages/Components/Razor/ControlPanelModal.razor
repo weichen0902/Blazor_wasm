@@ -22,7 +22,15 @@
                             {
                                 <div class="d-flex flex-column gap-2 text-center" style="font-size: 30px; ">
                                     <label class="text-primary">@label:</label>
-                                    <span class="">@devicesDataModel[inputNumber0, key]</span>
+                                    @if (elecError)
+                                    {
+                                        
+                                        <span class="centered-blinking-label blinking-label">####</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="">@devicesDataModel[inputNumber0, key]</span>
+                                    }
                                 </div>
                             }
                         </div>
@@ -266,12 +274,8 @@
     public char preCalStatus { get; set; }
     [Parameter]
     public char stablingStatus { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        devicesDataModel.OnStateChange += StateHasChanged;
-        ModbusToWrite.onStateChanged += StateHasChanged;
-    }
+    [Parameter]
+    public bool elecError { get; set; }
 
     public void ShowModal()
     {

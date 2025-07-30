@@ -32,7 +32,14 @@
         <CircularGaugeAnnotations>
             <CircularGaugeAnnotation Angle="@GaugeOneAngle" ZIndex="1" Radius="@GaugeOneRadius">
                 <ContentTemplate>
-                    <div class="gaugeOneText" style="font-size:30px;">@hbmpH</div>
+                    @if (MainLayout.elecError[0])
+                    {
+                        <div class="gaugeOneText centered-blinking-label blinking-label" style="font-size:30px; position:relative; top:20px;">####</div>
+                    }
+                    else
+                    {
+                        <div class="gaugeOneText" style="font-size:30px;">@hbmpH</div>
+                    }                 
                 </ContentTemplate>
             </CircularGaugeAnnotation>
         </CircularGaugeAnnotations>
@@ -62,6 +69,12 @@
 
     private async void Update()
     {
+        if (MainLayout.elecError[0])
+        {
+            hbmpH = 0;
+            color = "black";
+            return;
+        }
         hbmpH = (double)devicesDataModel[0, "hbmpH"];
         if (hbmpH >= 0 & hbmpH < 5.2)
             color = "#e96920";
