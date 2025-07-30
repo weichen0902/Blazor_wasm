@@ -1,8 +1,8 @@
 services:
   blazor_wasm_sqm:
     build:
-      context: .
-      dockerfile: Blazor_wasm/Dockerfile
+      context: ./Blazor_wasm
+      dockerfile: Dockerfile
     ports:
       - "88:80"
     volumes:
