@@ -132,8 +132,14 @@ window.createStreamingChart = async (canvasId, historicalData) => {
                             let yValue1 = await DotNet.invokeMethodAsync('Blazor_wasm', 'GetY1ValueAsync');
                             let yValue2 = await DotNet.invokeMethodAsync('Blazor_wasm', 'GetY2ValueAsync');
 
-                            chart.data.datasets[0].data.push({ x: Date.now(), y: yValue1 });
-                            chart.data.datasets[1].data.push({ x: Date.now(), y: yValue2 });
+                            if (!yValue1.elecError)
+                            {
+                                chart.data.datasets[0].data.push({ x: Date.now(), y: yValue1.yValue});
+                            }
+                            if (!yValue2.elecError)
+                            {
+                                chart.data.datasets[1].data.push({ x: Date.now(), y: yValue2.yValue});
+                            }
 
                             updateYAxisScale(); // 每次新增數據時，更新 Y 軸
                         }

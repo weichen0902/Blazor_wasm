@@ -17,6 +17,12 @@
     private long dateTimeStartUnixTimeStamp, dateTimeEndUnixTimeStamp;
     private static List<RealTimepHModel>? realTimepHList = new List<RealTimepHModel>();
 
+    public class YValueResult
+    {
+        public bool ElecError { get; set; }
+        public double YValue { get; set; }
+    }
+
     protected override void OnInitialized()
     {
         //    MainLayout.OnLanguageChange += StateHasChanged;
@@ -39,27 +45,34 @@
         }
     }
 
-
     [JSInvokable]
     public static async Task<List<RealTimepHModel>> GetHistoricalDataAsync()
     {
         return await Task.FromResult(realTimepHList);
     }
 
-
     [JSInvokable]
-    public static async Task<double> GetY1ValueAsync()
+    public static async Task<YValueResult> GetY1ValueAsync()
     {
-        double yValue = MainLayout.d1pH;
-        return await Task.FromResult(yValue);
+        var elecError = MainLayout.elecError[0] ? true : false;
+        var yValue = MainLayout.d1pH;     
+        return await Task.FromResult(new YValueResult
+        {
+                ElecError = elecError,
+                YValue = yValue
+        });
     }
 
-
     [JSInvokable]
-    public static async Task<double> GetY2ValueAsync()
+    public static async Task<YValueResult> GetY2ValueAsync()
     {
-        double yValue = MainLayout.d2pH;
-        return await Task.FromResult(yValue);
+        var elecError = MainLayout.elecError[1] ? true : false;
+        var yValue = MainLayout.d2pH;
+        return await Task.FromResult(new YValueResult
+            {
+                ElecError = elecError,
+                YValue = yValue
+            });
     }
 }
 
