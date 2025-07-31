@@ -530,6 +530,7 @@
     {
         public string ID { get; set; }
         public int ConstantTotalDays { get; set; }
+        public string FieldName { get; set; }
         public string Text { get; set; }
     }
 
@@ -579,15 +580,15 @@
             if (result.IsSuccess)
             {
                 fieldData = result?.Content as FieldDataModel;
-
-                dropDownFieldBindValue = fieldData.Field == null ? waterFieldRate[0] :
-                 fieldData.Field.Contains(localizer[StringDescriptionModel.field_lsr]) ? waterFieldRate[1] :
-                 fieldData.Field.Contains(localizer[StringDescriptionModel.field_bio]) ? waterFieldRate[2] :
-                 fieldData.Field.Contains(localizer[StringDescriptionModel.field_aw]) ? waterFieldRate[3] :
-                 fieldData.Field.Contains(localizer[StringDescriptionModel.field_cmp]) ? waterFieldRate[4] :
-                 fieldData.Field.Contains(localizer[StringDescriptionModel.field_cucmp]) ? waterFieldRate[5] :
-                 fieldData.Field.Contains(localizer[StringDescriptionModel.field_nh]) ? waterFieldRate[6] :
-                 fieldData.Field.Contains(localizer[StringDescriptionModel.field_hf]) ? waterFieldRate[7] :
+                Console.WriteLine($"MainLayout: {MainLayout.fieldData.FieldName}");
+                dropDownFieldBindValue = fieldData.FieldName == null ? waterFieldRate[0] :
+                 fieldData.FieldName.Contains("lsr") ? waterFieldRate[1] :
+                 fieldData.FieldName.Contains("bio") ? waterFieldRate[2] :
+                 fieldData.FieldName.Contains("aw") ? waterFieldRate[3] :
+                 fieldData.FieldName.Contains("cmp") ? waterFieldRate[4] :
+                 fieldData.FieldName.Contains("cucmp") ? waterFieldRate[5] :
+                 fieldData.FieldName.Contains("nh") ? waterFieldRate[6] :
+                 fieldData.FieldName.Contains("hf") ? waterFieldRate[7] :
                  "1";
             }
             // else
@@ -621,14 +622,14 @@
     {
         FieldData = new List<DropDownModel>
         {
-            new DropDownModel() { ID= waterFieldRate[0], ConstantTotalDays=913, Text= localizer[StringDescriptionModel.field_pure] },
-            new DropDownModel() { ID= waterFieldRate[1], ConstantTotalDays=537, Text= localizer[StringDescriptionModel.field_lsr] },
-            new DropDownModel() { ID= waterFieldRate[2], ConstantTotalDays=364, Text= localizer[StringDescriptionModel.field_bio] },
-            new DropDownModel() { ID= waterFieldRate[3], ConstantTotalDays=286, Text= localizer[StringDescriptionModel.field_aw] },
-            new DropDownModel() { ID= waterFieldRate[4], ConstantTotalDays=224, Text= localizer[StringDescriptionModel.field_cmp] },
-            new DropDownModel() { ID= waterFieldRate[5], ConstantTotalDays=208, Text= localizer[StringDescriptionModel.field_cucmp] },
-            new DropDownModel() { ID= waterFieldRate[6], ConstantTotalDays=184, Text= localizer[StringDescriptionModel.field_nh] },
-            new DropDownModel() { ID= waterFieldRate[7], ConstantTotalDays=135, Text= localizer[StringDescriptionModel.field_hf] },
+            new DropDownModel() { ID= waterFieldRate[0], ConstantTotalDays=913, FieldName="pure", Text= localizer[StringDescriptionModel.field_pure] },
+            new DropDownModel() { ID= waterFieldRate[1], ConstantTotalDays=537, FieldName="lsr", Text= localizer[StringDescriptionModel.field_lsr] },
+            new DropDownModel() { ID= waterFieldRate[2], ConstantTotalDays=364, FieldName="bio", Text= localizer[StringDescriptionModel.field_bio] },
+            new DropDownModel() { ID= waterFieldRate[3], ConstantTotalDays=286, FieldName="aw", Text= localizer[StringDescriptionModel.field_aw] },
+            new DropDownModel() { ID= waterFieldRate[4], ConstantTotalDays=224, FieldName="cmp", Text= localizer[StringDescriptionModel.field_cmp] },
+            new DropDownModel() { ID= waterFieldRate[5], ConstantTotalDays=208, FieldName="cucmp", Text= localizer[StringDescriptionModel.field_cucmp] },
+            new DropDownModel() { ID= waterFieldRate[6], ConstantTotalDays=184, FieldName="nh", Text= localizer[StringDescriptionModel.field_nh] },
+            new DropDownModel() { ID= waterFieldRate[7], ConstantTotalDays=135, FieldName="hf", Text= localizer[StringDescriptionModel.field_hf] },
         };
     }
 
@@ -726,7 +727,7 @@
     public async void OnDropDownFieldValueChange(SelectEventArgs<DropDownModel> args)
     {
         var _fieldData = new FieldDataModel();
-        _fieldData.Field = args.ItemData.Text;
+        _fieldData.FieldName = args.ItemData.FieldName;
         _fieldData.ConstantTotalDays = (ushort)(args.ItemData.ConstantTotalDays);
         _fieldData.DegradationFactor = Convert.ToDouble(args.ItemData.ID);
 
@@ -736,13 +737,13 @@
         {
             fieldData = new FieldDataModel()
                 {
-                    Field = _fieldData.Field,
+                    FieldName = _fieldData.FieldName,
                     ConstantTotalDays = _fieldData.ConstantTotalDays,
                     DegradationFactor = _fieldData.DegradationFactor
                 };
         }
 
-        fieldData.Field = _fieldData.Field;
+        fieldData.FieldName = _fieldData.FieldName;
 
         fieldModal.Hide();
         NotifyFieldInputChanged();     

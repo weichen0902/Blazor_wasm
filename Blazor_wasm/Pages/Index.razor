@@ -136,7 +136,7 @@
                         white-space: nowrap;
                         z-index: 1000;
                     ">            
-                        @MainLayout.fieldData.Field                                      
+                        @fieldText                                      
                     </div>
                     <div style="width:100%; height:100%;" onmousedown="@(()=>NotifyMaintain1Msg())">
                         <SfCircularGauge ID="GaugeThree" @ref="GaugeThree" Width="100%" Height="100%" MoveToCenter="true">
@@ -171,9 +171,9 @@
         </DashboardLayoutPanel>
         <DashboardLayoutPanel Id="LayoutEight" Row="8" Col="7" SizeX="7" SizeY="8">
             <HeaderTemplate><div> @localizer[StringDescriptionModel.dashboard_elec_life] System#2 </div></HeaderTemplate>
-            <ContentTemplate>
+            <ContentTemplate>              
                 @if (IsInitialRender && MainLayout.fieldData != null)
-                {
+                {                   
                     <div style="
                         position: absolute;
                         top: 40px;
@@ -183,7 +183,7 @@
                         white-space: nowrap;
                         z-index: 1000;
                     ">
-                        @MainLayout.fieldData.Field
+                        @* @fieldText *@
                     </div>
                     <div style="width:100%; height:100%;" onmousedown="@(()=>NotifyMaintain2Msg())">
                         <SfCircularGauge ID="GaugeFour" @ref="GaugeFour" Width="100%" Height="100%" MoveToCenter="true">
@@ -231,7 +231,7 @@ preWashingStatus="@MainLayout.d1DeviceStatusIntBinaryCharArray[3]" preCalStatus=
 hoisterDownCycleCount="@hoisterDownCycleCount[1]" hoisterDownCycleSettingCount="@hoisterDownCycleSettingCount[1]"
 mBufAValve="@MainLayout.bufAValve[1]" mBufBValve="@MainLayout.bufBValve[1]" mReagValve="@MainLayout.reagValve[1]" mWashingValve="@MainLayout.washingValve[1]"
 aWashingMotion="@MainLayout.hbmWashingMotionControl[1]" aCalMotion="@MainLayout.hbmCalMotionControl[1]"
-                   preWashingStatus="@MainLayout.d2DeviceStatusIntBinaryCharArray[3]" preCalStatus="@MainLayout.d2DeviceStatusIntBinaryCharArray[4]" stablingStatus="@MainLayout.systemStatusIntBinaryCharArray[10]" elecError="@MainLayout.elecError[1]">
+preWashingStatus="@MainLayout.d2DeviceStatusIntBinaryCharArray[3]" preCalStatus="@MainLayout.d2DeviceStatusIntBinaryCharArray[4]" stablingStatus="@MainLayout.systemStatusIntBinaryCharArray[10]" elecError="@MainLayout.elecError[1]">
 </ControlPanelModal>
 @code {
     SfCircularGauge GaugeOne;
@@ -275,6 +275,8 @@ aWashingMotion="@MainLayout.hbmWashingMotionControl[1]" aCalMotion="@MainLayout.
 
     private static int d1ValveValue, d2ValveValue;
 
+    private string fieldText;
+
     protected override async Task OnInitializedAsync()
     {
         pageTitleService.Title = "dashboard";
@@ -288,6 +290,42 @@ aWashingMotion="@MainLayout.hbmWashingMotionControl[1]" aCalMotion="@MainLayout.
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
+        if (!string.IsNullOrEmpty(MainLayout.fieldData?.FieldName))
+        {
+            if (MainLayout.fieldData.FieldName.Contains("pure"))
+            {
+                fieldText = localizer[StringDescriptionModel.field_pure];
+            }
+            else if (MainLayout.fieldData.FieldName.Contains("lsr"))
+            {
+                fieldText = localizer[StringDescriptionModel.field_lsr];
+            }
+            else if (MainLayout.fieldData.FieldName.Contains("bio"))
+            {
+                fieldText = localizer[StringDescriptionModel.field_bio];
+            }
+            else if (MainLayout.fieldData.FieldName.Contains("aw"))
+            {
+                fieldText = localizer[StringDescriptionModel.field_aw];
+            }
+            else if (MainLayout.fieldData.FieldName.Contains("cmp"))
+            {
+                fieldText = localizer[StringDescriptionModel.field_cmp];
+            }
+            else if (MainLayout.fieldData.FieldName.Contains("cucmp"))
+            {
+                fieldText = localizer[StringDescriptionModel.field_cucmp];
+            }
+            else if (MainLayout.fieldData.FieldName.Contains("nh"))
+            {
+                fieldText = localizer[StringDescriptionModel.field_nh];
+            }
+            else if (MainLayout.fieldData.FieldName.Contains("hf"))
+            {
+                fieldText = localizer[StringDescriptionModel.field_hf];
+            }
+        }
+
         if (firstRender)
         {
             if (Setting.UserBasicDetail.Role == "Admin" || Setting.UserBasicDetail.Role == "User")
@@ -304,7 +342,7 @@ aWashingMotion="@MainLayout.hbmWashingMotionControl[1]" aCalMotion="@MainLayout.
 
                 await Task.Delay(500);
             }
-
+                    
             Update();
         }
     }
