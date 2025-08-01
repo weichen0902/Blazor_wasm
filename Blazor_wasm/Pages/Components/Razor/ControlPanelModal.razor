@@ -24,7 +24,7 @@
                                     <label class="text-primary">@label:</label>
                                     @if (elecError)
                                     {
-                                        
+
                                         <span class="centered-blinking-label blinking-label">####</span>
                                     }
                                     else
@@ -44,29 +44,29 @@
                                     <div>@localizer[StringDescriptionModel.modal_current_position]: <span>@hoisterDownCycleCount</span></div>
                                     <div>@localizer[StringDescriptionModel.modal_set_position]:</div>
                                     <input type="number" min="0" max="10"
-                                        class="form-control text-center"
-                                        style="width: 80px; height: 40px; font-size: 1.5rem; border-radius: 8px;"
-                                        value="@hoisterDownCycleSettingCount"
-                                        @onkeydown="@(e => HandleKeyDown(e))"
-                                        @onchange="@(async(e)=> await UpdateNumber(inputNumber15, e))" />
+                                    class="form-control text-center"
+                                    style="width: 80px; height: 40px; font-size: 1.5rem; border-radius: 8px;"
+                                    value="@hoisterDownCycleSettingCount"
+                                    @onkeydown="@(e => HandleKeyDown(e))"
+                                    @onchange="@(async(e)=> await UpdateNumber(inputNumber15, e))" />
                                     <button class="btn btn-outline-primary" style="width: 80px; height: 50px;"
-                                        onmousedown="this.style.backgroundColor='transparent'; this.style.color='#007bff'; this.style.borderColor='#007bff';"
-                                        onclick="@(() => modbusToWrite.WriteToRegister(inputNumber1100, 64))">
+                                    onmousedown="this.style.backgroundColor='transparent'; this.style.color='#007bff'; this.style.borderColor='#007bff';"
+                                    onclick="@(() => modbusToWrite.WriteToRegister(inputNumber1100, 64))">
                                         Up
                                     </button>
                                     <button class="btn btn-outline-primary" style="width: 80px; height: 50px;"
-                                        onmousedown="this.style.backgroundColor='transparent'; this.style.color='#007bff'; this.style.borderColor='#007bff';"
-                                        onclick="@(() => modbusToWrite.WriteToRegister(inputNumber1100, 128))">
+                                    onmousedown="this.style.backgroundColor='transparent'; this.style.color='#007bff'; this.style.borderColor='#007bff';"
+                                    onclick="@(() => modbusToWrite.WriteToRegister(inputNumber1100, 128))">
                                         Spec.
                                     </button>
                                     <button class="btn btn-outline-primary" style="width: 80px; height: 50px;"
-                                        onmousedown="this.style.backgroundColor='transparent'; this.style.color='#007bff'; this.style.borderColor='#007bff';"
-                                        @onclick="@(async () => modbusToWrite.WriteToRegister(inputNumber1100, 16))">
+                                    onmousedown="this.style.backgroundColor='transparent'; this.style.color='#007bff'; this.style.borderColor='#007bff';"
+                                    @onclick="@(async () => modbusToWrite.WriteToRegister(inputNumber1100, 16))">
                                         @localizer[StringDescriptionModel.modal_gateway]
                                     </button>
                                     <button class="btn btn-outline-primary" style="width: 80px; height: 50px;"
-                                        onmousedown="this.style.backgroundColor='transparent'; this.style.color='#007bff'; this.style.borderColor='#007bff';"
-                                        @onclick="@(async () => modbusToWrite.WriteToRegister(inputNumber1100, 1024))">
+                                    onmousedown="this.style.backgroundColor='transparent'; this.style.color='#007bff'; this.style.borderColor='#007bff';"
+                                    @onclick="@(async () => modbusToWrite.WriteToRegister(inputNumber1100, 1024))">
                                         @localizer[StringDescriptionModel.modal_cable_organizer]
                                     </button>
                                 </div>
@@ -93,23 +93,23 @@
                                         <!-- Manual 模式按鈕 -->
                                         <div style="display: flex; flex-direction: column; gap: 10px; ">
                                             <button class="btn btn-outline-success @(!isManual ? "btn-manual" : "btn-default")" style="background-color:@mBufAValve"
-                                                disabled="@isManual"
-                                                @onclick="@(async () => modbusToWrite.WriteToRegister(inputNumber1100, 1))">
+                                            disabled="@isManual"
+                                            @onclick="@(async () => modbusToWrite.WriteToRegister(inputNumber1100, 1))">
                                                 @localizer[StringDescriptionModel.modal_m_bufa]
                                             </button>
                                             <button class="btn btn-outline-success @(!isManual ? "btn-manual" : "btn-default")" style="background-color:@mBufBValve"
-                                                disabled="@isManual"
-                                                @onclick="@(async () => modbusToWrite.WriteToRegister(inputNumber1100, 2))">
+                                            disabled="@isManual"
+                                            @onclick="@(async () => modbusToWrite.WriteToRegister(inputNumber1100, 2))">
                                                 @localizer[StringDescriptionModel.modal_m_bufb]
                                             </button>
                                             <button class="btn btn-outline-success @(!isManual ? "btn-manual" : "btn-default")" style="width: 120px; height: 50px; background-color:@mReagValve"
-                                                disabled="@isManual"
-                                                @onclick="@(async () => modbusToWrite.WriteToRegister(inputNumber1100, 4))">
+                                            disabled="@isManual"
+                                            @onclick="@(async () => modbusToWrite.WriteToRegister(inputNumber1100, 4))">
                                                 @localizer[StringDescriptionModel.modal_m_reag]
                                             </button>
                                             <button class="btn btn-outline-success @(!isManual ? "btn-manual" : "btn-default")" style="width: 120px; height: 50px; background-color:@mWashingValve"
-                                                disabled="@isManual"
-                                                @onclick="@(async () => modbusToWrite.WriteToRegister(inputNumber1100, 8))">
+                                            disabled="@isManual"
+                                            @onclick="@(async () => modbusToWrite.WriteToRegister(inputNumber1100, 8))">
                                                 @localizer[StringDescriptionModel.modal_m_wash]
                                             </button>
                                         </div>
@@ -117,20 +117,20 @@
                                         <!-- Auto 模式按鈕 -->
                                         <div style="display: flex; flex-direction: column; gap: 10px;">
                                             <button class="btn btn-primary" style="width: 120px; height: 50px; background-color:@aWashingMotion"
-                                                disabled="@(!isManual)"
-                                                @onclick="@(async () => modbusToWrite.WriteToRegister(inputNumber10, 1))">
+                                            disabled="@(!isManual)"
+                                            @onclick="@(async () => modbusToWrite.WriteToRegister(inputNumber10, 1))">
                                                 @localizer[StringDescriptionModel.modal_a_wash]
                                             </button>
                                             <button class="btn btn-success" style="width: 120px; height: 50px; background-color:@aCalMotion"
-                                                disabled="@(!isManual)"
-                                                @onclick="@(async () => modbusToWrite.WriteToRegister(inputNumber10, 2))">
+                                            disabled="@(!isManual)"
+                                            @onclick="@(async () => modbusToWrite.WriteToRegister(inputNumber10, 2))">
                                                 @localizer[StringDescriptionModel.modal_a_cal]
                                             </button>
                                             <button class="btn btn-danger" style="width: 120px; height: 50px;"
-                                                disabled="@(!isManual)"
-                                                @onclick="@(async () => modbusToWrite.WriteToRegister(inputNumber10, 4))"
-                                                onmousedown="this.classList.remove('btn-danger'); this.classList.add('btn-outline-danger');"
-                                                onmouseup="this.classList.remove('btn-outline-danger'); this.classList.add('btn-danger');">
+                                            disabled="@(!isManual)"
+                                            @onclick="@(async () => modbusToWrite.WriteToRegister(inputNumber10, 4))"
+                                            onmousedown="this.classList.remove('btn-danger'); this.classList.add('btn-outline-danger');"
+                                            onmouseup="this.classList.remove('btn-outline-danger'); this.classList.add('btn-danger');">
                                                 @localizer[StringDescriptionModel.modal_stop]
                                             </button>
 
@@ -173,71 +173,71 @@
 
 <style>
     .e-switch-wrapper.handle-text {
-        width: 271px;
-        height: 30px;
-        position: relative;
+    width: 271px;
+    height: 30px;
+    position: relative;
     }
 
-        /* 白色滑塊 */
-        .e-switch-wrapper.handle-text .e-switch-handle {
-            width: 114px;
-            height: 23px;
-            left: 4px;
-            bottom: 2px;
-            background-color: #fff;
-            position: absolute;
-            border-radius: 0;
-            transition: all 200ms ease-in-out;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: "Helvetica", sans-serif;
-            font-size: 16px;
-            color: #4d841d;
-        }
+    /* 白色滑塊 */
+    .e-switch-wrapper.handle-text .e-switch-handle {
+    width: 114px;
+    height: 23px;
+    left: 4px;
+    bottom: 2px;
+    background-color: #fff;
+    position: absolute;
+    border-radius: 0;
+    transition: all 200ms ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Helvetica", sans-serif;
+    font-size: 16px;
+    color: #4d841d;
+    }
 
-            /* 滑塊移到右邊（開啟狀態） */
-            .e-switch-wrapper.handle-text .e-switch-handle.e-switch-active {
-                left: 172px;
-                color: #CE0000;
-            }
+    /* 滑塊移到右邊（開啟狀態） */
+    .e-switch-wrapper.handle-text .e-switch-handle.e-switch-active {
+    left: 172px;
+    color: #CE0000;
+    }
 
-            /* 將文字放到滑塊上 */
-            .e-switch-wrapper.handle-text .e-switch-handle::before {
-                content: "@localizer[StringDescriptionModel.system_manual]";
-                transition: all 200ms ease-in-out;
-            }
+    /* 將文字放到滑塊上 */
+    .e-switch-wrapper.handle-text .e-switch-handle::before {
+    content: "@localizer[StringDescriptionModel.system_manual]";
+    transition: all 200ms ease-in-out;
+    }
 
-            /* 開啟狀態時顯示 Auto */
-            .e-switch-wrapper.handle-text .e-switch-handle.e-switch-active::before {
-                content: "@localizer[StringDescriptionModel.system_auto]";
-            }
+    /* 開啟狀態時顯示 Auto */
+    .e-switch-wrapper.handle-text .e-switch-handle.e-switch-active::before {
+    content: "@localizer[StringDescriptionModel.system_auto]";
+    }
 
-        /* 取消原本固定背景上的文字（避免重疊） */
-        .e-switch-wrapper.handle-text .e-switch-inner:before,
-        .e-switch-wrapper.handle-text .e-switch-inner:after {
-            display: none;
-        }
+    /* 取消原本固定背景上的文字（避免重疊） */
+    .e-switch-wrapper.handle-text .e-switch-inner:before,
+    .e-switch-wrapper.handle-text .e-switch-inner:after {
+    display: none;
+    }
 
-        /* 背景顏色 */
-        .e-switch-wrapper.handle-text .e-switch-inner,
-        .e-switch-wrapper.handle-text .e-switch-off {
-            background-color: #4d841d;
-            border-color: #4d841d;
-            border-radius: 0;
-        }
+    /* 背景顏色 */
+    .e-switch-wrapper.handle-text .e-switch-inner,
+    .e-switch-wrapper.handle-text .e-switch-off {
+    background-color: #4d841d;
+    border-color: #4d841d;
+    border-radius: 0;
+    }
 
-            /* 開啟狀態的背景（紅色） */
-            .e-switch-wrapper.handle-text .e-switch-inner.e-switch-active,
-            .e-switch-wrapper.handle-text .e-switch-inner.e-switch-active .e-switch-on {
-                background-color: #CE0000;
-                border-color: #CE0000;
-            }
+    /* 開啟狀態的背景（紅色） */
+    .e-switch-wrapper.handle-text .e-switch-inner.e-switch-active,
+    .e-switch-wrapper.handle-text .e-switch-inner.e-switch-active .e-switch-on {
+    background-color: #CE0000;
+    border-color: #CE0000;
+    }
 
-        /* 滑塊 hover 效果 */
-        .e-switch-wrapper.handle-text:not(.e-switch-disabled):hover .e-switch-handle {
-            background-color: #fff;
-        }
+    /* 滑塊 hover 效果 */
+    .e-switch-wrapper.handle-text:not(.e-switch-disabled):hover .e-switch-handle {
+    background-color: #fff;
+    }
 </style>
 
 @code {
@@ -312,6 +312,8 @@
 
     private void HandleKeyDown(KeyboardEventArgs e)
     {
+        if (string.IsNullOrEmpty(e.Key))
+            return;
         bool isDigit = e.Key.Length == 1 && char.IsDigit(e.Key[0]);
         bool isControl = e.Key == "Backspace" ||
                         e.Key == "Delete" ||
@@ -323,12 +325,17 @@
     }
     private async Task UpdateNumber(ushort address, Microsoft.AspNetCore.Components.ChangeEventArgs value)
     {
-        PostModbusApiModel postModbusApiModel = new PostModbusApiModel();
-
-        postModbusApiModel.startAddress = address;
-        postModbusApiModel.value = Convert.ToInt32(value.Value);
-        await dataService.PostModbusDevicesData(postModbusApiModel);
-        return;
+        try
+        {
+            PostModbusApiModel postModbusApiModel = new PostModbusApiModel();
+            postModbusApiModel.startAddress = address;
+            postModbusApiModel.value = Convert.ToInt32(value.Value);
+            await dataService.PostModbusDevicesData(postModbusApiModel);
+        }
+        catch (Exception ex)
+        {
+            return;
+        }        
     }
 
     private async Task OnManualSwitchChanged(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args)
@@ -336,5 +343,4 @@
         isManual = args.Checked;
         await modbusToWrite.WriteToRegister(0, 1);
     }
-
 }
