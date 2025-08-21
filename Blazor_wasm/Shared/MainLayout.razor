@@ -6,6 +6,7 @@
 @using Blazor_wasm.Authentication
 @using Blazor_wasm.Pages
 @using Microsoft.AspNetCore.Components.Authorization
+@using System.Reflection
 
 @inject IJSRuntime JS
 @inject AlertMessages alertMsgs
@@ -371,6 +372,13 @@
                     </Authorized>
                 </AuthorizeView> *@
             </nav>
+
+            <p class="text-center">
+                <label>v.@version</label>
+            </p>
+            <p class="text-center">
+                <label>Copyright © 2020 HsingWuei Inc.</label>
+            </p>
         </div>
     </div>
 
@@ -518,6 +526,8 @@
 
     private string ipUrl = "localhost";
 
+    private string? version;
+
     public static string[] waterFieldRate = new string[]
         {         
            "0.8", "0.6", "0.55", "0.4", "0.35", "0.3", "0.25", "0.15"
@@ -551,6 +561,9 @@
     protected override async Task OnInitializedAsync()
     {
         timer = new Timer(UpdateTime, null, 0, 1000); // 每秒更新时间
+
+        var assembly = Assembly.GetExecutingAssembly();
+        version = assembly.GetName().Version.ToString();
 
         base.OnInitializedAsync();
         pageTitleService.Title = "/";
