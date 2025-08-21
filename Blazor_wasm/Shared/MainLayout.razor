@@ -73,46 +73,101 @@
 {
     <div class="flyout">
         <div class="top-row d-flex justify-content-end">
-            <a class="oi oi-x" aria-hidden="true" style="margin-top:10px" @onclick="HideFlyout"></a>
-        </div>
-        <div class="flyout-content" style="padding:0 0 20px 0;">
-            <a href="/" @onclick="HideFlyout">
-                <img src="CompanyLogo.png" class="img-fluid" style="position:relative; left:17%; top:5%; width:65%;" />
-            </a>
+            <a class="oi oi-x" aria-hidden="true" style="margin-top:20px; text-decoration: none;" @onclick="HideFlyout"></a>
+         </div>
 
-            <p class="text-center">
-                <AuthorizeView Roles="Admin,User">
-                    <Authorized>
-                        Hi, @context.User.Identity.Name
-                    </Authorized>
-                    <NotAuthorized>
-                        Hi, Guest
-                    </NotAuthorized>
-                </AuthorizeView>
-            </p>
+        <div class="flyout-content d-flex flex-column">
 
-            <nav class="flex-column px-4">
-                <AuthorizeView Roles="Admin,User">
-                    <Authorized>
-                        <div class="nav-item">
-                            <NavLink class="nav-link px-2" href="/">
-                                <div class="d-flex align-items-center">
-                                    <span class="oi oi-home" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
-                                    <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.home]</span>
-                                </div>
-                            </NavLink>
-                        </div>
+            <!-- Header (Logo) -->
+            <div class="flyout-header text-center">
+                <a href="/" @onclick="HideFlyout">
+                    <img src="CompanyLogo.png" class="img-fluid" style="width:65%;" />
+                </a>
+                <p class="mt-2">
+                    <AuthorizeView Roles="Admin,User">
+                        <Authorized>
+                            Hi, @context.User.Identity.Name
+                        </Authorized>
+                        <NotAuthorized>
+                            Hi, Guest
+                        </NotAuthorized>
+                    </AuthorizeView>
+                </p>
+            </div>
 
-                        @if (Setting.UserBasicDetail.Role == "Admin")
-                        {                         
+            <!-- Body (Navigation) -->
+            <div class="flyout-body flex-grow-1">
+                <nav class="flex-column px-4">
+                    <AuthorizeView Roles="Admin,User">
+                        <Authorized>
                             <div class="nav-item">
-                                <NavLink class="nav-link px-2" href="javascript:void(0);" @onclick="()=>{collapseNavMenuD4=true; expanSubMenuD4 = !expanSubMenuD4;}">
+                                <NavLink class="nav-link px-2" href="/">
                                     <div class="d-flex align-items-center">
-                                        <span class="oi oi-person" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
-                                        <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.account_account_management]</span>
+                                        <span class="oi oi-home" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                        <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.home]</span>
+                                    </div>
+                                </NavLink>
+                            </div>
+
+                            @if (Setting.UserBasicDetail.Role == "Admin")
+                            {
+                                <div class="nav-item">
+                                    <NavLink class="nav-link px-2" href="javascript:void(0);" @onclick="()=>{collapseNavMenuD4=true; expanSubMenuD4 = !expanSubMenuD4;}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="oi oi-person" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                            <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.account_account_management]</span>
+                                        </div>
+                                        <span class="arrow-icon" aria-hidden="true">
+                                            @if (!expanSubMenuD4)
+                                            {
+                                                <span class="oi oi-chevron-left"></span>
+                                            }
+                                            else
+                                            {
+                                                <span class="oi oi-chevron-bottom"></span>
+                                            }
+                                        </span>
+                                    </NavLink>
+                                    @if (expanSubMenuD4)
+                                    {
+                                        <ul class="nav flex-column">
+                                            <li class="nav-item">
+                                                <NavLink class="nav-link" href="registration" @onclick="HideFlyout">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="oi oi-person" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                                        <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.account_registration]</span>
+                                                    </div>
+                                                </NavLink>
+                                            </li>
+                                            <li class="nav-item">
+                                                <NavLink class="nav-link" href="update" @onclick="HideFlyout">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="oi oi-person" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                                        <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.account_modify_account]</span>
+                                                    </div>
+                                                </NavLink>
+                                            </li>
+                                            <li class="nav-item">
+                                                <NavLink class="nav-link" href="javascript:void(0);" @onclick="ShowDelAccountModal">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="oi oi-person" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                                        <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.account_delete_account]</span>
+                                                    </div>
+                                                </NavLink>
+                                            </li>
+                                        </ul>
+                                    }
+                                </div>
+                            }
+
+                            <div class="nav-item">
+                                <NavLink class="nav-link px-2" href="javascript:void(0);" @onclick="()=>{collapseNavMenuD1=true; expanSubMenuD1 = !expanSubMenuD1;}">
+                                    <div class="d-flex align-items-center">
+                                        <span class="oi oi-graph" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                        <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.charts]</span>
                                     </div>
                                     <span class="arrow-icon" aria-hidden="true">
-                                        @if (!expanSubMenuD4)
+                                        @if (!expanSubMenuD1)
                                         {
                                             <span class="oi oi-chevron-left"></span>
                                         }
@@ -122,266 +177,217 @@
                                         }
                                     </span>
                                 </NavLink>
-                                @if (expanSubMenuD4)
+                                @if (expanSubMenuD1)
                                 {
                                     <ul class="nav flex-column">
                                         <li class="nav-item">
-                                            <NavLink class="nav-link" href="registration" @onclick="HideFlyout">
+                                            <NavLink class="nav-link" href="streamingChart" @onclick="HideFlyout">
                                                 <div class="d-flex align-items-center">
-                                                    <span class="oi oi-person" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
-                                                    <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.account_registration]</span>
+                                                    <span class="oi oi-graph" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                                    <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.live_chart]</span>
                                                 </div>
                                             </NavLink>
                                         </li>
                                         <li class="nav-item">
-                                            <NavLink class="nav-link" href="update" @onclick="HideFlyout">
+                                            <NavLink class="nav-link" href="historyChart" @onclick="HideFlyout">
                                                 <div class="d-flex align-items-center">
-                                                    <span class="oi oi-person" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
-                                                    <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.account_modify_account]</span>
-                                                </div>
-                                            </NavLink>
-                                        </li>
-                                        <li class="nav-item">
-                                            <NavLink class="nav-link" href="javascript:void(0);" @onclick="ShowDelAccountModal">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="oi oi-person" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
-                                                    <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.account_delete_account]</span>
+                                                    <span class="oi oi-graph" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                                    <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.history_chart]</span>
                                                 </div>
                                             </NavLink>
                                         </li>
                                     </ul>
                                 }
                             </div>
-                        }
-
-                        <div class="nav-item">
-                            <NavLink class="nav-link px-2" href="javascript:void(0);" @onclick="()=>{collapseNavMenuD1=true; expanSubMenuD1 = !expanSubMenuD1;}">
-                                <div class="d-flex align-items-center">
-                                    <span class="oi oi-graph" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
-                                    <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.charts]</span>
-                                </div>
-                                <span class="arrow-icon" aria-hidden="true">
-                                    @if (!expanSubMenuD1)
-                                    {
-                                        <span class="oi oi-chevron-left"></span>
-                                    }
-                                    else
-                                    {
-                                        <span class="oi oi-chevron-bottom"></span>
-                                    }
-                                </span>
-                            </NavLink>
-                            @if (expanSubMenuD1)
-                            {
-                                <ul class="nav flex-column">
-                                    <li class="nav-item">
-                                        <NavLink class="nav-link" href="streamingChart" @onclick="HideFlyout">
-                                            <div class="d-flex align-items-center">
-                                                <span class="oi oi-graph" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
-                                                <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.live_chart]</span>
-                                            </div>
-                                        </NavLink>
-                                    </li>
-                                    <li class="nav-item">
-                                        <NavLink class="nav-link" href="historyChart" @onclick="HideFlyout">
-                                            <div class="d-flex align-items-center">
-                                                <span class="oi oi-graph" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
-                                                <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.history_chart]</span>
-                                            </div>
-                                        </NavLink>
-                                    </li>
-                                </ul>
-                            }
-                        </div>
-                        <div class="nav-item">
-                            <NavLink class="nav-link px-2" href="javascript:void(0);" @onclick="()=>{collapseNavMenuD2=true; expanSubMenuD2 = !expanSubMenuD2;}">
-                                <div class="d-flex align-items-center">
-                                    <span class="oi oi-list" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
-                                    <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.cal_datalog]</span>
-                                </div>
-                                <span class="arrow-icon" aria-hidden="true">
-                                    @if (!expanSubMenuD2)
-                                    {
-                                        <span class="oi oi-chevron-left"></span>
-                                    }
-                                    else
-                                    {
-                                        <span class="oi oi-chevron-bottom"></span>
-                                    }
-                                </span>
-                            </NavLink>
-                            @if (expanSubMenuD2)
-                            {
-                                <ul class="nav flex-column">
-                                    <li class="nav-item">
-                                        <NavLink class="nav-link" href="D1CalDataGrid" @onclick="HideFlyout">
-                                            <div class="d-flex align-items-center">
-                                                <span class="oi oi-list" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
-                                                <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.d1_cal_datalogger]</span>
-                                            </div>
-                                        </NavLink>
-                                    </li>
-                                    <li class="nav-item">
-                                        <NavLink class="nav-link" href="D2CalDataGrid" @onclick="HideFlyout">
-                                            <div class="d-flex align-items-center">
-                                                <span class="oi oi-list" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
-                                                <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.d2_cal_datalogger]</span>
-                                            </div>
-                                        </NavLink>
-                                    </li>
-                                </ul>
-                            }
-                        </div>
-
-                        <div class="nav-item">
-                            <NavLink class="nav-link px-2" href="javascript:void(0);" @onclick="()=>{collapseNavMenuD3=true; expanSubMenuD3 = !expanSubMenuD3;}">
-                                <div class="d-flex align-items-center">
-                                    <span class="oi oi-pencil" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
-                                    <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.proccess_setting]</span>
-                                </div>
-                                <span class="arrow-icon" aria-hidden="true">
-                                    @if (!expanSubMenuD3)
-                                    {
-                                        <span class="oi oi-chevron-left"></span>
-                                    }
-                                    else
-                                    {
-                                        <span class="oi oi-chevron-bottom"></span>
-                                    }
-                                </span>
-                            </NavLink>
-                            @if (expanSubMenuD3)
-                            {
-                                <ul class="nav flex-column">
-                                    <li class="nav-item">
-                                        <NavLink class="nav-link" href="stepWashingSetting" @onclick="HideFlyout">
-                                            <div class="d-flex align-items-center">
-                                                <span class="oi oi-pencil" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
-                                                <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.washing_step_setting]</span>
-                                            </div>
-                                        </NavLink>
-                                    </li>
-                                    <li class="nav-item">
-                                        <NavLink class="nav-link" href="stepCalSetting" @onclick="HideFlyout">
-                                            <div class="d-flex align-items-center">
-                                                <span class="oi oi-pencil" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
-                                                <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.calibration_step_setting]</span>
-                                            </div>
-                                        </NavLink>
-                                    </li>
-                                </ul>
-                            }
-                        </div>
-
-                        <div class="nav-item">
-                            <NavLink class="nav-link px-2" href="scheduler" @onclick="HideFlyout">
-                                <div class="d-flex align-items-center">
-                                    <span class="oi oi-calendar" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
-                                    <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.schedule]</span>
-                                </div>
-                            </NavLink>
-                        </div>
-
-                        @if(Setting.UserBasicDetail.Role == "User")
-                        {
                             <div class="nav-item">
-                                <NavLink class="nav-link px-2" href="update" @onclick="HideFlyout">
+                                <NavLink class="nav-link px-2" href="javascript:void(0);" @onclick="()=>{collapseNavMenuD2=true; expanSubMenuD2 = !expanSubMenuD2;}">
                                     <div class="d-flex align-items-center">
-                                        <span class="oi oi-person" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
-                                        <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.account_modify_account]</span>
+                                        <span class="oi oi-list" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                        <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.cal_datalog]</span>
+                                    </div>
+                                    <span class="arrow-icon" aria-hidden="true">
+                                        @if (!expanSubMenuD2)
+                                        {
+                                            <span class="oi oi-chevron-left"></span>
+                                        }
+                                        else
+                                        {
+                                            <span class="oi oi-chevron-bottom"></span>
+                                        }
+                                    </span>
+                                </NavLink>
+                                @if (expanSubMenuD2)
+                                {
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <NavLink class="nav-link" href="D1CalDataGrid" @onclick="HideFlyout">
+                                                <div class="d-flex align-items-center">
+                                                    <span class="oi oi-list" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                                    <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.d1_cal_datalogger]</span>
+                                                </div>
+                                            </NavLink>
+                                        </li>
+                                        <li class="nav-item">
+                                            <NavLink class="nav-link" href="D2CalDataGrid" @onclick="HideFlyout">
+                                                <div class="d-flex align-items-center">
+                                                    <span class="oi oi-list" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                                    <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.d2_cal_datalogger]</span>
+                                                </div>
+                                            </NavLink>
+                                        </li>
+                                    </ul>
+                                }
+                            </div>
+
+                            <div class="nav-item">
+                                <NavLink class="nav-link px-2" href="javascript:void(0);" @onclick="()=>{collapseNavMenuD3=true; expanSubMenuD3 = !expanSubMenuD3;}">
+                                    <div class="d-flex align-items-center">
+                                        <span class="oi oi-pencil" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                        <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.proccess_setting]</span>
+                                    </div>
+                                    <span class="arrow-icon" aria-hidden="true">
+                                        @if (!expanSubMenuD3)
+                                        {
+                                            <span class="oi oi-chevron-left"></span>
+                                        }
+                                        else
+                                        {
+                                            <span class="oi oi-chevron-bottom"></span>
+                                        }
+                                    </span>
+                                </NavLink>
+                                @if (expanSubMenuD3)
+                                {
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <NavLink class="nav-link" href="stepWashingSetting" @onclick="HideFlyout">
+                                                <div class="d-flex align-items-center">
+                                                    <span class="oi oi-pencil" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                                    <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.washing_step_setting]</span>
+                                                </div>
+                                            </NavLink>
+                                        </li>
+                                        <li class="nav-item">
+                                            <NavLink class="nav-link" href="stepCalSetting" @onclick="HideFlyout">
+                                                <div class="d-flex align-items-center">
+                                                    <span class="oi oi-pencil" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                                    <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.calibration_step_setting]</span>
+                                                </div>
+                                            </NavLink>
+                                        </li>
+                                    </ul>
+                                }
+                            </div>
+
+                            <div class="nav-item">
+                                <NavLink class="nav-link px-2" href="scheduler" @onclick="HideFlyout">
+                                    <div class="d-flex align-items-center">
+                                        <span class="oi oi-calendar" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                        <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.schedule]</span>
                                     </div>
                                 </NavLink>
                             </div>
-                        }
 
-                        @if (Setting.UserBasicDetail.Role == "Admin")
-                        {
+                            @if (Setting.UserBasicDetail.Role == "User")
+                            {
+                                <div class="nav-item">
+                                    <NavLink class="nav-link px-2" href="update" @onclick="HideFlyout">
+                                        <div class="d-flex align-items-center">
+                                            <span class="oi oi-person" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                            <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.account_modify_account]</span>
+                                        </div>
+                                    </NavLink>
+                                </div>
+                            }
+
+                            @if (Setting.UserBasicDetail.Role == "Admin")
+                            {
+                                <div class="nav-item">
+                                    <NavLink class="nav-link px-2" href="javascript:void(0);" @onclick="ShowFieldModal">
+                                        <div class="d-flex align-items-center">
+                                            <span class="oi oi-check" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                            <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.field_selection]</span>
+                                        </div>
+                                    </NavLink>
+                                </div>
+                            }
+
                             <div class="nav-item">
-                                <NavLink class="nav-link px-2" href="javascript:void(0);" @onclick="ShowFieldModal">
+                                <NavLink class="nav-link px-2" href="javascript:void(0);" @onclick="ShowSwitchLanguageModal">
                                     <div class="d-flex align-items-center">
-                                        <span class="oi oi-check" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
-                                        <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.field_selection]</span>
+                                        <span class="oi oi-transfer" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                        <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.language_selection]</span>
                                     </div>
                                 </NavLink>
                             </div>
-                        }
 
-                        <div class="nav-item">
-                            <NavLink class="nav-link px-2" href="javascript:void(0);" @onclick="ShowSwitchLanguageModal">
-                                <div class="d-flex align-items-center">
-                                    <span class="oi oi-transfer" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
-                                    <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.language_selection]</span>
-                                </div>
-                            </NavLink>
-                        </div>
+                            <div class="nav-item">
+                                <NavLink class="nav-link px-2" href="login" @onclick="LogoutAsync">
+                                    <div class="d-flex align-items-center">
+                                        <span class="oi oi-account-logout" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                        <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.account_logout]</span>
+                                    </div>
+                                </NavLink>
+                            </div>
+                        </Authorized>
+                        <NotAuthorized>
+                            <div class="nav-item">
+                                <NavLink class="nav-link" href="login" @onclick="HideFlyout">
+                                    <div class="d-flex align-items-center">
+                                        <span class="oi oi-account-login" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                        <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.account_login]</span>
+                                    </div>
+                                </NavLink>
+                            </div>
+                            <div class="nav-item">
+                                <NavLink class="nav-link" href="javascript:void(0);" @onclick="ShowSwitchLanguageModal">
+                                    <div class="d-flex align-items-center">
+                                        <span class="oi oi-transfer" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                        <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.language_selection]</span>
+                                    </div>
+                                </NavLink>
+                            </div>
+                            <div class="nav-item">
+                                <NavLink class="nav-link" href="javascript:void(0);" @onclick="ShowIpSettingModal">
+                                    <div class="d-flex align-items-center">
+                                        <span class="oi oi-map-marker" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                                        <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.nav_ip_url]</span>
+                                    </div>
+                                </NavLink>
+                            </div>
+                        </NotAuthorized>
+                    </AuthorizeView>
+                    @* <AuthorizeView Roles="Admin">
+        <Authorized>
+            <div class="nav-item">
+                <NavLink class="nav-link px-2" href="javascript:void(0);" @onclick="ShowFieldModal">
+                    <div class="d-flex align-items-center">
+                        <span class="oi oi-check" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                        <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.field_selection]</span>
+                    </div>
+                </NavLink>
+            </div>
+            <div class="nav-item">
+                <NavLink class="nav-link px-2" href="javascript:void(0);" @onclick="ShowDelAccountModal">
+                    <div class="d-flex align-items-center">
+                        <span class="oi oi-trash" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
+                        <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.account_delete_account]</span>
+                    </div>
+                </NavLink>
+            </div>
+        </Authorized>
+    </AuthorizeView> *@
+                </nav>
+            </div>
 
-                        <div class="nav-item">
-                            <NavLink class="nav-link px-2" href="login" @onclick="LogoutAsync">
-                                <div class="d-flex align-items-center">
-                                    <span class="oi oi-account-logout" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
-                                    <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.account_logout]</span>
-                                </div>
-                            </NavLink>
-                        </div>
-                    </Authorized>
-                    <NotAuthorized>
-                        <div class="nav-item">
-                            <NavLink class="nav-link" href="login" @onclick="HideFlyout">
-                                <div class="d-flex align-items-center">
-                                    <span class="oi oi-account-login" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
-                                    <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.account_login]</span>
-                                </div>
-                            </NavLink>
-                        </div>
-                        <div class="nav-item">
-                            <NavLink class="nav-link" href="javascript:void(0);" @onclick="ShowSwitchLanguageModal">
-                                <div class="d-flex align-items-center">
-                                    <span class="oi oi-transfer" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
-                                    <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.language_selection]</span>
-                                </div>
-                            </NavLink>
-                        </div>
-                        <div class="nav-item">
-                            <NavLink class="nav-link" href="javascript:void(0);" @onclick="ShowIpSettingModal">
-                                <div class="d-flex align-items-center">
-                                    <span class="oi oi-map-marker" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
-                                    <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.nav_ip_url]</span>
-                                </div>
-                            </NavLink>
-                        </div>
-                    </NotAuthorized>
-                </AuthorizeView>
-                @* <AuthorizeView Roles="Admin">
-                    <Authorized>
-                        <div class="nav-item">
-                            <NavLink class="nav-link px-2" href="javascript:void(0);" @onclick="ShowFieldModal">
-                                <div class="d-flex align-items-center">
-                                    <span class="oi oi-check" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
-                                    <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.field_selection]</span>
-                                </div>
-                            </NavLink>
-                        </div>
-                        <div class="nav-item">
-                            <NavLink class="nav-link px-2" href="javascript:void(0);" @onclick="ShowDelAccountModal">
-                                <div class="d-flex align-items-center">
-                                    <span class="oi oi-trash" aria-hidden="true" style="flex-shrink: 0; margin-right: 8px;"></span>
-                                    <span style="word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">@localizer[StringDescriptionModel.account_delete_account]</span>
-                                </div>
-                            </NavLink>
-                        </div>
-                    </Authorized>
-                </AuthorizeView> *@
-            </nav>
+            <!-- Footer (Version & Copyright) -->
+            <div class="flyout-footer d-flex flex-column justify-content-center align-items-center">
+                <p class="mb-1">v.@version</p>
+                <p>Copyright © 2025 HsingWuei Inc.</p>
+            </div>
 
-            <p class="text-center">
-                <label>v.@version</label>
-            </p>
-            <p class="text-center">
-                <label>Copyright © 2020 HsingWuei Inc.</label>
-            </p>
         </div>
     </div>
-
 }
 
 <Modal @ref="fieldModal">
