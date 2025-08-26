@@ -760,7 +760,7 @@
     <value>氣壓壓力異常</value>
   </data>
   <data name="dialog_maintain80" xml:space="preserve">
-    <value>續航力80%，狀況良好，檢查電極於校正槽的位置是否有偏移狀況</value>
+    <value>狀況良好，檢查電極於校正槽的位置是否有偏移狀況</value>
   </data>
   <data name="dialog_maintain70" xml:space="preserve">
     <value>狀況尚可，檢查標準液測值是否充足正確</value>
