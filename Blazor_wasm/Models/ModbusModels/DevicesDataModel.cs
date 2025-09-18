@@ -208,7 +208,7 @@ namespace Blazor_wasm.Models.ModbusModels
                         case "washingStepTimeSetting":
                             if (washingStepTimeSetting[index] != (ushort)value)
                             {
-                                washingStepTimeSetting[index] = Convert.ToUInt16((ushort)value/10);                               
+                                washingStepTimeSetting[index] = Convert.ToUInt16((ushort)value);                               
                                 boolStateChanged = true;
                             }
                             break;
@@ -222,7 +222,7 @@ namespace Blazor_wasm.Models.ModbusModels
                         case "calStepTimeSetting":
                             if (calStepTimeSetting[index] != (ushort)value)
                             {
-                                calStepTimeSetting[index] = Convert.ToUInt16((ushort)value / 10);
+                                calStepTimeSetting[index] = Convert.ToUInt16((ushort)value);
                                 boolStateChanged = true;
                             }
                             break;
