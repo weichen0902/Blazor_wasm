@@ -15,6 +15,7 @@ namespace Blazor_wasm.Models.AuthModels
         public string AccessToken { get; set; }
         public DateTime AccessTokenExpire { get; set; }
         public string RefreshToken { get; set; }
+        public DateTime RefreshTokenExpiry { get; set; }
         public string Email { get; set; }
         public string Role { get; set; }
         public string UserAvatar { get; set; }
@@ -26,6 +27,7 @@ namespace Blazor_wasm.Models.AuthModels
             AccessToken = string.Empty;
             AccessTokenExpire = DateTime.MinValue;
             RefreshToken = string.Empty;
+            RefreshTokenExpiry = DateTime.MinValue;
             Email = string.Empty;
             Role = string.Empty;
             UserAvatar = string.Empty;

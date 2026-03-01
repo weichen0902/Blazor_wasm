@@ -94,6 +94,7 @@
             string email = loginModel.UserName;
 
             DateTime refreshTokenExpiry = Convert.ToDateTime(tokenResponse.RefreshTokenExpiry);
+            Setting.UserBasicDetail.RefreshTokenExpiry = refreshTokenExpiry;
             var timer = new System.Timers.Timer(1000);
             MainLayout.disposeTimer += (() => timer.Dispose());
             timer.Elapsed += async (sender, e) =>
@@ -115,6 +116,7 @@
                     AccessToken = tokenResponse.AccessToken,
                     AccessTokenExpire = jsontoken.ValidTo,
                     RefreshToken = tokenResponse.RefreshToken,
+                    RefreshTokenExpiry = refreshTokenExpiry,
                     UserAvatar = !string.IsNullOrWhiteSpace(userAvatar) ? $"{Setting.BaseUrl}/{userAvatar}" : "",
                     UserID = userID,
                     Role = userRole

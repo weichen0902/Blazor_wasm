@@ -574,6 +574,7 @@
         base.OnInitializedAsync();
         pageTitleService.Title = "/";
         Login.flagFunc += LogoutAsync;
+        AppLaunch.flagFunc += LogoutAsync;
         pageTitleService.OnChange += StateHasChanged;
         OnLanguageChange += FieldLanguageChange;
         CircularGaugeLife1.onMaintainMsg += PublishMaintainMsg;

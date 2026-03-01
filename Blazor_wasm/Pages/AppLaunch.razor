@@ -17,6 +17,8 @@
 
 @code {
 
+    public static event Func<Task>? flagFunc;
+
     protected async override Task OnInitializedAsync()
     {    
         try
@@ -49,6 +51,22 @@
                 var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
                 await customAuthStateProvider.UpdateAuthenticationState(Setting.UserBasicDetail);
                 NavManager.NavigateTo("/dashboard");
+                var timer = new System.Timers.Timer(1000);
+                MainLayout.disposeTimer += (() => timer.Dispose());
+                timer.Elapsed += async (sender, e) =>
+                {
+                    DateTime dateTimeNow = DateTime.Now;
+                    Console.WriteLine($"Now: {dateTimeNow}");
+                    Console.WriteLine($"AccessExpiry: {Setting.UserBasicDetail.AccessTokenExpire}");
+                    Console.WriteLine($"RefreshExpiry: {Setting.UserBasicDetail.RefreshTokenExpiry}");
+                    if (Setting.UserBasicDetail.RefreshTokenExpiry < dateTimeNow)
+                    {
+                        await flagFunc.Invoke();
+                        timer.Stop();
+                    }
+                };
+                // 启动定时器
+                timer.Start();
             }
             else
             {
